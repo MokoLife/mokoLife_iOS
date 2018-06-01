@@ -1,0 +1,56 @@
+PODS:
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
+  - HJTabViewController (1.0.6)
+  - Masonry (1.0.2)
+  - MBProgressHUD (1.0.0)
+  - MJRefresh (3.1.12)
+  - MLInputDodger (1.5.0)
+  - MQTTClient (0.8.8):
+    - MQTTClient/Core (= 0.8.8)
+  - MQTTClient/Core (0.8.8):
+    - MQTTClient/Manager
+    - MQTTClient/Min
+  - MQTTClient/Manager (0.8.8):
+    - MQTTClient/Min
+  - MQTTClient/Min (0.8.8)
+  - Toast (3.1.0)
+  - YYKit (1.0.9):
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9)
+
+DEPENDENCIES:
+  - FMDB
+  - HJTabViewController (from `https://github.com/panghaijiao/HJTabViewController.git`)
+  - Masonry
+  - MBProgressHUD
+  - MJRefresh
+  - MLInputDodger
+  - MQTTClient
+  - Toast
+  - YYKit
+
+EXTERNAL SOURCES:
+  HJTabViewController:
+    :git: https://github.com/panghaijiao/HJTabViewController.git
+
+CHECKOUT OPTIONS:
+  HJTabViewController:
+    :commit: 1cb7bbf5068fc40b6613778ddcb89d7950f6d6db
+    :git: https://github.com/panghaijiao/HJTabViewController.git
+
+SPEC CHECKSUMS:
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  HJTabViewController: 578a5bbab471587e7cc49a2f0f49fc8601c833bf
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  MLInputDodger: 832d3163b394405fd5a5ed2b0cbbc264ed10c7c0
+  MQTTClient: f49de7a90edaf48f8965a73b67b0cd47f5b6b81d
+  Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
+  YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
+
+PODFILE CHECKSUM: f138ad29403ac38e47c0b581625d4c53d60120f6
+
+COCOAPODS: 1.2.1
