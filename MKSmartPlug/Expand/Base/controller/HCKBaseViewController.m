@@ -43,7 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = BACKGROUND_VIEW_COLOR;
+    [self.view setBackgroundColor:UIColorFromRGB(0xf2f2f2)];
     [self setNavigationBarImage:[UIImage imageWithColor:NAVIGATION_BAR_COLOR]];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(60.0f, 7.0f, kScreenWidth-120.0f, 30.0f)];

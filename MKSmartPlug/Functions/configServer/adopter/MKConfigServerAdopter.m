@@ -50,44 +50,37 @@
     if (indexPath.row == 0) {
         //host
         MKConfigServerHostCell *cell = [MKConfigServerHostCell initCellWithTableView:tableView];
-        cell.indexPath = indexPath;
         return cell;
     }
     if (indexPath.row == 1) {
         //port
         MKConfigServerPortCell *cell = [MKConfigServerPortCell initCellWithTableView:tableView];
-        cell.indexPath = indexPath;
         return cell;
     }
     if (indexPath.row == 2) {
         //connect mode
         MKConfigServerConnectModeCell *cell = [MKConfigServerConnectModeCell initCellWithTableView:tableView];
-        cell.indexPath = indexPath;
         return cell;
     }
     if (indexPath.row == 3) {
         //qos
         MKConfigServerQosCell *cell = [MKConfigServerQosCell initCellWithTableView:tableView];
-        cell.indexPath = indexPath;
         return cell;
     }
     if (indexPath.row == 4) {
         //client id
         MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
-        cell.indexPath = indexPath;
         cell.msg = @"Client Id";
         return cell;
     }
     if (indexPath.row == 5) {
         //Username
         MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
-        cell.indexPath = indexPath;
         cell.msg = @"Username";
         return cell;
     }
     //Password
     MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
-    cell.indexPath = indexPath;
     cell.msg = @"Password";
     return cell;
 }

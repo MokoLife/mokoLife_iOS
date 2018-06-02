@@ -16,6 +16,10 @@
 		001447E620C23ADA00A87037 /* configServer_triangleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 001447E420C23ADA00A87037 /* configServer_triangleIcon@2x.png */; };
 		001447E920C2650F00A87037 /* MKConfigServerPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447E820C2650F00A87037 /* MKConfigServerPickView.m */; };
 		001447F020C2763400A87037 /* MKConfigServerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447EF20C2763400A87037 /* MKConfigServerModel.m */; };
+		001447F720C2972300A87037 /* MKSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447F620C2972300A87037 /* MKSettingsController.m */; };
+		001447FD20C299A600A87037 /* MKSettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447FC20C299A600A87037 /* MKSettingsCell.m */; };
+		0014480020C29A9300A87037 /* MKSmartPlugRightNextIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 001447FE20C29A9200A87037 /* MKSmartPlugRightNextIcon@2x.png */; };
+		0014480120C29A9300A87037 /* MKSmartPlugRightNextIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 001447FF20C29A9200A87037 /* MKSmartPlugRightNextIcon@3x.png */; };
 		003F698E20C122B90002C833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003F698D20C122B90002C833 /* Assets.xcassets */; };
 		003F6A6320C145BC0002C833 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6020C145BC0002C833 /* AppDelegate.m */; };
 		003F6A6520C145BC0002C833 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6220C145BC0002C833 /* main.m */; };
@@ -90,6 +94,12 @@
 		001447EA20C26F5C00A87037 /* MKConfigServerCellProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerCellProtocol.h; sourceTree = "<group>"; };
 		001447EE20C2763400A87037 /* MKConfigServerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerModel.h; sourceTree = "<group>"; };
 		001447EF20C2763400A87037 /* MKConfigServerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerModel.m; sourceTree = "<group>"; };
+		001447F520C2972300A87037 /* MKSettingsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSettingsController.h; sourceTree = "<group>"; };
+		001447F620C2972300A87037 /* MKSettingsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSettingsController.m; sourceTree = "<group>"; };
+		001447FB20C299A600A87037 /* MKSettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSettingsCell.h; sourceTree = "<group>"; };
+		001447FC20C299A600A87037 /* MKSettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKSettingsCell.m; sourceTree = "<group>"; };
+		001447FE20C29A9200A87037 /* MKSmartPlugRightNextIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MKSmartPlugRightNextIcon@2x.png"; sourceTree = "<group>"; };
+		001447FF20C29A9200A87037 /* MKSmartPlugRightNextIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MKSmartPlugRightNextIcon@3x.png"; sourceTree = "<group>"; };
 		003F698120C122B90002C833 /* MKSmartPlug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKSmartPlug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		003F698D20C122B90002C833 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		003F6A5F20C145BC0002C833 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -201,6 +211,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		001447F120C2971300A87037 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				001447F220C2971300A87037 /* controller */,
+				001447F320C2971300A87037 /* model */,
+				001447F420C2971300A87037 /* view */,
+			);
+			path = settings;
+			sourceTree = "<group>";
+		};
+		001447F220C2971300A87037 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				001447F520C2972300A87037 /* MKSettingsController.h */,
+				001447F620C2972300A87037 /* MKSettingsController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		001447F320C2971300A87037 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		001447F420C2971300A87037 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				001447FB20C299A600A87037 /* MKSettingsCell.h */,
+				001447FC20C299A600A87037 /* MKSettingsCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		003F697820C122B90002C833 = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +309,8 @@
 		003F6BFA20C161E80002C833 /* PublicImages */ = {
 			isa = PBXGroup;
 			children = (
+				001447FE20C29A9200A87037 /* MKSmartPlugRightNextIcon@2x.png */,
+				001447FF20C29A9200A87037 /* MKSmartPlugRightNextIcon@3x.png */,
 				003F6D7F20C162AC0002C833 /* navigation_back_button@2x.png */,
 				003F6D7E20C162AC0002C833 /* navigation_back_button@3x.png */,
 			);
@@ -273,6 +320,7 @@
 		003F6D0020C161EF0002C833 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				001447F120C2971300A87037 /* settings */,
 				003F6D8F20C16A690002C833 /* configServer */,
 				003F6D0120C161EF0002C833 /* addDevice */,
 			);
@@ -696,11 +744,13 @@
 				003F6D8D20C163390002C833 /* addDevice_menuIcon@2x.png in Resources */,
 				003F6D8920C163390002C833 /* addDevice_addIcon@2x.png in Resources */,
 				003F6D7A20C161F50002C833 /* refresh_loading_3@2x.png in Resources */,
+				0014480020C29A9300A87037 /* MKSmartPlugRightNextIcon@2x.png in Resources */,
 				003F6D9D20C16DAB0002C833 /* configServer_starIcon@3x.png in Resources */,
 				003F6DA820C179080002C833 /* configServer_ConnectMode_selected@2x.png in Resources */,
 				003F6D8B20C163390002C833 /* addDevice_centerIcon@2x.png in Resources */,
 				001447E520C23ADA00A87037 /* configServer_triangleIcon@3x.png in Resources */,
 				003F6DAB20C179080002C833 /* configServer_ConnectMode_normal@2x.png in Resources */,
+				0014480120C29A9300A87037 /* MKSmartPlugRightNextIcon@3x.png in Resources */,
 				003F6D9C20C16DAB0002C833 /* configServer_starIcon@2x.png in Resources */,
 				003F6D7B20C161F50002C833 /* refresh_loading_4@2x.png in Resources */,
 				003F6D6F20C161F50002C833 /* keyboardDelIcon@2x.png in Resources */,
@@ -782,6 +832,8 @@
 				003F6D6520C161F50002C833 /* NSInvocation+HCKAdd.m in Sources */,
 				003F6D7720C161F50002C833 /* HCKRefreshGifHeader.m in Sources */,
 				003F6D6E20C161F50002C833 /* HCKHexKeyboard.m in Sources */,
+				001447FD20C299A600A87037 /* MKSettingsCell.m in Sources */,
+				001447F720C2972300A87037 /* MKSettingsController.m in Sources */,
 				003F6D6020C161F50002C833 /* HCKBaseTableView.m in Sources */,
 				003F6D6220C161F50002C833 /* HCKHaveRefreshTableView.m in Sources */,
 				003F6D9520C16A7D0002C833 /* MKConfigServerController.m in Sources */,

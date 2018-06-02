@@ -88,10 +88,7 @@ static NSString *const MKConfigServerConnectModeCellIdenty = @"MKConfigServerCon
  }
  */
 - (NSDictionary *)configServerCellValue{
-    return @{
-             @"row":@(self.indexPath.row),
-             @"connectMode":@(self.modeNumber),
-             };
+    return @{@"connectMode":@(self.modeNumber)};
 }
 
 /**

@@ -11,8 +11,6 @@
 
 @interface MKConfigServerNormalCell : UITableViewCell<MKConfigServerCellProtocol>
 
-@property (nonatomic, strong)NSIndexPath *indexPath;
-
 @property (nonatomic, copy)NSString *msg;
 
 + (MKConfigServerNormalCell *)initCellWithTableView:(UITableView *)tableView;

@@ -77,10 +77,7 @@ static NSString *const MKConfigServerNormalCellIdenty = @"MKConfigServerNormalCe
  */
 - (NSDictionary *)configServerCellValue{
     NSString *paramValue = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    return @{
-             @"row":@(self.indexPath.row),
-             @"paramValue":paramValue
-             };
+    return @{@"paramValue":paramValue};
 }
 
 /**

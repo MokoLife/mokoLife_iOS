@@ -7,7 +7,7 @@
 //
 
 #import "MKAddDeviceController.h"
-#import "MKConfigServerController.h"
+#import "MKSettingsController.h"
 
 static CGFloat const offset_X = 15.f;
 static CGFloat const centerIconWidth = 268.f;
@@ -42,7 +42,7 @@ static CGFloat const centerIconHeight = 268.f;
 }
 
 - (void)leftButtonMethod{
-    MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKSettingsController *vc = [[MKSettingsController alloc] initWithNavigationType:GYNaviTypeShow];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

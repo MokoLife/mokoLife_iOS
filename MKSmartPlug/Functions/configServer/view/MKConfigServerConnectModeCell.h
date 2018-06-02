@@ -11,8 +11,6 @@
 
 @interface MKConfigServerConnectModeCell : UITableViewCell<MKConfigServerCellProtocol>
 
-@property (nonatomic, strong)NSIndexPath *indexPath;
-
 + (MKConfigServerConnectModeCell *)initCellWithTableView:(UITableView *)tableView;
 
 @end

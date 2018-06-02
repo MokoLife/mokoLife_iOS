@@ -100,7 +100,6 @@
 
 #pragma mark - loadSubViews
 - (void)loadSubViews{
-    [self.view setBackgroundColor:UIColorFromRGB(0xf2f2f2)];
     [self.rightButton setTitle:@"Clear" forState:UIControlStateNormal];
     [self.rightButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
     [self.view addSubview:self.tableView];
