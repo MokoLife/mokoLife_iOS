@@ -39,6 +39,21 @@
  */
 - (BOOL)isLetterOrRealNumbers;
 
+- (BOOL)isValidatIP;
+
+- (BOOL)checkClientId;
+
+- (BOOL)checkUserName;
+
+- (BOOL)checkPassword;
+
+/**
+ 判断当前字符串是否是url
+ 
+ @return result
+ */
+- (BOOL)checkIsUrl;
+
 #pragma mark - 类方法
 + (CGSize)sizeWithLabel:(UILabel *)label;
 

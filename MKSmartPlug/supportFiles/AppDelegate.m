@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MKAddDeviceController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _window.backgroundColor = COLOR_WHITE_MACROS;
+    [self enterAddDevicePage];
     return YES;
 }
 
@@ -45,6 +49,14 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark -
+- (void)enterAddDevicePage{
+    MKAddDeviceController *vc = [[MKAddDeviceController alloc] initWithNavigationType:GYNaviTypeShow];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    _window.rootViewController = nav;
+    [_window makeKeyAndVisible];
 }
 
 

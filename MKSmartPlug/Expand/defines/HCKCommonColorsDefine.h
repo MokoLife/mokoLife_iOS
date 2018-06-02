@@ -75,7 +75,7 @@
  *  导航栏颜色
  *
  */
-#define NAVIGATION_BAR_COLOR             UIColorFromRGB(0xf8f8f8)
+#define NAVIGATION_BAR_COLOR             UIColorFromRGB(0x0188cc)
 
 #define DEFAULT_TEXT_COLOR               UIColorFromRGB(0x353535)
 

@@ -57,6 +57,58 @@
     return [pred evaluateWithObject:self];
 }
 
+- (BOOL)isValidatIP{
+    if (!ValidStr(self)) return NO;
+    NSString  *urlRegEx =@"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
+    return [pred evaluateWithObject:self];
+}
+
+- (BOOL)checkClientId{
+    if (!ValidStr(self)) {
+        return NO;
+    }
+    NSString *regex = @"^[a-zA-Z_][a-zA-Z0-9_]{5,19}$";
+    NSPredicate *clientIdPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [clientIdPre evaluateWithObject:self];
+}
+
+- (BOOL)checkUserName{
+    if (!ValidStr(self)) {
+        return NO;
+    }
+    NSString *regex = @"^[a-zA-Z_][a-zA-Z0-9_]{5,19}$";
+    NSPredicate *userNamePre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [userNamePre evaluateWithObject:self];
+}
+
+- (BOOL)checkPassword{
+    if (!ValidStr(self)) {
+        return NO;
+    }
+    NSString *regex = @"^[a-zA-Z0-9_]{5,19}$$";
+    NSPredicate *passwordPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [passwordPre evaluateWithObject:self];
+}
+
+/**
+ 判断当前字符串是否是url
+ 
+ @return result
+ */
+- (BOOL)checkIsUrl{
+    if (!ValidStr(self)) {
+        return NO;
+    }
+    NSString *regex =@"[a-zA-z]+://[^\\s]*";
+    NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [urlTest evaluateWithObject:self];
+}
+
 #pragma mark - ===============类方法====================
 
 + (CGSize)sizeWithLabel:(UILabel *)label
