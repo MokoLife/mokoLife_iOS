@@ -12,5 +12,6 @@ pod 'HJTabViewController',     :git => 'https://github.com/panghaijiao/HJTabView
 pod ‘YYKit’
 pod ‘MLInputDodger’
 pod 'MQTTClient'
+pod 'FLAnimatedImage'
 
 end

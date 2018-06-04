@@ -6,9 +6,9 @@
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "HCKBaseCell.h"
+#import "MKBaseCell.h"
 
-@interface MKSettingsCell : HCKBaseCell
+@interface MKSettingsCell : MKBaseCell
 
 @property (nonatomic, copy)NSString *msg;
 

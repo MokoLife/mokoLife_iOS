@@ -146,7 +146,7 @@ static CGFloat const pickViewRowHeight = 30;
         [cancelButton setBackgroundColor:COLOR_CLEAR_MACROS];
         [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
         [cancelButton setTitleColor:DEFAULT_TEXT_COLOR forState:UIControlStateNormal];
-        [cancelButton.titleLabel setFont:HCKFont(16)];
+        [cancelButton.titleLabel setFont:MKFont(16)];
         [cancelButton addTarget:self action:@selector(cancelButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:cancelButton];
         
@@ -155,7 +155,7 @@ static CGFloat const pickViewRowHeight = 30;
         [confirmBtn setBackgroundColor:COLOR_CLEAR_MACROS];
         [confirmBtn setTitle:@"Confirm" forState:UIControlStateNormal];
         [confirmBtn setTitleColor:DEFAULT_TEXT_COLOR forState:UIControlStateNormal];
-        [confirmBtn.titleLabel setFont:HCKFont(16)];
+        [confirmBtn.titleLabel setFont:MKFont(16)];
         [confirmBtn addTarget:self action:@selector(confirmButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:confirmBtn];
     }

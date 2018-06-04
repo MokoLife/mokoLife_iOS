@@ -22,12 +22,12 @@
     UILabel *msgLabel = [[UILabel alloc] init];
     msgLabel.textAlignment = NSTextAlignmentLeft;
     msgLabel.textColor = DEFAULT_TEXT_COLOR;
-    msgLabel.font = HCKFont(15.f);
+    msgLabel.font = MKFont(15.f);
     return msgLabel;
 }
 
 + (CGFloat)defaultMsgLabelHeight{
-    return HCKFont(15.f).lineHeight;
+    return MKFont(15.f).lineHeight;
 }
 
 + (UITextField *)configServerTextField{
@@ -36,7 +36,7 @@
     textField.borderStyle = UITextBorderStyleNone;
     textField.textColor = DEFAULT_TEXT_COLOR;
     textField.textAlignment = NSTextAlignmentLeft;
-    textField.font = HCKFont(15.f);
+    textField.font = MKFont(15.f);
     textField.keyboardType = UIKeyboardTypeASCIICapable;
     
     textField.layer.masksToBounds = YES;
@@ -228,17 +228,17 @@
         [target.view showCentralToast:@"Port effective range : 0~65535"];
         return NO;
     }
-    if (![serverModel.clientId checkClientId]) {
+    if (ValidStr(serverModel.clientId) && ![serverModel.clientId checkClientId]) {
         //client id错误
         [target.view showCentralToast:@"Client id error"];
         return NO;
     }
-    if (![serverModel.userName checkUserName]) {
+    if (ValidStr(serverModel.userName) && ![serverModel.userName checkUserName]) {
         //user name错误
         [target.view showCentralToast:@"User name error"];
         return NO;
     }
-    if (![serverModel.password checkPassword]) {
+    if (ValidStr(serverModel.password) && ![serverModel.password checkPassword]) {
         //passwrod错误
         [target.view showCentralToast:@"Password error"];
         return NO;

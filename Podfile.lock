@@ -1,4 +1,5 @@
 PODS:
+  - FLAnimatedImage (1.0.12)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -21,6 +22,7 @@ PODS:
   - YYKit/no-arc (1.0.9)
 
 DEPENDENCIES:
+  - FLAnimatedImage
   - FMDB
   - HJTabViewController (from `https://github.com/panghaijiao/HJTabViewController.git`)
   - Masonry
@@ -41,6 +43,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/panghaijiao/HJTabViewController.git
 
 SPEC CHECKSUMS:
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HJTabViewController: 578a5bbab471587e7cc49a2f0f49fc8601c833bf
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
@@ -51,6 +54,6 @@ SPEC CHECKSUMS:
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: f138ad29403ac38e47c0b581625d4c53d60120f6
+PODFILE CHECKSUM: d4f68b1cac40aafcca47270a5034f9c35bc585cc
 
 COCOAPODS: 1.2.1

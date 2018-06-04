@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "MKAddDeviceController.h"
+#import "MKMokoLifeController.h"
 
 @interface AppDelegate ()
 
@@ -53,7 +53,7 @@
 
 #pragma mark -
 - (void)enterAddDevicePage{
-    MKAddDeviceController *vc = [[MKAddDeviceController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKMokoLifeController *vc = [[MKMokoLifeController alloc] initWithNavigationType:GYNaviTypeShow];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     _window.rootViewController = nav;
     [_window makeKeyAndVisible];

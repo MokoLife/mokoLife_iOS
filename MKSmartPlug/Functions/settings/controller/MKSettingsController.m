@@ -7,13 +7,13 @@
 //
 
 #import "MKSettingsController.h"
-#import "HCKBaseTableView.h"
+#import "MKBaseTableView.h"
 #import "MKSettingsCell.h"
 #import "MKConfigServerController.h"
 
 @interface MKSettingsController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong)HCKBaseTableView *tableView;
+@property (nonatomic, strong)MKBaseTableView *tableView;
 
 @property (nonatomic, strong)NSMutableArray *dataList;
 
@@ -70,9 +70,9 @@
 }
 
 #pragma mark - setter & getter
-- (HCKBaseTableView *)tableView{
+- (MKBaseTableView *)tableView{
     if (!_tableView) {
-        _tableView = [[HCKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

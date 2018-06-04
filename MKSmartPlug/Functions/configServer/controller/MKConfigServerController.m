@@ -7,14 +7,14 @@
 //
 
 #import "MKConfigServerController.h"
-#import "HCKBaseTableView.h"
+#import "MKBaseTableView.h"
 #import "MKConfigServerAdopter.h"
 #import "MKConfigServerCellProtocol.h"
 #import "MKConfigServerModel.h"
 
 @interface MKConfigServerController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong)HCKBaseTableView *tableView;
+@property (nonatomic, strong)MKBaseTableView *tableView;
 
 @end
 
@@ -109,9 +109,9 @@
 }
 
 #pragma mark - setter & getter
-- (HCKBaseTableView *)tableView{
+- (MKBaseTableView *)tableView{
     if (!_tableView) {
-        _tableView = [[HCKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         
@@ -131,14 +131,9 @@
     UIView *tableFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 200.f)];
     tableFooter.backgroundColor = UIColorFromRGB(0xf2f2f2);
     
-    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [saveButton setBackgroundColor:NAVIGATION_BAR_COLOR];
-    [saveButton.titleLabel setFont:HCKFont(18.f)];
-    [saveButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
-    [saveButton setTitle:@"Save" forState:UIControlStateNormal];
-    [saveButton.layer setMasksToBounds:YES];
-    [saveButton.layer setCornerRadius:5.f];
-    [saveButton addTapAction:self selector:@selector(saveButtonPressed)];
+    UIButton *saveButton = [MKCommonlyUIHelper commonBottomButtonWithTitle:@"Save"
+                                                                    target:self
+                                                                    action:@selector(saveButtonPressed)];
     [tableFooter addSubview:saveButton];
     [saveButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(58.f);

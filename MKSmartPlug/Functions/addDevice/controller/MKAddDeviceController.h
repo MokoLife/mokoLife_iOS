@@ -2,12 +2,12 @@
 //  MKAddDeviceController.h
 //  MKSmartPlug
 //
-//  Created by aa on 2018/6/1.
+//  Created by aa on 2018/6/4.
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "HCKBaseViewController.h"
+#import "MKBaseViewController.h"
 
-@interface MKAddDeviceController : HCKBaseViewController
+@interface MKAddDeviceController : MKBaseViewController
 
 @end

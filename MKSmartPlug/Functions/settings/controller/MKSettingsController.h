@@ -6,8 +6,8 @@
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "HCKBaseViewController.h"
+#import "MKBaseViewController.h"
 
-@interface MKSettingsController : HCKBaseViewController
+@interface MKSettingsController : MKBaseViewController
 
 @end

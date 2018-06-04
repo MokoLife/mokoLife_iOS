@@ -46,7 +46,7 @@ static NSString *const MKSettingsCellIdenty = @"MKSettingsCellIdenty";
         make.left.mas_equalTo(15.f);
         make.right.mas_equalTo(self.rightIcon.mas_left).mas_offset(-10.f);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
-        make.height.mas_equalTo(HCKFont(15.f).lineHeight);
+        make.height.mas_equalTo(MKFont(15.f).lineHeight);
     }];
     [self.rightIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15.f);
@@ -72,7 +72,7 @@ static NSString *const MKSettingsCellIdenty = @"MKSettingsCellIdenty";
         _msgLabel = [[UILabel alloc] init];
         _msgLabel.textAlignment = NSTextAlignmentLeft;
         _msgLabel.textColor = DEFAULT_TEXT_COLOR;
-        _msgLabel.font = HCKFont(15.f);
+        _msgLabel.font = MKFont(15.f);
     }
     return _msgLabel;
 }

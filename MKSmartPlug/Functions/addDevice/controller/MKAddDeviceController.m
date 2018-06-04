@@ -2,24 +2,29 @@
 //  MKAddDeviceController.m
 //  MKSmartPlug
 //
-//  Created by aa on 2018/6/1.
+//  Created by aa on 2018/6/4.
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
 #import "MKAddDeviceController.h"
-#import "MKSettingsController.h"
+#import "FLAnimatedImage.h"
+#import "FLAnimatedImageView.h"
 
-static CGFloat const offset_X = 15.f;
-static CGFloat const centerIconWidth = 268.f;
-static CGFloat const centerIconHeight = 268.f;
+static CGFloat const offset_X = 20.f;
+static CGFloat const centerGifWidth = 144.f;
+static CGFloat const centerGifHeight = 253.f;
 
 @interface MKAddDeviceController ()
 
 @property (nonatomic, strong)UILabel *msgLabel;
 
-@property (nonatomic, strong)UIImageView *centerIcon;
+@property (nonatomic, strong)FLAnimatedImageView *gifIcon;
 
-@property (nonatomic, strong)UIButton *addButton;
+@property (nonatomic, strong)UILabel *linkLabel;
+
+@property (nonatomic, strong)UIButton *blinkButton;
+
+@property (nonatomic, strong)UILabel *instructionsLabel;
 
 @end
 
@@ -38,47 +43,62 @@ static CGFloat const centerIconHeight = 268.f;
 
 #pragma mark - 父类方法
 - (NSString *)defaultTitle{
-    return @"Moko Life";
-}
-
-- (void)leftButtonMethod{
-    MKSettingsController *vc = [[MKSettingsController alloc] initWithNavigationType:GYNaviTypeShow];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)rightButtonMethod{
-    
+    return @"Add Device";
 }
 
 #pragma mark - event method
-- (void)addButtonPressed{
+- (void)linkLabelPressed{
+    
+}
+
+- (void)blinkButtonPressed{
     
 }
 
 #pragma mark - loadSubViews
 - (void)loadSubViews{
-    [self.leftButton setImage:LOADIMAGE(@"addDevice_menuIcon", @"png") forState:UIControlStateNormal];
-    [self.rightButton setImage:LOADIMAGE(@"addDevice_addIcon", @"png") forState:UIControlStateNormal];
     [self.view addSubview:self.msgLabel];
-    [self.view addSubview:self.centerIcon];
-    [self.view addSubview:self.addButton];
+    [self.view addSubview:self.gifIcon];
+    [self.view addSubview:self.linkLabel];
+    [self.view addSubview:self.blinkButton];
+    [self.view addSubview:self.instructionsLabel];
+    
+    CGSize msgSize = [NSString sizeWithText:self.msgLabel.text
+                                    andFont:self.msgLabel.font
+                                 andMaxSize:CGSizeMake(kScreenWidth - 2 * offset_X, MAXFLOAT)];
     [self.msgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(offset_X);
         make.right.mas_equalTo(-offset_X);
-        make.top.mas_equalTo(52.f);
-        make.height.mas_equalTo(HCKFont(18.f).lineHeight);
+        make.top.mas_equalTo(24.f);
+        make.height.mas_equalTo(msgSize.height);
     }];
-    [self.centerIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.gifIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(centerIconWidth);
-        make.centerY.mas_equalTo(self.view.mas_centerY);
-        make.height.mas_equalTo(centerIconHeight);
+        make.width.mas_equalTo(centerGifWidth);
+        make.top.mas_equalTo(self.msgLabel.mas_bottom).mas_offset(64.f);
+        make.height.mas_equalTo(centerGifHeight);
     }];
-    [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(58.f);
-        make.right.mas_equalTo(-58.f);
-        make.bottom.mas_equalTo(-70.f);
-        make.height.mas_equalTo(50.f);
+    CGSize linkSize = [NSString sizeWithText:self.linkLabel.text
+                                     andFont:self.linkLabel.font
+                                  andMaxSize:CGSizeMake(MAXFLOAT,
+                                                        (iPhone6Plus ? MKFont(17).lineHeight : MKFont(16).lineHeight))];
+    [self.linkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.width.mas_equalTo(linkSize.width);
+        make.top.mas_equalTo(self.gifIcon.mas_bottom).mas_offset(64.f);
+        make.height.mas_equalTo((iPhone6Plus ? MKFont(17).lineHeight : MKFont(16).lineHeight));
+    }];
+    [self.blinkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(offset_X);
+        make.right.mas_equalTo(-offset_X);
+        make.top.mas_equalTo(self.linkLabel.mas_bottom).mas_offset(25.f);
+        make.height.mas_equalTo(45.f);
+    }];
+    [self.instructionsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(offset_X);
+        make.right.mas_equalTo(-offset_X);
+        make.top.mas_equalTo(self.blinkButton.mas_bottom).mas_offset(15.f);
+        make.height.mas_equalTo(MKFont(10.f).lineHeight);
     }];
 }
 
@@ -87,33 +107,54 @@ static CGFloat const centerIconHeight = 268.f;
     if (!_msgLabel) {
         _msgLabel = [[UILabel alloc] init];
         _msgLabel.textAlignment = NSTextAlignmentCenter;
-        _msgLabel.textColor = UIColorFromRGB(0x0188cc);
-        _msgLabel.font = HCKFont(18.f);
-        _msgLabel.text = @"Start your moko life";
+        _msgLabel.textColor = UIColorFromRGB(0x808080);
+        _msgLabel.font = MKFont(15.f);
+        _msgLabel.text = @"Plug in the device and confirm that indicator is blinking amber";
+        _msgLabel.numberOfLines = 0;
     }
     return _msgLabel;
 }
 
-- (UIImageView *)centerIcon{
-    if (!_centerIcon) {
-        _centerIcon = [[UIImageView alloc] init];
-        _centerIcon.image = LOADIMAGE(@"addDevice_centerIcon", @"png");
+- (FLAnimatedImageView *)gifIcon{
+    if (!_gifIcon) {
+        _gifIcon = [[FLAnimatedImageView alloc] init];
+        NSString *imageName = [@"addDevice_centerGif" stringByAppendingString:(iPhone6Plus ? @"@3x" : @"@2x")];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"gif"];
+        NSData* imageData = [NSData dataWithContentsOfFile:filePath];
+        _gifIcon.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
     }
-    return _centerIcon;
+    return _gifIcon;
 }
 
-- (UIButton *)addButton{
-    if (!_addButton) {
-        _addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_addButton setBackgroundColor:NAVIGATION_BAR_COLOR];
-        [_addButton.titleLabel setFont:HCKFont(18.f)];
-        [_addButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
-        [_addButton setTitle:@"Add Devices" forState:UIControlStateNormal];
-        [_addButton.layer setMasksToBounds:YES];
-        [_addButton.layer setCornerRadius:5.f];
-        [_addButton addTapAction:self selector:@selector(addButtonPressed)];
+- (UILabel *)linkLabel{
+    if (!_linkLabel) {
+        _linkLabel = [MKCommonlyUIHelper clickEnableLabelWithText:@"My light is not blinking amber"
+                                                        textColor:NAVIGATION_BAR_COLOR
+                                                           target:self
+                                                           action:@selector(linkLabelPressed)];
     }
-    return _addButton;
+    return _linkLabel;
+}
+
+- (UIButton *)blinkButton{
+    if (!_blinkButton) {
+        _blinkButton = [MKCommonlyUIHelper commonBottomButtonWithTitle:@"Indicator blink amber light"
+                                                                target:self
+                                                                action:@selector(blinkButtonPressed)];
+    }
+    return _blinkButton;
+}
+
+- (UILabel *)instructionsLabel{
+    if (!_instructionsLabel) {
+        _instructionsLabel = [[UILabel alloc] init];
+        _instructionsLabel.textAlignment = NSTextAlignmentCenter;
+        _instructionsLabel.textColor = UIColorFromRGB(0x808080);
+        _instructionsLabel.font = MKFont(10.f);
+        _instructionsLabel.numberOfLines = 0;
+        _instructionsLabel.text = @"This app supports only 2.4GHz Wi-Fi network";
+    }
+    return _instructionsLabel;
 }
 
 @end

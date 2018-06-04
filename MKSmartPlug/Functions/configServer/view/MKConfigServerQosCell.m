@@ -220,7 +220,7 @@ static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIden
         _aliveTextField.borderStyle = UITextBorderStyleNone;
         _aliveTextField.textColor = DEFAULT_TEXT_COLOR;
         _aliveTextField.textAlignment = NSTextAlignmentLeft;
-        _aliveTextField.font = HCKFont(15.f);
+        _aliveTextField.font = MKFont(15.f);
         _aliveTextField.keyboardType = UIKeyboardTypePhonePad;
         _aliveTextField.delegate = self;
         _aliveTextField.text = @"60";
@@ -251,7 +251,7 @@ static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIden
 - (UILabel *)valueLabel{
     UILabel *valueLabel = [[UILabel alloc] init];
     valueLabel.textAlignment = NSTextAlignmentLeft;
-    valueLabel.font = HCKFont(15.f);
+    valueLabel.font = MKFont(15.f);
     valueLabel.textColor = DEFAULT_TEXT_COLOR;
     return valueLabel;
 }

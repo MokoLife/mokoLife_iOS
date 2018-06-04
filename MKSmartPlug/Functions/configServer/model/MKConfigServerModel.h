@@ -6,9 +6,9 @@
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "HCKBaseDataModel.h"
+#import "MKBaseDataModel.h"
 
-@interface MKConfigServerModel : HCKBaseDataModel
+@interface MKConfigServerModel : MKBaseDataModel
 
 /**
  主机
