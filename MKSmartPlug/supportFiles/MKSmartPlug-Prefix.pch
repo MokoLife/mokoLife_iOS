@@ -7,6 +7,7 @@
 #import "MKHudManager.h"
 #import "MJRefresh.h"
 #import "MLInputDodger.h"
+#import "AFNetworking.h"
 
 /***************/
 #import "MKDefines.h"
@@ -14,6 +15,7 @@
 #import "MKCategories.h"
 
 /******自定义工具类********/
+#import "MKNetworkManager.h"
 #import "MKAttributedStringManager.h"
 #import "MKSystemResource.h"
 #import "MKDateFormatter.h"

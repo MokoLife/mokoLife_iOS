@@ -9,6 +9,9 @@
 #import "MKAddDeviceController.h"
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
+#import "MKNotBlinkAmberController.h"
+#import "MKAddDeviceAdopter.h"
+#import "MKConnectDeviceView.h"
 
 static CGFloat const offset_X = 20.f;
 static CGFloat const centerGifWidth = 144.f;
@@ -48,11 +51,26 @@ static CGFloat const centerGifHeight = 253.f;
 
 #pragma mark - event method
 - (void)linkLabelPressed{
-    
+    MKNotBlinkAmberController *vc = [[MKNotBlinkAmberController alloc] initWithNavigationType:GYNaviTypeShow];
+    WS(weakSelf);
+    vc.blinkButtonPressedBlock = ^{
+        //点击了按钮之后需要等vc退出栈之后退出新的页面
+        [weakSelf performSelector:@selector(blinkButtonPressed) withObject:nil afterDelay:0.3f];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)blinkButtonPressed{
-    
+    BOOL canNext = [MKAddDeviceAdopter canConnectWithCurrentTarget:self];
+    if (!canNext) {
+        return;
+    }
+    MKConnectDeviceView *deviceView = [[MKConnectDeviceView alloc] init];
+    [deviceView showAlertViewWithCancelAction:^{
+        
+    } confirmAction:^{
+        [MKAddDeviceAdopter gotoSystemWifiPage];
+    }];
 }
 
 #pragma mark - loadSubViews

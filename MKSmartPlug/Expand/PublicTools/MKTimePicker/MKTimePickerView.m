@@ -12,8 +12,6 @@ static float const animationDuration = .3f;
 static CGFloat const kDatePickerH = 270;
 
 @implementation MKTimerPickerModel
-
-
 @end
 
 @interface MKTimePickerView ()

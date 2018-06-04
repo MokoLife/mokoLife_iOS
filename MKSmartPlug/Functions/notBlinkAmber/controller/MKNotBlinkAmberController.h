@@ -10,4 +10,6 @@
 
 @interface MKNotBlinkAmberController : MKBaseViewController
 
+@property (nonatomic, copy)void (^blinkButtonPressedBlock)(void);
+
 @end

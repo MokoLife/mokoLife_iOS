@@ -6,8 +6,13 @@
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "MKBaseCell.h"
+#import <UIKit/UIKit.h>
 
-@interface MKNotBlinkAmberCell : MKBaseCell
+@class MKNotBlinkAmberModel;
+@interface MKNotBlinkAmberCell : UITableViewCell
+
+@property (nonatomic, strong)MKNotBlinkAmberModel *dataModel;
+
++ (MKNotBlinkAmberCell *)initCellWithTableView:(UITableView *)tableView;
 
 @end

@@ -13,5 +13,6 @@ pod ‘YYKit’
 pod ‘MLInputDodger’
 pod 'MQTTClient'
 pod 'FLAnimatedImage'
+pod 'AFNetworking'
 
 end
