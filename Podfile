@@ -15,5 +15,6 @@ pod 'MQTTClient'
 pod 'FLAnimatedImage'
 pod 'AFNetworking'
 pod 'CircleProgressBar'
+pod 'CocoaAsyncSocket'
 
 end

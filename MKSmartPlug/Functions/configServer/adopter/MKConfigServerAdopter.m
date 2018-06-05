@@ -30,22 +30,6 @@
     return MKFont(15.f).lineHeight;
 }
 
-+ (UITextField *)configServerTextField{
-    UITextField *textField = [[UITextField alloc] init];
-    textField.backgroundColor = COLOR_WHITE_MACROS;
-    textField.borderStyle = UITextBorderStyleNone;
-    textField.textColor = DEFAULT_TEXT_COLOR;
-    textField.textAlignment = NSTextAlignmentLeft;
-    textField.font = MKFont(15.f);
-    textField.keyboardType = UIKeyboardTypeASCIICapable;
-    
-    textField.layer.masksToBounds = YES;
-    textField.layer.borderColor = CUTTING_LINE_COLOR.CGColor;
-    textField.layer.borderWidth = CUTTING_LINE_HEIGHT;
-    textField.layer.cornerRadius = 5.f;
-    return textField;
-}
-
 + (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath table:(UITableView *)tableView{
     if (indexPath.row == 0) {
         //host

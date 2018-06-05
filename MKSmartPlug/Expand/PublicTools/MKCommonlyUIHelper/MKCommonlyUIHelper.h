@@ -30,4 +30,11 @@
  */
 + (UILabel *)clickEnableLabelWithText:(NSString *)text textColor:(UIColor *)textColor target:(id)target action:(SEL)action;
 
+/**
+ 带圆角边框的输入框
+ 
+ @return UITextField
+ */
++ (UITextField *)configServerTextField;
+
 @end

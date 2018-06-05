@@ -151,7 +151,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
 
 - (UITextField *)textField{
     if (!_textField) {
-        _textField = [MKConfigServerAdopter configServerTextField];
+        _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.keyboardType = UIKeyboardTypePhonePad;
         _textField.delegate = self;
     }

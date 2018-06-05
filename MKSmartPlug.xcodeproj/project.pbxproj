@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B278420C61D3200D305EA /* MKAnimationAdopter.m */; };
+		000B279120C636E800D305EA /* MKConnectDeviceWifiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B279020C636E800D305EA /* MKConnectDeviceWifiView.m */; };
 		001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D520C22BC700A87037 /* MKConfigServerHostCell.m */; };
 		001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D820C22BED00A87037 /* MKConfigServerPortCell.m */; };
 		001447DC20C22C0500A87037 /* MKConfigServerConnectModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447DB20C22C0500A87037 /* MKConfigServerConnectModeCell.m */; };
@@ -105,6 +106,8 @@
 /* Begin PBXFileReference section */
 		000B278320C61D3200D305EA /* MKAnimationAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAnimationAdopter.h; sourceTree = "<group>"; };
 		000B278420C61D3200D305EA /* MKAnimationAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAnimationAdopter.m; sourceTree = "<group>"; };
+		000B278F20C636E800D305EA /* MKConnectDeviceWifiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectDeviceWifiView.h; sourceTree = "<group>"; };
+		000B279020C636E800D305EA /* MKConnectDeviceWifiView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConnectDeviceWifiView.m; sourceTree = "<group>"; };
 		001447D420C22BC700A87037 /* MKConfigServerHostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerHostCell.h; sourceTree = "<group>"; };
 		001447D520C22BC700A87037 /* MKConfigServerHostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerHostCell.m; sourceTree = "<group>"; };
 		001447D720C22BED00A87037 /* MKConfigServerPortCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerPortCell.h; sourceTree = "<group>"; };
@@ -813,6 +816,8 @@
 				00C6802D20C5423C00EEFFF3 /* MKConnectAlertView.m */,
 				00C6803320C56FAE00EEFFF3 /* MKConnectDeviceProgressView.h */,
 				00C6803420C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m */,
+				000B278F20C636E800D305EA /* MKConnectDeviceWifiView.h */,
+				000B279020C636E800D305EA /* MKConnectDeviceWifiView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1072,6 +1077,7 @@
 			files = (
 				003F6D7D20C161F50002C833 /* MKTimePickerView.m in Sources */,
 				001447DF20C22C1A00A87037 /* MKConfigServerQosCell.m in Sources */,
+				000B279120C636E800D305EA /* MKConnectDeviceWifiView.m in Sources */,
 				00C6803520C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m in Sources */,
 				003F6DAF20C17A250002C833 /* MKConfigServerAdopter.m in Sources */,
 				00C6802820C53D9D00EEFFF3 /* MKConnectDeviceView.m in Sources */,

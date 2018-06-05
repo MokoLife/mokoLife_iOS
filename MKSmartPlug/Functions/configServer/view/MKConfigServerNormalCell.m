@@ -111,7 +111,7 @@ static NSString *const MKConfigServerNormalCellIdenty = @"MKConfigServerNormalCe
 
 - (UITextField *)textField{
     if (!_textField) {
-        _textField = [MKConfigServerAdopter configServerTextField];
+        _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.delegate = self;
     }
     return _textField;

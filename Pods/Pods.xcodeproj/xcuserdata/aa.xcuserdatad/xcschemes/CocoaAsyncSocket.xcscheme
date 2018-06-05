@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7C6F67FF1FAA5B477434C8D9D1029BB8"
-               BuildableName = "libYYKit.a"
-               BlueprintName = "YYKit"
+               BlueprintIdentifier = "23D7DA26C40DEA0CBB49A7825C7CD4F1"
+               BuildableName = "libCocoaAsyncSocket.a"
+               BlueprintName = "CocoaAsyncSocket"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7C6F67FF1FAA5B477434C8D9D1029BB8"
-            BuildableName = "libYYKit.a"
-            BlueprintName = "YYKit"
+            BlueprintIdentifier = "23D7DA26C40DEA0CBB49A7825C7CD4F1"
+            BuildableName = "libCocoaAsyncSocket.a"
+            BlueprintName = "CocoaAsyncSocket"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

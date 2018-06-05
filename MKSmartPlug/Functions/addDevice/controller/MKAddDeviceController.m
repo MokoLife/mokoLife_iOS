@@ -13,6 +13,7 @@
 #import "MKAddDeviceAdopter.h"
 #import "MKConnectDeviceView.h"
 #import "MKConnectDeviceProgressView.h"
+#import "MKConnectDeviceWifiView.h"
 
 static CGFloat const offset_X = 20.f;
 static CGFloat const centerGifWidth = 144.f;
@@ -69,12 +70,15 @@ static CGFloat const centerGifHeight = 253.f;
         return;
     }
     WS(weakSelf);
-    MKConnectDeviceView *deviceView = [[MKConnectDeviceView alloc] init];
-    [deviceView showAlertViewWithCancelAction:^{
-        
-    } confirmAction:^{
-        [weakSelf.connectProgressView showConnectAlertView];
-//        [MKAddDeviceAdopter gotoSystemWifiPage];
+    MKConnectDeviceWifiView *wifiConfirmView = [[MKConnectDeviceWifiView alloc] init];
+    [wifiConfirmView showAlertViewWithCancelAction:nil confirmAction:^(NSString *wifiSSID, NSString *password) {
+        MKConnectDeviceView *deviceView = [[MKConnectDeviceView alloc] init];
+        [deviceView showAlertViewWithCancelAction:^{
+            
+        } confirmAction:^{
+            [weakSelf.connectProgressView showConnectAlertView];
+            //        [MKAddDeviceAdopter gotoSystemWifiPage];
+        }];
     }];
 }
 

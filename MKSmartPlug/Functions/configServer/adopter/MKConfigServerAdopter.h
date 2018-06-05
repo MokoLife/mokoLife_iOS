@@ -18,8 +18,6 @@ static NSString *const configCellNeedHiddenKeyboardNotification = @"configCellNe
 
 + (CGFloat)defaultMsgLabelHeight;
 
-+ (UITextField *)configServerTextField;
-
 + (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath table:(UITableView *)tableView;
 
 /**
