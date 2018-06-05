@@ -12,6 +12,7 @@
 #import "MKNotBlinkAmberController.h"
 #import "MKAddDeviceAdopter.h"
 #import "MKConnectDeviceView.h"
+#import "MKConnectDeviceProgressView.h"
 
 static CGFloat const offset_X = 20.f;
 static CGFloat const centerGifWidth = 144.f;
@@ -28,6 +29,8 @@ static CGFloat const centerGifHeight = 253.f;
 @property (nonatomic, strong)UIButton *blinkButton;
 
 @property (nonatomic, strong)UILabel *instructionsLabel;
+
+@property (nonatomic, strong)MKConnectDeviceProgressView *connectProgressView;
 
 @end
 
@@ -65,11 +68,13 @@ static CGFloat const centerGifHeight = 253.f;
     if (!canNext) {
         return;
     }
+    WS(weakSelf);
     MKConnectDeviceView *deviceView = [[MKConnectDeviceView alloc] init];
     [deviceView showAlertViewWithCancelAction:^{
         
     } confirmAction:^{
-        [MKAddDeviceAdopter gotoSystemWifiPage];
+        [weakSelf.connectProgressView showConnectAlertView];
+//        [MKAddDeviceAdopter gotoSystemWifiPage];
     }];
 }
 
@@ -173,6 +178,13 @@ static CGFloat const centerGifHeight = 253.f;
         _instructionsLabel.text = @"This app supports only 2.4GHz Wi-Fi network";
     }
     return _instructionsLabel;
+}
+
+- (MKConnectDeviceProgressView *)connectProgressView{
+    if (!_connectProgressView) {
+        _connectProgressView = [[MKConnectDeviceProgressView alloc] init];
+    }
+    return _connectProgressView;
 }
 
 @end

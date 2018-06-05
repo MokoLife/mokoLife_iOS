@@ -21,3 +21,4 @@
 #import "MKDateFormatter.h"
 #import "MKPhotoPicker.h"
 #import "MKCommonlyUIHelper.h"
+#import "MKAnimationAdopter.h"

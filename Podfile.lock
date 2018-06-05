@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - CircleProgressBar (0.32)
   - FLAnimatedImage (1.0.12)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
@@ -38,6 +39,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - CircleProgressBar
   - FLAnimatedImage
   - FMDB
   - HJTabViewController (from `https://github.com/panghaijiao/HJTabViewController.git`)
@@ -60,6 +62,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HJTabViewController: 578a5bbab471587e7cc49a2f0f49fc8601c833bf
@@ -71,6 +74,6 @@ SPEC CHECKSUMS:
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: a6ffc9c6377c249418042cb4257410337e3e0cc9
+PODFILE CHECKSUM: 69c82daca23bb636b73cc0f257fe2c64181832e4
 
 COCOAPODS: 1.2.1

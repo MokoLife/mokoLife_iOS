@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B278420C61D3200D305EA /* MKAnimationAdopter.m */; };
 		001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D520C22BC700A87037 /* MKConfigServerHostCell.m */; };
 		001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D820C22BED00A87037 /* MKConfigServerPortCell.m */; };
 		001447DC20C22C0500A87037 /* MKConfigServerConnectModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447DB20C22C0500A87037 /* MKConfigServerConnectModeCell.m */; };
@@ -97,10 +98,13 @@
 		00C6802E20C5423C00EEFFF3 /* MKConnectAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6802D20C5423C00EEFFF3 /* MKConnectAlertView.m */; };
 		00C6803120C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6802F20C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png */; };
 		00C6803220C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6803020C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png */; };
+		00C6803520C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6803420C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m */; };
 		CF1A8D503A9A0F50468A9B31 /* libPods-MKSmartPlug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C70A99AF7622EA9C6E25B107 /* libPods-MKSmartPlug.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		000B278320C61D3200D305EA /* MKAnimationAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAnimationAdopter.h; sourceTree = "<group>"; };
+		000B278420C61D3200D305EA /* MKAnimationAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAnimationAdopter.m; sourceTree = "<group>"; };
 		001447D420C22BC700A87037 /* MKConfigServerHostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerHostCell.h; sourceTree = "<group>"; };
 		001447D520C22BC700A87037 /* MKConfigServerHostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerHostCell.m; sourceTree = "<group>"; };
 		001447D720C22BED00A87037 /* MKConfigServerPortCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerPortCell.h; sourceTree = "<group>"; };
@@ -252,6 +256,8 @@
 		00C6802D20C5423C00EEFFF3 /* MKConnectAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConnectAlertView.m; sourceTree = "<group>"; };
 		00C6802F20C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon@2x.png"; sourceTree = "<group>"; };
 		00C6803020C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon@3x.png"; sourceTree = "<group>"; };
+		00C6803320C56FAE00EEFFF3 /* MKConnectDeviceProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectDeviceProgressView.h; sourceTree = "<group>"; };
+		00C6803420C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConnectDeviceProgressView.m; sourceTree = "<group>"; };
 		2BB0763E1F3538FB90377D4C /* Pods-MKSmartPlug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKSmartPlug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MKSmartPlug/Pods-MKSmartPlug.debug.xcconfig"; sourceTree = "<group>"; };
 		7A02BB2BC96529139122611F /* Pods-MKSmartPlug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKSmartPlug.release.xcconfig"; path = "Pods/Target Support Files/Pods-MKSmartPlug/Pods-MKSmartPlug.release.xcconfig"; sourceTree = "<group>"; };
 		C70A99AF7622EA9C6E25B107 /* libPods-MKSmartPlug.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MKSmartPlug.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +275,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000B278220C61D2600D305EA /* MKAnimationAdopter */ = {
+			isa = PBXGroup;
+			children = (
+				000B278320C61D3200D305EA /* MKAnimationAdopter.h */,
+				000B278420C61D3200D305EA /* MKAnimationAdopter.m */,
+			);
+			path = MKAnimationAdopter;
+			sourceTree = "<group>";
+		};
 		001447F120C2971300A87037 /* settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,6 +571,7 @@
 		003F6D3320C161F50002C833 /* PublicTools */ = {
 			isa = PBXGroup;
 			children = (
+				000B278220C61D2600D305EA /* MKAnimationAdopter */,
 				0055EB3420C4D96F003C4C70 /* MKCommonlyUIHelper */,
 				003F6D3420C161F50002C833 /* MKAttributedStringManager */,
 				003F6D3720C161F50002C833 /* MKDateFormatter */,
@@ -795,6 +811,8 @@
 				00C6802720C53D9D00EEFFF3 /* MKConnectDeviceView.m */,
 				00C6802C20C5423C00EEFFF3 /* MKConnectAlertView.h */,
 				00C6802D20C5423C00EEFFF3 /* MKConnectAlertView.m */,
+				00C6803320C56FAE00EEFFF3 /* MKConnectDeviceProgressView.h */,
+				00C6803420C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1054,6 +1072,7 @@
 			files = (
 				003F6D7D20C161F50002C833 /* MKTimePickerView.m in Sources */,
 				001447DF20C22C1A00A87037 /* MKConfigServerQosCell.m in Sources */,
+				00C6803520C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m in Sources */,
 				003F6DAF20C17A250002C833 /* MKConfigServerAdopter.m in Sources */,
 				00C6802820C53D9D00EEFFF3 /* MKConnectDeviceView.m in Sources */,
 				001447E220C22C2D00A87037 /* MKConfigServerNormalCell.m in Sources */,
@@ -1085,6 +1104,7 @@
 				003F6A6320C145BC0002C833 /* AppDelegate.m in Sources */,
 				003F6D6920C161F50002C833 /* UIImage+MKAdd.m in Sources */,
 				003F6D6A20C161F50002C833 /* UITextField+MKAdd.m in Sources */,
+				000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */,
 				0014480B20C2A7B200A87037 /* MKSelectDeviceTypeCell.m in Sources */,
 				003F6D5F20C161F50002C833 /* MKBaseDataModel.m in Sources */,
 				003F6D6420C161F50002C833 /* NSDateFormatter+MKAdd.m in Sources */,

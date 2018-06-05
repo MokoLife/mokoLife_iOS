@@ -14,5 +14,6 @@ pod ‘MLInputDodger’
 pod 'MQTTClient'
 pod 'FLAnimatedImage'
 pod 'AFNetworking'
+pod 'CircleProgressBar'
 
 end

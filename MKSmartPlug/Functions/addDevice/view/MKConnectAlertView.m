@@ -36,16 +36,16 @@
 - (instancetype)initWithTitleMsg:(NSString *)titleMsg
                     cancelAction:(void (^)(void))cancelAction
                    confirmAction:(void (^)(void))confirmAction{
-    self = [self initWithFrame:CGRectZero];
+    self = [self init];
     self.titleLabel.text = titleMsg;
     self.cancelAction = cancelAction;
     self.confirmAction = confirmAction;
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame{
-    if (self = [super initWithFrame:frame]) {
-        self.frame = kAppWindow.bounds;
+- (instancetype)init{
+    if (self = [super init]) {
+//        self.frame = kAppWindow.bounds;
         [self setLayerProperty];
         [self addSubview:self.titleLabel];
         [self addSubview:self.horizontalLine];
@@ -62,30 +62,36 @@
     CGSize titleSize = [NSString sizeWithText:self.titleLabel.text
                                       andFont:self.titleLabel.font
                                    andMaxSize:CGSizeMake(self.frame.size.width - 2 * 15.f, MAXFLOAT)];
+//    [self.titleLabel setFrame:CGRectMake(15.f, 20.f, self.frame.size.width - 2 * 15.f, titleSize.height)];
     [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15.f);
         make.right.mas_equalTo(-15.f);
         make.top.mas_equalTo(20.f);
         make.height.mas_equalTo(titleSize.height);
     }];
+//    [self.horizontalLine setFrame:CGRectMake(0, self.frame.size.height - 45.f - 0.5f, self.frame.size.width, 0.5f)];
     [self.horizontalLine mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
         make.bottom.mas_equalTo(-45.f);
         make.height.mas_equalTo(0.5f);
     }];
+//    [self.verticalLine setFrame:CGRectMake(self.frame.size.width / 2 - 0.5f, self.frame.size.height - 45.f, 0.5f, 45.f)];
     [self.verticalLine mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.mas_centerX);
         make.width.mas_equalTo(0.5f);
         make.bottom.mas_equalTo(0);
         make.height.mas_equalTo(45.f);
     }];
+//    CGFloat buttonWidth = (self.frame.size.width - 0.5f) / 2;
+//    [self.cancelButton setFrame:CGRectMake(0, self.frame.size.height - 45.f,  buttonWidth, 45.f)];
     [self.cancelButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(self.verticalLine.mas_left);
         make.bottom.mas_equalTo(0);
         make.height.mas_equalTo(45.f);
     }];
+//    [self.confirmButton setFrame:CGRectMake(self.frame.size.width - buttonWidth, self.frame.size.height - 45.f, buttonWidth, 45.f)];
     [self.confirmButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(0);
         make.left.mas_equalTo(self.verticalLine.mas_right);

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F6F27F12AA054F6341789097883026A1"
-               BuildableName = "libPods-MKSmartPlug.a"
-               BlueprintName = "Pods-MKSmartPlug"
+               BlueprintIdentifier = "893941B71A4E6451FF3F512EC17ECAF5"
+               BuildableName = "libCircleProgressBar.a"
+               BlueprintName = "CircleProgressBar"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F6F27F12AA054F6341789097883026A1"
-            BuildableName = "libPods-MKSmartPlug.a"
-            BlueprintName = "Pods-MKSmartPlug"
+            BlueprintIdentifier = "893941B71A4E6451FF3F512EC17ECAF5"
+            BuildableName = "libCircleProgressBar.a"
+            BlueprintName = "CircleProgressBar"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
