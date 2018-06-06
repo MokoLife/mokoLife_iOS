@@ -1,0 +1,91 @@
+//
+//  MKSocketBlockAdopter.m
+//  MKSmartPlug
+//
+//  Created by aa on 2018/6/5.
+//  Copyright © 2018年 MK. All rights reserved.
+//
+
+#import "MKSocketBlockAdopter.h"
+#import <CocoaAsyncSocket/GCDAsyncSocket.h>
+
+NSString * const socketCustomErrorDomain = @"com.moko.MKPlugDeviceSDK";
+
+@implementation MKSocketBlockAdopter
+
++ (NSError *)getErrorWithCode:(socketCustomErrorCode)code message:(NSString *)message{
+    NSError *error = [[NSError alloc] initWithDomain:socketCustomErrorDomain
+                                                code:code
+                                            userInfo:@{@"errorInfo":message}];
+    return error;
+}
+
+/**
+ 将第三方GCDAsyncSocket的error转换成自定义的error
+
+ @param error GCDAsyncSocket的error
+ @return 自定义error
+ */
++ (NSError *)exchangedGCDAsyncSocketErrorToLocalError:(NSError *)error{
+    if (!error || ![error isKindOfClass:[NSError class]]) {
+        return nil;
+    }
+    NSString *domain = error.domain;
+    if (![domain isEqualToString:GCDAsyncSocketErrorDomain]) {
+        return nil;
+    }
+    //只转换GCDAsyncSocket的error
+    socketCustomErrorCode code = [self customErrorCode:error.code];
+    NSError *customError = [self getErrorWithCode:code message:error.userInfo[NSLocalizedDescriptionKey]];
+    return customError;
+}
+
++ (void)operationParamsErrorBlock:(void (^)(NSError *error))block{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block) {
+            block([self getErrorWithCode:socketParamsError message:@"params error"]);
+        }
+    });
+}
+
++ (void)operationGetDataErrorBlock:(void (^)(NSError *error))block{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block) {
+            block([self getErrorWithCode:socketRequestDataError message:@"get data error"]);
+        }
+    });
+}
+
++ (void)operationDisConnectedErrorBlock:(void (^)(NSError *error))block{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block) {
+            block([self getErrorWithCode:socketPeripheralDisconnected message:@"please connect device"]);
+        }
+    });
+}
+
+#pragma mark - private method
++ (socketCustomErrorCode)customErrorCode:(GCDAsyncSocketError)socketErrorCode{
+    switch (socketErrorCode) {
+        case GCDAsyncSocketNoError:
+            return socketNoError;
+        case GCDAsyncSocketBadConfigError:
+            return socketParamsError;
+        case GCDAsyncSocketBadParamError:
+            return socketParamsError;
+        case GCDAsyncSocketConnectTimeoutError:
+            return socketConnectedFailed;
+        case GCDAsyncSocketReadTimeoutError:
+            return socketRequestDataError;
+        case GCDAsyncSocketWriteTimeoutError:
+            return socketRequestDataError;
+        case GCDAsyncSocketClosedError:
+            return socketPeripheralDisconnected;
+        case GCDAsyncSocketReadMaxedOutError:
+            return socketSetParamsError;
+        case GCDAsyncSocketOtherError:
+            return socketRequestDataError;
+    }
+}
+
+@end

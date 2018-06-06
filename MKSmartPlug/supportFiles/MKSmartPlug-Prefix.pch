@@ -22,3 +22,8 @@
 #import "MKPhotoPicker.h"
 #import "MKCommonlyUIHelper.h"
 #import "MKAnimationAdopter.h"
+
+/*********interface***********/
+#import "MKSocketManager.h"
+
+

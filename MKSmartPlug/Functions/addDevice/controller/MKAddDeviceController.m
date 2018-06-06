@@ -55,6 +55,12 @@ static CGFloat const centerGifHeight = 253.f;
 
 #pragma mark - event method
 - (void)linkLabelPressed{
+    [[MKSocketManager sharedInstance] readSmartPlugDeviceInformationWithSucBlock:^(id returnData) {
+        NSLog(@"%@",returnData);
+    } failedBlock:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    return;
     MKNotBlinkAmberController *vc = [[MKNotBlinkAmberController alloc] initWithNavigationType:GYNaviTypeShow];
     WS(weakSelf);
     vc.blinkButtonPressedBlock = ^{
@@ -69,6 +75,18 @@ static CGFloat const centerGifHeight = 253.f;
     if (!canNext) {
         return;
     }
+    [[MKHudManager share] showHUDWithTitle:@"Connecting..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [[MKSocketManager sharedInstance] connectDeviceWithHost:defaultHostIpAddress port:defaultPort connectSucBlock:^(NSString *IP, NSInteger port) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+    } connectFailedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+- (void)test{
     WS(weakSelf);
     MKConnectDeviceWifiView *wifiConfirmView = [[MKConnectDeviceWifiView alloc] init];
     [wifiConfirmView showAlertViewWithCancelAction:nil confirmAction:^(NSString *wifiSSID, NSString *password) {

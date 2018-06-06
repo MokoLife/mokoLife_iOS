@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B278420C61D3200D305EA /* MKAnimationAdopter.m */; };
 		000B279120C636E800D305EA /* MKConnectDeviceWifiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B279020C636E800D305EA /* MKConnectDeviceWifiView.m */; };
+		000B279720C666FF00D305EA /* MKSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B279620C666FF00D305EA /* MKSocketManager.m */; };
 		001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D520C22BC700A87037 /* MKConfigServerHostCell.m */; };
 		001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D820C22BED00A87037 /* MKConfigServerPortCell.m */; };
 		001447DC20C22C0500A87037 /* MKConfigServerConnectModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447DB20C22C0500A87037 /* MKConfigServerConnectModeCell.m */; };
@@ -27,6 +28,10 @@
 		0014480F20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0014480D20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png */; };
 		0014481020C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0014480E20C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png */; };
 		0014481320C2A92400A87037 /* MKSelectDeviceTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014481220C2A92400A87037 /* MKSelectDeviceTypeModel.m */; };
+		0014591B20C8026000AB7759 /* MKSocketAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014591820C8026000AB7759 /* MKSocketAdopter.m */; };
+		0014591C20C8026000AB7759 /* MKSocketBlockAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014591A20C8026000AB7759 /* MKSocketBlockAdopter.m */; };
+		0014592120C8040A00AB7759 /* MKSocketTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */; };
+		0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014592320C8090400AB7759 /* MKSocketDataModel.m */; };
 		003F698E20C122B90002C833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003F698D20C122B90002C833 /* Assets.xcassets */; };
 		003F6A6320C145BC0002C833 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6020C145BC0002C833 /* AppDelegate.m */; };
 		003F6A6520C145BC0002C833 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6220C145BC0002C833 /* main.m */; };
@@ -108,6 +113,8 @@
 		000B278420C61D3200D305EA /* MKAnimationAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAnimationAdopter.m; sourceTree = "<group>"; };
 		000B278F20C636E800D305EA /* MKConnectDeviceWifiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectDeviceWifiView.h; sourceTree = "<group>"; };
 		000B279020C636E800D305EA /* MKConnectDeviceWifiView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConnectDeviceWifiView.m; sourceTree = "<group>"; };
+		000B279520C666FF00D305EA /* MKSocketManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketManager.h; sourceTree = "<group>"; };
+		000B279620C666FF00D305EA /* MKSocketManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketManager.m; sourceTree = "<group>"; };
 		001447D420C22BC700A87037 /* MKConfigServerHostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerHostCell.h; sourceTree = "<group>"; };
 		001447D520C22BC700A87037 /* MKConfigServerHostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerHostCell.m; sourceTree = "<group>"; };
 		001447D720C22BED00A87037 /* MKConfigServerPortCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerPortCell.h; sourceTree = "<group>"; };
@@ -139,6 +146,15 @@
 		0014480E20C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectDeviceType_plugIcon@3x.png"; sourceTree = "<group>"; };
 		0014481120C2A92400A87037 /* MKSelectDeviceTypeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSelectDeviceTypeModel.h; sourceTree = "<group>"; };
 		0014481220C2A92400A87037 /* MKSelectDeviceTypeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSelectDeviceTypeModel.m; sourceTree = "<group>"; };
+		0014591720C8026000AB7759 /* MKSocketAdopter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSocketAdopter.h; sourceTree = "<group>"; };
+		0014591820C8026000AB7759 /* MKSocketAdopter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKSocketAdopter.m; sourceTree = "<group>"; };
+		0014591920C8026000AB7759 /* MKSocketBlockAdopter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSocketBlockAdopter.h; sourceTree = "<group>"; };
+		0014591A20C8026000AB7759 /* MKSocketBlockAdopter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKSocketBlockAdopter.m; sourceTree = "<group>"; };
+		0014591E20C8027000AB7759 /* MKSocketTaskID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSocketTaskID.h; sourceTree = "<group>"; };
+		0014591F20C8040A00AB7759 /* MKSocketTaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketTaskOperation.h; sourceTree = "<group>"; };
+		0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketTaskOperation.m; sourceTree = "<group>"; };
+		0014592220C8090400AB7759 /* MKSocketDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketDataModel.h; sourceTree = "<group>"; };
+		0014592320C8090400AB7759 /* MKSocketDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketDataModel.m; sourceTree = "<group>"; };
 		003F698120C122B90002C833 /* MKSmartPlug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKSmartPlug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		003F698D20C122B90002C833 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		003F6A5F20C145BC0002C833 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -287,6 +303,33 @@
 			path = MKAnimationAdopter;
 			sourceTree = "<group>";
 		};
+		000B279220C665BF00D305EA /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				000B279320C665BF00D305EA /* MKSDKForDevice */,
+				000B279420C665BF00D305EA /* MKSDKForMqttServer */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		000B279320C665BF00D305EA /* MKSDKForDevice */ = {
+			isa = PBXGroup;
+			children = (
+				0014591D20C8027000AB7759 /* task */,
+				0014591620C8026000AB7759 /* adopter */,
+				000B279520C666FF00D305EA /* MKSocketManager.h */,
+				000B279620C666FF00D305EA /* MKSocketManager.m */,
+			);
+			path = MKSDKForDevice;
+			sourceTree = "<group>";
+		};
+		000B279420C665BF00D305EA /* MKSDKForMqttServer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MKSDKForMqttServer;
+			sourceTree = "<group>";
+		};
 		001447F120C2971300A87037 /* settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -368,6 +411,29 @@
 			path = selectDeviceType;
 			sourceTree = "<group>";
 		};
+		0014591620C8026000AB7759 /* adopter */ = {
+			isa = PBXGroup;
+			children = (
+				0014591720C8026000AB7759 /* MKSocketAdopter.h */,
+				0014591820C8026000AB7759 /* MKSocketAdopter.m */,
+				0014591920C8026000AB7759 /* MKSocketBlockAdopter.h */,
+				0014591A20C8026000AB7759 /* MKSocketBlockAdopter.m */,
+			);
+			path = adopter;
+			sourceTree = "<group>";
+		};
+		0014591D20C8027000AB7759 /* task */ = {
+			isa = PBXGroup;
+			children = (
+				0014591E20C8027000AB7759 /* MKSocketTaskID.h */,
+				0014591F20C8040A00AB7759 /* MKSocketTaskOperation.h */,
+				0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */,
+				0014592220C8090400AB7759 /* MKSocketDataModel.h */,
+				0014592320C8090400AB7759 /* MKSocketDataModel.m */,
+			);
+			path = task;
+			sourceTree = "<group>";
+		};
 		003F697820C122B90002C833 = {
 			isa = PBXGroup;
 			children = (
@@ -389,6 +455,7 @@
 		003F698320C122B90002C833 /* MKSmartPlug */ = {
 			isa = PBXGroup;
 			children = (
+				000B279220C665BF00D305EA /* Interface */,
 				00BB0EA720C519BA006F2DEA /* Network */,
 				003F6D0620C161F50002C833 /* Expand */,
 				003F6D0020C161EF0002C833 /* Functions */,
@@ -1075,6 +1142,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0014591B20C8026000AB7759 /* MKSocketAdopter.m in Sources */,
+				0014592120C8040A00AB7759 /* MKSocketTaskOperation.m in Sources */,
 				003F6D7D20C161F50002C833 /* MKTimePickerView.m in Sources */,
 				001447DF20C22C1A00A87037 /* MKConfigServerQosCell.m in Sources */,
 				000B279120C636E800D305EA /* MKConnectDeviceWifiView.m in Sources */,
@@ -1095,6 +1164,7 @@
 				003F6D6520C161F50002C833 /* NSInvocation+MKAdd.m in Sources */,
 				00BB0EAE20C51B5D006F2DEA /* MKAddDeviceAdopter.m in Sources */,
 				0055EB4720C50F2C003C4C70 /* MKNotBlinkAmberModel.m in Sources */,
+				0014591C20C8026000AB7759 /* MKSocketBlockAdopter.m in Sources */,
 				003F6D7720C161F50002C833 /* MKRefreshGifHeader.m in Sources */,
 				003F6D6E20C161F50002C833 /* MKHexKeyboard.m in Sources */,
 				0055EB4420C4E882003C4C70 /* MKNotBlinkAmberCell.m in Sources */,
@@ -1103,6 +1173,7 @@
 				003F6D6020C161F50002C833 /* MKBaseTableView.m in Sources */,
 				003F6D6220C161F50002C833 /* MKHaveRefreshTableView.m in Sources */,
 				003F6D9520C16A7D0002C833 /* MKConfigServerController.m in Sources */,
+				000B279720C666FF00D305EA /* MKSocketManager.m in Sources */,
 				00C6802E20C5423C00EEFFF3 /* MKConnectAlertView.m in Sources */,
 				0055EB2F20C4D283003C4C70 /* MKAddDeviceController.m in Sources */,
 				003F6D6D20C161F50002C833 /* MKDateFormatter.m in Sources */,
@@ -1112,6 +1183,7 @@
 				003F6D6A20C161F50002C833 /* UITextField+MKAdd.m in Sources */,
 				000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */,
 				0014480B20C2A7B200A87037 /* MKSelectDeviceTypeCell.m in Sources */,
+				0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */,
 				003F6D5F20C161F50002C833 /* MKBaseDataModel.m in Sources */,
 				003F6D6420C161F50002C833 /* NSDateFormatter+MKAdd.m in Sources */,
 				003F6D5D20C161F50002C833 /* MKBaseCell.m in Sources */,
@@ -1246,12 +1318,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TYTPVLJ5LD;
+				DEVELOPMENT_TEAM = R558LEUW2T;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/MKSmartPlug/supportFiles/MKSmartPlug-Prefix.pch";
 				INFOPLIST_FILE = MKSmartPlug/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.moko.MKSmartPlug;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moko.smartPlug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1264,12 +1336,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TYTPVLJ5LD;
+				DEVELOPMENT_TEAM = R558LEUW2T;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/MKSmartPlug/supportFiles/MKSmartPlug-Prefix.pch";
 				INFOPLIST_FILE = MKSmartPlug/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.moko.MKSmartPlug;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moko.smartPlug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
