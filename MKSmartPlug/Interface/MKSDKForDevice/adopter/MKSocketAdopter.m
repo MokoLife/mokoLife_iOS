@@ -20,6 +20,30 @@
     return [pred evaluateWithObject:IPAddress];
 }
 
++ (BOOL)isClientId:(NSString *)clientId{
+    NSString *regex = @"^[a-zA-Z_][a-zA-Z0-9_]{5,19}$";
+    NSPredicate *clientIdPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [clientIdPre evaluateWithObject:clientId];
+}
+
++ (BOOL)isUserName:(NSString *)userName{
+    NSString *regex = @"^[a-zA-Z_][a-zA-Z0-9_]{5,19}$";
+    NSPredicate *userNamePre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [userNamePre evaluateWithObject:userName];
+}
+
++ (BOOL)isPassword:(NSString *)password{
+    NSString *regex = @"^[a-zA-Z0-9_]{5,19}$$";
+    NSPredicate *passwordPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [passwordPre evaluateWithObject:password];
+}
+
++ (BOOL)isDomainName:(NSString *)host{
+    NSString *regex =@"[a-zA-z]+://[^\\s]*";
+    NSPredicate *hostTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [hostTest evaluateWithObject:host];
+}
+
 /**
  字典转json字符串方法
  

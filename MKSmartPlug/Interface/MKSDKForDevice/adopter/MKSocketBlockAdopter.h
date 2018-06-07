@@ -35,8 +35,12 @@ typedef NS_ENUM(NSInteger, socketCustomErrorCode){
 
 + (void)operationParamsErrorBlock:(void (^)(NSError *error))block;
 
++ (void)operationParamsErrorWithMessage:(NSString *)message block:(void (^)(NSError *error))block;
+
 + (void)operationGetDataErrorBlock:(void (^)(NSError *error))block;
 
 + (void)operationDisConnectedErrorBlock:(void (^)(NSError *error))block;
+
++ (void)operationDataErrorWithReturnData:(NSDictionary *)returnData block:(void (^)(NSError *error))block;
 
 @end

@@ -16,7 +16,7 @@ NSString * const socketCustomErrorDomain = @"com.moko.MKPlugDeviceSDK";
 + (NSError *)getErrorWithCode:(socketCustomErrorCode)code message:(NSString *)message{
     NSError *error = [[NSError alloc] initWithDomain:socketCustomErrorDomain
                                                 code:code
-                                            userInfo:@{@"errorInfo":message}];
+                                            userInfo:@{@"errorInfo":(message == nil ? @"" : message)}];
     return error;
 }
 
@@ -48,6 +48,14 @@ NSString * const socketCustomErrorDomain = @"com.moko.MKPlugDeviceSDK";
     });
 }
 
++ (void)operationParamsErrorWithMessage:(NSString *)message block:(void (^)(NSError *error))block{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block) {
+            block([self getErrorWithCode:socketParamsError message:message]);
+        }
+    });
+}
+
 + (void)operationGetDataErrorBlock:(void (^)(NSError *error))block{
     dispatch_async(dispatch_get_main_queue(), ^{
         if (block) {
@@ -60,6 +68,17 @@ NSString * const socketCustomErrorDomain = @"com.moko.MKPlugDeviceSDK";
     dispatch_async(dispatch_get_main_queue(), ^{
         if (block) {
             block([self getErrorWithCode:socketPeripheralDisconnected message:@"please connect device"]);
+        }
+    });
+}
+
++ (void)operationDataErrorWithReturnData:(NSDictionary *)returnData block:(void (^)(NSError *error))block{
+    if ([returnData[@"code"] isEqualToString:@"0"]) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block) {
+            block([self getErrorWithCode:socketSetParamsError message:returnData[@"message"]]);
         }
     });
 }

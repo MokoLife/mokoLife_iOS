@@ -33,6 +33,10 @@ static CGFloat const centerGifHeight = 253.f;
 
 @property (nonatomic, strong)MKConnectDeviceProgressView *connectProgressView;
 
+@property (nonatomic, copy)NSString *wifiSSID;
+
+@property (nonatomic, copy)NSString *password;
+
 @end
 
 @implementation MKAddDeviceController
@@ -40,11 +44,17 @@ static CGFloat const centerGifHeight = 253.f;
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKAddDeviceController销毁");
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
+    //当前网络状态发生改变的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(networkStatusChanged)
+                                                 name:MKNetworkStatusChangedNotification
+                                               object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -55,12 +65,6 @@ static CGFloat const centerGifHeight = 253.f;
 
 #pragma mark - event method
 - (void)linkLabelPressed{
-    [[MKSocketManager sharedInstance] readSmartPlugDeviceInformationWithSucBlock:^(id returnData) {
-        NSLog(@"%@",returnData);
-    } failedBlock:^(NSError *error) {
-        NSLog(@"%@",error);
-    }];
-    return;
     MKNotBlinkAmberController *vc = [[MKNotBlinkAmberController alloc] initWithNavigationType:GYNaviTypeShow];
     WS(weakSelf);
     vc.blinkButtonPressedBlock = ^{
@@ -71,33 +75,17 @@ static CGFloat const centerGifHeight = 253.f;
 }
 
 - (void)blinkButtonPressed{
-    BOOL canNext = [MKAddDeviceAdopter canConnectWithCurrentTarget:self];
-    if (!canNext) {
-        return;
-    }
-    [[MKHudManager share] showHUDWithTitle:@"Connecting..." inView:self.view isPenetration:NO];
-    WS(weakSelf);
-    [[MKSocketManager sharedInstance] connectDeviceWithHost:defaultHostIpAddress port:defaultPort connectSucBlock:^(NSString *IP, NSInteger port) {
-        [[MKHudManager share] hide];
-        [weakSelf.view showCentralToast:@"Success!"];
-    } connectFailedBlock:^(NSError *error) {
-        [[MKHudManager share] hide];
-        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
-    }];
-}
-
-- (void)test{
     WS(weakSelf);
     MKConnectDeviceWifiView *wifiConfirmView = [[MKConnectDeviceWifiView alloc] init];
     [wifiConfirmView showAlertViewWithCancelAction:nil confirmAction:^(NSString *wifiSSID, NSString *password) {
-        MKConnectDeviceView *deviceView = [[MKConnectDeviceView alloc] init];
-        [deviceView showAlertViewWithCancelAction:^{
-            
-        } confirmAction:^{
-            [weakSelf.connectProgressView showConnectAlertView];
-            //        [MKAddDeviceAdopter gotoSystemWifiPage];
-        }];
+        weakSelf.wifiSSID = wifiSSID;
+        weakSelf.password = password;
+        
     }];
+}
+
+- (void)networkStatusChanged{
+    
 }
 
 #pragma mark - loadSubViews

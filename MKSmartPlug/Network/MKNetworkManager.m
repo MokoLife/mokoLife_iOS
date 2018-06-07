@@ -34,11 +34,11 @@ NSString *const MKNetworkStatusChangedNotification = @"MKNetworkStatusChangedNot
 #pragma mark - public method
 
 /**
- 获取当前手机连接的wifi SSID
-
- @return SSID
+ 获取当前手机连接的wifi ssid
+ 
+ @return wifi ssid
  */
-+ (NSString *)fetchWifiSSID{
++ (NSString *)currentWifiSSID{
     CFArrayRef tempArray = CNCopySupportedInterfaces();
     if (!tempArray) {
         CFRelease(tempArray);
@@ -64,7 +64,6 @@ NSString *const MKNetworkStatusChangedNotification = @"MKNetworkStatusChangedNot
         self.currentNetStatus = status;
         [[NSNotificationCenter defaultCenter] postNotificationName:MKNetworkStatusChangedNotification object:nil];
     }];
-    
     [mgr startMonitoring];
 }
 

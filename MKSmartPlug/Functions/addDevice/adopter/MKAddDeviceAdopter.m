@@ -69,7 +69,7 @@
         [target.view showCentralToast:@"Please Connect Wi-Fi First."];
         return NO;
     }
-    NSString *wifiSSID = [MKSocketManager currentWifiSSID];
+    NSString *wifiSSID = [MKNetworkManager currentWifiSSID];
     if (!ValidStr(wifiSSID) || [wifiSSID isEqualToString:@"<<NONE>>"]) {
         //当前wifi的ssid未知
         [target.view showCentralToast:@"Get wifi ssid errors"];

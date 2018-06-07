@@ -11,6 +11,10 @@
 @interface MKSocketAdopter : NSObject
 
 + (BOOL)isValidatIP:(NSString *)IPAddress;
++ (BOOL)isClientId:(NSString *)clientId;
++ (BOOL)isUserName:(NSString *)userName;
++ (BOOL)isPassword:(NSString *)password;
++ (BOOL)isDomainName:(NSString *)host;
 
 /**
  字典转json字符串方法

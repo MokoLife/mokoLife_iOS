@@ -7,7 +7,6 @@
 //
 
 #import "MKSocketManager.h"
-#import <SystemConfiguration/CaptiveNetwork.h>
 #import <CocoaAsyncSocket/GCDAsyncSocket.h>
 #import "MKSocketBlockAdopter.h"
 #import "MKSocketAdopter.h"
@@ -72,6 +71,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     if (!sock) {
         return;
     }
+    [self.operationQueue cancelAllOperations];
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.connectSucBlock) {
             self.connectSucBlock(sock.connectedHost, sock.connectedPort);
@@ -83,6 +83,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     if (!err) {
         return;
     }
+    [self.operationQueue cancelAllOperations];
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.connectFailedBlock) {
             self.connectFailedBlock([MKSocketBlockAdopter exchangedGCDAsyncSocketErrorToLocalError:err]);
@@ -149,6 +150,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     }];
 }
 
+#pragma mark - interface
 /**
  读取设备信息
 
@@ -161,27 +163,114 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     [self addTaskWithTaskID:socketReadDeviceInformationTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];
 }
 
-//- (void)configMQTTServerHost:(NSString *)host port:(NSInteger)port clientId:(NSString *)clientId
+/**
+ 设置给插座的mqtt服务器信息。插座接收到此信息，并成功解析，待插座成功连接wifi网络后，插座会自动去连接手机指定的mqtt服务器
+
+ @param host mqtt服务器主机host
+ @param port mqtt服务器主机端口号，范围0~65535
+ @param mode 连接方式 0：tcp,1:ssl
+ @param qos mqqt服务质量
+ @param keepalive plug跟mqtt服务器连接之后保持活跃状态的时间，0~2的32次方，单位：s
+ @param clean NO:表示创建一个持久会话，在客户端断开连接时，会话仍然保持并保存离线消息，直到会话超时注销。YES:表示创建一个新的临时会话，在客户端断开时，会话自动销毁。
+ @param clientId plug作为客户端的id,以非数字开头,长度为6-20个字符,由英文字母(区分大小写),数字(0-9),下划线组成
+ @param username plug连接mqtt服务器时候的用户名,以非数字开头,长度为6-20个字符,由英文字母(区分大小写),数字(0-9),下划线组成
+ @param password plug连接mqtt服务器时候的密码,以非数字开头,长度为6-20个字符,由英文字母(区分大小写),数字(0-9),下划线组成
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)configMQTTServerHost:(NSString *)host
+                        port:(NSInteger)port
+                 connectMode:(mqttServerConnectMode)mode
+                         qos:(mqttServerQosMode)qos
+                   keepalive:(NSUInteger)keepalive
+                cleanSession:(BOOL)clean
+                    clientId:(NSString *)clientId
+                    username:(NSString *)username
+                    password:(NSString *)password
+                    sucBlock:(void (^)(id returnData))sucBlock
+                 failedBlock:(void (^)(NSError *error))failedBlock{
+    if (![MKSocketAdopter isValidatIP:host] || ![MKSocketAdopter isDomainName:host]) {
+        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Host error" block:failedBlock];
+        return;
+    }
+    if (port < 0 || port > 65535) {
+        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Port effective range : 0~65535" block:failedBlock];
+        return;
+    }
+    if (![MKSocketAdopter isClientId:clientId]) {
+        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Client id error" block:failedBlock];
+        return;
+    }
+    if (![MKSocketAdopter isUserName:username]) {
+        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"User name error" block:failedBlock];
+        return;
+    }
+    if (![MKSocketAdopter isPassword:password]) {
+        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Password error" block:failedBlock];
+        return;
+    }
+    NSString *connectMode = @"0";
+    if (mode == mqttServerConnectSSLMode) {
+        connectMode = @"1";
+    }
+    NSString *qosString = @"2";
+    if (qos == mqttServerQosModeBestEffortService) {
+        qosString = @"0";
+    }else if (qos == mqttServerQosModeAtLeastOnce){
+        qosString = @"1";
+    }
+    NSDictionary *commandDic = @{
+                                 @"header":@(4002),
+                                 @"host":host,
+                                 @"port":@(port),
+                                 @"clientId":clientId,
+                                 @"connect_mode":connectMode,
+                                 @"username":username,
+                                 @"password":password,
+                                 @"keepalive":[NSString stringWithFormat:@"%ld",(long)keepalive],
+                                 @"qos":qosString,
+                                 @"clean_session":(clean ? @"1" : @"0"),
+                                 };
+    NSString *jsonString = [MKSocketAdopter convertToJsonData:commandDic];
+    [self addTaskWithTaskID:socketConfigMQTTServerTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];
+}
 
 /**
- 获取当前手机连接的wifi ssid
- 
- @return wifi ssid
+ 手机给插座指定连接特定ssid的WiFi网络。注意:调用该方法的时候，应该确保已经把mqtt服务器信息设置给plug了，否则调用该方法会出现错误
+
+ @param ssid wifi ssid
+ @param password wifi密码,不需要密码的wifi网络，密码可以不填
+ @param security wifi加密策略
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
  */
-+ (NSString *)currentWifiSSID{
-    CFArrayRef tempArray = CNCopySupportedInterfaces();
-    if (!tempArray) {
-        CFRelease(tempArray);
-        return @"<<NONE>>";
+- (void)configWifiSSID:(NSString *)ssid
+              password:(NSString *)password
+              security:(wifiSecurity)security
+              sucBlock:(void (^)(id returnData))sucBlock
+           failedBlock:(void (^)(NSError *error))failedBlock{
+    if (!ssid || ssid.length == 0) {
+        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"SSID error" block:failedBlock];
+        return;
     }
-    NSDictionary* wifiDic = (__bridge NSDictionary *) CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(tempArray, 0));
-    NSLog(@"%@",wifiDic);
-    if (!ValidDict(wifiDic)) {
-        CFRelease(tempArray);
-        return @"<<NONE>>";
+    NSString *wifi_security = @"0";
+    if (security == wifiSecurity_WEP) {
+        wifi_security = @"1";
+    }else if (security == wifiSecurity_WPA_PSK){
+        wifi_security = @"2";
+    }else if (security == wifiSecurity_WPA2_PSK){
+        wifi_security = @"3";
+    }else if (security == wifiSecurity_WPA_WPA2_PSK){
+        wifi_security = @"4";
     }
-    CFRelease(tempArray);
-    return wifiDic[@"SSID"];
+    NSDictionary *commandDic = @{
+                                 @"header":@(4003),
+                                 @"wifi_ssid":ssid,
+                                 @"wifi_pwd":((!password || password.length == 0) ? @"" : password),
+                                 @"wifi_security":wifi_security,
+                                 };
+    NSString *jsonString = [MKSocketAdopter convertToJsonData:commandDic];
+    [self addTaskWithTaskID:socketConfigWifiTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];
 }
 
 #pragma mark - connect private method
@@ -196,6 +285,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     NSError *error = nil;
     BOOL pass = [self.socket connectToHost:host onPort:port withTimeout:defaultConnectTime error:&error];
     if (!pass) {
+        [self.operationQueue cancelAllOperations];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failedBlock) {
                 failedBlock(error);
@@ -225,9 +315,14 @@ static NSTimeInterval const defaultCommandTime = 2.f;
             });
             return ;
         }
-        if (!returnData) {
+        if (!returnData || ![returnData isKindOfClass:[NSDictionary class]]) {
             //出错
             [MKSocketBlockAdopter operationGetDataErrorBlock:failedBlock];
+        }
+        if (![returnData[@"code"] isEqualToString:@"0"]) {
+            //数据错误
+            [MKSocketBlockAdopter operationDataErrorWithReturnData:returnData block:failedBlock];
+            return;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             if (sucBlock) {

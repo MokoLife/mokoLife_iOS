@@ -118,10 +118,6 @@ static CGFloat const alertViewHeight = 230.f;
         [self.alertView showCentralToast:@"Please enter a valid name of wifi"];
         return;
     }
-    if (!ValidStr(password)) {
-        [self.alertView showCentralToast:@"Please enter a valid wifi password"];
-        return;
-    }
     [self hiddenKeyboard];
     if (self.confirmAction) {
         self.confirmAction(ssid, password);
