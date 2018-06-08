@@ -32,10 +32,6 @@ static NSString *const step3Msg = @"3.Back to the App and continue";
 
 @property (nonatomic, strong)UILabel *step3Label;
 
-@property (nonatomic, copy)void (^cancelAction)(void);
-
-@property (nonatomic, copy)void (^confirmAction)(void);
-
 @end
 
 @implementation MKConnectDeviceView
@@ -106,22 +102,13 @@ static NSString *const step3Msg = @"3.Back to the App and continue";
     }];
 }
 
-#pragma mark - event method
-/**
- 取消选择
- */
-- (void)cancelButtonPressed{
+#pragma mark - MKConnectViewProtocol method
+- (void)showConnectAlertView{
     [self dismiss];
-}
-
-/**
- 确认选择
- */
-- (void)confirmButtonPressed{
-    if (self.confirmAction) {
-        self.confirmAction();
-    }
-    [self dismiss];
+    [kAppWindow addSubview:self];
+    [UIView animateWithDuration:.3f animations:^{
+        self.alertView.transform = CGAffineTransformMakeTranslation(-kScreenWidth, 0);
+    }];
 }
 
 - (void)dismiss{
@@ -130,14 +117,28 @@ static NSString *const step3Msg = @"3.Back to the App and continue";
     }
 }
 
-#pragma mark - public method
-- (void)showAlertViewWithCancelAction:(void (^)(void))cancelAction confirmAction:(void (^)(void))confirmAction{
-    self.cancelAction = cancelAction;
-    self.confirmAction = confirmAction;
-    [kAppWindow addSubview:self];
-    [UIView animateWithDuration:.3f animations:^{
-        self.alertView.transform = CGAffineTransformMakeTranslation(-kScreenWidth, 0);
-    }];
+- (BOOL)isShow{
+    return (self.superview != nil);
+}
+
+#pragma mark - event method
+/**
+ 取消选择
+ */
+- (void)cancelButtonPressed{
+    if ([self.delegate respondsToSelector:@selector(cancelButtonActionWithView:)]) {
+        [self.delegate cancelButtonActionWithView:self];
+    }
+    [self dismiss];
+}
+
+/**
+ 确认选择
+ */
+- (void)confirmButtonPressed{
+    if ([self.delegate respondsToSelector:@selector(confirmButtonActionWithView:returnData:)]) {
+        [self.delegate confirmButtonActionWithView:self returnData:nil];
+    }
 }
 
 #pragma mark - setter & getter

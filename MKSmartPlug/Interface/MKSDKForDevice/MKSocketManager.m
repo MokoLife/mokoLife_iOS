@@ -34,6 +34,16 @@ static NSTimeInterval const defaultCommandTime = 2.f;
 
 @property (nonatomic, copy)void (^connectFailedBlock)(NSError *error);
 
+/**
+ 连接定时器，超过指定时间将会视为连接失败
+ */
+@property (nonatomic, strong)dispatch_source_t connectTimer;
+
+/**
+ 连接超时标记
+ */
+@property (nonatomic, assign)BOOL connectTimeout;
+
 @end
 
 @implementation MKSocketManager
@@ -68,10 +78,14 @@ static NSTimeInterval const defaultCommandTime = 2.f;
 #pragma mark - GCDAsyncSocketDelegate
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
-    if (!sock) {
+    if (!sock || self.connectTimeout) {
         return;
     }
     [self.operationQueue cancelAllOperations];
+    self.connectTimeout = NO;
+    if (self.connectTimer) {
+        dispatch_cancel(self.connectTimer);
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.connectSucBlock) {
             self.connectSucBlock(sock.connectedHost, sock.connectedPort);
@@ -82,6 +96,10 @@ static NSTimeInterval const defaultCommandTime = 2.f;
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(nullable NSError *)err{
     if (!err) {
         return;
+    }
+    self.connectTimeout = NO;
+    if (self.connectTimer) {
+        dispatch_cancel(self.connectTimer);
     }
     [self.operationQueue cancelAllOperations];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -94,7 +112,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
     //发送成功之后读取数值
     NSLog(@"发送数据成功");
-    [self.socket readDataWithTimeout:defaultCommandTime tag:socketReadDeviceInformationTask];
+    [self.socket readDataWithTimeout:defaultCommandTime tag:tag];
 }
 
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
@@ -150,6 +168,13 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     }];
 }
 
+/**
+ 断开连接
+ */
+- (void)disconnect{
+    [self.socket disconnect];
+}
+
 #pragma mark - interface
 /**
  读取设备信息
@@ -189,7 +214,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
                     password:(NSString *)password
                     sucBlock:(void (^)(id returnData))sucBlock
                  failedBlock:(void (^)(NSError *error))failedBlock{
-    if (![MKSocketAdopter isValidatIP:host] || ![MKSocketAdopter isDomainName:host]) {
+    if (![MKSocketAdopter isValidatIP:host] && ![MKSocketAdopter isDomainName:host]) {
         [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Host error" block:failedBlock];
         return;
     }
@@ -214,9 +239,9 @@ static NSTimeInterval const defaultCommandTime = 2.f;
         connectMode = @"1";
     }
     NSString *qosString = @"2";
-    if (qos == mqttServerQosModeBestEffortService) {
+    if (qos == mqttQosLevelAtMostOnce) {
         qosString = @"0";
-    }else if (qos == mqttServerQosModeAtLeastOnce){
+    }else if (qos == mqttQosLevelAtLeastOnce){
         qosString = @"1";
     }
     NSDictionary *commandDic = @{
@@ -282,6 +307,14 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     self.connectSucBlock = sucBlock;
     self.connectFailedBlock = nil;
     self.connectFailedBlock = failedBlock;
+    if (self.socket.isConnected) {
+        [self.socket disconnect];
+    }
+    self.connectTimeout = NO;
+    if (self.connectTimer) {
+        dispatch_cancel(self.connectTimer);
+    }
+    [self initConnectTimer];
     NSError *error = nil;
     BOOL pass = [self.socket connectToHost:host onPort:port withTimeout:defaultConnectTime error:&error];
     if (!pass) {
@@ -319,7 +352,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
             //出错
             [MKSocketBlockAdopter operationGetDataErrorBlock:failedBlock];
         }
-        if (![returnData[@"code"] isEqualToString:@"0"]) {
+        if ([returnData[@"code"] integerValue] != 0) {
             //数据错误
             [MKSocketBlockAdopter operationDataErrorWithReturnData:returnData block:failedBlock];
             return;
@@ -332,7 +365,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     }];
     [self.operationQueue addOperation:operation];
     NSData *commandData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    [self.socket writeData:commandData withTimeout:defaultCommandTime tag:socketReadDeviceInformationTask];
+    [self.socket writeData:commandData withTimeout:defaultCommandTime tag:taskID];
 }
 
 - (void)clearConnectBlock{
@@ -342,6 +375,24 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     if (self.connectFailedBlock) {
         self.connectFailedBlock = nil;
     }
+}
+
+- (void)initConnectTimer{
+    dispatch_queue_t connectQueue = dispatch_queue_create("connectSmartPlugQueue", DISPATCH_QUEUE_CONCURRENT);
+    self.connectTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,connectQueue);
+    //开始时间
+    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, defaultConnectTime * NSEC_PER_SEC);
+    //间隔时间
+    uint64_t interval = defaultConnectTime * NSEC_PER_SEC;
+    dispatch_source_set_timer(self.connectTimer, start, interval, 0);
+    __weak __typeof(&*self)weakSelf = self;
+    dispatch_source_set_event_handler(self.connectTimer, ^{
+        weakSelf.connectTimeout = YES;
+        dispatch_cancel(weakSelf.connectTimer);
+        [weakSelf.socket disconnect];
+        [MKSocketBlockAdopter operationConnectTimeoutBlock:weakSelf.connectFailedBlock];
+    });
+    dispatch_resume(self.connectTimer);
 }
 
 - (void)taskSuccessWithTag:(long)tag returnData:(NSDictionary *)returnData{

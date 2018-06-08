@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MKConnectViewProtocol.h"
 
-@interface MKConnectDeviceView : UIView
+@interface MKConnectDeviceView : UIView<MKConnectViewProtocol>
 
-- (void)showAlertViewWithCancelAction:(void (^)(void))cancelAction confirmAction:(void (^)(void))confirmAction;
+@property (nonatomic, weak)id <MKConnectViewConfirmDelegate>delegate;
 
 @end

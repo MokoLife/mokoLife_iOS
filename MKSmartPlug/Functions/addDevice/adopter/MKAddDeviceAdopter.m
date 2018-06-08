@@ -8,6 +8,9 @@
 
 #import "MKAddDeviceAdopter.h"
 
+//作为当前wifi是否是smartPlug的key，如果当前wifi的ssid前几位为smartPlugWifiSSIDKey，则认为当前已经连接smartPlug
+NSString *const smartPlugWifiSSIDKey = @"MOKO";
+
 @implementation MKAddDeviceAdopter
 
 + (UILabel *)connectAlertTitleLabel:(NSString *)title{
@@ -50,39 +53,27 @@
 }
 
 /**
- 判断当前网络状态，是否可以进行下一步，当前网络必须是2.4G wifi，wifi SSID前两位不能为MK
- 
- @param target 添加设备页面，如果不满足连接条件时，需要在target的view上面提示错误信息
- @return YES:可以下一步，NO:不可以下一步
+ 是否已经连接到plug了，点击连接的时候，必须先连接plug的wifi，然后把mqtt服务器参数和周围可用的wifi信息设置给plug之后才进行mqtt服务器的连接
+
+ @return YES:plug,NO:not plug
  */
-+ (BOOL)canConnectWithCurrentTarget:(UIViewController *)target{
-    if ([MKNetworkManager sharedInstance].currentNetStatus == AFNetworkReachabilityStatusUnknown
-        || [MKNetworkManager sharedInstance].currentNetStatus == AFNetworkReachabilityStatusNotReachable) {
-        [target.view showCentralToast:@"Please Connect Wi-Fi First."];
-        return NO;
-    }
-    if ([MKNetworkManager sharedInstance].currentNetStatus == AFNetworkReachabilityStatusReachableViaWWAN) {
-        [target.view showCentralToast:@"This app is supported only on 2.4GHz Wi-Fi network,please reselect."];
-        return NO;
-    }
++ (BOOL)currentWifiIsSmartPlug{
     if ([MKNetworkManager sharedInstance].currentNetStatus != AFNetworkReachabilityStatusReachableViaWiFi) {
-        [target.view showCentralToast:@"Please Connect Wi-Fi First."];
         return NO;
     }
     NSString *wifiSSID = [MKNetworkManager currentWifiSSID];
     if (!ValidStr(wifiSSID) || [wifiSSID isEqualToString:@"<<NONE>>"]) {
         //当前wifi的ssid未知
-        [target.view showCentralToast:@"Get wifi ssid errors"];
         return NO;
     }
-    if (wifiSSID.length >= 2) {
-        NSString *ssidHeader = [[wifiSSID substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-        if ([ssidHeader isEqualToString:@"MK"]) {
-            [target.view showCentralToast:@"The Wi-Fi cannot be the same as plug hotpot,please reselect."];
-            return NO;
-        }
+    if (wifiSSID.length < smartPlugWifiSSIDKey.length) {
+        return NO;
     }
-    return YES;
+    NSString *ssidHeader = [[wifiSSID substringWithRange:NSMakeRange(0, smartPlugWifiSSIDKey.length)] uppercaseString];
+    if ([ssidHeader isEqualToString:smartPlugWifiSSIDKey]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

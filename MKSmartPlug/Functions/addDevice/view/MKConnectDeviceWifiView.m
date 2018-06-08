@@ -28,10 +28,6 @@ static CGFloat const alertViewHeight = 230.f;
 
 @property (nonatomic, strong)UITextField *wifiPasswordTextField;
 
-@property (nonatomic, copy)void (^cancelAction)(void);
-
-@property (nonatomic, copy)void (^confirmAction)(NSString *wifiSSID, NSString *password);
-
 @end
 
 @implementation MKConnectDeviceWifiView
@@ -94,6 +90,25 @@ static CGFloat const alertViewHeight = 230.f;
     }];
 }
 
+#pragma mark - MKConnectViewProtocol method
+- (void)showConnectAlertView{
+    [self dismiss];
+    [kAppWindow addSubview:self];
+    [UIView animateWithDuration:.3f animations:^{
+        self.alertView.transform = CGAffineTransformMakeTranslation(-kScreenWidth, 0);
+    }];
+}
+
+- (void)dismiss{
+    if (self.superview) {
+        [self removeFromSuperview];
+    }
+}
+
+- (BOOL)isShow{
+    return (self.superview != nil);
+}
+
 #pragma mark - event method
 - (void)hiddenKeyboard{
     [self.wifiPasswordTextField resignFirstResponder];
@@ -104,6 +119,9 @@ static CGFloat const alertViewHeight = 230.f;
  取消选择
  */
 - (void)cancelButtonPressed{
+    if ([self.delegate respondsToSelector:@selector(cancelButtonActionWithView:)]) {
+        [self.delegate cancelButtonActionWithView:self];
+    }
     [self dismiss];
 }
 
@@ -119,27 +137,9 @@ static CGFloat const alertViewHeight = 230.f;
         return;
     }
     [self hiddenKeyboard];
-    if (self.confirmAction) {
-        self.confirmAction(ssid, password);
+    if ([self.delegate respondsToSelector:@selector(confirmButtonActionWithView:returnData:)]) {
+        [self.delegate confirmButtonActionWithView:self returnData:@{@"ssid":ssid,@"password":password}];
     }
-    [self dismiss];
-}
-
-- (void)dismiss{
-    if (self.superview) {
-        [self removeFromSuperview];
-    }
-}
-
-#pragma mark - public method
-- (void)showAlertViewWithCancelAction:(void (^)(void))cancelAction
-                        confirmAction:(void (^)(NSString *wifiSSID, NSString *password))confirmAction{
-    self.cancelAction = cancelAction;
-    self.confirmAction = confirmAction;
-    [kAppWindow addSubview:self];
-    [UIView animateWithDuration:.3f animations:^{
-        self.alertView.transform = CGAffineTransformMakeTranslation(-kScreenWidth, 0);
-    }];
 }
 
 #pragma mark - setter & getter

@@ -54,6 +54,27 @@ NSString *const MKNetworkStatusChangedNotification = @"MKNetworkStatusChangedNot
     return wifiDic[@"SSID"];
 }
 
+/**
+ 当前网络是否可用
+
+ @return YES:可用，NO:不可用
+ */
+- (BOOL)currentNetworkAvailable{
+    if (self.currentNetStatus == AFNetworkReachabilityStatusUnknown || self.currentNetStatus == AFNetworkReachabilityStatusNotReachable) {
+        return NO;
+    }
+    return YES;
+}
+
+/**
+ 当前网络是否是wifi
+
+ @return YES:wifi，NO:非wifi
+ */
+- (BOOL)currentNetworkIsWifi{
+    return (self.currentNetStatus == AFNetworkReachabilityStatusReachableViaWiFi);
+}
+
 #pragma mark 网络监听相关方法
 - (void)startMonitoring{
     // 1.获得网络监控的管理者

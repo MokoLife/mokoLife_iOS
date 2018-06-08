@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MKConnectViewProtocol.h"
 
-@interface MKConnectDeviceWifiView : UIView
+@interface MKConnectDeviceWifiView : UIView<MKConnectViewProtocol>
 
-- (void)showAlertViewWithCancelAction:(void (^)(void))cancelAction
-                        confirmAction:(void (^)(NSString *wifiSSID, NSString *password))confirmAction;
+@property (nonatomic, weak)id <MKConnectViewConfirmDelegate>delegate;
 
 @end

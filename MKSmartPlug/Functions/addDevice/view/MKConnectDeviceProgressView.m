@@ -74,21 +74,33 @@ static CGFloat const alertViewHeight = 340.f;
     }];
 }
 
-#pragma mark - public method
+#pragma mark - MKConnectViewProtocol method
 - (void)showConnectAlertView{
+    [self dismiss];
     [kAppWindow addSubview:self];
     [UIView animateWithDuration:.3f animations:^{
         self.alertView.transform = CGAffineTransformMakeTranslation(-kScreenWidth, 0);
     }];
 }
 
-- (void)removeConnectAlertView{
+- (void)dismiss{
     if (self.superview) {
         [self removeFromSuperview];
     }
 }
 
-#pragma mark -
+- (BOOL)isShow{
+    return (self.superview != nil);
+}
+
+#pragma mark - public method
+- (void)setProgress:(CGFloat)progress{
+    [self.progressView setProgress:progress animated:YES];
+}
+
+- (CGFloat)currentProgress{
+    return self.progressView.progress;
+}
 
 #pragma mark - setter & getter
 - (UIView *)alertView{

@@ -29,6 +29,15 @@
  */
 @property (nonatomic, assign)BOOL shouldRemoveObser;
 
+/**
+ 超过5s没有接收到新的数据，超时
+ */
+@property (nonatomic, strong)dispatch_source_t receiveTimer;
+
+@property (nonatomic, assign)NSInteger receiveTimerCount;
+
+@property (nonatomic, assign)BOOL timeout;
+
 @end
 
 @implementation MKSocketTaskOperation
@@ -101,11 +110,15 @@
         return;
     }
     MKSocketDataModel *model = list[0];
-    if (!model
+    if (self.timeout
+        || !model
         || model.taskID != self.taskID
         || model.taskID == socketUnknowTask
         || !model.returnData) {
         return;
+    }
+    if (self.receiveTimer) {
+        dispatch_cancel(self.receiveTimer);
     }
     [self finishOperation];
     if (model.timeout) {
@@ -125,6 +138,25 @@
     }
     [[MKSocketManager sharedInstance] addObserver:self forKeyPath:@"dataList" options:NSKeyValueObservingOptionNew context:nil];
     self.shouldRemoveObser = YES;
+    __weak __typeof(&*self)weakSelf = self;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    self.receiveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    //当2s内没有接收到新的数据的时候，也认为是接受超时
+    dispatch_source_set_timer(self.receiveTimer, dispatch_walltime(NULL, 0), 0.1 * NSEC_PER_SEC, 0);
+    dispatch_source_set_event_handler(self.receiveTimer, ^{
+        if (weakSelf.timeout || weakSelf.receiveTimerCount >= 20.f) {
+            //接受数据超时
+            weakSelf.receiveTimerCount = 0;
+            [weakSelf communicationTimeout];
+            return ;
+        }
+        weakSelf.receiveTimerCount ++;
+    });
+    if (self.isCancelled) {
+        return;
+    }
+    //如果需要从外设拿总条数，则在拿到总条数之后，开启接受超时定时器
+    dispatch_resume(self.receiveTimer);
     do {
         [[NSRunLoop currentRunLoop] runMode:NSRunLoopCommonModes beforeDate:[NSDate distantFuture]];
     }while (NO == _complete);
@@ -138,6 +170,17 @@
     _finished = YES;
     [self didChangeValueForKey:@"isFinished"];
     _complete = YES;
+}
+
+- (void)communicationTimeout{
+    self.timeout = YES;
+    if (self.receiveTimer) {
+        dispatch_cancel(self.receiveTimer);
+    }
+    [self finishOperation];
+    if (self.completeBlock) {
+        self.completeBlock([self getErrorWithMsg:@"Communication timeout"], self.taskID, nil);
+    }
 }
 
 - (NSError *)getErrorWithMsg:(NSString *)msg{

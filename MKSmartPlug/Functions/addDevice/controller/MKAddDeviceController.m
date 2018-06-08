@@ -11,9 +11,7 @@
 #import "FLAnimatedImageView.h"
 #import "MKNotBlinkAmberController.h"
 #import "MKAddDeviceAdopter.h"
-#import "MKConnectDeviceView.h"
-#import "MKConnectDeviceProgressView.h"
-#import "MKConnectDeviceWifiView.h"
+#import "MKAddDeviceDataManager.h"
 
 static CGFloat const offset_X = 20.f;
 static CGFloat const centerGifWidth = 144.f;
@@ -31,11 +29,7 @@ static CGFloat const centerGifHeight = 253.f;
 
 @property (nonatomic, strong)UILabel *instructionsLabel;
 
-@property (nonatomic, strong)MKConnectDeviceProgressView *connectProgressView;
-
-@property (nonatomic, copy)NSString *wifiSSID;
-
-@property (nonatomic, copy)NSString *password;
+@property (nonatomic, strong)MKAddDeviceDataManager *dataManager;
 
 @end
 
@@ -44,17 +38,11 @@ static CGFloat const centerGifHeight = 253.f;
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKAddDeviceController销毁");
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    //当前网络状态发生改变的通知
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(networkStatusChanged)
-                                                 name:MKNetworkStatusChangedNotification
-                                               object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -75,17 +63,9 @@ static CGFloat const centerGifHeight = 253.f;
 }
 
 - (void)blinkButtonPressed{
-    WS(weakSelf);
-    MKConnectDeviceWifiView *wifiConfirmView = [[MKConnectDeviceWifiView alloc] init];
-    [wifiConfirmView showAlertViewWithCancelAction:nil confirmAction:^(NSString *wifiSSID, NSString *password) {
-        weakSelf.wifiSSID = wifiSSID;
-        weakSelf.password = password;
+    [self.dataManager startConfigProcessWithCompleteBlock:^(NSError *error, BOOL success) {
         
     }];
-}
-
-- (void)networkStatusChanged{
-    
 }
 
 #pragma mark - loadSubViews
@@ -190,11 +170,11 @@ static CGFloat const centerGifHeight = 253.f;
     return _instructionsLabel;
 }
 
-- (MKConnectDeviceProgressView *)connectProgressView{
-    if (!_connectProgressView) {
-        _connectProgressView = [[MKConnectDeviceProgressView alloc] init];
+- (MKAddDeviceDataManager *)dataManager{
+    if (!_dataManager) {
+        _dataManager = [MKAddDeviceDataManager addDeviceManager];
     }
-    return _connectProgressView;
+    return _dataManager;
 }
 
 @end

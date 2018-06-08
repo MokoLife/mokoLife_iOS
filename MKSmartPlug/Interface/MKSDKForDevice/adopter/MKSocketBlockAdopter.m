@@ -73,12 +73,20 @@ NSString * const socketCustomErrorDomain = @"com.moko.MKPlugDeviceSDK";
 }
 
 + (void)operationDataErrorWithReturnData:(NSDictionary *)returnData block:(void (^)(NSError *error))block{
-    if ([returnData[@"code"] isEqualToString:@"0"]) {
+    if ([returnData[@"code"] integerValue] == 0) {
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         if (block) {
             block([self getErrorWithCode:socketSetParamsError message:returnData[@"message"]]);
+        }
+    });
+}
+
++ (void)operationConnectTimeoutBlock:(void (^)(NSError *error))block{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block) {
+            block([self getErrorWithCode:socketConnectedFailed message:@"Connect device timeout"]);
         }
     });
 }

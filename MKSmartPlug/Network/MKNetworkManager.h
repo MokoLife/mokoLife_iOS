@@ -17,12 +17,24 @@ extern NSString *const MKNetworkStatusChangedNotification;
 
 + (MKNetworkManager *)sharedInstance;
 
-
 /**
  获取当前手机连接的wifi ssid,注意:目前公司设备的ssid前两位为mk(MK)
  
  @return wifi ssid
  */
 + (NSString *)currentWifiSSID;
+
+/**
+ 当前网络是否可用
+ 
+ @return YES:可用，NO:不可用
+ */
+- (BOOL)currentNetworkAvailable;
+/**
+ 当前网络是否是wifi
+ 
+ @return YES:wifi，NO:非wifi
+ */
+- (BOOL)currentNetworkIsWifi;
 
 @end

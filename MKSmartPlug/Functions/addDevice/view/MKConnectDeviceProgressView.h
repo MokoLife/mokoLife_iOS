@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MKConnectViewProtocol.h"
 
-@interface MKConnectDeviceProgressView : UIView
+@interface MKConnectDeviceProgressView : UIView<MKConnectViewProtocol>
 
-- (void)showConnectAlertView;
+@property (nonatomic, weak)id <MKConnectViewConfirmDelegate>delegate;
 
-- (void)removeConnectAlertView;
+- (void)setProgress:(CGFloat)progress;
+
+- (CGFloat)currentProgress;
 
 @end
