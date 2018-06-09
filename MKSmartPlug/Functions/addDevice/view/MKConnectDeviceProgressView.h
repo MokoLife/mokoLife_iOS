@@ -13,7 +13,7 @@
 
 @property (nonatomic, weak)id <MKConnectViewConfirmDelegate>delegate;
 
-- (void)setProgress:(CGFloat)progress;
+- (void)setProgress:(CGFloat)progress duration:(CGFloat)duration;
 
 - (CGFloat)currentProgress;
 

@@ -64,7 +64,7 @@ static CGFloat const centerGifHeight = 253.f;
 
 - (void)blinkButtonPressed{
     [self.dataManager startConfigProcessWithCompleteBlock:^(NSError *error, BOOL success) {
-        
+
     }];
 }
 

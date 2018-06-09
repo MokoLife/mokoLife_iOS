@@ -78,6 +78,8 @@
 		003F6DAA20C179080002C833 /* configServer_ConnectMode_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6DA620C179080002C833 /* configServer_ConnectMode_normal@3x.png */; };
 		003F6DAB20C179080002C833 /* configServer_ConnectMode_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6DA720C179080002C833 /* configServer_ConnectMode_normal@2x.png */; };
 		003F6DAF20C17A250002C833 /* MKConfigServerAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6DAE20C17A250002C833 /* MKConfigServerAdopter.m */; };
+		0041FF5D20CA7E4F0095B6E4 /* MKMQTTServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0041FF5C20CA7E4F0095B6E4 /* MKMQTTServerManager.m */; };
+		0041FF6020CA9E860095B6E4 /* MKMQTTServerManagerAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0041FF5F20CA9E860095B6E4 /* MKMQTTServerManagerAdopter.m */; };
 		0055EB2720C4D219003C4C70 /* mokoLife_addIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0055EB2120C4D219003C4C70 /* mokoLife_addIcon@2x.png */; };
 		0055EB2820C4D219003C4C70 /* mokoLife_addIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0055EB2220C4D219003C4C70 /* mokoLife_addIcon@3x.png */; };
 		0055EB2920C4D219003C4C70 /* mokoLife_centerIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0055EB2320C4D219003C4C70 /* mokoLife_centerIcon@2x.png */; };
@@ -243,6 +245,10 @@
 		003F6DA720C179080002C833 /* configServer_ConnectMode_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "configServer_ConnectMode_normal@2x.png"; sourceTree = "<group>"; };
 		003F6DAD20C17A250002C833 /* MKConfigServerAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerAdopter.h; sourceTree = "<group>"; };
 		003F6DAE20C17A250002C833 /* MKConfigServerAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerAdopter.m; sourceTree = "<group>"; };
+		0041FF5B20CA7E4F0095B6E4 /* MKMQTTServerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerManager.h; sourceTree = "<group>"; };
+		0041FF5C20CA7E4F0095B6E4 /* MKMQTTServerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMQTTServerManager.m; sourceTree = "<group>"; };
+		0041FF5E20CA9E860095B6E4 /* MKMQTTServerManagerAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerManagerAdopter.h; sourceTree = "<group>"; };
+		0041FF5F20CA9E860095B6E4 /* MKMQTTServerManagerAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMQTTServerManagerAdopter.m; sourceTree = "<group>"; };
 		0055EB2120C4D219003C4C70 /* mokoLife_addIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mokoLife_addIcon@2x.png"; sourceTree = "<group>"; };
 		0055EB2220C4D219003C4C70 /* mokoLife_addIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mokoLife_addIcon@3x.png"; sourceTree = "<group>"; };
 		0055EB2320C4D219003C4C70 /* mokoLife_centerIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mokoLife_centerIcon@2x.png"; sourceTree = "<group>"; };
@@ -330,6 +336,10 @@
 		000B279420C665BF00D305EA /* MKSDKForMqttServer */ = {
 			isa = PBXGroup;
 			children = (
+				0041FF5B20CA7E4F0095B6E4 /* MKMQTTServerManager.h */,
+				0041FF5C20CA7E4F0095B6E4 /* MKMQTTServerManager.m */,
+				0041FF5E20CA9E860095B6E4 /* MKMQTTServerManagerAdopter.h */,
+				0041FF5F20CA9E860095B6E4 /* MKMQTTServerManagerAdopter.m */,
 			);
 			path = MKSDKForMqttServer;
 			sourceTree = "<group>";
@@ -1199,7 +1209,9 @@
 				001447DC20C22C0500A87037 /* MKConfigServerConnectModeCell.m in Sources */,
 				003F6D6620C161F50002C833 /* NSString+MKAdd.m in Sources */,
 				003F6D0520C161EF0002C833 /* MKMokoLifeController.m in Sources */,
+				0041FF5D20CA7E4F0095B6E4 /* MKMQTTServerManager.m in Sources */,
 				003F6A6520C145BC0002C833 /* main.m in Sources */,
+				0041FF6020CA9E860095B6E4 /* MKMQTTServerManagerAdopter.m in Sources */,
 				003F6D5E20C161F50002C833 /* MKBaseViewController.m in Sources */,
 				003F6D7C20C161F50002C833 /* MKSystemResource.m in Sources */,
 				003F6D7620C161F50002C833 /* MKRefreshGifFooter.m in Sources */,

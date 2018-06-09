@@ -94,8 +94,8 @@ static CGFloat const alertViewHeight = 340.f;
 }
 
 #pragma mark - public method
-- (void)setProgress:(CGFloat)progress{
-    [self.progressView setProgress:progress animated:YES];
+- (void)setProgress:(CGFloat)progress duration:(CGFloat)duration{
+    [self.progressView setProgress:progress animated:YES duration:duration];
 }
 
 - (CGFloat)currentProgress{

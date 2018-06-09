@@ -120,7 +120,12 @@
         [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
         return;
     }
-    [progressView setProgress:0.3f];
+    [[MKMQTTServerManager sharedInstance] connectMQTTServer:@"111.111.111.1" port:8080 tls:YES keepalive:60 clean:YES auth:YES user:@"asdf" pass:@"12345" clientId:@"tehckaj" connectSucBlock:^{
+        NSLog(@"Success");
+    } connectFailedBlock:^(NSError *error) {
+        [progressView showCentralToast:@"Connect mqtt!"];
+        [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
+    }];
 }
 
 #pragma mark - public method
@@ -186,7 +191,7 @@
     [wifiView dismiss];
     MKConnectDeviceProgressView *progressView = self.viewList[2];
     [progressView showConnectAlertView];
-    [progressView setProgress:0.1f];
+    [progressView setProgress:0.3 duration:10.f];
 }
 
 - (void)dismisAllAlertView{
