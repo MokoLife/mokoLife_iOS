@@ -100,4 +100,8 @@
 /** 获取Tmp目录 */
 #define kTmpPath                 NSTemporaryDirectory()
 
+#pragma mark - **************************   数据库路径宏定义  *******************************
+
+/** 闹钟fmdb 路径*/
+#define deviceDBPath              kFilePath(@"deviceDB")
 

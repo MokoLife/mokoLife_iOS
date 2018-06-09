@@ -33,6 +33,11 @@
 		0014591C20C8026000AB7759 /* MKSocketBlockAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014591A20C8026000AB7759 /* MKSocketBlockAdopter.m */; };
 		0014592120C8040A00AB7759 /* MKSocketTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */; };
 		0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014592320C8090400AB7759 /* MKSocketDataModel.m */; };
+		001A0D8220CBAFF10096E8A6 /* MKSaveDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */; };
+		001A0D8920CBB7640096E8A6 /* MKDeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */; };
+		001A0D8D20CBBA440096E8A6 /* MKDeviceDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8C20CBBA440096E8A6 /* MKDeviceDataBaseManager.m */; };
+		001A0D9020CBBA650096E8A6 /* MKDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8F20CBBA650096E8A6 /* MKDeviceModel.m */; };
+		001A0D9320CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D9220CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m */; };
 		003F698E20C122B90002C833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003F698D20C122B90002C833 /* Assets.xcassets */; };
 		003F6A6320C145BC0002C833 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6020C145BC0002C833 /* AppDelegate.m */; };
 		003F6A6520C145BC0002C833 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6220C145BC0002C833 /* main.m */; };
@@ -161,6 +166,16 @@
 		0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketTaskOperation.m; sourceTree = "<group>"; };
 		0014592220C8090400AB7759 /* MKSocketDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketDataModel.h; sourceTree = "<group>"; };
 		0014592320C8090400AB7759 /* MKSocketDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketDataModel.m; sourceTree = "<group>"; };
+		001A0D8020CBAFF10096E8A6 /* MKSaveDeviceNameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSaveDeviceNameController.h; sourceTree = "<group>"; };
+		001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSaveDeviceNameController.m; sourceTree = "<group>"; };
+		001A0D8720CBB7640096E8A6 /* MKDeviceListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceListController.h; sourceTree = "<group>"; };
+		001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceListController.m; sourceTree = "<group>"; };
+		001A0D8B20CBBA440096E8A6 /* MKDeviceDataBaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceDataBaseManager.h; sourceTree = "<group>"; };
+		001A0D8C20CBBA440096E8A6 /* MKDeviceDataBaseManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceDataBaseManager.m; sourceTree = "<group>"; };
+		001A0D8E20CBBA650096E8A6 /* MKDeviceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceModel.h; sourceTree = "<group>"; };
+		001A0D8F20CBBA650096E8A6 /* MKDeviceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceModel.m; sourceTree = "<group>"; };
+		001A0D9120CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceDataBaseAdopter.h; sourceTree = "<group>"; };
+		001A0D9220CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceDataBaseAdopter.m; sourceTree = "<group>"; };
 		003F698120C122B90002C833 /* MKSmartPlug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKSmartPlug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		003F698D20C122B90002C833 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		003F6A5F20C145BC0002C833 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -448,6 +463,85 @@
 			path = task;
 			sourceTree = "<group>";
 		};
+		001A0D7C20CBAFE00096E8A6 /* saveDevice */ = {
+			isa = PBXGroup;
+			children = (
+				001A0D7D20CBAFE00096E8A6 /* controller */,
+				001A0D7E20CBAFE00096E8A6 /* model */,
+				001A0D7F20CBAFE00096E8A6 /* view */,
+			);
+			path = saveDevice;
+			sourceTree = "<group>";
+		};
+		001A0D7D20CBAFE00096E8A6 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				001A0D8020CBAFF10096E8A6 /* MKSaveDeviceNameController.h */,
+				001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		001A0D7E20CBAFE00096E8A6 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		001A0D7F20CBAFE00096E8A6 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		001A0D8320CBB73D0096E8A6 /* deviceList */ = {
+			isa = PBXGroup;
+			children = (
+				001A0D8420CBB73D0096E8A6 /* controller */,
+				001A0D8520CBB73D0096E8A6 /* model */,
+				001A0D8620CBB73D0096E8A6 /* view */,
+			);
+			path = deviceList;
+			sourceTree = "<group>";
+		};
+		001A0D8420CBB73D0096E8A6 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				001A0D8720CBB7640096E8A6 /* MKDeviceListController.h */,
+				001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		001A0D8520CBB73D0096E8A6 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				001A0D8E20CBBA650096E8A6 /* MKDeviceModel.h */,
+				001A0D8F20CBBA650096E8A6 /* MKDeviceModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		001A0D8620CBB73D0096E8A6 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		001A0D8A20CBBA2E0096E8A6 /* DataBaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				001A0D8B20CBBA440096E8A6 /* MKDeviceDataBaseManager.h */,
+				001A0D8C20CBBA440096E8A6 /* MKDeviceDataBaseManager.m */,
+				001A0D9120CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.h */,
+				001A0D9220CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m */,
+			);
+			path = DataBaseManager;
+			sourceTree = "<group>";
+		};
 		003F697820C122B90002C833 = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +563,7 @@
 		003F698320C122B90002C833 /* MKSmartPlug */ = {
 			isa = PBXGroup;
 			children = (
+				001A0D8A20CBBA2E0096E8A6 /* DataBaseManager */,
 				000B279220C665BF00D305EA /* Interface */,
 				00BB0EA720C519BA006F2DEA /* Network */,
 				003F6D0620C161F50002C833 /* Expand */,
@@ -526,6 +621,8 @@
 		003F6D0020C161EF0002C833 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				001A0D8320CBB73D0096E8A6 /* deviceList */,
+				001A0D7C20CBAFE00096E8A6 /* saveDevice */,
 				0055EB3820C4E722003C4C70 /* notBlinkAmber */,
 				0055EB1C20C4D1E5003C4C70 /* addDevice */,
 				0014480220C2A71600A87037 /* selectDeviceType */,
@@ -1176,6 +1273,7 @@
 				001447E920C2650F00A87037 /* MKConfigServerPickView.m in Sources */,
 				00BB0EAA20C519C8006F2DEA /* MKNetworkManager.m in Sources */,
 				003F6D6720C161F50002C833 /* UIApplication+MKAdd.m in Sources */,
+				001A0D8D20CBBA440096E8A6 /* MKDeviceDataBaseManager.m in Sources */,
 				001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */,
 				001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */,
 				003F6D6520C161F50002C833 /* NSInvocation+MKAdd.m in Sources */,
@@ -1186,6 +1284,8 @@
 				003F6D6E20C161F50002C833 /* MKHexKeyboard.m in Sources */,
 				0055EB4420C4E882003C4C70 /* MKNotBlinkAmberCell.m in Sources */,
 				001447FD20C299A600A87037 /* MKSettingsCell.m in Sources */,
+				001A0D8920CBB7640096E8A6 /* MKDeviceListController.m in Sources */,
+				001A0D9320CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m in Sources */,
 				001447F720C2972300A87037 /* MKSettingsController.m in Sources */,
 				003F6D6020C161F50002C833 /* MKBaseTableView.m in Sources */,
 				003F6D6220C161F50002C833 /* MKHaveRefreshTableView.m in Sources */,
@@ -1200,6 +1300,7 @@
 				003F6D6A20C161F50002C833 /* UITextField+MKAdd.m in Sources */,
 				000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */,
 				0014480B20C2A7B200A87037 /* MKSelectDeviceTypeCell.m in Sources */,
+				001A0D9020CBBA650096E8A6 /* MKDeviceModel.m in Sources */,
 				0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */,
 				003F6D5F20C161F50002C833 /* MKBaseDataModel.m in Sources */,
 				003F6D6420C161F50002C833 /* NSDateFormatter+MKAdd.m in Sources */,
@@ -1221,6 +1322,7 @@
 				000FED7820C911180082705A /* MKAddDeviceDataManager.m in Sources */,
 				003F6D6820C161F50002C833 /* UIButton+MKAdd.m in Sources */,
 				003F6D7320C161F50002C833 /* MKPageControl.m in Sources */,
+				001A0D8220CBAFF10096E8A6 /* MKSaveDeviceNameController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

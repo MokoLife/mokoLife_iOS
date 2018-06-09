@@ -12,6 +12,7 @@
 #import "MKNotBlinkAmberController.h"
 #import "MKAddDeviceAdopter.h"
 #import "MKAddDeviceDataManager.h"
+#import "MKSaveDeviceNameController.h"
 
 static CGFloat const offset_X = 20.f;
 static CGFloat const centerGifWidth = 144.f;
@@ -63,6 +64,8 @@ static CGFloat const centerGifHeight = 253.f;
 }
 
 - (void)blinkButtonPressed{
+//    MKSaveDeviceNameController *vc = [[MKSaveDeviceNameController alloc] initWithNavigationType:GYNaviTypeShow];
+//    [self.navigationController pushViewController:vc animated:YES];
     [self.dataManager startConfigProcessWithCompleteBlock:^(NSError *error, BOOL success) {
 
     }];
