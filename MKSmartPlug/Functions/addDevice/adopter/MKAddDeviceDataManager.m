@@ -12,6 +12,7 @@
 #import "MKConnectDeviceWifiView.h"
 #import "MKAddDeviceAdopter.h"
 #import "MKConnectViewProtocol.h"
+#import "MKSmartPlugConnectManager.h"
 
 @interface MKAddDeviceDataManager()<MKConnectViewConfirmDelegate>
 
@@ -191,7 +192,7 @@
     [wifiView dismiss];
     MKConnectDeviceProgressView *progressView = self.viewList[2];
     [progressView showConnectAlertView];
-    [progressView setProgress:0.3 duration:10.f];
+    [progressView setProgress:0.3 duration:60.f];
 }
 
 - (void)dismisAllAlertView{
@@ -210,31 +211,7 @@
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:wifiView isPenetration:NO];
     __weak __typeof(&*wifiView)weakView = wifiView;
     WS(weakSelf);
-    [[MKSocketManager sharedInstance] connectDeviceWithHost:defaultHostIpAddress port:defaultPort connectSucBlock:^(NSString *IP, NSInteger port) {
-        [weakSelf configMqttServer];
-    } connectFailedBlock:^(NSError *error) {
-        [[MKHudManager share] hide];
-        [weakView showCentralToast:error.userInfo[@"errorInfo"]];
-    }];
-}
-
-- (void)configMqttServer{
-    MKConnectDeviceWifiView *wifiView = self.viewList[1];
-    __weak __typeof(&*wifiView)weakView = wifiView;
-    WS(weakSelf);
-    [[MKSocketManager sharedInstance] configMQTTServerHost:@"45.32.33.42" port:1883 connectMode:mqttServerConnectTCPMode qos:mqttQosLevelExactlyOnce keepalive:60 cleanSession:YES clientId:@"smartPlug1" username:@"host1243" password:@"a123456" sucBlock:^(id returnData) {
-        [weakSelf configWifi];
-    } failedBlock:^(NSError *error) {
-        [[MKHudManager share] hide];
-        [weakView showCentralToast:error.userInfo[@"errorInfo"]];
-    }];
-}
-
-- (void)configWifi{
-    MKConnectDeviceWifiView *wifiView = self.viewList[1];
-    __weak __typeof(&*wifiView)weakView = wifiView;
-    WS(weakSelf);
-    [[MKSocketManager sharedInstance] configWifiSSID:self.wifiSSID password:self.password security:wifiSecurity_WPA2_PSK sucBlock:^(id returnData) {
+    [MKSmartPlugConnectManager configDeviceWithWifiSSID:self.wifiSSID password:self.password sucBlock:^{
         [[MKHudManager share] hide];
         //开始连接mqtt服务器
         [weakSelf connectMqttServer];

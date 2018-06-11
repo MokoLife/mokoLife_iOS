@@ -11,8 +11,11 @@
 #import "MKSelectDeviceTypeController.h"
 #import "MKBaseTableView.h"
 #import "MKDeviceModel.h"
+#import "MKAddDeviceView.h"
 
 @interface MKDeviceListController ()
+
+@property (nonatomic, strong)MKAddDeviceView *addDeviceView;
 
 @end
 
@@ -26,6 +29,11 @@
     [super viewDidLoad];
     [self.leftButton setImage:LOADIMAGE(@"mokoLife_menuIcon", @"png") forState:UIControlStateNormal];
     [self.rightButton setImage:LOADIMAGE(@"mokoLife_addIcon", @"png") forState:UIControlStateNormal];
+    [self.view addSubview:self.addDeviceView];
+    [self.addDeviceView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view);
+    }];
+    [self.addDeviceView setAlpha:1.f];
     // Do any additional setup after loading the view.
 }
 
@@ -46,6 +54,17 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-#pragma mark -
+#pragma mark - setter & getter
+- (MKAddDeviceView *)addDeviceView{
+    if (!_addDeviceView) {
+        _addDeviceView = [[MKAddDeviceView alloc] init];
+        _addDeviceView.alpha = 0.f;
+        WS(weakSelf);
+        _addDeviceView.addDeviceBlock = ^{
+            [weakSelf rightButtonMethod];
+        };
+    }
+    return _addDeviceView;
+}
 
 @end

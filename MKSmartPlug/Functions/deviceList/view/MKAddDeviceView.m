@@ -1,20 +1,17 @@
 //
-//  MKMokoLifeController.m
+//  MKAddDeviceView.m
 //  MKSmartPlug
 //
-//  Created by aa on 2018/6/1.
+//  Created by aa on 2018/6/9.
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "MKMokoLifeController.h"
-#import "MKSettingsController.h"
-#import "MKSelectDeviceTypeController.h"
+#import "MKAddDeviceView.h"
 
 static CGFloat const offset_X = 15.f;
 static CGFloat const centerIconWidth = 268.f;
 static CGFloat const centerIconHeight = 268.f;
-
-@interface MKMokoLifeController ()
+@interface MKAddDeviceView()
 
 @property (nonatomic, strong)UILabel *msgLabel;
 
@@ -24,51 +21,24 @@ static CGFloat const centerIconHeight = 268.f;
 
 @end
 
-@implementation MKMokoLifeController
-
+@implementation MKAddDeviceView
 #pragma mark - life circle
 - (void)dealloc{
-    NSLog(@"MKMokoLifeController销毁");
+    NSLog(@"销毁");
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self loadSubViews];
-    // Do any additional setup after loading the view.
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self addSubview:self.msgLabel];
+        [self addSubview:self.centerIcon];
+        [self addSubview:self.addButton];
+    }
+    return self;
 }
 
 #pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Moko Life";
-}
-
-- (void)leftButtonMethod{
-    MKSettingsController *vc = [[MKSettingsController alloc] initWithNavigationType:GYNaviTypeShow];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)rightButtonMethod{
-    MKSelectDeviceTypeController *vc = [[MKSelectDeviceTypeController alloc] initWithNavigationType:GYNaviTypeShow];
-    vc.isPrensent = YES;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-#pragma mark - event method
-- (void)addButtonPressed{
-    MKSelectDeviceTypeController *vc = [[MKSelectDeviceTypeController alloc] initWithNavigationType:GYNaviTypeShow];
-    vc.isPrensent = YES;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-#pragma mark - loadSubViews
-- (void)loadSubViews{
-    [self.leftButton setImage:LOADIMAGE(@"mokoLife_menuIcon", @"png") forState:UIControlStateNormal];
-    [self.rightButton setImage:LOADIMAGE(@"mokoLife_addIcon", @"png") forState:UIControlStateNormal];
-    [self.view addSubview:self.msgLabel];
-    [self.view addSubview:self.centerIcon];
-    [self.view addSubview:self.addButton];
+- (void)layoutSubviews{
+    [super layoutSubviews];
     [self.msgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(offset_X);
         make.right.mas_equalTo(-offset_X);
@@ -76,9 +46,9 @@ static CGFloat const centerIconHeight = 268.f;
         make.height.mas_equalTo(MKFont(18.f).lineHeight);
     }];
     [self.centerIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.centerX.mas_equalTo(self.mas_centerX);
         make.width.mas_equalTo(centerIconWidth);
-        make.centerY.mas_equalTo(self.view.mas_centerY);
+        make.centerY.mas_equalTo(self.mas_centerY);
         make.height.mas_equalTo(centerIconHeight);
     }];
     [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -87,6 +57,13 @@ static CGFloat const centerIconHeight = 268.f;
         make.bottom.mas_equalTo(-70.f);
         make.height.mas_equalTo(50.f);
     }];
+}
+
+#pragma mark - event method
+- (void)addButtonPressed{
+    if (self.addDeviceBlock) {
+        self.addDeviceBlock();
+    }
 }
 
 #pragma mark - setter & getter
