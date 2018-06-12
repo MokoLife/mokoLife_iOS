@@ -10,6 +10,11 @@
 #import "MQTTSessionManager.h"
 #import "MQTTSession.h"
 
+//manager的装发生改变通知
+NSString *const MKMQTTServerManagerStateChangedNotification = @"MKMQTTServerManagerStateChangedNotification";
+//manager收到mqtt服务器的数据通知
+NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataNotification";
+
 @interface MKMQTTServerManager()<MQTTSessionManagerDelegate>
 
 @property (nonatomic, strong)MQTTSessionManager *sessionManager;
@@ -48,11 +53,7 @@
 - (void)sessionManager:(MQTTSessionManager *)sessonManager didChangeState:(MQTTSessionManagerState)newState{
     //更新当前state
     [self sessionStateWithMQTTManagerState:newState];
-    if ([self.delegate respondsToSelector:@selector(sessionManager:didChangeState:)]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate sessionManager:[MKMQTTServerManager sharedInstance] didChangeState:self.managerState];
-        });
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerManagerStateChangedNotification object:nil];
     NSLog(@"连接状态发生改变:---%ld",(long)newState);
     if (newState == MQTTSessionManagerStateError) {
         //连接出错
@@ -103,6 +104,11 @@
                  clientId:(NSString *)clientId
           connectSucBlock:(void (^)(void))sucBlock
        connectFailedBlock:(void (^)(NSError *error))failedBlock{
+    if (self.sessionManager) {
+        self.sessionManager.delegate = nil;
+        [self.sessionManager disconnect];
+        self.sessionManager = nil;
+    }
     MQTTSessionManager *sessionManager = [[MQTTSessionManager alloc] init];
     sessionManager.delegate = self;
     self.sessionManager = sessionManager;
@@ -118,6 +124,20 @@
         }
         [weakSelf clearConnectBlock];
     }];
+}
+
+/**
+ 订阅主题。NSDictionary类型，Object 为 QoS，key 为 Topic
+
+ @param subscriptions subscriptions
+ */
+- (void)setSubscriptions:(NSDictionary<NSString *,NSNumber *> *)subscriptions{
+    _subscriptions = nil;
+    _subscriptions = subscriptions;
+    if (!_subscriptions || !self.sessionManager) {
+        return;
+    }
+    self.sessionManager.subscriptions = _subscriptions;
 }
 
 #pragma mark - private method

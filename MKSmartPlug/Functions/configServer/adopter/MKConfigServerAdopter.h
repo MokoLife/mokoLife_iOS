@@ -12,13 +12,16 @@
 static NSString *const configCellNeedHiddenKeyboardNotification = @"configCellNeedHiddenKeyboardNotification";
 
 @class MKConfigServerModel;
+@class MKConfigServerController;
 @interface MKConfigServerAdopter : NSObject
 
 + (UILabel *)configServerDefaultMsgLabel;
 
 + (CGFloat)defaultMsgLabelHeight;
 
-+ (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath table:(UITableView *)tableView;
++ (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath
+                                       table:(UITableView *)tableView
+                                 configModel:(MKConfigServerModel *)configModel;
 
 /**
  所有带输入框的cell取消第一响应者
@@ -63,5 +66,6 @@ static NSString *const configCellNeedHiddenKeyboardNotification = @"configCellNe
  */
 + (void)clearAction:(void (^)(void))confirmAction cancelAction:(void (^)(void))cancelAction;
 
++ (void)saveDataToLocal:(MKConfigServerModel *)serverModel target:(MKConfigServerController *)target;
 
 @end

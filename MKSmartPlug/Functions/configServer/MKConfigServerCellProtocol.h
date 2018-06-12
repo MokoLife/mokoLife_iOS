@@ -16,6 +16,13 @@
  */
 - (void)setToDefaultParameters;
 
+/**
+ 设置参数
+
+ @param params 参数
+ */
+- (void)setParams:(id)params;
+
 @optional
 
 /**

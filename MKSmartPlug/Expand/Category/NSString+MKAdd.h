@@ -39,13 +39,14 @@
  */
 - (BOOL)isLetterOrRealNumbers;
 
+/**
+ 校验输入的字符是否合法，必须是数字或者A、B、C、D、E、F其中的一种
+ 
+ @return NO不合法，YES合法
+ */
+- (BOOL)checkInputIsHexString;
+
 - (BOOL)isValidatIP;
-
-- (BOOL)checkClientId;
-
-- (BOOL)checkUserName;
-
-- (BOOL)checkPassword;
 
 /**
  判断当前字符串是否是url

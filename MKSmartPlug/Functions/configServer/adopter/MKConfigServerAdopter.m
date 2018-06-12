@@ -15,6 +15,8 @@
 #import "MKConfigServerPickView.h"
 #import "MKConfigServerCellProtocol.h"
 #import "MKConfigServerModel.h"
+#import "MKConfigServerController.h"
+#import "twlt_uuid_util.h"
 
 @implementation MKConfigServerAdopter
 
@@ -30,42 +32,64 @@
     return MKFont(15.f).lineHeight;
 }
 
-+ (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath table:(UITableView *)tableView{
++ (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath
+                                       table:(UITableView *)tableView
+                                 configModel:(MKConfigServerModel *)configModel{
     if (indexPath.row == 0) {
         //host
         MKConfigServerHostCell *cell = [MKConfigServerHostCell initCellWithTableView:tableView];
+        [cell setParams:configModel.host];
         return cell;
     }
     if (indexPath.row == 1) {
         //port
         MKConfigServerPortCell *cell = [MKConfigServerPortCell initCellWithTableView:tableView];
+        NSDictionary *params = @{
+                                 @"port":SafeStr(configModel.port),
+                                 @"clean":@(configModel.cleanSession)
+                                 };
+        [cell setParams:params];
         return cell;
     }
     if (indexPath.row == 2) {
         //connect mode
         MKConfigServerConnectModeCell *cell = [MKConfigServerConnectModeCell initCellWithTableView:tableView];
+        [cell setParams:@(configModel.connectMode)];
         return cell;
     }
     if (indexPath.row == 3) {
         //qos
         MKConfigServerQosCell *cell = [MKConfigServerQosCell initCellWithTableView:tableView];
+        NSDictionary *dic = @{
+                              @"qos":SafeStr(configModel.qos),
+                              @"keepAlive":SafeStr(configModel.keepAlive),
+                              };
+        [cell setParams:dic];
         return cell;
     }
     if (indexPath.row == 4) {
         //client id
         MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
         cell.msg = @"Client Id";
+        NSString *clientId = SafeStr(configModel.clientId);
+        if (!ValidStr(clientId)) {
+            //如果没有有效值，则默认用手机uuid
+            clientId = twlt_uuid_create();//设备唯一标识
+        }
+        [cell setParams:clientId];
         return cell;
     }
     if (indexPath.row == 5) {
         //Username
         MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
         cell.msg = @"Username";
+        [cell setParams:SafeStr(configModel.userName)];
         return cell;
     }
     //Password
     MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
     cell.msg = @"Password";
+    [cell setParams:SafeStr(configModel.password)];
     return cell;
 }
 
@@ -212,22 +236,46 @@
         [target.view showCentralToast:@"Port effective range : 0~65535"];
         return NO;
     }
-    if (ValidStr(serverModel.clientId) && ![serverModel.clientId checkClientId]) {
+    if (!ValidStr(serverModel.clientId) || serverModel.clientId.length > 32) {
         //client id错误
         [target.view showCentralToast:@"Client id error"];
         return NO;
     }
-    if (ValidStr(serverModel.userName) && ![serverModel.userName checkUserName]) {
+    if (!ValidStr(serverModel.userName) || serverModel.userName.length > 32) {
         //user name错误
         [target.view showCentralToast:@"User name error"];
         return NO;
     }
-    if (ValidStr(serverModel.password) && ![serverModel.password checkPassword]) {
+    if (!ValidStr(serverModel.password) || serverModel.password.length > 32) {
         //passwrod错误
         [target.view showCentralToast:@"Password error"];
         return NO;
     }
     return YES;
+}
+
++ (void)saveDataToLocal:(MKConfigServerModel *)serverModel target:(MKConfigServerController *)target{
+    if (target.controllerType == MKConfigServerForApp) {
+        [[MKMQTTServerConnectManager sharedInstance] saveServerConfigDataToLocal:serverModel];
+        if (![[MKSmartPlugConnectManager sharedInstance].configServerModel needParametersHasValue]) {
+            //如果设置给plug的mqtt服务器信息没有，去设置
+            MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+            vc.controllerType = MKConfigServerForSmartPlug;
+            [target.navigationController pushViewController:vc animated:YES];
+            return;
+        }
+        [target.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    [[MKSmartPlugConnectManager sharedInstance] saveServerConfigDataToLocal:serverModel];
+    if (![[MKMQTTServerConnectManager sharedInstance].configServerModel needParametersHasValue]) {
+        //如果app的mqtt服务器信息没有，则去设置
+        MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+        vc.controllerType = MKConfigServerForApp;
+        [target.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    [target.navigationController popViewControllerAnimated:YES];
 }
 
 @end

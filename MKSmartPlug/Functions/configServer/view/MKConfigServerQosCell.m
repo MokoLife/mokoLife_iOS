@@ -149,6 +149,23 @@ static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIden
 }
 
 /**
+ 设置参数
+ 
+ @param params 参数
+ */
+- (void)setParams:(id)params{
+    if (!ValidDict(params)) {
+        return;
+    }
+    if (ValidStr(params[@"qos"])) {
+        self.qosValueLabel.text = params[@"qos"];
+    }
+    if (ValidStr(params[@"keepAlive"])) {
+        self.aliveTextField.text = params[@"keepAlive"];
+    }
+}
+
+/**
  隐藏键盘
  */
 - (void)resignFirstResponder{

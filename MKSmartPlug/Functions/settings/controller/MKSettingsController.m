@@ -49,11 +49,13 @@
     if (indexPath.row == 0) {
         //device
         MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+        vc.controllerType = MKConfigServerForSmartPlug;
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
     //app
     MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+    vc.controllerType = MKConfigServerForApp;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

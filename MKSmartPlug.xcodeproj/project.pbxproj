@@ -9,9 +9,17 @@
 /* Begin PBXBuildFile section */
 		000AF77020CE0C6500BD74B6 /* MKSmartPlugConnectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000AF76F20CE0C6500BD74B6 /* MKSmartPlugConnectManager.m */; };
 		000AF77320CE0C7600BD74B6 /* MKMQTTServerConnectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000AF77220CE0C7600BD74B6 /* MKMQTTServerConnectManager.m */; };
+		000AF77720CE620500BD74B6 /* MKDeviceListAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 000AF77620CE620500BD74B6 /* MKDeviceListAdopter.m */; };
+		000AF77A20CE636200BD74B6 /* MKDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 000AF77920CE636200BD74B6 /* MKDeviceListCell.m */; };
+		000AF77D20CE7DFE00BD74B6 /* device_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 000AF77B20CE7DFD00BD74B6 /* device_icon@3x.png */; };
+		000AF77E20CE7DFE00BD74B6 /* device_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 000AF77C20CE7DFE00BD74B6 /* device_icon@2x.png */; };
 		000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B278420C61D3200D305EA /* MKAnimationAdopter.m */; };
 		000B279120C636E800D305EA /* MKConnectDeviceWifiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B279020C636E800D305EA /* MKConnectDeviceWifiView.m */; };
 		000B279720C666FF00D305EA /* MKSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B279620C666FF00D305EA /* MKSocketManager.m */; };
+		000E85AD20CF6910006B8831 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 000E85AA20CF6910006B8831 /* SFHFKeychainUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		000E85AE20CF6910006B8831 /* twlt_uuid_util.m in Sources */ = {isa = PBXBuildFile; fileRef = 000E85AC20CF6910006B8831 /* twlt_uuid_util.m */; };
+		000E85B020CF6A03006B8831 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 000E85AF20CF6A03006B8831 /* Security.framework */; };
+		000E85BC20CF6F8E006B8831 /* MKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 000E85BB20CF6F8E006B8831 /* MKTextField.m */; };
 		000FED7820C911180082705A /* MKAddDeviceDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000FED7720C911180082705A /* MKAddDeviceDataManager.m */; };
 		001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D520C22BC700A87037 /* MKConfigServerHostCell.m */; };
 		001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D820C22BED00A87037 /* MKConfigServerPortCell.m */; };
@@ -123,12 +131,25 @@
 		000AF76F20CE0C6500BD74B6 /* MKSmartPlugConnectManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSmartPlugConnectManager.m; sourceTree = "<group>"; };
 		000AF77120CE0C7600BD74B6 /* MKMQTTServerConnectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerConnectManager.h; sourceTree = "<group>"; };
 		000AF77220CE0C7600BD74B6 /* MKMQTTServerConnectManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMQTTServerConnectManager.m; sourceTree = "<group>"; };
+		000AF77520CE620500BD74B6 /* MKDeviceListAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceListAdopter.h; sourceTree = "<group>"; };
+		000AF77620CE620500BD74B6 /* MKDeviceListAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceListAdopter.m; sourceTree = "<group>"; };
+		000AF77820CE636200BD74B6 /* MKDeviceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceListCell.h; sourceTree = "<group>"; };
+		000AF77920CE636200BD74B6 /* MKDeviceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceListCell.m; sourceTree = "<group>"; };
+		000AF77B20CE7DFD00BD74B6 /* device_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "device_icon@3x.png"; sourceTree = "<group>"; };
+		000AF77C20CE7DFE00BD74B6 /* device_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "device_icon@2x.png"; sourceTree = "<group>"; };
 		000B278320C61D3200D305EA /* MKAnimationAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAnimationAdopter.h; sourceTree = "<group>"; };
 		000B278420C61D3200D305EA /* MKAnimationAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAnimationAdopter.m; sourceTree = "<group>"; };
 		000B278F20C636E800D305EA /* MKConnectDeviceWifiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectDeviceWifiView.h; sourceTree = "<group>"; };
 		000B279020C636E800D305EA /* MKConnectDeviceWifiView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConnectDeviceWifiView.m; sourceTree = "<group>"; };
 		000B279520C666FF00D305EA /* MKSocketManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketManager.h; sourceTree = "<group>"; };
 		000B279620C666FF00D305EA /* MKSocketManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketManager.m; sourceTree = "<group>"; };
+		000E85A920CF6910006B8831 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
+		000E85AA20CF6910006B8831 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		000E85AB20CF6910006B8831 /* twlt_uuid_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twlt_uuid_util.h; sourceTree = "<group>"; };
+		000E85AC20CF6910006B8831 /* twlt_uuid_util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = twlt_uuid_util.m; sourceTree = "<group>"; };
+		000E85AF20CF6A03006B8831 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		000E85BA20CF6F8E006B8831 /* MKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKTextField.h; sourceTree = "<group>"; };
+		000E85BB20CF6F8E006B8831 /* MKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKTextField.m; sourceTree = "<group>"; };
 		000FED7620C911180082705A /* MKAddDeviceDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAddDeviceDataManager.h; sourceTree = "<group>"; };
 		000FED7720C911180082705A /* MKAddDeviceDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAddDeviceDataManager.m; sourceTree = "<group>"; };
 		000FED7920C9221C0082705A /* MKConnectViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectViewProtocol.h; sourceTree = "<group>"; };
@@ -318,6 +339,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000E85B020CF6A03006B8831 /* Security.framework in Frameworks */,
 				CF1A8D503A9A0F50468A9B31 /* libPods-MKSmartPlug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +372,15 @@
 				000AF76F20CE0C6500BD74B6 /* MKSmartPlugConnectManager.m */,
 			);
 			path = smartPlugConnect;
+			sourceTree = "<group>";
+		};
+		000AF77420CE61F600BD74B6 /* adopter */ = {
+			isa = PBXGroup;
+			children = (
+				000AF77520CE620500BD74B6 /* MKDeviceListAdopter.h */,
+				000AF77620CE620500BD74B6 /* MKDeviceListAdopter.m */,
+			);
+			path = adopter;
 			sourceTree = "<group>";
 		};
 		000B278220C61D2600D305EA /* MKAnimationAdopter */ = {
@@ -390,6 +421,26 @@
 				0041FF5F20CA9E860095B6E4 /* MKMQTTServerManagerAdopter.m */,
 			);
 			path = MKSDKForMqttServer;
+			sourceTree = "<group>";
+		};
+		000E85A820CF6910006B8831 /* SFHFKeychainUtils */ = {
+			isa = PBXGroup;
+			children = (
+				000E85A920CF6910006B8831 /* SFHFKeychainUtils.h */,
+				000E85AA20CF6910006B8831 /* SFHFKeychainUtils.m */,
+				000E85AB20CF6910006B8831 /* twlt_uuid_util.h */,
+				000E85AC20CF6910006B8831 /* twlt_uuid_util.m */,
+			);
+			path = SFHFKeychainUtils;
+			sourceTree = "<group>";
+		};
+		000E85B920CF6F8E006B8831 /* MKTextField */ = {
+			isa = PBXGroup;
+			children = (
+				000E85BA20CF6F8E006B8831 /* MKTextField.h */,
+				000E85BB20CF6F8E006B8831 /* MKTextField.m */,
+			);
+			path = MKTextField;
 			sourceTree = "<group>";
 		};
 		001447F120C2971300A87037 /* settings */ = {
@@ -532,6 +583,7 @@
 		001A0D8320CBB73D0096E8A6 /* deviceList */ = {
 			isa = PBXGroup;
 			children = (
+				000AF77420CE61F600BD74B6 /* adopter */,
 				001A0D8420CBB73D0096E8A6 /* controller */,
 				001A0D8520CBB73D0096E8A6 /* model */,
 				001A0D8620CBB73D0096E8A6 /* view */,
@@ -562,6 +614,8 @@
 			children = (
 				001A0D9420CBCFDE0096E8A6 /* MKAddDeviceView.h */,
 				001A0D9520CBCFDE0096E8A6 /* MKAddDeviceView.m */,
+				000AF77820CE636200BD74B6 /* MKDeviceListCell.h */,
+				000AF77920CE636200BD74B6 /* MKDeviceListCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -770,6 +824,8 @@
 		003F6D3320C161F50002C833 /* PublicTools */ = {
 			isa = PBXGroup;
 			children = (
+				000E85B920CF6F8E006B8831 /* MKTextField */,
+				000E85A820CF6910006B8831 /* SFHFKeychainUtils */,
 				000B278220C61D2600D305EA /* MKAnimationAdopter */,
 				0055EB3420C4D96F003C4C70 /* MKCommonlyUIHelper */,
 				003F6D3420C161F50002C833 /* MKAttributedStringManager */,
@@ -887,6 +943,8 @@
 		003F6D8220C163390002C833 /* addDevice */ = {
 			isa = PBXGroup;
 			children = (
+				000AF77C20CE7DFE00BD74B6 /* device_icon@2x.png */,
+				000AF77B20CE7DFD00BD74B6 /* device_icon@3x.png */,
 				00C6802F20C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png */,
 				00C6803020C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png */,
 				0055EB4820C51338003C4C70 /* notBlinkAmberStep1_leftIcon@2x.png */,
@@ -1101,6 +1159,7 @@
 		1F7C2CDD2A2710E96AB5869C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				000E85AF20CF6A03006B8831 /* Security.framework */,
 				C70A99AF7622EA9C6E25B107 /* libPods-MKSmartPlug.a */,
 			);
 			name = Frameworks;
@@ -1177,6 +1236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000AF77D20CE7DFE00BD74B6 /* device_icon@3x.png in Resources */,
 				0055EB2B20C4D219003C4C70 /* mokoLife_menuIcon@2x.png in Resources */,
 				003F6DA920C179080002C833 /* configServer_ConnectMode_selected@3x.png in Resources */,
 				003F698E20C122B90002C833 /* Assets.xcassets in Resources */,
@@ -1196,6 +1256,7 @@
 				001447E520C23ADA00A87037 /* configServer_triangleIcon@3x.png in Resources */,
 				0055EB5720C51339003C4C70 /* notBlinkAmberStep1_rightIcon@2x.png in Resources */,
 				003F6DAB20C179080002C833 /* configServer_ConnectMode_normal@2x.png in Resources */,
+				000AF77E20CE7DFE00BD74B6 /* device_icon@2x.png in Resources */,
 				0014480120C29A9300A87037 /* MKSmartPlugRightNextIcon@3x.png in Resources */,
 				0014481020C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png in Resources */,
 				0055EB2A20C4D219003C4C70 /* mokoLife_centerIcon@3x.png in Resources */,
@@ -1277,6 +1338,7 @@
 				0014591B20C8026000AB7759 /* MKSocketAdopter.m in Sources */,
 				0014592120C8040A00AB7759 /* MKSocketTaskOperation.m in Sources */,
 				003F6D7D20C161F50002C833 /* MKTimePickerView.m in Sources */,
+				000AF77A20CE636200BD74B6 /* MKDeviceListCell.m in Sources */,
 				001447DF20C22C1A00A87037 /* MKConfigServerQosCell.m in Sources */,
 				000B279120C636E800D305EA /* MKConnectDeviceWifiView.m in Sources */,
 				00C6803520C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m in Sources */,
@@ -1303,8 +1365,10 @@
 				003F6D6E20C161F50002C833 /* MKHexKeyboard.m in Sources */,
 				0055EB4420C4E882003C4C70 /* MKNotBlinkAmberCell.m in Sources */,
 				001447FD20C299A600A87037 /* MKSettingsCell.m in Sources */,
+				000E85BC20CF6F8E006B8831 /* MKTextField.m in Sources */,
 				001A0D9620CBCFDE0096E8A6 /* MKAddDeviceView.m in Sources */,
 				001A0D8920CBB7640096E8A6 /* MKDeviceListController.m in Sources */,
+				000E85AE20CF6910006B8831 /* twlt_uuid_util.m in Sources */,
 				001A0D9320CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m in Sources */,
 				001447F720C2972300A87037 /* MKSettingsController.m in Sources */,
 				003F6D6020C161F50002C833 /* MKBaseTableView.m in Sources */,
@@ -1323,6 +1387,7 @@
 				0014480B20C2A7B200A87037 /* MKSelectDeviceTypeCell.m in Sources */,
 				001A0D9020CBBA650096E8A6 /* MKDeviceModel.m in Sources */,
 				0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */,
+				000E85AD20CF6910006B8831 /* SFHFKeychainUtils.m in Sources */,
 				003F6D5F20C161F50002C833 /* MKBaseDataModel.m in Sources */,
 				003F6D6420C161F50002C833 /* NSDateFormatter+MKAdd.m in Sources */,
 				003F6D5D20C161F50002C833 /* MKBaseCell.m in Sources */,
@@ -1335,6 +1400,7 @@
 				0041FF6020CA9E860095B6E4 /* MKMQTTServerManagerAdopter.m in Sources */,
 				003F6D5E20C161F50002C833 /* MKBaseViewController.m in Sources */,
 				003F6D7C20C161F50002C833 /* MKSystemResource.m in Sources */,
+				000AF77720CE620500BD74B6 /* MKDeviceListAdopter.m in Sources */,
 				003F6D7620C161F50002C833 /* MKRefreshGifFooter.m in Sources */,
 				0055EB3E20C4E7D2003C4C70 /* MKNotBlinkAmberController.m in Sources */,
 				0055EB3720C4D97A003C4C70 /* MKCommonlyUIHelper.m in Sources */,

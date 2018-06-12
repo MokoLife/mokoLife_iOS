@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class MKTextField;
 @interface MKCommonlyUIHelper : NSObject
 
 /**
@@ -31,10 +32,10 @@
 + (UILabel *)clickEnableLabelWithText:(NSString *)text textColor:(UIColor *)textColor target:(id)target action:(SEL)action;
 
 /**
- 带圆角边框的输入框
+ 带圆角边框的输入框,并且最大输入长度为32个字符
  
  @return UITextField
  */
-+ (UITextField *)configServerTextField;
++ (MKTextField *)configServerTextField;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "MKConfigServerNormalCell.h"
 #import "MKConfigServerAdopter.h"
+#import "MKTextField.h"
 
 static CGFloat const msgLabelWidth = 90.f;
 static CGFloat const textFieldHeight = 45.f;
@@ -18,7 +19,7 @@ static NSString *const MKConfigServerNormalCellIdenty = @"MKConfigServerNormalCe
 
 @property (nonatomic, strong)UILabel *msgLabel;
 
-@property (nonatomic, strong)UITextField *textField;
+@property (nonatomic, strong)MKTextField *textField;
 
 @end
 
@@ -88,6 +89,18 @@ static NSString *const MKConfigServerNormalCellIdenty = @"MKConfigServerNormalCe
 }
 
 /**
+ 设置参数
+ 
+ @param params 参数
+ */
+- (void)setParams:(id)params{
+    if (!ValidStr(params)) {
+        return;
+    }
+    self.textField.text = params;
+}
+
+/**
  隐藏键盘
  */
 - (void)resignFirstResponder{
@@ -109,7 +122,7 @@ static NSString *const MKConfigServerNormalCellIdenty = @"MKConfigServerNormalCe
     return _msgLabel;
 }
 
-- (UITextField *)textField{
+- (MKTextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.delegate = self;

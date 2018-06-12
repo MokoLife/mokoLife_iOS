@@ -8,6 +8,7 @@
 
 #import "MKConfigServerHostCell.h"
 #import "MKConfigServerAdopter.h"
+#import "MKTextField.h"
 
 static CGFloat const starIconWidth = 6.f;
 static CGFloat const starIconHeight = 6.f;
@@ -22,7 +23,7 @@ static NSString *const MKConfigServerHostCellIdenty = @"MKConfigServerHostCellId
 
 @property (nonatomic, strong)UILabel *msgLabel;
 
-@property (nonatomic, strong)UITextField *textField;
+@property (nonatomic, strong)MKTextField *textField;
 
 @end
 
@@ -99,6 +100,18 @@ static NSString *const MKConfigServerHostCellIdenty = @"MKConfigServerHostCellId
 }
 
 /**
+ 设置参数
+ 
+ @param params 参数
+ */
+- (void)setParams:(id)params{
+    if (!ValidStr(params)) {
+        return;
+    }
+    self.textField.text = params;
+}
+
+/**
  隐藏键盘
  */
 - (void)resignFirstResponder{
@@ -122,7 +135,7 @@ static NSString *const MKConfigServerHostCellIdenty = @"MKConfigServerHostCellId
     return _msgLabel;
 }
 
-- (UITextField *)textField{
+- (MKTextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.delegate = self;

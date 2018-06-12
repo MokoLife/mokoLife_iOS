@@ -7,12 +7,13 @@
 //
 
 #import "MKSaveDeviceNameController.h"
+#import "MKTextField.h"
 
 @interface MKSaveDeviceNameController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong)UILabel *msgLabel;
 
-@property (nonatomic, strong)UITextField *textField;
+@property (nonatomic, strong)MKTextField *textField;
 
 @property (nonatomic, strong)UIButton *doneButton;
 
@@ -97,7 +98,7 @@
     return _msgLabel;
 }
 
-- (UITextField *)textField{
+- (MKTextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.delegate = self;

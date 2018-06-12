@@ -16,6 +16,8 @@
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
+@property (nonatomic, strong)MKConfigServerModel *serverModel;
+
 @end
 
 @implementation MKConfigServerController
@@ -38,12 +40,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(configCellNeedHiddenKeyboard) name:configCellNeedHiddenKeyboardNotification
                                                object:nil];
+    if (self.controllerType == MKConfigServerForApp) {
+        [self.serverModel updateServerDataWithModel:[MKMQTTServerConnectManager sharedInstance].configServerModel];
+    }else{
+        [self.serverModel updateServerDataWithModel:[MKSmartPlugConnectManager sharedInstance].configServerModel];
+    }
+    [self.tableView reloadData];
     // Do any additional setup after loading the view.
 }
 
 #pragma mark - 父类方法
 - (NSString *)defaultTitle{
-    return @"MQTT Server";
+    return (self.controllerType == MKConfigServerForApp ? @"MQTT settings for APP" : @"MQTT settings for device");
 }
 
 - (void)rightButtonMethod{
@@ -70,7 +78,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [MKConfigServerAdopter configCellWithIndexPath:indexPath table:tableView];
+    return [MKConfigServerAdopter configCellWithIndexPath:indexPath table:tableView configModel:self.serverModel];
 }
 
 #pragma mark -
@@ -96,6 +104,7 @@
         return;
     }
     //保存参数到本地
+    [MKConfigServerAdopter saveDataToLocal:serverModel target:self];
 }
 
 #pragma mark - loadSubViews
@@ -142,6 +151,13 @@
         make.height.mas_equalTo(50.f);
     }];
     return tableFooter;
+}
+
+- (MKConfigServerModel *)serverModel{
+    if (!_serverModel) {
+        _serverModel = [[MKConfigServerModel alloc] init];
+    }
+    return _serverModel;
 }
 
 @end

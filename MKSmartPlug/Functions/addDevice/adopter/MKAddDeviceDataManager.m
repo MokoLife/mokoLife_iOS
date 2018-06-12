@@ -12,7 +12,6 @@
 #import "MKConnectDeviceWifiView.h"
 #import "MKAddDeviceAdopter.h"
 #import "MKConnectViewProtocol.h"
-#import "MKSmartPlugConnectManager.h"
 
 @interface MKAddDeviceDataManager()<MKConnectViewConfirmDelegate>
 
@@ -211,7 +210,7 @@
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:wifiView isPenetration:NO];
     __weak __typeof(&*wifiView)weakView = wifiView;
     WS(weakSelf);
-    [MKSmartPlugConnectManager configDeviceWithWifiSSID:self.wifiSSID password:self.password sucBlock:^{
+    [[MKSmartPlugConnectManager sharedInstance] configDeviceWithWifiSSID:self.wifiSSID password:self.password sucBlock:^{
         [[MKHudManager share] hide];
         //开始连接mqtt服务器
         [weakSelf connectMqttServer];

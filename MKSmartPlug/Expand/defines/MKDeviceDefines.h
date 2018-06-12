@@ -56,6 +56,16 @@
 #define AutoSizeScaleForX (kScreenWidth > 480 ? kScreenWidth/320 : 1.0)
 #define AutoSizeScaleForY (kScreenHeight > 480 ? kScreenHeight/568 : 1.0)
 
+#pragma mark - **************************  常用单例宏  *********************************
+//iOS系统常用单例
+#define kApplicationSington         [UIApplication sharedApplication]               //UIApplication单例
+#define kUserDefaultsSington        [NSUserDefaults standardUserDefaults]           //NSUserDefaults单例
+#define kFileManagerSington         [NSFileManager defaultManager]                  //文件管理单例
+#define kNotificationCenterSington  [NSNotificationCenter defaultCenter]            //通知中心单例
+#define kBundleSington              [NSBundle mainBundle]                           //bundle单例
+#define kURLCacheSington            [NSURLCache sharedURLCache]                     //请求缓存单例
+#define kHTTPCookieStorageSington   [NSHTTPCookieStorage sharedHTTPCookieStorage]   //应用程序cookies池单例
+
 #pragma mark - *************************  系统相关  *************************
 //delegate对象//AppWindow
 #define kAppDelegate            ((AppDelegate *)[[UIApplication sharedApplication] delegate])

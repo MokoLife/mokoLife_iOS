@@ -57,6 +57,32 @@
     return [pred evaluateWithObject:self];
 }
 
+/**
+ 校验输入的字符是否合法，必须是数字或者A、B、C、D、E、F其中的一种
+ 
+ @return NO不合法，YES合法
+ */
+- (BOOL)checkInputIsHexString{
+    if ([self isRealNumbers]) {
+        return YES;
+    }
+    if ([self isEqualToString:@"A"]
+        || [self isEqualToString:@"B"]
+        || [self isEqualToString:@"C"]
+        || [self isEqualToString:@"D"]
+        || [self isEqualToString:@"E"]
+        || [self isEqualToString:@"F"]
+        || [self isEqualToString:@"a"]
+        || [self isEqualToString:@"b"]
+        || [self isEqualToString:@"c"]
+        || [self isEqualToString:@"d"]
+        || [self isEqualToString:@"e"]
+        || [self isEqualToString:@"f"]) {
+        return YES;
+    }
+    return NO;
+}
+
 - (BOOL)isValidatIP{
     if (!ValidStr(self)) return NO;
     NSString  *urlRegEx =@"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
@@ -66,33 +92,6 @@
     
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
     return [pred evaluateWithObject:self];
-}
-
-- (BOOL)checkClientId{
-    if (!ValidStr(self)) {
-        return NO;
-    }
-    NSString *regex = @"^[a-zA-Z_][a-zA-Z0-9_]{5,19}$";
-    NSPredicate *clientIdPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
-    return [clientIdPre evaluateWithObject:self];
-}
-
-- (BOOL)checkUserName{
-    if (!ValidStr(self)) {
-        return NO;
-    }
-    NSString *regex = @"^[a-zA-Z_][a-zA-Z0-9_]{5,19}$";
-    NSPredicate *userNamePre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
-    return [userNamePre evaluateWithObject:self];
-}
-
-- (BOOL)checkPassword{
-    if (!ValidStr(self)) {
-        return NO;
-    }
-    NSString *regex = @"^[a-zA-Z0-9_]{5,19}$$";
-    NSPredicate *passwordPre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
-    return [passwordPre evaluateWithObject:self];
 }
 
 /**

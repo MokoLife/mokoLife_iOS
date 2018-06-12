@@ -62,4 +62,13 @@
  */
 - (BOOL)needParametersHasValue;
 
+/**
+ 更新属性值
+
+ @param dic dic
+ */
+- (void)updateServerModelWithDic:(NSDictionary *)dic;
+
+- (void)updateServerDataWithModel:(MKConfigServerModel *)model;
+
 @end

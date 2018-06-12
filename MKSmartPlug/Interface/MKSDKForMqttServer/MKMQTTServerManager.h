@@ -17,10 +17,17 @@ typedef NS_ENUM(NSInteger, MKSessionManagerState) {
     MKSessionManagerStateClosed
 };
 
-@protocol MKMQTTServerManagerDelegate;
+//manager的装发生改变通知
+extern NSString *const MKMQTTServerManagerStateChangedNotification;
+//manager收到mqtt服务器的数据通知
+extern NSString *const MKMQTTServerReceiveDataNotification;
+
 @interface MKMQTTServerManager : NSObject
 
-@property (nonatomic, weak)id <MKMQTTServerManagerDelegate>delegate;
+/**
+ 订阅主题。NSDictionary类型，Object 为 QoS，key 为 Topic
+ */
+@property (nonatomic, strong)NSDictionary<NSString *, NSNumber *> *subscriptions;
 
 @property (nonatomic, assign, readonly)MKSessionManagerState managerState;
 
@@ -51,12 +58,5 @@ typedef NS_ENUM(NSInteger, MKSessionManagerState) {
                  clientId:(NSString *)clientId
           connectSucBlock:(void (^)(void))sucBlock
        connectFailedBlock:(void (^)(NSError *error))failedBlock;
-
-@end
-
-
-@protocol MKMQTTServerManagerDelegate <NSObject>
-
-- (void)sessionManager:(MKMQTTServerManager *)sessonManager didChangeState:(MKSessionManagerState)newState;
 
 @end

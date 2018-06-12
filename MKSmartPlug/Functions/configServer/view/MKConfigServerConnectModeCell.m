@@ -98,6 +98,19 @@ static NSString *const MKConfigServerConnectModeCellIdenty = @"MKConfigServerCon
     [self tcpViewPressed];
 }
 
+/**
+ 设置参数
+ 
+ @param params 参数
+ */
+- (void)setParams:(id)params{
+    if ([params integerValue] == 0) {
+        [self tcpViewPressed];
+        return;
+    }
+    [self sslViewPressed];
+}
+
 #pragma mark - event method
 - (void)tcpViewPressed{
     self.modeNumber = 0;

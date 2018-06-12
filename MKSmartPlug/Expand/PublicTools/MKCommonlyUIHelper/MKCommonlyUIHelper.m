@@ -3,6 +3,7 @@
  */
 
 #import "MKCommonlyUIHelper.h"
+#import "MKTextField.h"
 
 @implementation MKCommonlyUIHelper
 
@@ -56,12 +57,12 @@
 }
 
 /**
- 带圆角边框的输入框
+ 带圆角边框的输入框,并且最大输入长度为32个字符
 
  @return UITextField
  */
-+ (UITextField *)configServerTextField{
-    UITextField *textField = [[UITextField alloc] init];
++ (MKTextField *)configServerTextField{
+    MKTextField *textField = [[MKTextField alloc] init];
     textField.backgroundColor = COLOR_WHITE_MACROS;
     textField.borderStyle = UITextBorderStyleNone;
     textField.textColor = DEFAULT_TEXT_COLOR;
@@ -73,6 +74,8 @@
     textField.layer.borderColor = CUTTING_LINE_COLOR.CGColor;
     textField.layer.borderWidth = CUTTING_LINE_HEIGHT;
     textField.layer.cornerRadius = 5.f;
+    
+    textField.maxLength = 32;
     return textField;
 }
 

@@ -8,6 +8,7 @@
 
 #import "MKConfigServerPortCell.h"
 #import "MKConfigServerAdopter.h"
+#import "MKTextField.h"
 
 static CGFloat const starIconWidth = 6.f;
 static CGFloat const starIconHeight = 6.f;
@@ -22,7 +23,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
 
 @property (nonatomic, strong)UILabel *portLabel;
 
-@property (nonatomic, strong)UITextField *textField;
+@property (nonatomic, strong)MKTextField *textField;
 
 @property (nonatomic, strong)UILabel *cleanSessionLabel;
 
@@ -121,6 +122,19 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
 }
 
 /**
+ 设置参数
+ 
+ @param params 参数
+ */
+- (void)setParams:(id)params{
+    if (!ValidDict(params)) {
+        return;
+    }
+    self.textField.text = params[@"port"];
+    self.switchView.on = [params[@"clean"] boolValue];
+}
+
+/**
  隐藏键盘
  */
 - (void)resignFirstResponder{
@@ -149,7 +163,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
     return _portLabel;
 }
 
-- (UITextField *)textField{
+- (MKTextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.keyboardType = UIKeyboardTypePhonePad;

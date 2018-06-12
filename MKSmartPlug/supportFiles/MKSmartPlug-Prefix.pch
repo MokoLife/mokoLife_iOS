@@ -26,5 +26,7 @@
 /*********interface***********/
 #import "MKSocketManager.h"
 #import "MKMQTTServerManager.h"
+#import "MKMQTTServerConnectManager.h"
+#import "MKSmartPlugConnectManager.h"
 
 
