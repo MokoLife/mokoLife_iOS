@@ -19,10 +19,6 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
 
 @property (nonatomic, strong)MQTTSessionManager *sessionManager;
 
-@property (nonatomic, copy)void (^connectSucBlock)(void);
-
-@property (nonatomic, copy)void (^connectFailedBlock)(NSError *error);
-
 @property (nonatomic, assign)MKSessionManagerState managerState;
 
 @end
@@ -55,25 +51,6 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
     [self sessionStateWithMQTTManagerState:newState];
     [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerManagerStateChangedNotification object:nil];
     NSLog(@"连接状态发生改变:---%ld",(long)newState);
-    if (newState == MQTTSessionManagerStateError) {
-        //连接出错
-        [self.sessionManager disconnect];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.connectFailedBlock) {
-                self.connectFailedBlock(sessonManager.lastErrorCode);
-            }
-        });
-        return;
-    }
-    if (newState == MQTTSessionManagerStateConnected) {
-        //连接成功
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.connectSucBlock) {
-                self.connectSucBlock();
-            }
-        });
-        return;
-    }
 }
 
 #pragma mark - public method
@@ -90,8 +67,6 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
  @param user 用户名
  @param pass 密码
  @param clientId 客户端id，需要特别指出的是这个id需要全局唯一，因为服务端是根据这个来区分不同的客户端的，默认情况下一个id登录后，假如有另外的连接以这个id登录，上一个连接会被踢下线
- @param sucBlock 连接成功回调
- @param failedBlock 连接失败回调
  */
 - (void)connectMQTTServer:(NSString *)host
                      port:(NSInteger)port
@@ -101,9 +76,7 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
                      auth:(BOOL)auth
                      user:(NSString *)user
                      pass:(NSString *)pass
-                 clientId:(NSString *)clientId
-          connectSucBlock:(void (^)(void))sucBlock
-       connectFailedBlock:(void (^)(NSError *error))failedBlock{
+                 clientId:(NSString *)clientId{
     if (self.sessionManager) {
         self.sessionManager.delegate = nil;
         [self.sessionManager disconnect];
@@ -112,48 +85,6 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
     MQTTSessionManager *sessionManager = [[MQTTSessionManager alloc] init];
     sessionManager.delegate = self;
     self.sessionManager = sessionManager;
-    __weak __typeof(&*self)weakSelf = self;
-    [self connectTo:host port:port tls:tls keepalive:keepalive clean:clean auth:auth user:user pass:pass clientId:clientId connectSucBlock:^{
-        if (sucBlock) {
-            sucBlock();
-        }
-        [weakSelf clearConnectBlock];
-    } connectFailedBlock:^(NSError *error) {
-        if (failedBlock) {
-            failedBlock(error);
-        }
-        [weakSelf clearConnectBlock];
-    }];
-}
-
-/**
- 订阅主题。NSDictionary类型，Object 为 QoS，key 为 Topic
-
- @param subscriptions subscriptions
- */
-- (void)setSubscriptions:(NSDictionary<NSString *,NSNumber *> *)subscriptions{
-    _subscriptions = nil;
-    _subscriptions = subscriptions;
-    if (!_subscriptions || !self.sessionManager) {
-        return;
-    }
-    self.sessionManager.subscriptions = _subscriptions;
-}
-
-#pragma mark - private method
-- (void)connectTo:(NSString *)host
-             port:(NSInteger)port
-              tls:(BOOL)tls
-        keepalive:(NSInteger)keepalive
-            clean:(BOOL)clean
-             auth:(BOOL)auth
-             user:(NSString *)user
-             pass:(NSString *)pass
-         clientId:(NSString *)clientId
-  connectSucBlock:(void (^)(void))sucBlock
-connectFailedBlock:(void (^)(NSError *error))failedBlock{
-    self.connectSucBlock = sucBlock;
-    self.connectFailedBlock = failedBlock;
     [self.sessionManager connectTo:host
                               port:port
                                tls:tls
@@ -170,13 +101,30 @@ connectFailedBlock:(void (^)(NSError *error))failedBlock{
                       withClientId:clientId];
 }
 
-- (void)clearConnectBlock{
-    if (self.connectSucBlock) {
-        self.connectSucBlock = nil;
+/**
+ 断开连接
+ */
+- (void)disconnect{
+    if (!self.sessionManager) {
+        return;
     }
-    if (self.connectFailedBlock) {
-        self.connectFailedBlock = nil;
+    self.sessionManager.delegate = nil;
+    [self.sessionManager disconnect];
+    self.sessionManager = nil;
+}
+
+/**
+ 订阅主题。NSDictionary类型，Object 为 QoS，key 为 Topic
+
+ @param subscriptions subscriptions
+ */
+- (void)setSubscriptions:(NSDictionary<NSString *,NSNumber *> *)subscriptions{
+    _subscriptions = nil;
+    _subscriptions = subscriptions;
+    if (!_subscriptions || !self.sessionManager) {
+        return;
     }
+    self.sessionManager.subscriptions = _subscriptions;
 }
 
 - (void)sessionStateWithMQTTManagerState:(MQTTSessionManagerState)sessionState{

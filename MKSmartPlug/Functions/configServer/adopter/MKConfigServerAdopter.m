@@ -34,7 +34,8 @@
 
 + (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath
                                        table:(UITableView *)tableView
-                                 configModel:(MKConfigServerModel *)configModel{
+                                 configModel:(MKConfigServerModel *)configModel
+                                       isApp:(BOOL)isApp{
     if (indexPath.row == 0) {
         //host
         MKConfigServerHostCell *cell = [MKConfigServerHostCell initCellWithTableView:tableView];
@@ -72,7 +73,7 @@
         MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
         cell.msg = @"Client Id";
         NSString *clientId = SafeStr(configModel.clientId);
-        if (!ValidStr(clientId)) {
+        if (!ValidStr(clientId) && isApp) {
             //如果没有有效值，则默认用手机uuid
             clientId = twlt_uuid_create();//设备唯一标识
         }
@@ -225,7 +226,7 @@
  @param target MKConfigServerController
  @return YES:正确，NO:存在参数错误
  */
-+ (BOOL)checkConfigServerParams:(MKConfigServerModel *)serverModel target:(UIViewController *)target{
++ (BOOL)checkConfigServerParams:(MKConfigServerModel *)serverModel target:(MKConfigServerController *)target{
     if (![serverModel.host checkIsUrl] && ![serverModel.host isValidatIP]) {
         //host校验错误
         [target.view showCentralToast:@"Host error"];
@@ -236,11 +237,22 @@
         [target.view showCentralToast:@"Port effective range : 0~65535"];
         return NO;
     }
-    if (!ValidStr(serverModel.clientId) || serverModel.clientId.length > 32) {
-        //client id错误
-        [target.view showCentralToast:@"Client id error"];
-        return NO;
+    if (target.controllerType == MKConfigServerForApp) {
+        //app，不能为空并且最大32个字符
+        if (!ValidStr(serverModel.clientId) || serverModel.clientId.length > 32) {
+            //client id错误
+            [target.view showCentralToast:@"Client id error"];
+            return NO;
+        }
+    }else{
+        //device,长度不大于32个字符
+        if (serverModel.clientId.length > 32) {
+            //client id错误
+            [target.view showCentralToast:@"Client id error"];
+            return NO;
+        }
     }
+    
     if (!ValidStr(serverModel.userName) || serverModel.userName.length > 32) {
         //user name错误
         [target.view showCentralToast:@"User name error"];

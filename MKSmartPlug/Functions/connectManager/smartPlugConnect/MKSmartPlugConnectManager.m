@@ -197,4 +197,12 @@
     }];
 }
 
+#pragma mark - setter & getter
+- (MKConfigServerModel *)configServerModel{
+    if (!_configServerModel) {
+        _configServerModel = [[MKConfigServerModel alloc] init];
+    }
+    return _configServerModel;
+}
+
 @end

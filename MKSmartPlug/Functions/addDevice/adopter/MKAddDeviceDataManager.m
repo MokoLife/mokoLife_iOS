@@ -90,7 +90,7 @@
     MKConnectDeviceWifiView *connectDeviceView = self.viewList[0];
     if ([connectDeviceView isShow]) {
         //当前手机没有连plug ap wifi，出现的是引导用户连接设备的alert
-        if ([MKAddDeviceAdopter currentWifiIsSmartPlug]) {
+        if ([[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
             //如果已经连接到plug了，则进入下一步
             [self showDeviceWifiView];
         }
@@ -114,18 +114,18 @@
         return;
     }
     //设置plug已经完成，需要开启app->>mqtt服务器流程,当前网络状态必须可用，并且连接的wifi不能是smartPlug设备
-    if ([MKAddDeviceAdopter currentWifiIsSmartPlug]) {
+    if ([[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         //必须连接了wifi并且非plug设备
         [progressView showCentralToast:@"Network cannot be smart plug!"];
         [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
         return;
     }
-    [[MKMQTTServerManager sharedInstance] connectMQTTServer:@"111.111.111.1" port:8080 tls:YES keepalive:60 clean:YES auth:YES user:@"asdf" pass:@"12345" clientId:@"tehckaj" connectSucBlock:^{
-        NSLog(@"Success");
-    } connectFailedBlock:^(NSError *error) {
-        [progressView showCentralToast:@"Connect mqtt!"];
-        [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
-    }];
+//    [[MKMQTTServerManager sharedInstance] connectMQTTServer:@"111.111.111.1" port:8080 tls:YES keepalive:60 clean:YES auth:YES user:@"asdf" pass:@"12345" clientId:@"tehckaj" connectSucBlock:^{
+//        NSLog(@"Success");
+//    } connectFailedBlock:^(NSError *error) {
+//        [progressView showCentralToast:@"Connect mqtt!"];
+//        [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
+//    }];
 }
 
 #pragma mark - public method
@@ -147,7 +147,7 @@
 - (void)startConfigProcessWithCompleteBlock:(void (^)(NSError *error, BOOL success))completeBlock{
     self.completeBlock = nil;
     self.completeBlock = completeBlock;
-    if (![MKAddDeviceAdopter currentWifiIsSmartPlug]) {
+    if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         //需要引导用户去连接smart plug
         [self showConnectDeviceView];
         return;
@@ -203,7 +203,7 @@
 #pragma mark - SDK
 - (void)connectPlug{
     MKConnectDeviceWifiView *wifiView = self.viewList[1];
-    if (![MKAddDeviceAdopter currentWifiIsSmartPlug]) {
+    if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         [wifiView showCentralToast:@"Please connect smart plug"];
         return;
     }

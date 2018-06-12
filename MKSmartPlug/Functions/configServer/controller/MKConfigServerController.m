@@ -78,7 +78,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [MKConfigServerAdopter configCellWithIndexPath:indexPath table:tableView configModel:self.serverModel];
+    return [MKConfigServerAdopter configCellWithIndexPath:indexPath
+                                                    table:tableView
+                                              configModel:self.serverModel
+                                                    isApp:(self.controllerType == MKConfigServerForApp)];
 }
 
 #pragma mark -

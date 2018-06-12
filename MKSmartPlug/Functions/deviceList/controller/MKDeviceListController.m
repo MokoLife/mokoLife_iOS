@@ -15,12 +15,15 @@
 #import "MKAddDeviceView.h"
 #import "MKDeviceListAdopter.h"
 #import "MKDeviceDataBaseManager.h"
+#import "EasyLodingView.h"
 
 @interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
 @property (nonatomic, strong)MKAddDeviceView *addDeviceView;
+
+@property (nonatomic, strong)UIView *loadingView;
 
 @property (nonatomic, strong)NSMutableArray *dataList;
 
@@ -30,16 +33,22 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKDeviceListController销毁");
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerManagerStateChangedNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getDeviceList];
+    //开始连接
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(MQTTServerManagerStateChanged)
+                                       name:MKMQTTServerManagerStateChangedNotification
+                                     object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -73,12 +82,45 @@
     return cell;
 }
 
+#pragma mark - event method
+- (void)MQTTServerManagerStateChanged{
+    if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
+        || [[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
+        //网络不可用
+        [EasyLodingView hidenLoingInView:self.loadingView];
+        return;
+    }
+    if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateConnecting) {
+        //开始连接
+        [EasyLodingView showLodingText:@"Connecting..." config:^EasyLodingConfig *{
+            EasyLodingConfig *config = [EasyLodingConfig shared];
+            config.lodingType = LodingShowTypeIndicatorLeft;
+            config.textFont = MKFont(18.f);
+            config.bgColor = NAVIGATION_BAR_COLOR;
+            config.tintColor = COLOR_WHITE_MACROS;
+            config.superView = self.loadingView;
+            return config;
+        }];
+        return;
+    }
+    if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateConnected) {
+        //开始成功
+        [EasyLodingView hidenLoingInView:self.loadingView];
+        return;
+    }
+    if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateError) {
+        //连接出错
+        [EasyLodingView hidenLoingInView:self.loadingView];
+        return;
+    }
+}
+
 #pragma mark - get device list
 - (void)getDeviceList{
     WS(weakSelf);
-    [[MKHudManager share] showHUDWithTitle:@"Loading..." inView:self.view isPenetration:NO];
+//    [[MKHudManager share] showHUDWithTitle:@"Loading..." inView:self.view isPenetration:NO];
     [MKDeviceDataBaseManager getLocalDeviceListWithSucBlock:^(NSArray<MKDeviceModel *> *deviceList) {
-        [[MKHudManager share] hide];
+//        [[MKHudManager share] hide];
         [weakSelf processLocalDeviceDatas:deviceList];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];
@@ -108,15 +150,29 @@
 
 #pragma mark - loadSubViews
 - (void)loadSubViews{
-    [self.leftButton setImage:LOADIMAGE(@"mokoLife_menuIcon", @"png") forState:UIControlStateNormal];
-    [self.rightButton setImage:LOADIMAGE(@"mokoLife_addIcon", @"png") forState:UIControlStateNormal];
+    [self.customNaviView.leftButton setImage:LOADIMAGE(@"mokoLife_menuIcon", @"png") forState:UIControlStateNormal];
+    [self.customNaviView.rightButton setImage:LOADIMAGE(@"mokoLife_addIcon", @"png") forState:UIControlStateNormal];
+    [self.customNaviView setBackgroundColor:NAVIGATION_BAR_COLOR];
+    [self.customNaviView addSubview:self.loadingView];
     [self.view addSubview:self.addDeviceView];
     [self.view addSubview:self.tableView];
+    [self.loadingView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(self.customNaviView.mas_centerX);
+        make.width.mas_equalTo(140.f);
+        make.top.mas_equalTo(22.f);
+        make.bottom.mas_equalTo(-10.f);
+    }];
     [self.addDeviceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.top.mas_equalTo(self.customNaviView.mas_bottom).mas_offset(0);
+        make.bottom.mas_equalTo(0);
     }];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.top.mas_equalTo(self.customNaviView.mas_bottom).mas_offset(0);
+        make.bottom.mas_equalTo(0);
     }];
     [self.view sendSubviewToBack:self.addDeviceView];
 }
@@ -141,6 +197,13 @@
         _tableView.dataSource = self;
     }
     return _tableView;
+}
+
+- (UIView *)loadingView{
+    if (!_loadingView) {
+        _loadingView = [[UIView alloc] init];
+    }
+    return _loadingView;
 }
 
 - (NSMutableArray *)dataList{

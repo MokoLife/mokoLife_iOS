@@ -21,6 +21,7 @@
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = COLOR_WHITE_MACROS;
     //加载网络部分
+    [MKMQTTServerConnectManager sharedInstance];
     [MKNetworkManager sharedInstance];
     [self enterAddDevicePage];
     return YES;
@@ -55,7 +56,7 @@
 
 #pragma mark -
 - (void)enterAddDevicePage{
-    MKDeviceListController *vc = [[MKDeviceListController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKDeviceListController *vc = [[MKDeviceListController alloc] initWithNavigationType:GYNaviTypeHide];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     _window.rootViewController = nav;
     [_window makeKeyAndVisible];

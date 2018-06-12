@@ -44,8 +44,6 @@ extern NSString *const MKMQTTServerReceiveDataNotification;
  @param user 用户名
  @param pass 密码
  @param clientId 客户端id，需要特别指出的是这个id需要全局唯一，因为服务端是根据这个来区分不同的客户端的，默认情况下一个id登录后，假如有另外的连接以这个id登录，上一个连接会被踢下线
- @param sucBlock 连接成功回调
- @param failedBlock 连接失败回调
  */
 - (void)connectMQTTServer:(NSString *)host
                      port:(NSInteger)port
@@ -55,8 +53,11 @@ extern NSString *const MKMQTTServerReceiveDataNotification;
                      auth:(BOOL)auth
                      user:(NSString *)user
                      pass:(NSString *)pass
-                 clientId:(NSString *)clientId
-          connectSucBlock:(void (^)(void))sucBlock
-       connectFailedBlock:(void (^)(NSError *error))failedBlock;
+                 clientId:(NSString *)clientId;
+
+/**
+ 断开连接
+ */
+- (void)disconnect;
 
 @end

@@ -21,7 +21,8 @@ static NSString *const configCellNeedHiddenKeyboardNotification = @"configCellNe
 
 + (UITableViewCell *)configCellWithIndexPath:(NSIndexPath *)indexPath
                                        table:(UITableView *)tableView
-                                 configModel:(MKConfigServerModel *)configModel;
+                                 configModel:(MKConfigServerModel *)configModel
+                                       isApp:(BOOL)isApp;
 
 /**
  所有带输入框的cell取消第一响应者
@@ -47,7 +48,7 @@ static NSString *const configCellNeedHiddenKeyboardNotification = @"configCellNe
  @param target MKConfigServerController
  @return YES:正确，NO:存在参数错误
  */
-+ (BOOL)checkConfigServerParams:(MKConfigServerModel *)serverModel target:(UIViewController *)target;
++ (BOOL)checkConfigServerParams:(MKConfigServerModel *)serverModel target:(MKConfigServerController *)target;
 
 /**
  Qos选择

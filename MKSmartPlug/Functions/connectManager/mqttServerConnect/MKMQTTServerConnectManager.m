@@ -17,14 +17,6 @@
 
 @property (nonatomic, strong)MKConfigServerModel *configServerModel;
 
-@property (nonatomic, copy)void (^connectProgressBlock)(CGFloat progress);
-
-@property (nonatomic, copy)void (^connectSucBlock)(void);
-
-@property (nonatomic, copy)void (^connectFailedBlock)(NSError *error);
-
-@property (nonatomic, assign)MKSessionManagerState managerState;
-
 @end
 
 @implementation MKMQTTServerConnectManager
@@ -32,7 +24,7 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"销毁");
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerManagerStateChangedNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
 }
 - (instancetype)init{
     if (self = [super init]) {
@@ -43,9 +35,10 @@
             self.paramDic = [NSMutableDictionary dictionary];
         }
         [self.configServerModel updateServerModelWithDic:self.paramDic];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(MQTTServerManagerStateChanged) name:MKMQTTServerManagerStateChangedNotification
-                                                   object:nil];
+        [kNotificationCenterSington addObserver:self
+                                       selector:@selector(networkStateChanged)
+                                           name:MKNetworkStatusChangedNotification
+                                         object:nil];
     }
     return self;
 }
@@ -61,9 +54,20 @@
     return manager;
 }
 
-#pragma mark - notice method
-- (void)MQTTServerManagerStateChanged{
-    self.managerState = [MKMQTTServerManager sharedInstance].managerState;
+#pragma mark - event method
+- (void)networkStateChanged{
+    if (![self.configServerModel needParametersHasValue]) {
+        //参数没有配置好，直接返回
+        return;
+    }
+    if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
+        || [[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
+        //如果是当前网络不可用或者是连接的plug设备，则断开当前手机与mqtt服务器的连接操作
+        [[MKMQTTServerManager sharedInstance] disconnect];
+        return;
+    }
+    //如果网络可用，则连接
+    [self connectServer];
 }
 
 - (void)saveServerConfigDataToLocal:(MKConfigServerModel *)model{
@@ -71,6 +75,7 @@
         return;
     }
     [self.configServerModel updateServerDataWithModel:model];
+    [self synchronize];
 }
 
 /**
@@ -93,20 +98,7 @@
 /**
  连接mqtt server
  
- @param progressBlock 连接进度回调
- @param sucBlock 连接成功回调
- @param failedBlock 连接失败回调
  */
-- (void)connectMqttServerWithProgressBlock:(void (^)(CGFloat progress))progressBlock
-                                  sucBlock:(void (^)(void))sucBlock
-                               failedBlock:(void (^)(NSError *error))failedBlock{
-    self.connectProgressBlock = progressBlock;
-    self.connectSucBlock = sucBlock;
-    self.connectFailedBlock = failedBlock;
-    [self connectServer];
-}
-
-#pragma mark -
 - (void)connectServer{
     [[MKMQTTServerManager sharedInstance] connectMQTTServer:self.configServerModel.host
                                                        port:[self.configServerModel.port integerValue]
@@ -114,13 +106,7 @@
                                                   keepalive:[self.configServerModel.keepAlive integerValue] clean:self.configServerModel.cleanSession auth:NO
                                                        user:self.configServerModel.userName
                                                        pass:self.configServerModel.password
-                                                   clientId:self.configServerModel.clientId
-                                            connectSucBlock:^{
-        NSLog(@"连接成功");
-    }
-                                         connectFailedBlock:^(NSError *error) {
-        NSLog(@"连接失败");
-    }];
+                                                   clientId:self.configServerModel.clientId];
 }
 
 #pragma mark - setter & getter
