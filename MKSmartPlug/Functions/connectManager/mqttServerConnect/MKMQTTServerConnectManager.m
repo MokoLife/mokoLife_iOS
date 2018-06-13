@@ -109,6 +109,16 @@
                                                    clientId:self.configServerModel.clientId];
 }
 
+/**
+ 订阅主题
+ */
+- (void)updateMQTTServerTopic:(NSArray <NSString *>*)topicList{
+    if (!ValidArray(topicList) || [MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnected) {
+        return;
+    }
+    [[MKMQTTServerManager sharedInstance] subscriptions:topicList];
+}
+
 #pragma mark - setter & getter
 - (MKConfigServerModel *)configServerModel{
     if (!_configServerModel) {

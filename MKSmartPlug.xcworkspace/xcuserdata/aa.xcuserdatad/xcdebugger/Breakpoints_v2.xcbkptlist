@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MKSmartPlug/Interface/MKSDKForDevice/MKSocketManager.m"
-            timestampString = "550485914.75061"
+            filePath = "MKSmartPlug/Interface/MKSDKForMqttServer/MKMQTTServerManager.m"
+            timestampString = "550562674.6718071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "-configMQTTServerHost:port:connectMode:qos:keepalive:cleanSession:clientId:username:password:sucBlock:failedBlock:"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "-subscriptions:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

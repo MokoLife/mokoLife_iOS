@@ -16,6 +16,7 @@
 #import "MKDeviceListAdopter.h"
 #import "MKDeviceDataBaseManager.h"
 #import "EasyLodingView.h"
+#import "MKConfigDeviceController.h"
 
 @interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -34,12 +35,16 @@
 - (void)dealloc{
     NSLog(@"MKDeviceListController销毁");
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerManagerStateChangedNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getDeviceList];
-    //开始连接
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
 }
 
 - (void)viewDidLoad {
@@ -49,6 +54,11 @@
                                    selector:@selector(MQTTServerManagerStateChanged)
                                        name:MKMQTTServerManagerStateChangedNotification
                                      object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(networkStatusChanged)
+                                       name:MKNetworkStatusChangedNotification
+                                     object:nil];
+    [self networkStatusChanged];
     // Do any additional setup after loading the view.
 }
 
@@ -69,6 +79,12 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80.f;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MKConfigDeviceController *vc = [[MKConfigDeviceController alloc] initWithNavigationType:GYNaviTypeHide];
+    vc.plugIsOn = NO;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -103,24 +119,26 @@
         }];
         return;
     }
+    [EasyLodingView hidenLoingInView:self.loadingView];
     if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateConnected) {
         //开始成功
-        [EasyLodingView hidenLoingInView:self.loadingView];
+        [self resetMQTTServerTopic];
         return;
     }
-    if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateError) {
-        //连接出错
+}
+
+- (void)networkStatusChanged{
+    if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]) {
+        //网络不可用
         [EasyLodingView hidenLoingInView:self.loadingView];
-        return;
+        [self.view showCentralToast:@"The network is not available"];
     }
 }
 
 #pragma mark - get device list
 - (void)getDeviceList{
     WS(weakSelf);
-//    [[MKHudManager share] showHUDWithTitle:@"Loading..." inView:self.view isPenetration:NO];
     [MKDeviceDataBaseManager getLocalDeviceListWithSucBlock:^(NSArray<MKDeviceModel *> *deviceList) {
-//        [[MKHudManager share] hide];
         [weakSelf processLocalDeviceDatas:deviceList];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];
@@ -131,21 +149,32 @@
 - (void)processLocalDeviceDatas:(NSArray<MKDeviceModel *> *)deviceList{
     if (!ValidArray(deviceList)) {
         //如果本地没有，则加载添加设备页面，
-        [self reloadTableViewWithData:@[]];
         [self.view sendSubviewToBack:self.tableView];
         [self.view bringSubviewToFront:self.addDeviceView];
+        [self reloadTableViewWithData:@[]];
         return;
     }
     //如果本地有设备，显示设备列表
-    [self reloadTableViewWithData:deviceList];
     [self.view sendSubviewToBack:self.addDeviceView];
     [self.view bringSubviewToFront:self.tableView];
+    [self reloadTableViewWithData:deviceList];
 }
 
 - (void)reloadTableViewWithData:(NSArray <MKDeviceModel *> *)deviceList{
     [self.dataList removeAllObjects];
     [self.dataList addObjectsFromArray:deviceList];
     [self.tableView reloadData];
+}
+
+- (void)resetMQTTServerTopic{
+    if (!ValidArray(self.dataList)) {
+        return;
+    }
+    NSMutableArray *topicList = [NSMutableArray arrayWithCapacity:self.dataList.count];
+    for (MKDeviceModel *deviceModel in self.dataList) {
+        [topicList addObject:[deviceModel topicInfo]];
+    }
+    [[MKMQTTServerConnectManager sharedInstance] updateMQTTServerTopic:topicList];
 }
 
 #pragma mark - loadSubViews

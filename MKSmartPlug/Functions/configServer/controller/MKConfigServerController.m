@@ -96,7 +96,7 @@
 }
 - (void)saveButtonPressed{
     MKConfigServerModel *serverModel = [MKConfigServerAdopter currentServerModelWithTable:self.tableView];
-    if (!serverModel || ![serverModel needParametersHasValue]) {
+    if (!serverModel) {
         //
         [self.view showCentralToast:@"Required options cannot be empty."];
         return;

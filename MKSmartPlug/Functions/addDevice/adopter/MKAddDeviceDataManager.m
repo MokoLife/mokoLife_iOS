@@ -191,7 +191,7 @@
     [wifiView dismiss];
     MKConnectDeviceProgressView *progressView = self.viewList[2];
     [progressView showConnectAlertView];
-    [progressView setProgress:0.3 duration:60.f];
+    [progressView setProgress:0.3 duration:0.2f];
 }
 
 - (void)dismisAllAlertView{
@@ -213,16 +213,11 @@
     [[MKSmartPlugConnectManager sharedInstance] configDeviceWithWifiSSID:self.wifiSSID password:self.password sucBlock:^{
         [[MKHudManager share] hide];
         //开始连接mqtt服务器
-        [weakSelf connectMqttServer];
+        [weakSelf showProcessView];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];
         [weakView showCentralToast:error.userInfo[@"errorInfo"]];
     }];
-}
-
-- (void)connectMqttServer{
-    [[MKSocketManager sharedInstance] disconnect];
-    [self showProcessView];
 }
 
 #pragma mark - private method

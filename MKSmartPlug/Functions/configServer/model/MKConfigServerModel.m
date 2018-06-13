@@ -27,7 +27,6 @@
         || !ValidStr(self.port)
         || !ValidStr(self.qos)
         || !ValidStr(self.keepAlive)
-        || !ValidStr(self.clientId)
         || !ValidStr(self.userName)
         || !ValidStr(self.password)) {
         return NO;

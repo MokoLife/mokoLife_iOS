@@ -39,7 +39,8 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
 #pragma mark - MQTTSessionManagerDelegate
 
 - (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained{
-    
+    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"接收到新的数据了%@",dataString);
 }
 
 - (void)messageDelivered:(UInt16)msgID{
@@ -114,17 +115,22 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
 }
 
 /**
- 订阅主题。NSDictionary类型，Object 为 QoS，key 为 Topic
-
- @param subscriptions subscriptions
+ 订阅主题,Object 为 QoS，key 为 Topic
+ 
+ @param topicList 主题
  */
-- (void)setSubscriptions:(NSDictionary<NSString *,NSNumber *> *)subscriptions{
-    _subscriptions = nil;
-    _subscriptions = subscriptions;
-    if (!_subscriptions || !self.sessionManager) {
+- (void)subscriptions:(NSArray <NSString *>*)topicList{
+    if (!self.sessionManager
+        || self.sessionManager.state != MKSessionManagerStateConnected
+        || !topicList
+        || topicList.count == 0) {
         return;
     }
-    self.sessionManager.subscriptions = _subscriptions;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:[topicList count]];
+    for (NSString *topic in topicList) {
+        [dic setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
+    }
+    self.sessionManager.subscriptions = dic;
 }
 
 - (void)sessionStateWithMQTTManagerState:(MQTTSessionManagerState)sessionState{

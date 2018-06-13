@@ -28,4 +28,9 @@
  */
 - (void)connectServer;
 
+/**
+ 订阅主题
+ */
+- (void)updateMQTTServerTopic:(NSArray <NSString *>*)topicList;
+
 @end

@@ -24,11 +24,6 @@ extern NSString *const MKMQTTServerReceiveDataNotification;
 
 @interface MKMQTTServerManager : NSObject
 
-/**
- 订阅主题。NSDictionary类型，Object 为 QoS，key 为 Topic
- */
-@property (nonatomic, strong)NSDictionary<NSString *, NSNumber *> *subscriptions;
-
 @property (nonatomic, assign, readonly)MKSessionManagerState managerState;
 
 + (MKMQTTServerManager *)sharedInstance;
@@ -59,5 +54,12 @@ extern NSString *const MKMQTTServerReceiveDataNotification;
  断开连接
  */
 - (void)disconnect;
+
+/**
+ 订阅主题
+
+ @param topicList 主题
+ */
+- (void)subscriptions:(NSArray <NSString *>*)topicList;
 
 @end

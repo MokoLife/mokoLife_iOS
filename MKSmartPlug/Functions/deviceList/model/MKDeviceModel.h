@@ -51,4 +51,11 @@ typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
  */
 @property (nonatomic, copy)NSString *device_function;
 
+/**
+ 订阅的主题
+
+ @return 设备功能/设备名称/型号/mac/device/#
+ */
+- (NSString *)topicInfo;
+
 @end

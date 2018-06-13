@@ -10,4 +10,18 @@
 
 @implementation MKDeviceModel
 
+/**
+ 订阅的主题
+ 
+ @return 设备功能/设备名称/型号/mac/device/#
+ */
+- (NSString *)topicInfo{
+    return [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@",
+            self.device_function,
+            self.device_name,
+            self.device_specifications,
+            self.device_mac,
+            @"device",@"#"];
+}
+
 @end
