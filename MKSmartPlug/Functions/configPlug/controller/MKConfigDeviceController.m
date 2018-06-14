@@ -9,6 +9,7 @@
 #import "MKConfigDeviceController.h"
 #import "MKConfigDeviceButtonView.h"
 #import "MKConfigDeviceButtonModel.h"
+#import "MKDeviceInfoController.h"
 
 static CGFloat const switchButtonWidth = 200.f;
 static CGFloat const switchButtonHeight = 200.f;
@@ -54,7 +55,8 @@ static CGFloat const buttonViewHeight = 50.f;
 }
 
 - (void)rightButtonMethod{
-    
+    MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] initWithNavigationType:GYNaviTypeShow];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - event method

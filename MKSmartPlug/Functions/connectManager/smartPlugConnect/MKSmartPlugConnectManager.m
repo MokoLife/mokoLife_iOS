@@ -8,7 +8,6 @@
 
 #import "MKSmartPlugConnectManager.h"
 #import "MKDeviceModel.h"
-#import "MKDeviceDataBaseManager.h"
 #import "MKConfigServerModel.h"
 
 @interface MKSmartPlugConnectManager()
@@ -25,7 +24,7 @@
 
 @property (nonatomic, strong)NSMutableDictionary *deviceInfoDic;
 
-@property (nonatomic, copy)void (^connectSucBlock)(void);
+@property (nonatomic, copy)void (^connectSucBlock)(NSDictionary *deviceInfo);
 
 @property (nonatomic, copy)void (^connectFailedBlock)(NSError *error);
 
@@ -93,14 +92,14 @@
  */
 - (void)configDeviceWithWifiSSID:(NSString *)wifi_ssid
                         password:(NSString *)password
-                        sucBlock:(void (^)(void))sucBlock
+                        sucBlock:(void (^)(NSDictionary *deviceInfo))sucBlock
                      failedBlock:(void (^)(NSError *error))failedBlock{
     self.wifi_ssid = wifi_ssid;
     self.password = password;
     WS(weakSelf);
-    [self connectPlugWithSucBlock:^{
+    [self connectPlugWithSucBlock:^(NSDictionary *deviceInfo) {
         if (sucBlock) {
-            sucBlock();
+            sucBlock(deviceInfo);
         }
         weakSelf.connectFailedBlock = nil;
         weakSelf.connectSucBlock = nil;
@@ -116,7 +115,7 @@
 }
 
 #pragma mark - private method
-- (void)connectPlugWithSucBlock:(void (^)(void))sucBlock
+- (void)connectPlugWithSucBlock:(void (^)(NSDictionary *deviceInfo))sucBlock
                 failedBlock:(void (^)(NSError *error))failedBlock{
     self.connectSucBlock = sucBlock;
     self.connectFailedBlock = failedBlock;
@@ -172,23 +171,8 @@
 - (void)configWifiInfo{
     WS(weakSelf);
     [[MKSocketManager sharedInstance] configWifiSSID:self.wifi_ssid password:self.password security:wifiSecurity_WPA2_PSK sucBlock:^(id returnData) {
-        [weakSelf saveDeviceToLocal];
-    } failedBlock:^(NSError *error) {
-        if (weakSelf.connectFailedBlock) {
-            weakSelf.connectFailedBlock(error);
-        }
-    }];
-}
-
-- (void)saveDeviceToLocal{
-    MKDeviceModel *dataModel = [[MKDeviceModel alloc] initWithDictionary:self.deviceInfoDic];
-    NSString *macAddress = self.deviceInfoDic[@"device_mac"];
-    macAddress = [[macAddress stringByReplacingOccurrencesOfString:@":" withString:@""] uppercaseString];
-    dataModel.local_name = [@"MK102-" stringByAppendingString:[macAddress substringWithRange:NSMakeRange(8, 4)]];
-    WS(weakSelf);
-    [MKDeviceDataBaseManager insertDeviceList:@[dataModel] sucBlock:^{
         if (weakSelf.connectSucBlock) {
-            weakSelf.connectSucBlock();
+            weakSelf.connectSucBlock(weakSelf.deviceInfoDic);
         }
     } failedBlock:^(NSError *error) {
         if (weakSelf.connectFailedBlock) {

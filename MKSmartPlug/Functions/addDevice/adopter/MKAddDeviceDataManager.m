@@ -12,6 +12,8 @@
 #import "MKConnectDeviceWifiView.h"
 #import "MKAddDeviceAdopter.h"
 #import "MKConnectViewProtocol.h"
+#import "MKDeviceModel.h"
+#import "MKDeviceDataBaseManager.h"
 
 @interface MKAddDeviceDataManager()<MKConnectViewConfirmDelegate>
 
@@ -23,6 +25,17 @@
 
 @property (nonatomic, strong)NSMutableArray *viewList;
 
+@property (nonatomic, strong)NSMutableDictionary *deviceDic;
+
+/**
+ 超过15s没有接收到连接成功数据，则认为连接失败
+ */
+@property (nonatomic, strong)dispatch_source_t receiveTimer;
+
+@property (nonatomic, assign)NSInteger receiveTimerCount;
+
+@property (nonatomic, assign)BOOL connectTimeout;
+
 @end
 
 @implementation MKAddDeviceDataManager
@@ -30,16 +43,17 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKAddDeviceDataManager销毁");
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
 }
 
 - (instancetype)init{
     if (self = [super init]) {
         //当前网络状态发生改变的通知
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(networkStatusChanged)
-                                                     name:MKNetworkStatusChangedNotification
-                                                   object:nil];
+        [kNotificationCenterSington addObserver:self
+                                       selector:@selector(networkStatusChanged)
+                                           name:MKNetworkStatusChangedNotification
+                                         object:nil];
         [self loadViewList];
     }
     return self;
@@ -69,14 +83,14 @@
         [self connectPlug];
         return;
     }
-    if (view == self.viewList[2]) {
-        //MKConnectDeviceProgressView
-        return;
-    }
 }
 
 - (void)cancelButtonActionWithView:(UIView *)view{
-    
+    if (self.receiveTimer) {
+        dispatch_cancel(self.receiveTimer);
+    }
+    self.receiveTimerCount = 0;
+    self.connectTimeout = NO;
 }
 
 #pragma mark - event method
@@ -96,36 +110,24 @@
         }
         return;
     }
-    id <MKConnectViewProtocol>wifiView = self.viewList[1];
-    if ([wifiView isShow]) {
-        //当前手机已经连接到了目标设备wifi，出现的需要设置给plug连接的wifi ssid、password alert
+}
+
+- (void)receiveDeviceTopicData:(NSNotification *)note{
+    NSDictionary *deviceDic = note.userInfo[@"userInfo"];
+    if (!ValidDict(deviceDic) || self.connectTimeout) {
         return;
     }
-    MKConnectDeviceProgressView *progressView = self.viewList[2];
-    if (![progressView isShow]) {
-        return;
+    if ([deviceDic[@"mac"] isEqualToString:self.deviceDic[@"device_mac"]]) {
+        //当前设备已经连上mqtt服务器了
+        if (self.receiveTimer) {
+            dispatch_cancel(self.receiveTimer);
+            self.receiveTimerCount = 0;
+            self.connectTimeout = NO;
+        }
+        MKConnectDeviceProgressView *progressView = self.viewList[2];
+        [progressView setProgress:1.f duration:0.2];
+        [self saveDeviceToLocal];
     }
-    if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]) {
-//        if ([progressView currentProgress] == 0.1f) {
-//            //不可用,提示错误
-//            [progressView showCentralToast:@"Connect error,please check your network is available"];
-//        }
-        //由于切换网络引起的不可用，暂时不处理，因为这个时候还没有开始连接mqtt服务器流程
-        return;
-    }
-    //设置plug已经完成，需要开启app->>mqtt服务器流程,当前网络状态必须可用，并且连接的wifi不能是smartPlug设备
-    if ([[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
-        //必须连接了wifi并且非plug设备
-        [progressView showCentralToast:@"Network cannot be smart plug!"];
-        [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
-        return;
-    }
-//    [[MKMQTTServerManager sharedInstance] connectMQTTServer:@"111.111.111.1" port:8080 tls:YES keepalive:60 clean:YES auth:YES user:@"asdf" pass:@"12345" clientId:@"tehckaj" connectSucBlock:^{
-//        NSLog(@"Success");
-//    } connectFailedBlock:^(NSError *error) {
-//        [progressView showCentralToast:@"Connect mqtt!"];
-//        [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
-//    }];
 }
 
 #pragma mark - public method
@@ -147,6 +149,10 @@
 - (void)startConfigProcessWithCompleteBlock:(void (^)(NSError *error, BOOL success))completeBlock{
     self.completeBlock = nil;
     self.completeBlock = completeBlock;
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    if (self.receiveTimer) {
+        dispatch_cancel(self.receiveTimer);
+    }
     if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         //需要引导用户去连接smart plug
         [self showConnectDeviceView];
@@ -191,7 +197,7 @@
     [wifiView dismiss];
     MKConnectDeviceProgressView *progressView = self.viewList[2];
     [progressView showConnectAlertView];
-    [progressView setProgress:0.3 duration:0.2f];
+    [progressView setProgress:0.3 duration:10.f];
 }
 
 - (void)dismisAllAlertView{
@@ -210,10 +216,11 @@
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:wifiView isPenetration:NO];
     __weak __typeof(&*wifiView)weakView = wifiView;
     WS(weakSelf);
-    [[MKSmartPlugConnectManager sharedInstance] configDeviceWithWifiSSID:self.wifiSSID password:self.password sucBlock:^{
+    [[MKSmartPlugConnectManager sharedInstance] configDeviceWithWifiSSID:self.wifiSSID password:self.password sucBlock:^(NSDictionary *deviceInfo) {
         [[MKHudManager share] hide];
-        //开始连接mqtt服务器
-        [weakSelf showProcessView];
+        weakSelf.deviceDic = nil;
+        weakSelf.deviceDic = [NSMutableDictionary dictionaryWithDictionary:deviceInfo];
+        [weakSelf connectMQTTServer];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];
         [weakView showCentralToast:error.userInfo[@"errorInfo"]];
@@ -221,6 +228,64 @@
 }
 
 #pragma mark - private method
+- (void)connectMQTTServer{
+    //开始连接mqtt服务器
+    MKDeviceModel *model = [[MKDeviceModel alloc] initWithDictionary:self.deviceDic];
+    [[MKMQTTServerConnectManager sharedInstance] updateMQTTServerTopic:@[[model topicInfo]]];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(receiveDeviceTopicData:)
+                                       name:MKMQTTServerReceiveDataNotification
+                                     object:nil];
+    [self startConnectTimer];
+    [self showProcessView];
+}
+
+- (void)startConnectTimer{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    self.receiveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    self.receiveTimerCount = 0;
+    self.connectTimeout = NO;
+    dispatch_source_set_timer(self.receiveTimer, dispatch_walltime(NULL, 0), 1 * NSEC_PER_SEC, 0);
+    WS(weakSelf);
+    dispatch_source_set_event_handler(self.receiveTimer, ^{
+        if (weakSelf.receiveTimerCount >= 30.f) {
+            //接受数据超时
+            [weakSelf connectFailed];
+            return ;
+        }
+        weakSelf.receiveTimerCount ++;
+    });
+    dispatch_resume(self.receiveTimer);
+}
+
+- (void)connectFailed{
+    self.receiveTimerCount = 0;
+    self.connectTimeout = YES;
+    if (self.receiveTimer) {
+        dispatch_cancel(self.receiveTimer);
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        MKConnectDeviceProgressView *progressView = self.viewList[2];
+        if ([progressView isShow]) {
+            [progressView showCentralToast:@"Connect failed"];
+        }
+        [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
+        [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    });
+}
+
+- (void)saveDeviceToLocal{
+    MKDeviceModel *dataModel = [[MKDeviceModel alloc] initWithDictionary:self.deviceDic];
+    NSString *macAddress = self.deviceDic[@"device_mac"];
+    macAddress = [[macAddress stringByReplacingOccurrencesOfString:@":" withString:@""] uppercaseString];
+    dataModel.local_name = [@"MK102-" stringByAppendingString:[macAddress substringWithRange:NSMakeRange(8, 4)]];
+    [MKDeviceDataBaseManager insertDeviceList:@[dataModel] sucBlock:^{
+        
+    } failedBlock:^(NSError *error) {
+        
+    }];
+}
+
 - (void)loadViewList{
     MKConnectDeviceView *connectDeviceView = [[MKConnectDeviceView alloc] init];
     connectDeviceView.delegate = self;

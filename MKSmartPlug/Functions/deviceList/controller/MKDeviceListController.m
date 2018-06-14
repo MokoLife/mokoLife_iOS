@@ -120,11 +120,6 @@
         return;
     }
     [EasyLodingView hidenLoingInView:self.loadingView];
-    if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateConnected) {
-        //开始成功
-        [self resetMQTTServerTopic];
-        return;
-    }
 }
 
 - (void)networkStatusChanged{
@@ -164,6 +159,11 @@
     [self.dataList removeAllObjects];
     [self.dataList addObjectsFromArray:deviceList];
     [self.tableView reloadData];
+    if ([MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnected
+        && [MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnecting) {
+        [[MKMQTTServerConnectManager sharedInstance] connectServer];
+    }
+    [self resetMQTTServerTopic];
 }
 
 - (void)resetMQTTServerTopic{

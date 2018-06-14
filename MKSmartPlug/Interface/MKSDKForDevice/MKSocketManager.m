@@ -234,27 +234,24 @@ static NSTimeInterval const defaultCommandTime = 2.f;
         [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Password error" block:failedBlock];
         return;
     }
-    NSString *connectMode = @"0";
-    if (mode == mqttServerConnectSSLMode) {
-        connectMode = @"1";
-    }
-    NSString *qosString = @"2";
+    NSInteger connectMode = (mode == mqttServerConnectTCPMode ? 0 : 1);
+    NSInteger qosNumber = 2;
     if (qos == mqttQosLevelAtMostOnce) {
-        qosString = @"0";
+        qosNumber = 0;
     }else if (qos == mqttQosLevelAtLeastOnce){
-        qosString = @"1";
+        qosNumber = 1;
     }
     NSDictionary *commandDic = @{
                                  @"header":@(4002),
                                  @"host":host,
                                  @"port":@(port),
                                  @"clientId":(clientId ? clientId : @""),
-                                 @"connect_mode":connectMode,
+                                 @"connect_mode":@(connectMode),
                                  @"username":username,
                                  @"password":password,
-                                 @"keepalive":[NSString stringWithFormat:@"%ld",(long)keepalive],
-                                 @"qos":qosString,
-                                 @"clean_session":(clean ? @"1" : @"0"),
+                                 @"keepalive":@(keepalive),
+                                 @"qos":@(qosNumber),
+                                 @"clean_session":(clean ? @(1) : @(0)),
                                  };
     NSString *jsonString = [MKSocketAdopter convertToJsonData:commandDic];
     [self addTaskWithTaskID:socketConfigMQTTServerTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];
@@ -278,21 +275,21 @@ static NSTimeInterval const defaultCommandTime = 2.f;
         [MKSocketBlockAdopter operationParamsErrorWithMessage:@"SSID error" block:failedBlock];
         return;
     }
-    NSString *wifi_security = @"0";
+    NSInteger wifi_security = 0;
     if (security == wifiSecurity_WEP) {
-        wifi_security = @"1";
+        wifi_security = 1;
     }else if (security == wifiSecurity_WPA_PSK){
-        wifi_security = @"2";
+        wifi_security = 2;
     }else if (security == wifiSecurity_WPA2_PSK){
-        wifi_security = @"3";
+        wifi_security = 3;
     }else if (security == wifiSecurity_WPA_WPA2_PSK){
-        wifi_security = @"4";
+        wifi_security = 4;
     }
     NSDictionary *commandDic = @{
                                  @"header":@(4003),
                                  @"wifi_ssid":ssid,
                                  @"wifi_pwd":((!password || password.length == 0) ? @"" : password),
-                                 @"wifi_security":wifi_security,
+                                 @"wifi_security":@(wifi_security),
                                  };
     NSString *jsonString = [MKSocketAdopter convertToJsonData:commandDic];
     [self addTaskWithTaskID:socketConfigWifiTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];

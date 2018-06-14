@@ -66,6 +66,11 @@
         [[MKMQTTServerManager sharedInstance] disconnect];
         return;
     }
+    if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateConnected
+        || [MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateConnecting) {
+        //已经连接或者正在连接，直接返回
+        return;
+    }
     //如果网络可用，则连接
     [self connectServer];
 }
@@ -100,6 +105,10 @@
  
  */
 - (void)connectServer{
+    if (![self.configServerModel needParametersHasValue]) {
+        //参数没有配置好，直接返回
+        return;
+    }
     [[MKMQTTServerManager sharedInstance] connectMQTTServer:self.configServerModel.host
                                                        port:[self.configServerModel.port integerValue]
                                                         tls:NO
@@ -113,7 +122,7 @@
  订阅主题
  */
 - (void)updateMQTTServerTopic:(NSArray <NSString *>*)topicList{
-    if (!ValidArray(topicList) || [MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnected) {
+    if (!ValidArray(topicList)) {
         return;
     }
     [[MKMQTTServerManager sharedInstance] subscriptions:topicList];

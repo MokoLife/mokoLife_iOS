@@ -21,6 +21,8 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
 
 @property (nonatomic, assign)MKSessionManagerState managerState;
 
+@property (nonatomic, strong)NSMutableDictionary *subscriptions;
+
 @end
 
 @implementation MKMQTTServerManager
@@ -39,8 +41,30 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
 #pragma mark - MQTTSessionManagerDelegate
 
 - (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained{
+    if (!ValidStr(topic)) {
+        return;
+    }
+    NSArray *keyList = [topic componentsSeparatedByString:@"/"];
+    if (keyList.count != 6) {
+        return;
+    }
     NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"接收到新的数据了%@",dataString);
+    if (!ValidStr(dataString)) {
+        return;
+    }
+    NSDictionary *dataDic = [NSString dictionaryWithJsonString:dataString];
+    if (!ValidDict(dataDic)) {
+        return;
+    }
+    NSString *macAddress = keyList[3];
+    NSString *function = keyList[5];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:dataDic];
+    [tempDic setObject:macAddress forKey:@"mac"];
+    [tempDic setObject:function forKey:@"function"];
+    NSLog(@"接收到数据:%@",tempDic);
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerReceiveDataNotification
+                                                        object:nil
+                                                      userInfo:@{@"userInfo" : tempDic}];
 }
 
 - (void)messageDelivered:(UInt16)msgID{
@@ -52,6 +76,10 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
     [self sessionStateWithMQTTManagerState:newState];
     [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerManagerStateChangedNotification object:nil];
     NSLog(@"连接状态发生改变:---%ld",(long)newState);
+    if (self.managerState == MKSessionManagerStateConnected) {
+        //连接成功了，订阅主题
+        self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
+    }
 }
 
 #pragma mark - public method
@@ -112,6 +140,7 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
     self.sessionManager.delegate = nil;
     [self.sessionManager disconnect];
     self.sessionManager = nil;
+    self.managerState = MQTTSessionManagerStateStarting;
 }
 
 /**
@@ -120,17 +149,13 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
  @param topicList 主题
  */
 - (void)subscriptions:(NSArray <NSString *>*)topicList{
-    if (!self.sessionManager
-        || self.sessionManager.state != MKSessionManagerStateConnected
-        || !topicList
+    if (!topicList
         || topicList.count == 0) {
         return;
     }
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:[topicList count]];
     for (NSString *topic in topicList) {
-        [dic setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
+        [self.subscriptions setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
     }
-    self.sessionManager.subscriptions = dic;
 }
 
 - (void)sessionStateWithMQTTManagerState:(MQTTSessionManagerState)sessionState{
@@ -162,6 +187,14 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
         default:
             break;
     }
+}
+
+#pragma mark - setter & getter
+- (NSMutableDictionary *)subscriptions{
+    if (!_subscriptions) {
+        _subscriptions = [NSMutableDictionary dictionary];
+    }
+    return _subscriptions;
 }
 
 @end

@@ -269,6 +269,7 @@
 + (void)saveDataToLocal:(MKConfigServerModel *)serverModel target:(MKConfigServerController *)target{
     if (target.controllerType == MKConfigServerForApp) {
         [[MKMQTTServerConnectManager sharedInstance] saveServerConfigDataToLocal:serverModel];
+        [[MKMQTTServerConnectManager sharedInstance] connectServer];
         if (![[MKSmartPlugConnectManager sharedInstance].configServerModel needParametersHasValue]) {
             //如果设置给plug的mqtt服务器信息没有，去设置
             MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];

@@ -32,7 +32,7 @@
  */
 - (void)configDeviceWithWifiSSID:(NSString *)wifi_ssid
                         password:(NSString *)password
-                        sucBlock:(void (^)(void))sucBlock
+                        sucBlock:(void (^)(NSDictionary *deviceInfo))sucBlock
                      failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end

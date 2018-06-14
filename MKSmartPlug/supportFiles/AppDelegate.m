@@ -21,7 +21,7 @@
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = COLOR_WHITE_MACROS;
     //加载网络部分
-    [MKMQTTServerConnectManager sharedInstance];
+//    [MKMQTTServerConnectManager sharedInstance];
     [MKNetworkManager sharedInstance];
     [self enterAddDevicePage];
     return YES;
