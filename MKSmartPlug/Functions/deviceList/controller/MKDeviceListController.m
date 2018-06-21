@@ -18,7 +18,7 @@
 #import "EasyLodingView.h"
 #import "MKConfigDeviceController.h"
 
-@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource>
+@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
@@ -36,15 +36,12 @@
     NSLog(@"MKDeviceListController销毁");
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerManagerStateChangedNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKNeedReadDataFromLocalNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self getDeviceList];
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
 }
 
 - (void)viewDidLoad {
@@ -58,7 +55,16 @@
                                    selector:@selector(networkStatusChanged)
                                        name:MKNetworkStatusChangedNotification
                                      object:nil];
-    [self networkStatusChanged];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(receiveDeviceTopicData:)
+                                       name:MKMQTTServerReceiveDataNotification
+                                     object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(getDeviceList)
+                                       name:MKNeedReadDataFromLocalNotification
+                                     object:nil];
+    [self performSelector:@selector(networkStatusChanged) withObject:nil afterDelay:2.f];
+    [self getDeviceList];
     // Do any additional setup after loading the view.
 }
 
@@ -98,7 +104,15 @@
     return cell;
 }
 
-#pragma mark - event method
+#pragma mark - MKDeviceModelDelegate
+- (void)deviceModelStateChanged:(MKDeviceModel *)deviceModel{
+    if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
+        return;
+    }
+    [self updateDeviceModelWithState:smartPlugDeviceOffline mac:deviceModel.device_mac];
+}
+
+#pragma mark - Notification Method
 - (void)MQTTServerManagerStateChanged{
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
         || [[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
@@ -130,6 +144,15 @@
     }
 }
 
+- (void)receiveDeviceTopicData:(NSNotification *)note{
+    NSDictionary *deviceDic = note.userInfo[@"userInfo"];
+    if (!ValidDict(deviceDic) || ![deviceDic[@"function"] isEqualToString:@"switch_state"] || self.dataList.count == 0) {
+        return;
+    }
+    smartPlugDeviceState state = ([deviceDic[@"switch_state"] isEqualToString:@"on"] ? smartPlugDeviceOn : smartPlugDeviceStatusOff);
+    [self updateDeviceModelWithState:state mac:deviceDic[@"mac"]];
+}
+
 #pragma mark - get device list
 - (void)getDeviceList{
     WS(weakSelf);
@@ -156,9 +179,17 @@
 }
 
 - (void)reloadTableViewWithData:(NSArray <MKDeviceModel *> *)deviceList{
+    //页面消失需要取消model的定时器
+    for (MKDeviceModel *model in self.dataList) {
+        [model cancel];
+    }
     [self.dataList removeAllObjects];
     [self.dataList addObjectsFromArray:deviceList];
     [self.tableView reloadData];
+    for (MKDeviceModel *model in self.dataList) {
+        model.delegate = self;
+        [model startConnectTimer];
+    }
     if ([MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnected
         && [MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnecting) {
         [[MKMQTTServerConnectManager sharedInstance] connectServer];
@@ -175,6 +206,30 @@
         [topicList addObject:[deviceModel topicInfo]];
     }
     [[MKMQTTServerConnectManager sharedInstance] updateMQTTServerTopic:topicList];
+}
+
+#pragma mark -
+- (void)updateDeviceModelWithState:(smartPlugDeviceState)state mac:(NSString *)mac{
+    @synchronized(self) {
+        //需要执行的代码
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            for (NSInteger i = 0; i < self.dataList.count; i ++) {
+                MKDeviceModel *model = self.dataList[i];
+                if ([model.device_mac isEqualToString:mac]) {
+                    model.device_state = state;
+                    if (state != smartPlugDeviceOffline) {
+                        [model resetTimerCounter];
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [UIView performWithoutAnimation:^{
+                            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                        }];
+                    });
+                    break;
+                }
+            }
+        });
+    }
 }
 
 #pragma mark - loadSubViews

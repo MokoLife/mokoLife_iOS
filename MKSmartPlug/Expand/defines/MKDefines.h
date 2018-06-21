@@ -11,4 +11,5 @@
 #import "MKDeviceDefines.h"
 #import "MKRegularsDefine.h"
 #import "MKNomalBlockDefines.h"
+#import "MKNotificationDefines.h"
 

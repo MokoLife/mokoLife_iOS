@@ -68,19 +68,35 @@
         [cell setParams:dic];
         return cell;
     }
-    if (indexPath.row == 4) {
-        //client id
-        MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
-        cell.msg = @"Client Id";
-        NSString *clientId = SafeStr(configModel.clientId);
-        if (!ValidStr(clientId) && isApp) {
-            //如果没有有效值，则默认用手机uuid
-            clientId = twlt_uuid_create();//设备唯一标识
+    if (isApp) {
+        //app
+        if (indexPath.row == 4) {
+            //client id
+            MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
+            cell.msg = @"Client Id";
+            NSString *clientId = SafeStr(configModel.clientId);
+            if (!ValidStr(clientId)) {
+                //如果没有有效值，则默认用手机uuid
+                clientId = twlt_uuid_create();//设备唯一标识
+            }
+            [cell setParams:clientId];
+            return cell;
         }
-        [cell setParams:clientId];
+        if (indexPath.row == 5) {
+            //Username
+            MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
+            cell.msg = @"Username";
+            [cell setParams:SafeStr(configModel.userName)];
+            return cell;
+        }
+        //Password
+        MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
+        cell.msg = @"Password";
+        [cell setParams:SafeStr(configModel.password)];
         return cell;
     }
-    if (indexPath.row == 5) {
+    //device
+    if (indexPath.row == 4) {
         //Username
         MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
         cell.msg = @"Username";
@@ -98,7 +114,7 @@
  所有带输入框的cell取消第一响应者
  */
 + (void)configCellResignFirstResponderWithTable:(UITableView *)tableView{
-    for (NSInteger row = 0; row < 7; row ++) {
+    for (NSInteger row = 0; row < [tableView numberOfRowsInSection:0]; row ++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
         id <MKConfigServerCellProtocol>cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell respondsToSelector:@selector(resignFirstResponder)]) {
@@ -107,12 +123,15 @@
     }
 }
 
+
 /**
  获取当前配置的服务器数据
- 
- @return MKConfigServerModel
+
+ @param tableView tableView
+ @param isApp 配置app的服务器信息还是设备的服务器信息
+ @return model
  */
-+ (MKConfigServerModel *)currentServerModelWithTable:(UITableView *)tableView{
++ (MKConfigServerModel *)currentServerModelWithTable:(UITableView *)tableView isApp:(BOOL)isApp{
     MKConfigServerModel *serverModel = [[MKConfigServerModel alloc] init];
     
     //host
@@ -141,23 +160,39 @@
     serverModel.qos = qosDic[@"qos"];
     serverModel.keepAlive = qosDic[@"keepAlive"];
     
-    //client id
-    NSIndexPath *clientIdPath = [NSIndexPath indexPathForRow:4 inSection:0];
-    id <MKConfigServerCellProtocol>clientIdCell = [tableView cellForRowAtIndexPath:clientIdPath];
-    NSDictionary *clientIdDic = [clientIdCell configServerCellValue];
-    serverModel.clientId = clientIdDic[@"paramValue"];
-    
-    //userName
-    NSIndexPath *userNamePath = [NSIndexPath indexPathForRow:5 inSection:0];
-    id <MKConfigServerCellProtocol>userNameCell = [tableView cellForRowAtIndexPath:userNamePath];
-    NSDictionary *userNameDic = [userNameCell configServerCellValue];
-    serverModel.userName = userNameDic[@"paramValue"];
-    
-    //password
-    NSIndexPath *passwordPath = [NSIndexPath indexPathForRow:6 inSection:0];
-    id <MKConfigServerCellProtocol>passwordCell = [tableView cellForRowAtIndexPath:passwordPath];
-    NSDictionary *passwordDic = [passwordCell configServerCellValue];
-    serverModel.password = passwordDic[@"paramValue"];
+    if (isApp) {
+        //app
+        //client id
+        NSIndexPath *clientIdPath = [NSIndexPath indexPathForRow:4 inSection:0];
+        id <MKConfigServerCellProtocol>clientIdCell = [tableView cellForRowAtIndexPath:clientIdPath];
+        NSDictionary *clientIdDic = [clientIdCell configServerCellValue];
+        serverModel.clientId = clientIdDic[@"paramValue"];
+        
+        //userName
+        NSIndexPath *userNamePath = [NSIndexPath indexPathForRow:5 inSection:0];
+        id <MKConfigServerCellProtocol>userNameCell = [tableView cellForRowAtIndexPath:userNamePath];
+        NSDictionary *userNameDic = [userNameCell configServerCellValue];
+        serverModel.userName = userNameDic[@"paramValue"];
+        
+        //password
+        NSIndexPath *passwordPath = [NSIndexPath indexPathForRow:6 inSection:0];
+        id <MKConfigServerCellProtocol>passwordCell = [tableView cellForRowAtIndexPath:passwordPath];
+        NSDictionary *passwordDic = [passwordCell configServerCellValue];
+        serverModel.password = passwordDic[@"paramValue"];
+    }else{
+        
+        //userName
+        NSIndexPath *userNamePath = [NSIndexPath indexPathForRow:4 inSection:0];
+        id <MKConfigServerCellProtocol>userNameCell = [tableView cellForRowAtIndexPath:userNamePath];
+        NSDictionary *userNameDic = [userNameCell configServerCellValue];
+        serverModel.userName = userNameDic[@"paramValue"];
+        
+        //password
+        NSIndexPath *passwordPath = [NSIndexPath indexPathForRow:5 inSection:0];
+        id <MKConfigServerCellProtocol>passwordCell = [tableView cellForRowAtIndexPath:passwordPath];
+        NSDictionary *passwordDic = [passwordCell configServerCellValue];
+        serverModel.password = passwordDic[@"paramValue"];
+    }
     
     return serverModel;
 }
@@ -166,7 +201,7 @@
  右上角清除按钮点了之后，将所有cell上面的信息恢复成默认的
  */
 + (void)clearAllConfigCellValuesWithTable:(UITableView *)tableView{
-    for (NSInteger row = 0; row < 7; row ++) {
+    for (NSInteger row = 0; row < [tableView numberOfRowsInSection:0]; row ++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
         id <MKConfigServerCellProtocol>cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell respondsToSelector:@selector(setToDefaultParameters)]) {
@@ -244,13 +279,6 @@
             [target.view showCentralToast:@"Client id error"];
             return NO;
         }
-    }else{
-        //device,长度不大于32个字符
-        if (serverModel.clientId.length > 32) {
-            //client id错误
-            [target.view showCentralToast:@"Client id error"];
-            return NO;
-        }
     }
     
     if (!ValidStr(serverModel.userName) || serverModel.userName.length > 32) {
@@ -286,6 +314,18 @@
         MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
         vc.controllerType = MKConfigServerForApp;
         [target.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    UIViewController *popController = nil;
+    for (UIViewController *v in target.navigationController.viewControllers) {
+        if ([v isKindOfClass:NSClassFromString(@"MKSettingsController")]) {
+            popController = v;
+            break;
+        }
+    }
+    if (!popController) {
+        //从主页面直接过来的
+        [target.navigationController popToRootViewControllerAnimated:YES];
         return;
     }
     [target.navigationController popViewControllerAnimated:YES];

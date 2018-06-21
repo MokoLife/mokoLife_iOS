@@ -246,6 +246,7 @@
 		000FED7620C911180082705A /* MKAddDeviceDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAddDeviceDataManager.h; sourceTree = "<group>"; };
 		000FED7720C911180082705A /* MKAddDeviceDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAddDeviceDataManager.m; sourceTree = "<group>"; };
 		000FED7920C9221C0082705A /* MKConnectViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectViewProtocol.h; sourceTree = "<group>"; };
+		0012411320DBC99200FE2DFA /* MKNotificationDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKNotificationDefines.h; sourceTree = "<group>"; };
 		001447D420C22BC700A87037 /* MKConfigServerHostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerHostCell.h; sourceTree = "<group>"; };
 		001447D520C22BC700A87037 /* MKConfigServerHostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerHostCell.m; sourceTree = "<group>"; };
 		001447D720C22BED00A87037 /* MKConfigServerPortCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerPortCell.h; sourceTree = "<group>"; };
@@ -1132,6 +1133,7 @@
 				003F6D3020C161F50002C833 /* MKDeviceDefines.h */,
 				003F6D3120C161F50002C833 /* MKNomalBlockDefines.h */,
 				003F6D3220C161F50002C833 /* MKRegularsDefine.h */,
+				0012411320DBC99200FE2DFA /* MKNotificationDefines.h */,
 			);
 			path = defines;
 			sourceTree = "<group>";

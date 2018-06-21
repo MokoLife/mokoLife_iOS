@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class MKDeviceModel;
 @interface MKAddDeviceDataManager : NSObject
 
 + (MKAddDeviceDataManager *)addDeviceManager;
 
-- (void)startConfigProcessWithCompleteBlock:(void (^)(NSError *error, BOOL success))completeBlock;
+- (void)startConfigProcessWithCompleteBlock:(void (^)(NSError *error, BOOL success, MKDeviceModel *deviceModel))completeBlock;
 
 @end

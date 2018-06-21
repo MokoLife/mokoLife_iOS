@@ -13,6 +13,7 @@
 #import "MKAddDeviceAdopter.h"
 #import "MKAddDeviceDataManager.h"
 #import "MKSaveDeviceNameController.h"
+#import "MKDeviceModel.h"
 
 static CGFloat const offset_X = 20.f;
 static CGFloat const centerGifWidth = 144.f;
@@ -64,10 +65,18 @@ static CGFloat const centerGifHeight = 253.f;
 }
 
 - (void)blinkButtonPressed{
-//    MKSaveDeviceNameController *vc = [[MKSaveDeviceNameController alloc] initWithNavigationType:GYNaviTypeShow];
-//    [self.navigationController pushViewController:vc animated:YES];
-    [self.dataManager startConfigProcessWithCompleteBlock:^(NSError *error, BOOL success) {
-
+    WS(weakSelf);
+    [self.dataManager startConfigProcessWithCompleteBlock:^(NSError *error, BOOL success, MKDeviceModel *deviceModel) {
+        if (error) {
+            [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+            return ;
+        }
+        [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
+        MKSaveDeviceNameController *vc = [[MKSaveDeviceNameController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKDeviceModel *tempModel = [[MKDeviceModel alloc] init];
+        [tempModel updatePropertyWithModel:deviceModel];
+        vc.deviceModel = tempModel;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
 }
 

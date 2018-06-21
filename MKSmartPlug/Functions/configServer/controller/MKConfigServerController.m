@@ -74,7 +74,7 @@
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 7;
+    return ((self.controllerType == MKConfigServerForApp) ? 7 : 6);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -95,7 +95,8 @@
     [MKConfigServerAdopter configCellResignFirstResponderWithTable:self.tableView];
 }
 - (void)saveButtonPressed{
-    MKConfigServerModel *serverModel = [MKConfigServerAdopter currentServerModelWithTable:self.tableView];
+    BOOL isApp = (self.controllerType == MKConfigServerForApp);
+    MKConfigServerModel *serverModel = [MKConfigServerAdopter currentServerModelWithTable:self.tableView isApp:isApp];
     if (!serverModel) {
         //
         [self.view showCentralToast:@"Required options cannot be empty."];

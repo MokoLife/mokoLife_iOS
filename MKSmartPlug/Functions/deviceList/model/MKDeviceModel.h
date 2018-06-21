@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
     smartPlugDeviceStatusOff,           //在线并且关闭
 };
 
+@protocol MKDeviceModelDelegate;
 @interface MKDeviceModel : MKBaseDataModel
 
 /**
@@ -52,10 +53,48 @@ typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
 @property (nonatomic, copy)NSString *device_function;
 
 /**
+ 设备类型，现在分为带计电量和不带两种
+ */
+@property (nonatomic, copy)NSString *device_type;
+
+#pragma mark - 业务流程相关
+
+@property (nonatomic, weak)id <MKDeviceModelDelegate>delegate;
+
+/**
+ 是否处于离线状态
+ */
+@property (nonatomic, assign, readonly)BOOL offline;
+
+/**
  订阅的主题
 
  @return 设备功能/设备名称/型号/mac/device/#
  */
 - (NSString *)topicInfo;
+
+- (void)updatePropertyWithModel:(MKDeviceModel *)model;
+
+/**
+ 设备列表页面的状态监控
+ */
+- (void)startConnectTimer;
+
+/**
+ 接收到开关状态的时候，需要清除离线状态计数
+ */
+- (void)resetTimerCounter;
+
+/**
+ 取消定时器
+ */
+- (void)cancel;
+
+@end
+
+@protocol MKDeviceModelDelegate <NSObject>
+
+@optional
+- (void)deviceModelStateChanged:(MKDeviceModel *)deviceModel;
 
 @end

@@ -8,6 +8,9 @@
 
 #import "MKBaseViewController.h"
 
+@class MKDeviceModel;
 @interface MKSaveDeviceNameController : MKBaseViewController
+
+@property (nonatomic, strong)MKDeviceModel *deviceModel;
 
 @end

@@ -42,7 +42,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             return;
         }
         
-        BOOL resCreate = [db executeUpdate:@"CREATE TABLE IF NOT EXISTS deviceTable (device_mac text NOT NULL, local_name text NOT NULL,device_name text NOT NULL, device_icon text NOT NULL, device_specifications text NOT NULL, device_function text NOT NULL);"];
+        BOOL resCreate = [db executeUpdate:@"CREATE TABLE IF NOT EXISTS deviceTable (device_mac text NOT NULL,device_type text NOT NULL ,local_name text NOT NULL,device_name text NOT NULL, device_icon text NOT NULL, device_specifications text NOT NULL, device_function text NOT NULL);"];
         if (!resCreate) {
             [db close];
             [MKDeviceDataBaseAdopter operationInsertFailedBlock:failedBlock];
@@ -58,11 +58,11 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             }
             if (exist) {
                 //存在该设备，更新设备
-                [db executeUpdate:@"UPDATE deviceTable SET device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? WHERE device_mac = ?",                          SafeStr(model.device_name),SafeStr(model.local_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function),SafeStr(model.device_mac)];
+                [db executeUpdate:@"UPDATE deviceTable SET device_type = ?, device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? WHERE device_mac = ?", SafeStr(model.device_type),                         SafeStr(model.device_name),SafeStr(model.local_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function),SafeStr(model.device_mac)];
             }else{
                 //不存在，插入设备
-                [db executeUpdate:@"INSERT INTO deviceTable (device_mac, local_name, device_name, device_icon, device_specifications, device_function) VALUES (?, ?, ?, ?, ?, ?);",
-                 model.device_mac,model.local_name,model.device_name,model.device_icon,model.device_specifications,model.device_function];
+                [db executeUpdate:@"INSERT INTO deviceTable (device_mac, device_type, local_name, device_name, device_icon, device_specifications, device_function) VALUES (?,?,?,?,?,?,?);",
+                 model.device_mac,model.device_type,model.local_name,model.device_name,model.device_icon,model.device_specifications,model.device_function];
             }
             
         }
@@ -96,6 +96,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             MKDeviceModel *deviceModel = [[MKDeviceModel alloc] init];
             deviceModel.local_name = [result stringForColumn:@"local_name"];
             deviceModel.device_mac = [result stringForColumn:@"device_mac"];
+            deviceModel.device_type = [result stringForColumn:@"device_type"];
             deviceModel.device_name = [result stringForColumn:@"device_name"];
             deviceModel.device_icon = [result stringForColumn:@"device_icon"];
             deviceModel.device_specifications = [result stringForColumn:@"device_specifications"];
@@ -132,7 +133,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             [MKDeviceDataBaseAdopter operationUpdateFailedBlock:failedBlock];
             return;
         }
-        BOOL resUpdate = [db executeUpdate:@"UPDATE deviceTable SET device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? WHERE device_mac = ?",                          SafeStr(deviceModel.device_name),SafeStr(deviceModel.local_name),SafeStr(deviceModel.device_icon),SafeStr(deviceModel.device_specifications),SafeStr(deviceModel.device_function),SafeStr(deviceModel.device_mac)];
+        BOOL resUpdate = [db executeUpdate:@"UPDATE deviceTable SET device_type = ?, device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? WHERE device_mac = ?", SafeStr(deviceModel.device_type),                         SafeStr(deviceModel.device_name),SafeStr(deviceModel.local_name),SafeStr(deviceModel.device_icon),SafeStr(deviceModel.device_specifications),SafeStr(deviceModel.device_function),SafeStr(deviceModel.device_mac)];
         [db close];
         if (!resUpdate) {
             [MKDeviceDataBaseAdopter operationUpdateFailedBlock:failedBlock];

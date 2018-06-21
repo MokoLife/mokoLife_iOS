@@ -25,6 +25,7 @@
 - (void)dealloc{
     NSLog(@"销毁");
     [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 - (instancetype)init{
     if (self = [super init]) {
@@ -38,6 +39,10 @@
         [kNotificationCenterSington addObserver:self
                                        selector:@selector(networkStateChanged)
                                            name:MKNetworkStatusChangedNotification
+                                         object:nil];
+        [kNotificationCenterSington addObserver:self
+                                       selector:@selector(networkStateChanged)
+                                           name:UIApplicationDidBecomeActiveNotification
                                          object:nil];
     }
     return self;

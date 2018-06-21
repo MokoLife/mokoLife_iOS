@@ -17,7 +17,7 @@
 
 @interface MKAddDeviceDataManager()<MKConnectViewConfirmDelegate>
 
-@property (nonatomic, copy)void (^completeBlock)(NSError *error, BOOL success);
+@property (nonatomic, copy)void (^completeBlock)(NSError *error, BOOL success, MKDeviceModel *deviceModel);
 
 @property (nonatomic, copy)NSString *wifiSSID;
 
@@ -45,6 +45,7 @@
     NSLog(@"MKAddDeviceDataManager销毁");
     [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (instancetype)init{
@@ -54,7 +55,6 @@
                                        selector:@selector(networkStatusChanged)
                                            name:MKNetworkStatusChangedNotification
                                          object:nil];
-        [self loadViewList];
     }
     return self;
 }
@@ -91,6 +91,7 @@
     }
     self.receiveTimerCount = 0;
     self.connectTimeout = NO;
+    self.completeBlock = nil;
 }
 
 #pragma mark - event method
@@ -101,33 +102,36 @@
         //如果三个alert页面都没有加载到window，则不需要管网络状态改变通知
         return;
     }
-    MKConnectDeviceWifiView *connectDeviceView = self.viewList[0];
-    if ([connectDeviceView isShow]) {
-        //当前手机没有连plug ap wifi，出现的是引导用户连接设备的alert
-        if ([[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
-            //如果已经连接到plug了，则进入下一步
-            [self showDeviceWifiView];
-        }
+    MKConnectDeviceProgressView *progressView = self.viewList[2];
+    if ([progressView isShow]) {
+        //正在走连接进度流程，直接返回，
         return;
     }
+    if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
+        //需要引导用户去连接smart plug
+        [self showConnectDeviceView];
+        return;
+    }
+    [self showDeviceWifiView];
 }
 
 - (void)receiveDeviceTopicData:(NSNotification *)note{
     NSDictionary *deviceDic = note.userInfo[@"userInfo"];
-    if (!ValidDict(deviceDic) || self.connectTimeout) {
+    if (!ValidDict(deviceDic)
+        || self.connectTimeout
+        || ![deviceDic[@"mac"] isEqualToString:self.deviceDic[@"device_mac"]]) {
         return;
     }
-    if ([deviceDic[@"mac"] isEqualToString:self.deviceDic[@"device_mac"]]) {
-        //当前设备已经连上mqtt服务器了
-        if (self.receiveTimer) {
-            dispatch_cancel(self.receiveTimer);
-            self.receiveTimerCount = 0;
-            self.connectTimeout = NO;
-        }
-        MKConnectDeviceProgressView *progressView = self.viewList[2];
-        [progressView setProgress:1.f duration:0.2];
-        [self saveDeviceToLocal];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    //当前设备已经连上mqtt服务器了
+    if (self.receiveTimer) {
+        dispatch_cancel(self.receiveTimer);
+        self.receiveTimerCount = 0;
+        self.connectTimeout = NO;
     }
+    MKConnectDeviceProgressView *progressView = self.viewList[2];
+    [progressView setProgress:1.f duration:0.2];
+    [self saveDeviceToLocal];
 }
 
 #pragma mark - public method
@@ -146,13 +150,30 @@
     return NO;
 }
 
-- (void)startConfigProcessWithCompleteBlock:(void (^)(NSError *error, BOOL success))completeBlock{
+- (void)startConfigProcessWithCompleteBlock:(void (^)(NSError *error, BOOL success, MKDeviceModel *deviceModel))completeBlock{
+    WS(weakSelf);
+    [self connectProgressWithCompleteBlock:^(NSError *error, BOOL success, MKDeviceModel *deviceModel) {
+        if (completeBlock) {
+            completeBlock(error,success,deviceModel);
+        }
+        weakSelf.completeBlock = nil;
+    }];
+}
+
+#pragma mark -
+- (void)connectProgressWithCompleteBlock:(void (^)(NSError *error, BOOL success, MKDeviceModel *deviceModel))completeBlock{
     self.completeBlock = nil;
     self.completeBlock = completeBlock;
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(networkStatusChanged)
+                                       name:UIApplicationDidBecomeActiveNotification
+                                     object:nil];
     if (self.receiveTimer) {
         dispatch_cancel(self.receiveTimer);
     }
+    [self.viewList removeAllObjects];
+    [self loadViewList];
     if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         //需要引导用户去连接smart plug
         [self showConnectDeviceView];
@@ -197,7 +218,7 @@
     [wifiView dismiss];
     MKConnectDeviceProgressView *progressView = self.viewList[2];
     [progressView showConnectAlertView];
-    [progressView setProgress:0.3 duration:10.f];
+    [progressView setProgress:0.3 duration:30.f];
 }
 
 - (void)dismisAllAlertView{
@@ -214,7 +235,6 @@
         return;
     }
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:wifiView isPenetration:NO];
-    __weak __typeof(&*wifiView)weakView = wifiView;
     WS(weakSelf);
     [[MKSmartPlugConnectManager sharedInstance] configDeviceWithWifiSSID:self.wifiSSID password:self.password sucBlock:^(NSDictionary *deviceInfo) {
         [[MKHudManager share] hide];
@@ -223,7 +243,11 @@
         [weakSelf connectMQTTServer];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];
-        [weakView showCentralToast:error.userInfo[@"errorInfo"]];
+        if (weakSelf.completeBlock) {
+            weakSelf.completeBlock(error, NO, nil);
+        }
+        [weakSelf dismisAllAlertView];
+//        [weakView showCentralToast:error.userInfo[@"errorInfo"]];
     }];
 }
 
@@ -236,6 +260,7 @@
                                    selector:@selector(receiveDeviceTopicData:)
                                        name:MKMQTTServerReceiveDataNotification
                                      object:nil];
+    [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     [self startConnectTimer];
     [self showProcessView];
 }
@@ -265,11 +290,11 @@
         dispatch_cancel(self.receiveTimer);
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        MKConnectDeviceProgressView *progressView = self.viewList[2];
-        if ([progressView isShow]) {
-            [progressView showCentralToast:@"Connect failed"];
+        [self dismisAllAlertView];
+        NSError *error = [[NSError alloc] initWithDomain:@"addDeviceDataManager" code:-999 userInfo:@{@"errorInfo":@"Connect failed"}];
+        if (self.completeBlock) {
+            self.completeBlock(error, NO, nil);
         }
-        [self performSelector:@selector(dismisAllAlertView) withObject:nil afterDelay:0.5f];
         [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
     });
 }
@@ -279,10 +304,17 @@
     NSString *macAddress = self.deviceDic[@"device_mac"];
     macAddress = [[macAddress stringByReplacingOccurrencesOfString:@":" withString:@""] uppercaseString];
     dataModel.local_name = [@"MK102-" stringByAppendingString:[macAddress substringWithRange:NSMakeRange(8, 4)]];
+    WS(weakSelf);
     [MKDeviceDataBaseManager insertDeviceList:@[dataModel] sucBlock:^{
-        
+        [weakSelf dismisAllAlertView];
+        if (weakSelf.completeBlock) {
+            weakSelf.completeBlock(nil, YES, dataModel);
+        }
     } failedBlock:^(NSError *error) {
-        
+        [weakSelf dismisAllAlertView];
+        if (weakSelf.completeBlock) {
+            weakSelf.completeBlock(error, NO, nil);
+        }
     }];
 }
 

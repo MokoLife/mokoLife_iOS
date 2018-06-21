@@ -32,9 +32,11 @@ static NSString *const configCellNeedHiddenKeyboardNotification = @"configCellNe
 /**
  获取当前配置的服务器数据
  
- @return MKConfigServerModel
+ @param tableView tableView
+ @param isApp 配置app的服务器信息还是设备的服务器信息
+ @return model
  */
-+ (MKConfigServerModel *)currentServerModelWithTable:(UITableView *)tableView;
++ (MKConfigServerModel *)currentServerModelWithTable:(UITableView *)tableView isApp:(BOOL)isApp;
 
 /**
  右上角清除按钮点了之后，将所有cell上面的信息恢复成默认的

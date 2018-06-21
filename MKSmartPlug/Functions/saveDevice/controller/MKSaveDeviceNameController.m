@@ -8,6 +8,8 @@
 
 #import "MKSaveDeviceNameController.h"
 #import "MKTextField.h"
+#import "MKDeviceModel.h"
+#import "MKDeviceDataBaseManager.h"
 
 @interface MKSaveDeviceNameController ()<UITextFieldDelegate>
 
@@ -41,6 +43,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
+    NSString *mac = [[self.deviceModel.device_mac stringByReplacingOccurrencesOfString:@":" withString:@""] uppercaseString];
+    mac = [mac substringWithRange:NSMakeRange(8, 4)];
+    NSString *text = @"MK102-";
+    if ([self.deviceModel.device_type isEqualToString:@"1"]) {
+        //带计电量
+        text = @"MK112-";
+    }
+    text = [text stringByAppendingString:mac];
+    self.textField.text = text;
     // Do any additional setup after loading the view.
 }
 
@@ -57,7 +68,18 @@
 
 #pragma mark - event method
 - (void)doneButtonPressed{
-    
+    self.deviceModel.local_name = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    WS(weakSelf);
+    [MKDeviceDataBaseManager updateDevice:self.deviceModel sucBlock:^{
+        for (MKBaseViewController *vc in weakSelf.navigationController.viewControllers) {
+            if ([vc isKindOfClass:NSClassFromString(@"MKSelectDeviceTypeController")]) {
+                [vc leftButtonMethod];
+                break ;
+            }
+        }
+    } failedBlock:^(NSError *error) {
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - loadSubViews
