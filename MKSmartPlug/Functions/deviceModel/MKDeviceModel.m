@@ -72,7 +72,7 @@
     self.device_type = model.device_type;
 }
 
-- (void)startConnectTimer{
+- (void)startStateMonitoringTimer{
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.receiveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     self.receiveTimerCount = 0;
@@ -85,9 +85,11 @@
             dispatch_cancel(weakSelf.receiveTimer);
             weakSelf.receiveTimerCount = 0;
             weakSelf.offline = YES;
-            if ([weakSelf.delegate respondsToSelector:@selector(deviceModelStateChanged:)]) {
-                [weakSelf.delegate deviceModelStateChanged:weakSelf];
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([weakSelf.delegate respondsToSelector:@selector(deviceModelStateChanged:)]) {
+                    [weakSelf.delegate deviceModelStateChanged:weakSelf];
+                }
+            });
             return ;
         }
         weakSelf.receiveTimerCount ++;
@@ -101,7 +103,7 @@
 - (void)resetTimerCounter{
     if (self.offline) {
         //已经离线，重新开启定时器监测
-        [self startConnectTimer];
+        [self startStateMonitoringTimer];
         return;
     }
     self.receiveTimerCount = 0;

@@ -69,5 +69,19 @@ typedef NS_ENUM(NSInteger, MKSessionManagerState) {
                           topic:(NSString *)topic
                        sucBlock:(void (^)(void))sucBlock
                     failedBlock:(void (^)(NSError *error))failedBlock;
+/**
+ 插座便进入倒计时，当计时时间到了，插座便会切换当前的状态，如当前为”on”状态，便会切换为”off”状态
+ 
+ @param delay_hour 倒计时,0~23
+ @param delay_minutes 倒计分,0~59
+ @param topic 发布倒计时功能的主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)setDelayHour:(NSInteger)delay_hour
+            delayMin:(NSInteger)delay_minutes
+               topic:(NSString *)topic
+            sucBlock:(void (^)(void))sucBlock
+         failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end

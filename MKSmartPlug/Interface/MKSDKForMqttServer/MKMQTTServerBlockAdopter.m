@@ -38,7 +38,15 @@ NSString * const mqttServerCustomErrorDomain = @"com.moko.MKMQTTServerSDK";
 + (void)operationSetDataErrorBlock:(void (^)(NSError *error))block{
     dispatch_async(dispatch_get_main_queue(), ^{
         if (block) {
-            block([self getErrorWithCode:serverSetParamsError message:@"Set data error"]);
+            block([self getErrorWithCode:serverSetParamsError message:@"set data error"]);
+        }
+    });
+}
+
++ (void)operationParamsErrorBlock:(void (^)(NSError *error))block{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (block) {
+            block([self getErrorWithCode:serverParamsError message:@"params error"]);
         }
     });
 }

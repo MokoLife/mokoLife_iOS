@@ -28,4 +28,6 @@ typedef NS_ENUM(NSInteger, serverCustomErrorCode){
 
 + (void)operationSetDataErrorBlock:(void (^)(NSError *error))block;
 
++ (void)operationParamsErrorBlock:(void (^)(NSError *error))block;
+
 @end

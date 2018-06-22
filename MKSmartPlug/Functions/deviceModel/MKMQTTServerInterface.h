@@ -19,4 +19,17 @@
  */
 + (void)setSwitchState:(BOOL)isOn deviceModel:(MKDeviceModel *)deviceModel target:(UIViewController *)target;
 
+/**
+ 设置延时功能
+
+ @param hour 延时时
+ @param minutes 延时分
+ @param deviceModel deviceModel
+ @param target vc
+ */
++ (void)setDelayHour:(NSString *)hour
+             minutes:(NSString *)minutes
+         deviceModel:(MKDeviceModel *)deviceModel
+              target:(UIViewController *)target;
+
 @end

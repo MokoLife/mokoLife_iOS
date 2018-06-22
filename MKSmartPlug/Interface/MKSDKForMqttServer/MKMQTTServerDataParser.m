@@ -41,7 +41,13 @@
                                                           userInfo:@{@"userInfo" : tempDic}];
         return;
     }
-    
+    if ([function isEqualToString:@"delay_time"]) {
+        //倒计时
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerReceivedDelayTimeNotification
+                                                            object:nil
+                                                          userInfo:@{@"userInfo" : tempDic}];
+        return;
+    }
 }
 
 @end

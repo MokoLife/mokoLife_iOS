@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
 /**
  设备列表页面的状态监控
  */
-- (void)startConnectTimer;
+- (void)startStateMonitoringTimer;
 
 /**
  接收到开关状态的时候，需要清除离线状态计数

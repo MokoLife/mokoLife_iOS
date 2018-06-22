@@ -32,8 +32,7 @@ static CGFloat const kDatePickerH = 270;
         self.backgroundColor = RGBACOLOR(0, 0, 0, 0.5);
         [self addSubview:self.bottomView];
         [self.bottomView addSubview:self.datePicker];
-        [self addTapAction:self
-                  selector:@selector(dismiss)];
+        [self addTapAction:self selector:@selector(dismiss)];
     }
     return self;
 }
@@ -122,7 +121,7 @@ static CGFloat const kDatePickerH = 270;
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         cancelButton.frame = CGRectMake(10, 10, 60, 30);
         [cancelButton setBackgroundColor:COLOR_CLEAR_MACROS];
-        [cancelButton setTitle:LS(@"MKTimePickerView_cancel") forState:UIControlStateNormal];
+        [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
         [cancelButton setTitleColor:DEFAULT_TEXT_COLOR forState:UIControlStateNormal];
         [cancelButton.titleLabel setFont:MKFont(16)];
         [cancelButton addTarget:self action:@selector(cancelButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -131,7 +130,7 @@ static CGFloat const kDatePickerH = 270;
         UIButton *confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         confirmBtn.frame = CGRectMake(kScreenWidth - 10 - 60, 10, 60, 30);
         [confirmBtn setBackgroundColor:COLOR_CLEAR_MACROS];
-        [confirmBtn setTitle:LS(@"MKTimePickerView_confirm") forState:UIControlStateNormal];
+        [confirmBtn setTitle:@"Confirm" forState:UIControlStateNormal];
         [confirmBtn setTitleColor:DEFAULT_TEXT_COLOR forState:UIControlStateNormal];
         [confirmBtn.titleLabel setFont:MKFont(16)];
         [confirmBtn addTarget:self action:@selector(confirmButtonPressed) forControlEvents:UIControlEventTouchUpInside];

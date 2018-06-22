@@ -177,7 +177,7 @@
     [self.tableView reloadData];
     for (MKDeviceModel *model in self.dataList) {
         model.delegate = self;
-        [model startConnectTimer];
+        [model startStateMonitoringTimer];
     }
     if ([MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnected
         && [MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnecting) {

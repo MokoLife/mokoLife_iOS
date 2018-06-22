@@ -52,6 +52,7 @@
 		0011534420DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0011534020DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png */; };
 		0011534520DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0011534120DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png */; };
 		0011534820DCD4DD00F80B1D /* MKMQTTServerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 0011534720DCD4DD00F80B1D /* MKMQTTServerInterface.m */; };
+		0011534B20DCDE8700F80B1D /* MKConfigDeviceTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0011534A20DCDE8700F80B1D /* MKConfigDeviceTimePickerView.m */; };
 		001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D520C22BC700A87037 /* MKConfigServerHostCell.m */; };
 		001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D820C22BED00A87037 /* MKConfigServerPortCell.m */; };
 		001447DC20C22C0500A87037 /* MKConfigServerConnectModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447DB20C22C0500A87037 /* MKConfigServerConnectModeCell.m */; };
@@ -267,6 +268,8 @@
 		0011534120DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deviceList_switchStateOnIcon@3x.png"; sourceTree = "<group>"; };
 		0011534620DCD4DD00F80B1D /* MKMQTTServerInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerInterface.h; sourceTree = "<group>"; };
 		0011534720DCD4DD00F80B1D /* MKMQTTServerInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMQTTServerInterface.m; sourceTree = "<group>"; };
+		0011534920DCDE8700F80B1D /* MKConfigDeviceTimePickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigDeviceTimePickerView.h; sourceTree = "<group>"; };
+		0011534A20DCDE8700F80B1D /* MKConfigDeviceTimePickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigDeviceTimePickerView.m; sourceTree = "<group>"; };
 		0012411320DBC99200FE2DFA /* MKNotificationDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKNotificationDefines.h; sourceTree = "<group>"; };
 		001447D420C22BC700A87037 /* MKConfigServerHostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerHostCell.h; sourceTree = "<group>"; };
 		001447D520C22BC700A87037 /* MKConfigServerHostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerHostCell.m; sourceTree = "<group>"; };
@@ -912,6 +915,8 @@
 			children = (
 				0024A5A520D0BA6B003AD20E /* MKConfigDeviceButtonView.h */,
 				0024A5A620D0BA6B003AD20E /* MKConfigDeviceButtonView.m */,
+				0011534920DCDE8700F80B1D /* MKConfigDeviceTimePickerView.h */,
+				0011534A20DCDE8700F80B1D /* MKConfigDeviceTimePickerView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1777,6 +1782,7 @@
 				0024A5A420D0B995003AD20E /* MKConfigDeviceController.m in Sources */,
 				0055EB2F20C4D283003C4C70 /* MKAddDeviceController.m in Sources */,
 				000AF77020CE0C6500BD74B6 /* MKSmartPlugConnectManager.m in Sources */,
+				0011534B20DCDE8700F80B1D /* MKConfigDeviceTimePickerView.m in Sources */,
 				003F6D6D20C161F50002C833 /* MKDateFormatter.m in Sources */,
 				003F6D7220C161F50002C833 /* KSUIImagePickerController.m in Sources */,
 				003F6A6320C145BC0002C833 /* AppDelegate.m in Sources */,

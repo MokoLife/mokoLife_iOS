@@ -142,6 +142,49 @@
                           topic:(NSString *)topic
                        sucBlock:(void (^)(void))sucBlock
                     failedBlock:(void (^)(NSError *error))failedBlock{
+    NSDictionary *dataDic = @{@"switch_state" : (isOn ? @"on" : @"off")};
+    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
+}
+
+/**
+ 插座便进入倒计时，当计时时间到了，插座便会切换当前的状态，如当前为”on”状态，便会切换为”off”状态
+
+ @param delay_hour 倒计时,0~23
+ @param delay_minutes 倒计分,0~59
+ @param topic 发布倒计时功能的主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)setDelayHour:(NSInteger)delay_hour
+            delayMin:(NSInteger)delay_minutes
+               topic:(NSString *)topic
+            sucBlock:(void (^)(void))sucBlock
+         failedBlock:(void (^)(NSError *error))failedBlock{
+    if (delay_hour < 0 || delay_hour > 23) {
+        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    if (delay_minutes < 0 || delay_minutes > 59) {
+        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSDictionary *dataDic = @{
+                              @"delay_hour":@(delay_hour),
+                              @"delay_minute":@(delay_minutes),
+                              };
+    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
+}
+
+#pragma mark - private method
+
+- (void)sendData:(NSData *)data
+           topic:(NSString *)topic
+        sucBlock:(void (^)(void))sucBlock
+     failedBlock:(void (^)(NSError *error))failedBlock{
+    if (!data || data.length == 0) {
+        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
+        return;
+    }
     if (!topic || topic.length == 0) {
         [MKMQTTServerBlockAdopter operationTopicErrorBlock:failedBlock];
         return;
@@ -150,8 +193,7 @@
         [MKMQTTServerBlockAdopter operationDisConnectedErrorBlock:failedBlock];
         return;
     }
-    NSString *dataString = [NSString convertToJsonData:@{@"switch_state" : (isOn ? @"on" : @"off")}];
-    UInt16 msgid = [self.sessionManager sendData:[dataString dataUsingEncoding:NSUTF8StringEncoding] //要发送的消息体
+    UInt16 msgid = [self.sessionManager sendData:data //要发送的消息体
                                            topic:topic //要往哪个topic发送消息
                                              qos:MQTTQosLevelExactlyOnce //消息级别
                                           retain:false];
@@ -166,9 +208,13 @@
     [MKMQTTServerBlockAdopter operationSetDataErrorBlock:failedBlock];
 }
 
-#pragma mark - private method
-
-//- (void)
+- (NSData *)dataWithJson:(NSDictionary *)dic{
+    if (!dic) {
+        return nil;
+    }
+    NSString *dataString = [NSString convertToJsonData:dic];
+    return [dataString dataUsingEncoding:NSUTF8StringEncoding];
+}
 
 - (void)sessionStateWithMQTTManagerState:(MQTTSessionManagerState)sessionState{
     switch (sessionState) {

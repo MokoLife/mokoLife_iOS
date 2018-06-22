@@ -36,4 +36,34 @@
     }];
 }
 
+/**
+ 设置延时功能
+ 
+ @param hour 延时时
+ @param minutes 延时分
+ @param deviceModel deviceModel
+ @param target vc
+ */
++ (void)setDelayHour:(NSString *)hour
+             minutes:(NSString *)minutes
+         deviceModel:(MKDeviceModel *)deviceModel
+              target:(UIViewController *)target{
+    if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
+        return;
+    }
+    if (deviceModel.device_state == smartPlugDeviceOffline) {
+        [target.view showCentralToast:@"Device offline,please check."];
+        return;
+    }
+    [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:target.view isPenetration:NO];
+    NSString *topic = [[deviceModel sendDataTopic] stringByAppendingString:@"delay_time"];
+    __weak __typeof(&*target)weakTarget = target;
+    [[MKMQTTServerManager sharedInstance] setDelayHour:[hour integerValue] delayMin:[minutes integerValue] topic:topic sucBlock:^{
+        [[MKHudManager share] hide];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakTarget.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
 @end
