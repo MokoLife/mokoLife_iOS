@@ -63,6 +63,9 @@ static CGFloat const buttonViewHeight = 50.f;
 
 - (void)rightButtonMethod{
     MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKDeviceModel *model = [[MKDeviceModel alloc] init];
+    [model updatePropertyWithModel:self.deviceModel];
+    vc.deviceModel = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

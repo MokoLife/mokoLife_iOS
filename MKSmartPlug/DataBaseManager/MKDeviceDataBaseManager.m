@@ -180,4 +180,39 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
     });
 }
 
+/**
+ 根据mac地址查询localName
+
+ @param device_mac mac地址
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
++ (void)selectLocalNameWithMacAddress:(NSString *)device_mac
+                             sucBlock:(void (^)(NSString *localName))sucBlock
+                          failedBlock:(void (^)(NSError *error))failedBlock{
+    if (!ValidStr(device_mac)) {
+        [MKDeviceDataBaseAdopter operationDeleteFailedBlock:failedBlock];
+        return;
+    }
+    dispatch_queue_t queueUpdate = dispatch_queue_create(MKDeviceDataBaseOperationQueue,DISPATCH_QUEUE_CONCURRENT);
+    dispatch_async(queueUpdate, ^{
+        FMDatabase* db = [FMDatabase databaseWithPath:deviceDBPath];
+        if (![db open]) {
+            [MKDeviceDataBaseAdopter operationDeleteFailedBlock:failedBlock];
+            return;
+        }
+        FMResultSet * result = [db executeQuery:@"select * from deviceTable where device_mac = ?",device_mac];
+        NSString *localName = @"";
+        while ([result next]) {
+            localName = [result stringForColumn:@"local_name"];
+        }
+        [db close];
+        if (sucBlock) {
+            dispatch_main_async_safe(^{
+                sucBlock(localName);
+            });
+        }
+    });
+}
+
 @end

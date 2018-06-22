@@ -10,6 +10,8 @@
 #import "MKBaseTableView.h"
 #import "MKDeviceInfoCell.h"
 #import "MKDeviceInfoModel.h"
+#import "MKModifyLocalNameView.h"
+#import "MKDeviceDataBaseManager.h"
 
 @interface MKDeviceInfoController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -29,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadDatas];
+    [self getDeviceLocalName];
     // Do any additional setup after loading the view.
 }
 
@@ -44,7 +46,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (indexPath.row == 0) {
+        //修改名称
+        MKModifyLocalNameView *view = [[MKModifyLocalNameView alloc] init];
+        WS(weakSelf);
+        [view showConnectAlertView:self.deviceModel.local_name block:^(NSString *name) {
+            [weakSelf updateDeviceLocalName:name];
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -67,6 +76,35 @@
     
 }
 
+#pragma mark - 数据库操作
+- (void)getDeviceLocalName{
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [MKDeviceDataBaseManager selectLocalNameWithMacAddress:self.deviceModel.device_mac sucBlock:^(NSString *localName) {
+        [[MKHudManager share] hide];
+        weakSelf.deviceModel.local_name = localName;
+        [weakSelf loadDatas];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf loadDatas];
+    }];
+}
+
+- (void)updateDeviceLocalName:(NSString *)localName{
+    [[MKHudManager share] showHUDWithTitle:@"Setting" inView:self.view isPenetration:NO];
+    MKDeviceModel *model = [[MKDeviceModel alloc] init];
+    [model updatePropertyWithModel:self.deviceModel];
+    model.local_name = localName;
+    WS(weakSelf);
+    [MKDeviceDataBaseManager updateDevice:model sucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf modifyNameSuccess:localName];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
 #pragma mark - ui
 - (void)loadSubViews{
     [self.view addSubview:self.tableView];
@@ -75,10 +113,21 @@
     }];
 }
 
+- (void)modifyNameSuccess:(NSString *)localName{
+    self.deviceModel.local_name = localName;
+    MKDeviceInfoModel *nameModel = self.dataList[0];
+    nameModel.rightMsg = localName;
+    [UIView performWithoutAnimation:^{
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationNone];
+    }];
+    [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
+}
+
 - (void)loadDatas{
     MKDeviceInfoModel *nameModel = [[MKDeviceInfoModel alloc] init];
     nameModel.leftMsg = @"Modify device name";
-    nameModel.rightMsg = @"MOKO Plug";
+    nameModel.rightMsg = self.deviceModel.local_name;
     [self.dataList addObject:nameModel];
     
     MKDeviceInfoModel *infoModel = [[MKDeviceInfoModel alloc] init];

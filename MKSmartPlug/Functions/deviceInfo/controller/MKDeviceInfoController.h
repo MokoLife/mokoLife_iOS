@@ -10,4 +10,6 @@
 
 @interface MKDeviceInfoController : MKBaseViewController
 
+@property (nonatomic, strong)MKDeviceModel *deviceModel;
+
 @end

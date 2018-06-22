@@ -50,5 +50,15 @@
 + (void)deleteDeviceWithMacAddress:(NSString *)device_mac
                           sucBlock:(void (^)(void))sucBlock
                        failedBlock:(void (^)(NSError *error))failedBlock;
+/**
+ 根据mac地址查询localName
+ 
+ @param device_mac mac地址
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
++ (void)selectLocalNameWithMacAddress:(NSString *)device_mac
+                             sucBlock:(void (^)(NSString *localName))sucBlock
+                          failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end
