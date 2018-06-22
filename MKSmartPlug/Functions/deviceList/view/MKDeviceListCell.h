@@ -8,11 +8,20 @@
 
 #import "MKBaseCell.h"
 
-@class MKDeviceModel;
+@protocol MKDeviceListCellDelegate;
 @interface MKDeviceListCell : MKBaseCell
+
+@property (nonatomic, weak)id <MKDeviceListCellDelegate>delegate;
 
 @property (nonatomic, strong)MKDeviceModel *dataModel;
 
 + (MKDeviceListCell *)initCellWithTableView:(UITableView *)tableView;
+
+@end
+
+@protocol MKDeviceListCellDelegate <NSObject>
+
+@optional
+- (void)deviceSwitchStateChanged:(MKDeviceModel *)deviceModel isOn:(BOOL)isOn;
 
 @end

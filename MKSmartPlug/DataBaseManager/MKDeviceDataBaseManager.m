@@ -8,7 +8,6 @@
 
 #import "MKDeviceDataBaseManager.h"
 #import "MKDeviceDataBaseAdopter.h"
-#import "MKDeviceModel.h"
 
 static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQueue";
 

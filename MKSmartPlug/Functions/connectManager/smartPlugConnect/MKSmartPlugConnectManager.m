@@ -7,7 +7,6 @@
 //
 
 #import "MKSmartPlugConnectManager.h"
-#import "MKDeviceModel.h"
 #import "MKConfigServerModel.h"
 
 @interface MKSmartPlugConnectManager()

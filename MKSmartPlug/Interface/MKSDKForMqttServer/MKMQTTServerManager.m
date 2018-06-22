@@ -8,12 +8,9 @@
 
 #import "MKMQTTServerManager.h"
 #import "MQTTSessionManager.h"
-#import "MQTTSession.h"
-
-//manager的装发生改变通知
-NSString *const MKMQTTServerManagerStateChangedNotification = @"MKMQTTServerManagerStateChangedNotification";
-//manager收到mqtt服务器的数据通知
-NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataNotification";
+#import "MKMQTTServerBlockAdopter.h"
+#import "MKMQTTServerDataParser.h"
+#import "MKMQTTServerDataNotifications.h"
 
 @interface MKMQTTServerManager()<MQTTSessionManagerDelegate>
 
@@ -41,34 +38,7 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
 #pragma mark - MQTTSessionManagerDelegate
 
 - (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained{
-    if (!ValidStr(topic)) {
-        return;
-    }
-    NSArray *keyList = [topic componentsSeparatedByString:@"/"];
-    if (keyList.count != 6) {
-        return;
-    }
-    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if (!ValidStr(dataString)) {
-        return;
-    }
-    NSDictionary *dataDic = [NSString dictionaryWithJsonString:dataString];
-    if (!ValidDict(dataDic)) {
-        return;
-    }
-    NSString *macAddress = keyList[3];
-    NSString *function = keyList[5];
-    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:dataDic];
-    [tempDic setObject:macAddress forKey:@"mac"];
-    [tempDic setObject:function forKey:@"function"];
-    NSLog(@"接收到数据:%@",tempDic);
-    [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerReceiveDataNotification
-                                                        object:nil
-                                                      userInfo:@{@"userInfo" : tempDic}];
-}
-
-- (void)messageDelivered:(UInt16)msgID{
-    
+    [MKMQTTServerDataParser handleMessage:data onTopic:topic retained:retained];
 }
 
 - (void)sessionManager:(MQTTSessionManager *)sessonManager didChangeState:(MQTTSessionManagerState)newState{
@@ -157,6 +127,48 @@ NSString *const MKMQTTServerReceiveDataNotification = @"MKMQTTServerReceiveDataN
         [self.subscriptions setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
     }
 }
+
+#pragma mark - interface
+
+/**
+ 设置plug的开关状态
+
+ @param isOn YES:开，NO:关
+ @param topic 发布开关状态的主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)setSmartPlugSwitchState:(BOOL)isOn
+                          topic:(NSString *)topic
+                       sucBlock:(void (^)(void))sucBlock
+                    failedBlock:(void (^)(NSError *error))failedBlock{
+    if (!topic || topic.length == 0) {
+        [MKMQTTServerBlockAdopter operationTopicErrorBlock:failedBlock];
+        return;
+    }
+    if (!self.sessionManager) {
+        [MKMQTTServerBlockAdopter operationDisConnectedErrorBlock:failedBlock];
+        return;
+    }
+    NSString *dataString = [NSString convertToJsonData:@{@"switch_state" : (isOn ? @"on" : @"off")}];
+    UInt16 msgid = [self.sessionManager sendData:[dataString dataUsingEncoding:NSUTF8StringEncoding] //要发送的消息体
+                                           topic:topic //要往哪个topic发送消息
+                                             qos:MQTTQosLevelExactlyOnce //消息级别
+                                          retain:false];
+    if (msgid > 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (sucBlock) {
+                sucBlock();
+            }
+        });
+        return;
+    }
+    [MKMQTTServerBlockAdopter operationSetDataErrorBlock:failedBlock];
+}
+
+#pragma mark - private method
+
+//- (void)
 
 - (void)sessionStateWithMQTTManagerState:(MQTTSessionManagerState)sessionState{
     switch (sessionState) {

@@ -67,7 +67,7 @@ NSString * const socketCustomErrorDomain = @"com.moko.MKPlugDeviceSDK";
 + (void)operationDisConnectedErrorBlock:(void (^)(NSError *error))block{
     dispatch_async(dispatch_get_main_queue(), ^{
         if (block) {
-            block([self getErrorWithCode:socketPeripheralDisconnected message:@"please connect device"]);
+            block([self getErrorWithCode:socketDisconnected message:@"please connect device"]);
         }
     });
 }
@@ -107,7 +107,7 @@ NSString * const socketCustomErrorDomain = @"com.moko.MKPlugDeviceSDK";
         case GCDAsyncSocketWriteTimeoutError:
             return socketRequestDataError;
         case GCDAsyncSocketClosedError:
-            return socketPeripheralDisconnected;
+            return socketDisconnected;
         case GCDAsyncSocketReadMaxedOutError:
             return socketSetParamsError;
         case GCDAsyncSocketOtherError:

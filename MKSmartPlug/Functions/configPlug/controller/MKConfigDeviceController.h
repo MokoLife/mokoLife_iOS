@@ -10,6 +10,6 @@
 
 @interface MKConfigDeviceController : MKBaseViewController
 
-@property (nonatomic, assign)BOOL plugIsOn;
+@property (nonatomic, strong)MKDeviceModel *dataModel;
 
 @end

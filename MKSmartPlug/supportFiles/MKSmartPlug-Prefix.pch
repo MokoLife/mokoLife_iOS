@@ -22,11 +22,13 @@
 #import "MKPhotoPicker.h"
 #import "MKCommonlyUIHelper.h"
 #import "MKAnimationAdopter.h"
+#import "MKDeviceModel.h"
 
 /*********interface***********/
 #import "MKSocketManager.h"
-#import "MKMQTTServerManager.h"
+#import "MKMQTTServer.h"
 #import "MKMQTTServerConnectManager.h"
 #import "MKSmartPlugConnectManager.h"
+#import "MKMQTTServerInterface.h"
 
 

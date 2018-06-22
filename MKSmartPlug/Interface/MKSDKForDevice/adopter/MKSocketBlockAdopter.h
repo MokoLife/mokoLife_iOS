@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, socketCustomErrorCode){
     socketNoError = 0,                                              //永远不存在
     socketNetworkDisable = -10000,                                  //当前手机网络不可用
     socketConnectedFailed = -10001,                                 //连接外设失败
-    socketPeripheralDisconnected = -10002,                          //当前外部连接的设备处于断开状态
+    socketDisconnected = -10002,                                    //当前外部连接的设备处于断开状态
     socketRequestDataError = -10003,                                //请求数据出错
     socketParamsError = -10004,                                     //输入的参数有误
     socketSetParamsError = -10005,                                  //设置参数出错

@@ -12,7 +12,6 @@
 #import "MKConnectDeviceWifiView.h"
 #import "MKAddDeviceAdopter.h"
 #import "MKConnectViewProtocol.h"
-#import "MKDeviceModel.h"
 #import "MKDeviceDataBaseManager.h"
 
 @interface MKAddDeviceDataManager()<MKConnectViewConfirmDelegate>
@@ -44,7 +43,7 @@
 - (void)dealloc{
     NSLog(@"MKAddDeviceDataManager销毁");
     [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
@@ -122,7 +121,7 @@
         || ![deviceDic[@"mac"] isEqualToString:self.deviceDic[@"device_mac"]]) {
         return;
     }
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     //当前设备已经连上mqtt服务器了
     if (self.receiveTimer) {
         dispatch_cancel(self.receiveTimer);
@@ -164,7 +163,7 @@
 - (void)connectProgressWithCompleteBlock:(void (^)(NSError *error, BOOL success, MKDeviceModel *deviceModel))completeBlock{
     self.completeBlock = nil;
     self.completeBlock = completeBlock;
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     [kNotificationCenterSington addObserver:self
                                    selector:@selector(networkStatusChanged)
                                        name:UIApplicationDidBecomeActiveNotification
@@ -255,10 +254,10 @@
 - (void)connectMQTTServer{
     //开始连接mqtt服务器
     MKDeviceModel *model = [[MKDeviceModel alloc] initWithDictionary:self.deviceDic];
-    [[MKMQTTServerConnectManager sharedInstance] updateMQTTServerTopic:@[[model topicInfo]]];
+    [[MKMQTTServerConnectManager sharedInstance] updateMQTTServerTopic:@[[model subscribeTopicInfo]]];
     [kNotificationCenterSington addObserver:self
                                    selector:@selector(receiveDeviceTopicData:)
-                                       name:MKMQTTServerReceiveDataNotification
+                                       name:MKMQTTServerReceivedSwitchStateNotification
                                      object:nil];
     [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     [self startConnectTimer];
@@ -295,7 +294,7 @@
         if (self.completeBlock) {
             self.completeBlock(error, NO, nil);
         }
-        [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+        [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     });
 }
 

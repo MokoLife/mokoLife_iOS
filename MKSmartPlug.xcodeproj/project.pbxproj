@@ -44,6 +44,14 @@
 		000E860720CFAEAC006B8831 /* EasyTextTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 000E85EF20CFAEAB006B8831 /* EasyTextTypes.m */; };
 		000E860820CFAEAC006B8831 /* EasyTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 000E85F120CFAEAB006B8831 /* EasyTextView.m */; };
 		000FED7820C911180082705A /* MKAddDeviceDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 000FED7720C911180082705A /* MKAddDeviceDataManager.m */; };
+		0011532F20DC896B00F80B1D /* MKMQTTServerBlockAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0011532E20DC896B00F80B1D /* MKMQTTServerBlockAdopter.m */; };
+		0011533220DC8DE800F80B1D /* MKMQTTServerDataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0011533120DC8DE800F80B1D /* MKMQTTServerDataParser.m */; };
+		0011533A20DC96AA00F80B1D /* MKDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0011533920DC96AA00F80B1D /* MKDeviceModel.m */; };
+		0011534220DCD21700F80B1D /* deviceList_switchStateOffIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0011533E20DCD21600F80B1D /* deviceList_switchStateOffIcon@2x.png */; };
+		0011534320DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0011533F20DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png */; };
+		0011534420DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0011534020DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png */; };
+		0011534520DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0011534120DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png */; };
+		0011534820DCD4DD00F80B1D /* MKMQTTServerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 0011534720DCD4DD00F80B1D /* MKMQTTServerInterface.m */; };
 		001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D520C22BC700A87037 /* MKConfigServerHostCell.m */; };
 		001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447D820C22BED00A87037 /* MKConfigServerPortCell.m */; };
 		001447DC20C22C0500A87037 /* MKConfigServerConnectModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 001447DB20C22C0500A87037 /* MKConfigServerConnectModeCell.m */; };
@@ -69,7 +77,6 @@
 		001A0D8220CBAFF10096E8A6 /* MKSaveDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */; };
 		001A0D8920CBB7640096E8A6 /* MKDeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */; };
 		001A0D8D20CBBA440096E8A6 /* MKDeviceDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8C20CBBA440096E8A6 /* MKDeviceDataBaseManager.m */; };
-		001A0D9020CBBA650096E8A6 /* MKDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8F20CBBA650096E8A6 /* MKDeviceModel.m */; };
 		001A0D9320CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D9220CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m */; };
 		001A0D9620CBCFDE0096E8A6 /* MKAddDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D9520CBCFDE0096E8A6 /* MKAddDeviceView.m */; };
 		0024A5A420D0B995003AD20E /* MKConfigDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5A320D0B995003AD20E /* MKConfigDeviceController.m */; };
@@ -246,6 +253,20 @@
 		000FED7620C911180082705A /* MKAddDeviceDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAddDeviceDataManager.h; sourceTree = "<group>"; };
 		000FED7720C911180082705A /* MKAddDeviceDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAddDeviceDataManager.m; sourceTree = "<group>"; };
 		000FED7920C9221C0082705A /* MKConnectViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectViewProtocol.h; sourceTree = "<group>"; };
+		0011532D20DC896B00F80B1D /* MKMQTTServerBlockAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerBlockAdopter.h; sourceTree = "<group>"; };
+		0011532E20DC896B00F80B1D /* MKMQTTServerBlockAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMQTTServerBlockAdopter.m; sourceTree = "<group>"; };
+		0011533020DC8DE800F80B1D /* MKMQTTServerDataParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerDataParser.h; sourceTree = "<group>"; };
+		0011533120DC8DE800F80B1D /* MKMQTTServerDataParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMQTTServerDataParser.m; sourceTree = "<group>"; };
+		0011533320DC8E8800F80B1D /* MKMQTTServerDataNotifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerDataNotifications.h; sourceTree = "<group>"; };
+		0011533620DC94DA00F80B1D /* MKMQTTServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServer.h; sourceTree = "<group>"; };
+		0011533820DC96AA00F80B1D /* MKDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKDeviceModel.h; sourceTree = "<group>"; };
+		0011533920DC96AA00F80B1D /* MKDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKDeviceModel.m; sourceTree = "<group>"; };
+		0011533E20DCD21600F80B1D /* deviceList_switchStateOffIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deviceList_switchStateOffIcon@2x.png"; sourceTree = "<group>"; };
+		0011533F20DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deviceList_switchStateOnIcon@2x.png"; sourceTree = "<group>"; };
+		0011534020DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deviceList_switchStateOffIcon@3x.png"; sourceTree = "<group>"; };
+		0011534120DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deviceList_switchStateOnIcon@3x.png"; sourceTree = "<group>"; };
+		0011534620DCD4DD00F80B1D /* MKMQTTServerInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKMQTTServerInterface.h; sourceTree = "<group>"; };
+		0011534720DCD4DD00F80B1D /* MKMQTTServerInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMQTTServerInterface.m; sourceTree = "<group>"; };
 		0012411320DBC99200FE2DFA /* MKNotificationDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKNotificationDefines.h; sourceTree = "<group>"; };
 		001447D420C22BC700A87037 /* MKConfigServerHostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerHostCell.h; sourceTree = "<group>"; };
 		001447D520C22BC700A87037 /* MKConfigServerHostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerHostCell.m; sourceTree = "<group>"; };
@@ -293,8 +314,6 @@
 		001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceListController.m; sourceTree = "<group>"; };
 		001A0D8B20CBBA440096E8A6 /* MKDeviceDataBaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceDataBaseManager.h; sourceTree = "<group>"; };
 		001A0D8C20CBBA440096E8A6 /* MKDeviceDataBaseManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceDataBaseManager.m; sourceTree = "<group>"; };
-		001A0D8E20CBBA650096E8A6 /* MKDeviceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceModel.h; sourceTree = "<group>"; };
-		001A0D8F20CBBA650096E8A6 /* MKDeviceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceModel.m; sourceTree = "<group>"; };
 		001A0D9120CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceDataBaseAdopter.h; sourceTree = "<group>"; };
 		001A0D9220CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceDataBaseAdopter.m; sourceTree = "<group>"; };
 		001A0D9420CBCFDE0096E8A6 /* MKAddDeviceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAddDeviceView.h; sourceTree = "<group>"; };
@@ -537,8 +556,14 @@
 		000B279420C665BF00D305EA /* MKSDKForMqttServer */ = {
 			isa = PBXGroup;
 			children = (
+				0011533620DC94DA00F80B1D /* MKMQTTServer.h */,
+				0011533320DC8E8800F80B1D /* MKMQTTServerDataNotifications.h */,
 				0041FF5B20CA7E4F0095B6E4 /* MKMQTTServerManager.h */,
 				0041FF5C20CA7E4F0095B6E4 /* MKMQTTServerManager.m */,
+				0011532D20DC896B00F80B1D /* MKMQTTServerBlockAdopter.h */,
+				0011532E20DC896B00F80B1D /* MKMQTTServerBlockAdopter.m */,
+				0011533020DC8DE800F80B1D /* MKMQTTServerDataParser.h */,
+				0011533120DC8DE800F80B1D /* MKMQTTServerDataParser.m */,
 			);
 			path = MKSDKForMqttServer;
 			sourceTree = "<group>";
@@ -655,6 +680,17 @@
 				000E85F120CFAEAB006B8831 /* EasyTextView.m */,
 			);
 			path = EasyText;
+			sourceTree = "<group>";
+		};
+		0011533720DC96AA00F80B1D /* deviceModel */ = {
+			isa = PBXGroup;
+			children = (
+				0011533820DC96AA00F80B1D /* MKDeviceModel.h */,
+				0011533920DC96AA00F80B1D /* MKDeviceModel.m */,
+				0011534620DCD4DD00F80B1D /* MKMQTTServerInterface.h */,
+				0011534720DCD4DD00F80B1D /* MKMQTTServerInterface.m */,
+			);
+			path = deviceModel;
 			sourceTree = "<group>";
 		};
 		001447F120C2971300A87037 /* settings */ = {
@@ -817,8 +853,6 @@
 		001A0D8520CBB73D0096E8A6 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				001A0D8E20CBBA650096E8A6 /* MKDeviceModel.h */,
-				001A0D8F20CBBA650096E8A6 /* MKDeviceModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1024,6 +1058,7 @@
 		003F6D0020C161EF0002C833 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				0011533720DC96AA00F80B1D /* deviceModel */,
 				0024A5D020D0FEA8003AD20E /* deviceInfo */,
 				0024A59E20D0B97D003AD20E /* configPlug */,
 				000AF76B20CE0BFC00BD74B6 /* connectManager */,
@@ -1398,6 +1433,10 @@
 		0055EB2020C4D219003C4C70 /* mokoLife */ = {
 			isa = PBXGroup;
 			children = (
+				0011533E20DCD21600F80B1D /* deviceList_switchStateOffIcon@2x.png */,
+				0011534020DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png */,
+				0011533F20DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png */,
+				0011534120DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png */,
 				0055EB2120C4D219003C4C70 /* mokoLife_addIcon@2x.png */,
 				0055EB2220C4D219003C4C70 /* mokoLife_addIcon@3x.png */,
 				0055EB2320C4D219003C4C70 /* mokoLife_centerIcon@2x.png */,
@@ -1557,10 +1596,12 @@
 				000AF77D20CE7DFE00BD74B6 /* device_icon@3x.png in Resources */,
 				0024A5CC20D0CB6A003AD20E /* configPlugPage_TimerOff@2x.png in Resources */,
 				0055EB2B20C4D219003C4C70 /* mokoLife_menuIcon@2x.png in Resources */,
+				0011534220DCD21700F80B1D /* deviceList_switchStateOffIcon@2x.png in Resources */,
 				003F6DA920C179080002C833 /* configServer_ConnectMode_selected@3x.png in Resources */,
 				003F698E20C122B90002C833 /* Assets.xcassets in Resources */,
 				0024A5C720D0CB6A003AD20E /* configPlugPage_statisticsOn@3x.png in Resources */,
 				0055EB3220C4D76D003C4C70 /* addDevice_centerGif@2x.gif in Resources */,
+				0011534420DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png in Resources */,
 				003F6DAA20C179080002C833 /* configServer_ConnectMode_normal@3x.png in Resources */,
 				003F6D7020C161F50002C833 /* keyboardDelIcon@3x.png in Resources */,
 				0024A5CA20D0CB6A003AD20E /* configPlugPage_switchButtonOn@2x.png in Resources */,
@@ -1580,6 +1621,7 @@
 				001447E520C23ADA00A87037 /* configServer_triangleIcon@3x.png in Resources */,
 				0024A5CB20D0CB6A003AD20E /* configPlugPage_switchButtonOn@3x.png in Resources */,
 				0024A5C820D0CB6A003AD20E /* configPlugPage_switchButtonOff@2x.png in Resources */,
+				0011534520DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png in Resources */,
 				0055EB5720C51339003C4C70 /* notBlinkAmberStep1_rightIcon@2x.png in Resources */,
 				0024A5CD20D0CB6A003AD20E /* configPlugPage_TimerOff@3x.png in Resources */,
 				003F6DAB20C179080002C833 /* configServer_ConnectMode_normal@2x.png in Resources */,
@@ -1590,6 +1632,7 @@
 				0055EB5620C51339003C4C70 /* notBlinkAmberStep2_leftIcon@2x.png in Resources */,
 				0024A5BE20D0CB6A003AD20E /* configPlugPage_moreIcon@2x.png in Resources */,
 				0055EB2720C4D219003C4C70 /* mokoLife_addIcon@2x.png in Resources */,
+				0011534320DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png in Resources */,
 				0014480F20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png in Resources */,
 				003F6D9C20C16DAB0002C833 /* configServer_starIcon@2x.png in Resources */,
 				0055EB5320C51339003C4C70 /* notBlinkAmberStep2_rightIcon@3x.png in Resources */,
@@ -1675,6 +1718,7 @@
 				000E85FD20CFAEAC006B8831 /* EasyLodingConfig.m in Sources */,
 				0014592120C8040A00AB7759 /* MKSocketTaskOperation.m in Sources */,
 				003F6D7D20C161F50002C833 /* MKTimePickerView.m in Sources */,
+				0011533A20DC96AA00F80B1D /* MKDeviceModel.m in Sources */,
 				000AF77A20CE636200BD74B6 /* MKDeviceListCell.m in Sources */,
 				000E85FA20CFAEAB006B8831 /* EasyEmptyPart.m in Sources */,
 				001447DF20C22C1A00A87037 /* MKConfigServerQosCell.m in Sources */,
@@ -1700,7 +1744,9 @@
 				001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */,
 				001447D920C22BED00A87037 /* MKConfigServerPortCell.m in Sources */,
 				000E85F720CFAEAB006B8831 /* EasyAlertView.m in Sources */,
+				0011532F20DC896B00F80B1D /* MKMQTTServerBlockAdopter.m in Sources */,
 				000E85FB20CFAEAB006B8831 /* EasyEmptyTypes.m in Sources */,
+				0011533220DC8DE800F80B1D /* MKMQTTServerDataParser.m in Sources */,
 				000E860620CFAEAC006B8831 /* EasyTextGlobalConfig.m in Sources */,
 				003F6D6520C161F50002C833 /* NSInvocation+MKAdd.m in Sources */,
 				00BB0EAE20C51B5D006F2DEA /* MKAddDeviceAdopter.m in Sources */,
@@ -1738,7 +1784,6 @@
 				003F6D6A20C161F50002C833 /* UITextField+MKAdd.m in Sources */,
 				000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */,
 				0014480B20C2A7B200A87037 /* MKSelectDeviceTypeCell.m in Sources */,
-				001A0D9020CBBA650096E8A6 /* MKDeviceModel.m in Sources */,
 				0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */,
 				0024A5A720D0BA6B003AD20E /* MKConfigDeviceButtonView.m in Sources */,
 				000E860020CFAEAC006B8831 /* EasyLodingView.m in Sources */,
@@ -1765,6 +1810,7 @@
 				0055EB3E20C4E7D2003C4C70 /* MKNotBlinkAmberController.m in Sources */,
 				0055EB3720C4D97A003C4C70 /* MKCommonlyUIHelper.m in Sources */,
 				0024A5DC20D1029D003AD20E /* MKDeviceInfoModel.m in Sources */,
+				0011534820DCD4DD00F80B1D /* MKMQTTServerInterface.m in Sources */,
 				003F6D6C20C161F50002C833 /* MKAttributedStringManager.m in Sources */,
 				000E860320CFAEAC006B8831 /* UIView+EasyShowExt.m in Sources */,
 				000E85F420CFAEAB006B8831 /* EasyAlertItem.m in Sources */,

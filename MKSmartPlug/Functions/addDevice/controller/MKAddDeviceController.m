@@ -13,7 +13,6 @@
 #import "MKAddDeviceAdopter.h"
 #import "MKAddDeviceDataManager.h"
 #import "MKSaveDeviceNameController.h"
-#import "MKDeviceModel.h"
 
 static CGFloat const offset_X = 20.f;
 static CGFloat const centerGifWidth = 144.f;

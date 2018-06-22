@@ -71,7 +71,14 @@ typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
 
  @return 设备功能/设备名称/型号/mac/device/#
  */
-- (NSString *)topicInfo;
+- (NSString *)subscribeTopicInfo;
+
+/**
+ 发布主题，注意，这个只是精确到设备功能/设备名称/型号/mac/app这一级，具体的得加上功能位
+ 
+ @return 设备功能/设备名称/型号/mac/app/
+ */
+- (NSString *)sendDataTopic;
 
 - (void)updatePropertyWithModel:(MKDeviceModel *)model;
 

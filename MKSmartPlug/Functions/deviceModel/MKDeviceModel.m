@@ -35,13 +35,27 @@
  
  @return 设备功能/设备名称/型号/mac/device/#
  */
-- (NSString *)topicInfo{
+- (NSString *)subscribeTopicInfo{
     return [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@",
             self.device_function,
             self.device_name,
             self.device_specifications,
             self.device_mac,
             @"device",@"#"];
+}
+
+/**
+ 发布主题，注意，这个只是精确到设备功能/设备名称/型号/mac/app这一级，具体的得加上功能位
+
+ @return 设备功能/设备名称/型号/mac/app/
+ */
+- (NSString *)sendDataTopic{
+    return [NSString stringWithFormat:@"%@/%@/%@/%@/%@/",
+            self.device_function,
+            self.device_name,
+            self.device_specifications,
+            self.device_mac,
+            @"app"];
 }
 
 - (void)updatePropertyWithModel:(MKDeviceModel *)model{

@@ -17,11 +17,6 @@ typedef NS_ENUM(NSInteger, MKSessionManagerState) {
     MKSessionManagerStateClosed
 };
 
-//manager的装发生改变通知
-extern NSString *const MKMQTTServerManagerStateChangedNotification;
-//manager收到mqtt服务器的数据通知
-extern NSString *const MKMQTTServerReceiveDataNotification;
-
 @interface MKMQTTServerManager : NSObject
 
 @property (nonatomic, assign, readonly)MKSessionManagerState managerState;
@@ -61,5 +56,18 @@ extern NSString *const MKMQTTServerReceiveDataNotification;
  @param topicList 主题
  */
 - (void)subscriptions:(NSArray <NSString *>*)topicList;
+
+/**
+ 设置plug的开关状态
+ 
+ @param isOn YES:开，NO:关
+ @param topic 发布开关状态的主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)setSmartPlugSwitchState:(BOOL)isOn
+                          topic:(NSString *)topic
+                       sucBlock:(void (^)(void))sucBlock
+                    failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end

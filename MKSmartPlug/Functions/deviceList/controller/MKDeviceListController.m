@@ -11,14 +11,13 @@
 #import "MKSelectDeviceTypeController.h"
 #import "MKBaseTableView.h"
 #import "MKDeviceListCell.h"
-#import "MKDeviceModel.h"
 #import "MKAddDeviceView.h"
 #import "MKDeviceListAdopter.h"
 #import "MKDeviceDataBaseManager.h"
 #import "EasyLodingView.h"
 #import "MKConfigDeviceController.h"
 
-@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate>
+@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate, MKDeviceListCellDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
@@ -36,33 +35,14 @@
     NSLog(@"MKDeviceListController销毁");
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerManagerStateChangedNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceiveDataNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKNeedReadDataFromLocalNotification object:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [kNotificationCenterSington addObserver:self
-                                   selector:@selector(MQTTServerManagerStateChanged)
-                                       name:MKMQTTServerManagerStateChangedNotification
-                                     object:nil];
-    [kNotificationCenterSington addObserver:self
-                                   selector:@selector(networkStatusChanged)
-                                       name:MKNetworkStatusChangedNotification
-                                     object:nil];
-    [kNotificationCenterSington addObserver:self
-                                   selector:@selector(receiveDeviceTopicData:)
-                                       name:MKMQTTServerReceiveDataNotification
-                                     object:nil];
-    [kNotificationCenterSington addObserver:self
-                                   selector:@selector(getDeviceList)
-                                       name:MKNeedReadDataFromLocalNotification
-                                     object:nil];
+    [self addNotification];
     [self performSelector:@selector(networkStatusChanged) withObject:nil afterDelay:2.f];
     [self getDeviceList];
     // Do any additional setup after loading the view.
@@ -88,8 +68,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MKDeviceModel *dataModel = self.dataList[indexPath.row];
     MKConfigDeviceController *vc = [[MKConfigDeviceController alloc] initWithNavigationType:GYNaviTypeHide];
-    vc.plugIsOn = NO;
+    MKDeviceModel *model = [[MKDeviceModel alloc] init];
+    [model updatePropertyWithModel:dataModel];
+    vc.dataModel = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -101,6 +84,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MKDeviceListCell *cell = [MKDeviceListCell initCellWithTableView:tableView];
     cell.dataModel = self.dataList[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
 
@@ -110,6 +94,11 @@
         return;
     }
     [self updateDeviceModelWithState:smartPlugDeviceOffline mac:deviceModel.device_mac];
+}
+
+#pragma mark - MKDeviceListCellDelegate
+- (void)deviceSwitchStateChanged:(MKDeviceModel *)deviceModel isOn:(BOOL)isOn{
+    [MKMQTTServerInterface setSwitchState:isOn deviceModel:deviceModel target:self];
 }
 
 #pragma mark - Notification Method
@@ -144,9 +133,9 @@
     }
 }
 
-- (void)receiveDeviceTopicData:(NSNotification *)note{
+- (void)receiveSwitchStateData:(NSNotification *)note{
     NSDictionary *deviceDic = note.userInfo[@"userInfo"];
-    if (!ValidDict(deviceDic) || ![deviceDic[@"function"] isEqualToString:@"switch_state"] || self.dataList.count == 0) {
+    if (!ValidDict(deviceDic) || self.dataList.count == 0) {
         return;
     }
     smartPlugDeviceState state = ([deviceDic[@"switch_state"] isEqualToString:@"on"] ? smartPlugDeviceOn : smartPlugDeviceStatusOff);
@@ -203,7 +192,7 @@
     }
     NSMutableArray *topicList = [NSMutableArray arrayWithCapacity:self.dataList.count];
     for (MKDeviceModel *deviceModel in self.dataList) {
-        [topicList addObject:[deviceModel topicInfo]];
+        [topicList addObject:[deviceModel subscribeTopicInfo]];
     }
     [[MKMQTTServerConnectManager sharedInstance] updateMQTTServerTopic:topicList];
 }
@@ -230,6 +219,25 @@
             }
         });
     }
+}
+
+- (void)addNotification{
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(MQTTServerManagerStateChanged)
+                                       name:MKMQTTServerManagerStateChangedNotification
+                                     object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(networkStatusChanged)
+                                       name:MKNetworkStatusChangedNotification
+                                     object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(receiveSwitchStateData:)
+                                       name:MKMQTTServerReceivedSwitchStateNotification
+                                     object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(getDeviceList)
+                                       name:MKNeedReadDataFromLocalNotification
+                                     object:nil];
 }
 
 #pragma mark - loadSubViews

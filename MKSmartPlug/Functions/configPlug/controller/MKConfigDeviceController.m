@@ -16,7 +16,7 @@ static CGFloat const switchButtonHeight = 200.f;
 static CGFloat const buttonViewWidth = 50.f;
 static CGFloat const buttonViewHeight = 50.f;
 
-@interface MKConfigDeviceController ()
+@interface MKConfigDeviceController ()<MKDeviceModelDelegate>
 
 @property (nonatomic, strong)UIImageView *switchButton;
 
@@ -32,6 +32,10 @@ static CGFloat const buttonViewHeight = 50.f;
 
 @property (nonatomic, strong)NSMutableArray *dataList;
 
+@property (nonatomic, strong)MKDeviceModel *deviceModel;
+
+@property (nonatomic, assign)BOOL plugIsOn;
+
 @end
 
 @implementation MKConfigDeviceController
@@ -39,6 +43,7 @@ static CGFloat const buttonViewHeight = 50.f;
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKConfigDeviceController销毁");
+    [self.deviceModel cancel];
 }
 
 - (void)viewDidLoad {
@@ -46,6 +51,10 @@ static CGFloat const buttonViewHeight = 50.f;
     [self loadSubViews];
     [self loadDataList];
     [self configView];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(receiveDeviceTopicData:)
+                                       name:MKMQTTServerReceivedSwitchStateNotification
+                                     object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -59,8 +68,31 @@ static CGFloat const buttonViewHeight = 50.f;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - MKDeviceModelDelegate
+- (void)deviceModelStateChanged:(MKDeviceModel *)deviceModel{
+    
+}
+
+#pragma mark - 通知处理
+- (void)receiveDeviceTopicData:(NSNotification *)note{
+    NSDictionary *deviceDic = note.userInfo[@"userInfo"];
+    if (!ValidDict(deviceDic) || ![deviceDic[@"mac"] isEqualToString:self.deviceModel.device_mac]) {
+        return;
+    }
+    [self.deviceModel resetTimerCounter];
+    BOOL status = ([deviceDic[@"switch_state"] isEqualToString:@"on"]);
+    if (self.plugIsOn == status) {
+        return;
+    }
+    self.plugIsOn = status;
+    [self configView];
+}
+
 #pragma mark - event method
 - (void)switchButtonPressed{
+    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
+        return;
+    }
     self.plugIsOn = !self.plugIsOn;
     [self configView];
 }
@@ -75,6 +107,18 @@ static CGFloat const buttonViewHeight = 50.f;
 
 - (void)statisticsButtonPressed{
     
+}
+
+#pragma mark - public method
+- (void)setDataModel:(MKDeviceModel *)dataModel{
+    _dataModel = nil;
+    _dataModel = dataModel;
+    if (!_dataModel) {
+        return;
+    }
+    [self.deviceModel updatePropertyWithModel:_dataModel];
+    [self.deviceModel startConnectTimer];
+    self.plugIsOn = (self.deviceModel.device_state == smartPlugDeviceOn);
 }
 
 #pragma mark - config view
@@ -213,6 +257,14 @@ static CGFloat const buttonViewHeight = 50.f;
         _dataList = [NSMutableArray arrayWithCapacity:3];
     }
     return _dataList;
+}
+
+- (MKDeviceModel *)deviceModel{
+    if (!_deviceModel) {
+        _deviceModel = [[MKDeviceModel alloc] init];
+        _deviceModel.delegate = self;
+    }
+    return _deviceModel;
 }
 
 @end

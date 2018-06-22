@@ -1,0 +1,39 @@
+//
+//  MKMQTTServerInterface.m
+//  MKSmartPlug
+//
+//  Created by aa on 2018/6/22.
+//  Copyright © 2018年 MK. All rights reserved.
+//
+
+#import "MKMQTTServerInterface.h"
+
+@implementation MKMQTTServerInterface
+
+/**
+ 改变开关状态
+
+ @param isOn isOn
+ @param deviceModel deviceModel
+ @param target vc
+ */
++ (void)setSwitchState:(BOOL)isOn deviceModel:(MKDeviceModel *)deviceModel target:(UIViewController *)target{
+    if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
+        return;
+    }
+    if (deviceModel.device_state == smartPlugDeviceOffline) {
+        [target.view showCentralToast:@"Device offline,please check."];
+        return;
+    }
+    [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:target.view isPenetration:NO];
+    NSString *topic = [[deviceModel sendDataTopic] stringByAppendingString:@"switch_state"];
+    __weak __typeof(&*target)weakTarget = target;
+    [[MKMQTTServerManager sharedInstance] setSmartPlugSwitchState:isOn topic:topic sucBlock:^{
+        [[MKHudManager share] hide];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakTarget.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+@end

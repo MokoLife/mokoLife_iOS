@@ -8,7 +8,6 @@
 
 #import "MKSaveDeviceNameController.h"
 #import "MKTextField.h"
-#import "MKDeviceModel.h"
 #import "MKDeviceDataBaseManager.h"
 
 @interface MKSaveDeviceNameController ()<UITextFieldDelegate>

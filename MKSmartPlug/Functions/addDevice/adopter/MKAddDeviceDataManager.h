@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class MKDeviceModel;
 @interface MKAddDeviceDataManager : NSObject
 
 + (MKAddDeviceDataManager *)addDeviceManager;

@@ -7,7 +7,6 @@
 //
 
 #import "MKDeviceListCell.h"
-#import "MKDeviceModel.h"
 
 static NSString *const MKDeviceListCellIdenty = @"MKDeviceListCellIdenty";
 
@@ -28,7 +27,7 @@ static CGFloat const switchHeight = 30.f;
 
 @property (nonatomic, strong)UIImageView *nextIcon;
 
-@property (nonatomic, strong)UISwitch *stateSwitch;
+@property (nonatomic, strong)UIButton *stateButton;
 
 @end
 
@@ -48,7 +47,7 @@ static CGFloat const switchHeight = 30.f;
         [self.contentView addSubview:self.deviceNameLabel];
         [self.contentView addSubview:self.deviceStateLabel];
         [self.contentView addSubview:self.nextIcon];
-        [self.contentView addSubview:self.stateSwitch];
+        [self.contentView addSubview:self.stateButton];
     }
     return self;
 }
@@ -84,12 +83,19 @@ static CGFloat const switchHeight = 30.f;
         make.bottom.mas_equalTo(-20.f);
         make.height.mas_equalTo(MKFont(15.f).lineHeight);
     }];
-    [self.stateSwitch mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.stateButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-15.f);
         make.width.mas_equalTo(switchWidth);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo(switchHeight);
     }];
+}
+
+#pragma mark - event method
+- (void)stateChanged{
+    if ([self.delegate respondsToSelector:@selector(deviceSwitchStateChanged:isOn:)]) {
+        [self.delegate deviceSwitchStateChanged:self.dataModel isOn:!self.stateButton.isSelected];
+    }
 }
 
 #pragma mark - public method
@@ -105,7 +111,9 @@ static CGFloat const switchHeight = 30.f;
     if (ValidStr(_dataModel.local_name)) {
         self.deviceNameLabel.text = _dataModel.local_name;
     }
-    self.stateSwitch.on = (_dataModel.device_state == smartPlugDeviceOn);
+    NSString *stateIconName = (_dataModel.device_state == smartPlugDeviceOn ? @"deviceList_switchStateOnIcon" : @"deviceList_switchStateOffIcon");
+    [self.stateButton setImage:LOADIMAGE(stateIconName, @"png") forState:UIControlStateNormal];
+    self.stateButton.selected = (_dataModel.device_state == smartPlugDeviceOn);
     if (_dataModel.device_state == smartPlugDeviceOn) {
         self.deviceStateLabel.textColor = NAVIGATION_BAR_COLOR;
         self.deviceStateLabel.text = @"On";
@@ -156,11 +164,12 @@ static CGFloat const switchHeight = 30.f;
     return _nextIcon;
 }
 
-- (UISwitch *)stateSwitch{
-    if (!_stateSwitch) {
-        _stateSwitch = [[UISwitch alloc] init];
+- (UIButton *)stateButton{
+    if (!_stateButton) {
+        _stateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_stateButton addTapAction:self selector:@selector(stateChanged)];
     }
-    return _stateSwitch;
+    return _stateButton;
 }
 
 @end
