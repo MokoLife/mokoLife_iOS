@@ -138,6 +138,20 @@
     }
 }
 
+/**
+ 取消订阅主题
+ 
+ @param topicList 主题列表
+ */
+- (void)unsubscriptions:(NSArray <NSString *>*)topicList{
+    if (!self.sessionManager
+        || !topicList
+        || topicList.count == 0) {
+        return;
+    }
+    [self.sessionManager unsubscriptions:topicList];
+}
+
 #pragma mark - interface
 
 /**
@@ -185,13 +199,27 @@
     [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
 }
 
+/**
+ 恢复出厂设置
+ 
+ @param topic 主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)resetDeviceWithTopic:(NSString *)topic
+                    sucBlock:(void (^)(void))sucBlock
+                 failedBlock:(void (^)(NSError *error))failedBlock{
+    NSDictionary *dataDic = @{};
+    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
+}
+
 #pragma mark - private method
 
 - (void)sendData:(NSData *)data
            topic:(NSString *)topic
         sucBlock:(void (^)(void))sucBlock
      failedBlock:(void (^)(NSError *error))failedBlock{
-    if (!data || data.length == 0) {
+    if (!data) {
         [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
         return;
     }

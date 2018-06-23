@@ -312,4 +312,6 @@ typedef NS_ENUM(int, MKMQTTSessionManagerState) {
  */
 - (void)disconnect;
 
+- (void)unsubscriptions:(NSArray <NSString *>*)topicList;
+
 @end

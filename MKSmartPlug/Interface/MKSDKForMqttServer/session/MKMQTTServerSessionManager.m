@@ -414,6 +414,15 @@
 #endif
 }
 
+- (void)unsubscriptions:(NSArray <NSString *>*)topicList{
+    if (!self.session || self.state != MKMQTTSessionManagerStateConnected || !topicList || topicList.count == 0) {
+        return;
+    }
+    for (NSString *topic in topicList) {
+        [self.session unsubscribeTopic:topic];
+    }
+}
+
 #pragma mark - MQTT Callback methods
 
 - (void)handleEvent:(MQTTSession *)session event:(MQTTSessionEvent)eventCode error:(NSError *)error

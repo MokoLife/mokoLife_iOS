@@ -12,6 +12,7 @@
 #import "MKDeviceInfoModel.h"
 #import "MKModifyLocalNameView.h"
 #import "MKDeviceDataBaseManager.h"
+#import "MKDeviceInfoAdopter.h"
 
 @interface MKDeviceInfoController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -69,21 +70,11 @@
 
 #pragma mark - event method
 - (void)removeButtonPressed{
-    [[MKHudManager share] showHUDWithTitle:@"Deleting..." inView:self.view isPenetration:NO];
-    WS(weakSelf);
-    [MKDeviceDataBaseManager deleteDeviceWithMacAddress:self.deviceModel.device_mac sucBlock:^{
-        [[MKHudManager share] hide];
-        
-        [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
-        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-    } failedBlock:^(NSError *error) {
-        [[MKHudManager share] hide];
-        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
-    }];
+    [MKDeviceInfoAdopter deleteDeviceWithModel:self.deviceModel target:self reset:NO];
 }
 
 - (void)resetButtonPressed{
-    
+    [MKDeviceInfoAdopter deleteDeviceWithModel:self.deviceModel target:self reset:YES];
 }
 
 #pragma mark - 数据库操作

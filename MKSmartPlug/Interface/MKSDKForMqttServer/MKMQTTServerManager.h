@@ -45,9 +45,16 @@
 /**
  订阅主题
 
- @param topicList 主题
+ @param topicList 主题列表
  */
 - (void)subscriptions:(NSArray <NSString *>*)topicList;
+
+/**
+ 取消订阅主题
+
+ @param topicList 主题列表
+ */
+- (void)unsubscriptions:(NSArray <NSString *>*)topicList;
 
 /**
  设置plug的开关状态
@@ -75,5 +82,16 @@
                topic:(NSString *)topic
             sucBlock:(void (^)(void))sucBlock
          failedBlock:(void (^)(NSError *error))failedBlock;
+
+/**
+ 恢复出厂设置
+
+ @param topic 主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)resetDeviceWithTopic:(NSString *)topic
+                    sucBlock:(void (^)(void))sucBlock
+                 failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end
