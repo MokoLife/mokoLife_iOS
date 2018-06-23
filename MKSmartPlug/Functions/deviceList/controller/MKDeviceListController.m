@@ -109,7 +109,7 @@
         [EasyLodingView hidenLoingInView:self.loadingView];
         return;
     }
-    if ([MKMQTTServerManager sharedInstance].managerState == MKSessionManagerStateConnecting) {
+    if ([MKMQTTServerManager sharedInstance].managerState == MKMQTTSessionManagerStateConnecting) {
         //开始连接
         [EasyLodingView showLodingText:@"Connecting..." config:^EasyLodingConfig *{
             EasyLodingConfig *config = [EasyLodingConfig shared];
@@ -179,8 +179,8 @@
         model.delegate = self;
         [model startStateMonitoringTimer];
     }
-    if ([MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnected
-        && [MKMQTTServerManager sharedInstance].managerState != MKSessionManagerStateConnecting) {
+    if ([MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnected
+        && [MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnecting) {
         [[MKMQTTServerConnectManager sharedInstance] connectServer];
     }
     [self resetMQTTServerTopic];

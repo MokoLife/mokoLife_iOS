@@ -7,16 +7,18 @@
 //
 
 #import "MKMQTTServerManager.h"
-#import "MQTTSessionManager.h"
 #import "MKMQTTServerBlockAdopter.h"
 #import "MKMQTTServerDataParser.h"
 #import "MKMQTTServerDataNotifications.h"
+#import "MKMQTTServerTaskOperation.h"
 
-@interface MKMQTTServerManager()<MQTTSessionManagerDelegate>
+@interface MKMQTTServerManager()<MKMQTTSessionManagerDelegate>
 
-@property (nonatomic, strong)MQTTSessionManager *sessionManager;
+@property (nonatomic, strong)MKMQTTServerSessionManager *sessionManager;
 
-@property (nonatomic, assign)MKSessionManagerState managerState;
+@property (nonatomic, assign)MKMQTTSessionManagerState managerState;
+
+@property (nonatomic, strong)NSOperationQueue *operationQueue;
 
 @property (nonatomic, strong)NSMutableDictionary *subscriptions;
 
@@ -41,15 +43,21 @@
     [MKMQTTServerDataParser handleMessage:data onTopic:topic retained:retained];
 }
 
-- (void)sessionManager:(MQTTSessionManager *)sessonManager didChangeState:(MQTTSessionManagerState)newState{
+- (void)sessionManager:(MKMQTTServerSessionManager *)sessonManager didChangeState:(MKMQTTSessionManagerState)newState{
     //更新当前state
-    [self sessionStateWithMQTTManagerState:newState];
+    self.managerState = newState;
     [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerManagerStateChangedNotification object:nil];
     NSLog(@"连接状态发生改变:---%ld",(long)newState);
-    if (self.managerState == MKSessionManagerStateConnected) {
+    if (self.managerState == MKMQTTSessionManagerStateConnected) {
         //连接成功了，订阅主题
         self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
     }
+}
+
+- (void)messageDelivered:(UInt16)msgID{
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerManagerSendDataSuccessNotification
+                                                        object:nil
+                                                      userInfo:@{@"userInfo" : @(msgID)}];
 }
 
 #pragma mark - public method
@@ -81,7 +89,8 @@
         [self.sessionManager disconnect];
         self.sessionManager = nil;
     }
-    MQTTSessionManager *sessionManager = [[MQTTSessionManager alloc] init];
+    [self.operationQueue cancelAllOperations];
+    MKMQTTServerSessionManager *sessionManager = [[MKMQTTServerSessionManager alloc] init];
     sessionManager.delegate = self;
     self.sessionManager = sessionManager;
     [self.sessionManager connectTo:host
@@ -104,13 +113,14 @@
  断开连接
  */
 - (void)disconnect{
+    [self.operationQueue cancelAllOperations];
     if (!self.sessionManager) {
         return;
     }
     self.sessionManager.delegate = nil;
     [self.sessionManager disconnect];
     self.sessionManager = nil;
-    self.managerState = MQTTSessionManagerStateStarting;
+    self.managerState = MKMQTTSessionManagerStateStarting;
 }
 
 /**
@@ -197,15 +207,30 @@
                                            topic:topic //要往哪个topic发送消息
                                              qos:MQTTQosLevelExactlyOnce //消息级别
                                           retain:false];
-    if (msgid > 0) {
+    if (msgid <= 0) {
+        [MKMQTTServerBlockAdopter operationSetDataErrorBlock:failedBlock];
+        return;
+    }
+    MKMQTTServerTaskOperation *operation = [[MKMQTTServerTaskOperation alloc] initOperationWithID:msgid completeBlock:^(NSError *error, NSInteger operationID) {
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failedBlock) {
+                    failedBlock(error);
+                }
+            });
+            return ;
+        }
+        if (msgid != operationID) {
+            [MKMQTTServerBlockAdopter operationSetDataErrorBlock:failedBlock];
+            return;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             if (sucBlock) {
                 sucBlock();
             }
         });
-        return;
-    }
-    [MKMQTTServerBlockAdopter operationSetDataErrorBlock:failedBlock];
+    }];
+    [self.operationQueue addOperation:operation];
 }
 
 - (NSData *)dataWithJson:(NSDictionary *)dic{
@@ -216,38 +241,15 @@
     return [dataString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (void)sessionStateWithMQTTManagerState:(MQTTSessionManagerState)sessionState{
-    switch (sessionState) {
-        case MQTTSessionManagerStateStarting:
-            //开始连接
-            self.managerState = MKSessionManagerStateStarting;
-            break;
-        case MQTTSessionManagerStateConnecting:
-            //正在连接
-            self.managerState = MKSessionManagerStateConnecting;
-            break;
-        case MQTTSessionManagerStateError:
-            //连接出错
-            self.managerState = MKSessionManagerStateError;
-            break;
-        case MQTTSessionManagerStateConnected:
-            //连接成功
-            self.managerState = MKSessionManagerStateConnected;
-            break;
-        case MQTTSessionManagerStateClosing:
-            //正在关闭
-            self.managerState = MKSessionManagerStateClosing;
-            break;
-        case MQTTSessionManagerStateClosed:
-            //已经关闭
-            self.managerState = MKSessionManagerStateClosed;
-            break;
-        default:
-            break;
+#pragma mark - setter & getter
+- (NSOperationQueue *)operationQueue{
+    if (!_operationQueue) {
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.maxConcurrentOperationCount = 1;
     }
+    return _operationQueue;
 }
 
-#pragma mark - setter & getter
 - (NSMutableDictionary *)subscriptions{
     if (!_subscriptions) {
         _subscriptions = [NSMutableDictionary dictionary];

@@ -7,19 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef NS_ENUM(NSInteger, MKSessionManagerState) {
-    MKSessionManagerStateStarting,
-    MKSessionManagerStateConnecting,
-    MKSessionManagerStateError,
-    MKSessionManagerStateConnected,
-    MKSessionManagerStateClosing,
-    MKSessionManagerStateClosed
-};
+#import "MKMQTTServerSessionManager.h"
 
 @interface MKMQTTServerManager : NSObject
 
-@property (nonatomic, assign, readonly)MKSessionManagerState managerState;
+@property (nonatomic, assign, readonly)MKMQTTSessionManagerState managerState;
 
 + (MKMQTTServerManager *)sharedInstance;
 /**

@@ -79,7 +79,7 @@ static CGFloat const switchHeight = 30.f;
     }];
     [self.deviceStateLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.deviceIcon.mas_right).mas_offset(15.f);
-        make.width.mas_equalTo(width);
+        make.width.mas_equalTo(100.f);
         make.bottom.mas_equalTo(-20.f);
         make.height.mas_equalTo(MKFont(15.f).lineHeight);
     }];

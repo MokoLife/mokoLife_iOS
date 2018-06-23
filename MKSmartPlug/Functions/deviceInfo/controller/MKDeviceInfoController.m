@@ -69,7 +69,17 @@
 
 #pragma mark - event method
 - (void)removeButtonPressed{
-    
+    [[MKHudManager share] showHUDWithTitle:@"Deleting..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [MKDeviceDataBaseManager deleteDeviceWithMacAddress:self.deviceModel.device_mac sucBlock:^{
+        [[MKHudManager share] hide];
+        
+        [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
+        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 - (void)resetButtonPressed{
