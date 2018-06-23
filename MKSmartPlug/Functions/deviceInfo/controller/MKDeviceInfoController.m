@@ -13,6 +13,8 @@
 #import "MKModifyLocalNameView.h"
 #import "MKDeviceDataBaseManager.h"
 #import "MKDeviceInfoAdopter.h"
+#import "MKAboutController.h"
+#import "MKDeviceInformationController.h"
 
 @interface MKDeviceInfoController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -54,6 +56,17 @@
         [view showConnectAlertView:self.deviceModel.local_name block:^(NSString *name) {
             [weakSelf updateDeviceLocalName:name];
         }];
+        return;
+    }
+    if (indexPath.row == 1) {
+        //设备信息
+        [self readFirmwareInfo];
+        return;
+    }
+    if (indexPath.row == 3) {
+        //关于
+        MKAboutController *vc = [[MKAboutController alloc] initWithNavigationType:GYNaviTypeShow];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -75,6 +88,21 @@
 
 - (void)resetButtonPressed{
     [MKDeviceInfoAdopter deleteDeviceWithModel:self.deviceModel target:self reset:YES];
+}
+
+- (void)readFirmwareInfo{
+    [[MKHudManager share] showHUDWithTitle:@"Loading..." inView:self.view isPenetration:NO];
+    NSString *topic = [[self.deviceModel sendDataTopic] stringByAppendingString:@"read_firmware_infor"];
+    WS(weakSelf);
+    [[MKMQTTServerManager sharedInstance] readDeviceFirmwareInformationWithTopic:topic sucBlock:^{
+        [[MKHudManager share] hide];
+        MKDeviceInformationController *vc = [[MKDeviceInformationController alloc] initWithNavigationType:GYNaviTypeShow];
+        vc.device_mac = weakSelf.deviceModel.device_mac;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - 数据库操作
@@ -138,6 +166,10 @@
     MKDeviceInfoModel *firmwareModel = [[MKDeviceInfoModel alloc] init];
     firmwareModel.leftMsg = @"Check firmware update";
     [self.dataList addObject:firmwareModel];
+    
+    MKDeviceInfoModel *aboutModel = [[MKDeviceInfoModel alloc] init];
+    aboutModel.leftMsg = @"About";
+    [self.dataList addObject:aboutModel];
     
     [self.tableView reloadData];
 }

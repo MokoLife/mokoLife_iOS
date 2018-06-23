@@ -147,9 +147,7 @@ static CGFloat const buttonViewHeight = 50.f;
         return;
     }
     MKElectricityController *vc = [[MKElectricityController alloc] initWithNavigationType:GYNaviTypeShow];
-    MKDeviceModel *model = [[MKDeviceModel alloc] init];
-    [model updatePropertyWithModel:self.deviceModel];
-    vc.deviceModel = model;
+    vc.device_mac = self.deviceModel.device_mac;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

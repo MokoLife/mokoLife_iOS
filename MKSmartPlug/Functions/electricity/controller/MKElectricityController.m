@@ -64,11 +64,11 @@
 
 #pragma mark - Notification Event
 - (void)receiveElectricityData:(NSNotification *)note{
-    if (!self.deviceModel || !ValidStr(self.deviceModel.device_mac)) {
+    if (!ValidStr(self.device_mac)) {
         return;
     }
     NSDictionary *deviceDic = note.userInfo[@"userInfo"];
-    if (!ValidDict(deviceDic) || ![deviceDic[@"mac"] isEqualToString:self.deviceModel.device_mac]) {
+    if (!ValidDict(deviceDic) || ![deviceDic[@"mac"] isEqualToString:self.device_mac]) {
         return;
     }
     if (ValidNum(deviceDic[@"current"])) {

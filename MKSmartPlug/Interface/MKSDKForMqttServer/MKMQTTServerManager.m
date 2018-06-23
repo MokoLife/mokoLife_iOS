@@ -216,6 +216,20 @@
     [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
 }
 
+/**
+ 读取设备固件信息
+ 
+ @param topic 主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)readDeviceFirmwareInformationWithTopic:(NSString *)topic
+                                      sucBlock:(void (^)(void))sucBlock
+                                   failedBlock:(void (^)(NSError *error))failedBlock{
+    NSDictionary *dataDic = @{};
+    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
+}
+
 #pragma mark - private method
 
 - (void)sendData:(NSData *)data

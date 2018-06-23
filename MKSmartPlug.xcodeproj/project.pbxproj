@@ -119,6 +119,10 @@
 		003D436E20DE191D00A02036 /* electricityPowerIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003D436820DE191D00A02036 /* electricityPowerIcon@3x.png */; };
 		003D436F20DE191D00A02036 /* electricityVoltageIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003D436920DE191D00A02036 /* electricityVoltageIcon@2x.png */; };
 		003D437020DE191D00A02036 /* electricityVoltageIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003D436A20DE191D00A02036 /* electricityVoltageIcon@3x.png */; };
+		003D437720DE223A00A02036 /* MKAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 003D437620DE223A00A02036 /* MKAboutController.m */; };
+		003D437A20DE230E00A02036 /* MKAboutModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 003D437920DE230E00A02036 /* MKAboutModel.m */; };
+		003D437D20DE233900A02036 /* MKAboutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 003D437C20DE233900A02036 /* MKAboutCell.m */; };
+		003D438020DE26D400A02036 /* MKDeviceInformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 003D437F20DE26D400A02036 /* MKDeviceInformationController.m */; };
 		003F698E20C122B90002C833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003F698D20C122B90002C833 /* Assets.xcassets */; };
 		003F6A6320C145BC0002C833 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6020C145BC0002C833 /* AppDelegate.m */; };
 		003F6A6520C145BC0002C833 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6A6220C145BC0002C833 /* main.m */; };
@@ -388,6 +392,14 @@
 		003D436820DE191D00A02036 /* electricityPowerIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "electricityPowerIcon@3x.png"; sourceTree = "<group>"; };
 		003D436920DE191D00A02036 /* electricityVoltageIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "electricityVoltageIcon@2x.png"; sourceTree = "<group>"; };
 		003D436A20DE191D00A02036 /* electricityVoltageIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "electricityVoltageIcon@3x.png"; sourceTree = "<group>"; };
+		003D437520DE223A00A02036 /* MKAboutController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAboutController.h; sourceTree = "<group>"; };
+		003D437620DE223A00A02036 /* MKAboutController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAboutController.m; sourceTree = "<group>"; };
+		003D437820DE230E00A02036 /* MKAboutModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAboutModel.h; sourceTree = "<group>"; };
+		003D437920DE230E00A02036 /* MKAboutModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAboutModel.m; sourceTree = "<group>"; };
+		003D437B20DE233900A02036 /* MKAboutCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAboutCell.h; sourceTree = "<group>"; };
+		003D437C20DE233900A02036 /* MKAboutCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAboutCell.m; sourceTree = "<group>"; };
+		003D437E20DE26D400A02036 /* MKDeviceInformationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceInformationController.h; sourceTree = "<group>"; };
+		003D437F20DE26D400A02036 /* MKDeviceInformationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceInformationController.m; sourceTree = "<group>"; };
 		003F698120C122B90002C833 /* MKSmartPlug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKSmartPlug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		003F698D20C122B90002C833 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		003F6A5F20C145BC0002C833 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1115,6 +1127,45 @@
 			path = electricity;
 			sourceTree = "<group>";
 		};
+		003D437120DE222B00A02036 /* about */ = {
+			isa = PBXGroup;
+			children = (
+				003D437220DE222B00A02036 /* controller */,
+				003D437320DE222B00A02036 /* model */,
+				003D437420DE222B00A02036 /* view */,
+			);
+			path = about;
+			sourceTree = "<group>";
+		};
+		003D437220DE222B00A02036 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				003D437520DE223A00A02036 /* MKAboutController.h */,
+				003D437620DE223A00A02036 /* MKAboutController.m */,
+				003D437E20DE26D400A02036 /* MKDeviceInformationController.h */,
+				003D437F20DE26D400A02036 /* MKDeviceInformationController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		003D437320DE222B00A02036 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				003D437820DE230E00A02036 /* MKAboutModel.h */,
+				003D437920DE230E00A02036 /* MKAboutModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		003D437420DE222B00A02036 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				003D437B20DE233900A02036 /* MKAboutCell.h */,
+				003D437C20DE233900A02036 /* MKAboutCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		003F697820C122B90002C833 = {
 			isa = PBXGroup;
 			children = (
@@ -1196,6 +1247,7 @@
 		003F6D0020C161EF0002C833 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				003D437120DE222B00A02036 /* about */,
 				003D435720DE139000A02036 /* electricity */,
 				0011533720DC96AA00F80B1D /* deviceModel */,
 				0024A5D020D0FEA8003AD20E /* deviceInfo */,
@@ -1859,6 +1911,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0014591B20C8026000AB7759 /* MKSocketAdopter.m in Sources */,
+				003D437A20DE230E00A02036 /* MKAboutModel.m in Sources */,
 				000E85FD20CFAEAC006B8831 /* EasyLodingConfig.m in Sources */,
 				0014592120C8040A00AB7759 /* MKSocketTaskOperation.m in Sources */,
 				003F6D7D20C161F50002C833 /* MKTimePickerView.m in Sources */,
@@ -1937,6 +1990,7 @@
 				0024A5A720D0BA6B003AD20E /* MKConfigDeviceButtonView.m in Sources */,
 				000E860020CFAEAC006B8831 /* EasyLodingView.m in Sources */,
 				000E85F520CFAEAB006B8831 /* EasyAlertPart.m in Sources */,
+				003D437720DE223A00A02036 /* MKAboutController.m in Sources */,
 				000E85AD20CF6910006B8831 /* SFHFKeychainUtils.m in Sources */,
 				000E85F920CFAEAB006B8831 /* EasyEmptyGlobalConfig.m in Sources */,
 				003F6D5F20C161F50002C833 /* MKBaseDataModel.m in Sources */,
@@ -1954,6 +2008,7 @@
 				000E85FE20CFAEAC006B8831 /* EasyLodingGlobalConfig.m in Sources */,
 				003D435D20DE13D200A02036 /* MKElectricityController.m in Sources */,
 				000AF77720CE620500BD74B6 /* MKDeviceListAdopter.m in Sources */,
+				003D438020DE26D400A02036 /* MKDeviceInformationController.m in Sources */,
 				003F6D7620C161F50002C833 /* MKRefreshGifFooter.m in Sources */,
 				000E85FF20CFAEAC006B8831 /* EasyLodingTypes.m in Sources */,
 				0011534F20DCFD7700F80B1D /* MKConnectAlertView.m in Sources */,
@@ -1963,6 +2018,7 @@
 				0024A5DC20D1029D003AD20E /* MKDeviceInfoModel.m in Sources */,
 				0011534820DCD4DD00F80B1D /* MKMQTTServerInterface.m in Sources */,
 				003D434820DDE7DE00A02036 /* MKMQTTServerDataParser.m in Sources */,
+				003D437D20DE233900A02036 /* MKAboutCell.m in Sources */,
 				003F6D6C20C161F50002C833 /* MKAttributedStringManager.m in Sources */,
 				000E860320CFAEAC006B8831 /* UIView+EasyShowExt.m in Sources */,
 				000E85F420CFAEAB006B8831 /* EasyAlertItem.m in Sources */,

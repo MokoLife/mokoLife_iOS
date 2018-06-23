@@ -1,5 +1,5 @@
 //
-//  MKElectricityController.h
+//  MKAboutController.h
 //  MKSmartPlug
 //
 //  Created by aa on 2018/6/23.
@@ -8,8 +8,6 @@
 
 #import "MKBaseViewController.h"
 
-@interface MKElectricityController : MKBaseViewController
-
-@property (nonatomic, copy)NSString *device_mac;
+@interface MKAboutController : MKBaseViewController
 
 @end

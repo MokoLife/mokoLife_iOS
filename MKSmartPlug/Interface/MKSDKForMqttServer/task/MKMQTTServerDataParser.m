@@ -55,6 +55,13 @@
                                                           userInfo:@{@"userInfo" : tempDic}];
         return;
     }
+    if ([function isEqualToString:@"firmware_infor"]) {
+        //固件信息
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerReceivedFirmwareInfoNotification
+                                                            object:nil
+                                                          userInfo:@{@"userInfo" : tempDic}];
+        return;
+    }
 }
 
 @end
