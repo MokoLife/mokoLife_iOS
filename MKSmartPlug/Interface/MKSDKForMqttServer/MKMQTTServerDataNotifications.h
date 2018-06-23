@@ -18,3 +18,8 @@ static NSString *const MKMQTTServerReceivedSwitchStateNotification = @"MKMQTTSer
  接收到倒计时的通知
  */
 static NSString *const MKMQTTServerReceivedDelayTimeNotification = @"MKMQTTServerReceivedDelayTimeNotification";
+
+/*
+ 接收到电量信息通知
+ */
+static NSString *const MKMQTTServerReceivedElectricityNotification = @"MKMQTTServerReceivedElectricityNotification";

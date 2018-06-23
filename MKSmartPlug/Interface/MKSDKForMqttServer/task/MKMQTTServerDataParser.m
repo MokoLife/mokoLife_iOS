@@ -48,6 +48,13 @@
                                                           userInfo:@{@"userInfo" : tempDic}];
         return;
     }
+    if ([function isEqualToString:@"electricity_information"]) {
+        //电量信息
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerReceivedElectricityNotification
+                                                            object:nil
+                                                          userInfo:@{@"userInfo" : tempDic}];
+        return;
+    }
 }
 
 @end

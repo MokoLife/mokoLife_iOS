@@ -11,6 +11,7 @@
 #import "MKConfigDeviceButtonModel.h"
 #import "MKDeviceInfoController.h"
 #import "MKConfigDeviceTimePickerView.h"
+#import "MKElectricityController.h"
 
 static CGFloat const switchButtonWidth = 200.f;
 static CGFloat const switchButtonHeight = 200.f;
@@ -145,6 +146,11 @@ static CGFloat const buttonViewHeight = 50.f;
         [self.view showCentralToast:@"Device offline,please check."];
         return;
     }
+    MKElectricityController *vc = [[MKElectricityController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKDeviceModel *model = [[MKDeviceModel alloc] init];
+    [model updatePropertyWithModel:self.deviceModel];
+    vc.deviceModel = model;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - public method

@@ -86,6 +86,7 @@ static NSString *const titleMsg = @"Modify Device Name";
     self.confirmBlock = nil;
     self.confirmBlock = block;
     [kAppWindow addSubview:self];
+    [self.textField becomeFirstResponder];
     if (ValidStr(text)) {
         self.textField.text = text;
     }

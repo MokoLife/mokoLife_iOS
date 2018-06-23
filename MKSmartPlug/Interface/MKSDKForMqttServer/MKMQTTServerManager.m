@@ -149,6 +149,9 @@
         || topicList.count == 0) {
         return;
     }
+    for (NSString *topic in topicList) {
+        [self.subscriptions removeObjectForKey:topic];
+    }
     [self.sessionManager unsubscriptions:topicList];
 }
 
