@@ -55,44 +55,32 @@ static CGFloat const kpickViewH = 300.f;
 
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 4;
+    return 2;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     if (component == 0) {
         return self.hourList.count;
     }
-    if (component == 1) {
-        return 1;
-    }
-    if (component == 2) {
-        return self.minList.count;
-    }
-    return 1;
+    return self.minList.count;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     if (component == 0) {
         return self.hourList[row];
     }
-    if (component == 1) {
-        return @"hours";
-    }
-    if (component == 2) {
-        return self.minList[row];
-    }
-    return @"min";
+    return self.minList[row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     if (component == 0) {
-        self.timeModel.hour = self.hourList[row];
-    }else if (component == 2){
-        self.timeModel.minutes = self.minList[row];
+        self.timeModel.hour = [NSString stringWithFormat:@"%ld",(long)row];
+        return;
     }
+    self.timeModel.minutes = [NSString stringWithFormat:@"%ld",(long)row];
 }
 
-#pragma mark - Private Method
+#pragma mark - Event Method
 
 /**
  取消选择
@@ -111,36 +99,6 @@ static CGFloat const kpickViewH = 300.f;
     [self dismiss];
 }
 
-- (void)dismiss
-{
-    if (self.superview) {
-        [self removeFromSuperview];
-    }
-}
-
-- (NSDictionary *)getSelectedRows{
-    NSInteger hourRow = 0;
-    NSInteger minRow = 0;
-    for (NSInteger i = 0; i < 24; i ++) {
-        NSString *tempString = [NSString stringWithFormat:@"%ld",(long)i];
-        [self.hourList addObject:tempString];
-        if ([self.timeModel.hour isEqualToString:tempString]) {
-            hourRow = i;
-        }
-    }
-    for (NSInteger i = 0; i < 60; i ++) {
-        NSString *tempString = [NSString stringWithFormat:@"%ld",(long)i];
-        [self.minList addObject:tempString];
-        if ([self.timeModel.minutes isEqualToString:tempString]) {
-            minRow = i;
-        }
-    }
-    return @{
-             @"hour":@(hourRow),
-             @"min":@(minRow)
-             };
-}
-
 #pragma mark - Public Method
 - (void)showTimePickViewBlock:(void (^)(MKConfigDeviceTimeModel *timeModel))Block{
     if (!self.timeModel) {
@@ -152,11 +110,52 @@ static CGFloat const kpickViewH = 300.f;
     NSDictionary *dic = [self getSelectedRows];
     [self.pickView reloadAllComponents];
     [self.pickView selectRow:[dic[@"hour"] integerValue] inComponent:0 animated:NO];
-    [self.pickView selectRow:[dic[@"min"] integerValue] inComponent:2 animated:NO];
+    [self.pickView selectRow:[dic[@"min"] integerValue] inComponent:1 animated:NO];
     
     [UIView animateWithDuration:animationDuration animations:^{
         self.bottomView.transform = CGAffineTransformMakeTranslation(0, -kpickViewH);
     }];
+}
+
+#pragma mark - private method
+- (void)dismiss
+{
+    if (self.superview) {
+        [self removeFromSuperview];
+    }
+}
+
+- (NSDictionary *)getSelectedRows{
+    NSInteger hourRow = 0;
+    NSInteger minRow = 0;
+    for (NSInteger i = 0; i < 24; i ++) {
+        NSString *valueString = [NSString stringWithFormat:@"%ld",(long)i];
+        NSString *unit = @"hours";
+        if (i == 0 || i == 1) {
+            unit = @"hour";
+        }
+        NSString *tempString = [valueString stringByAppendingString:unit];
+        [self.hourList addObject:tempString];
+        if ([self.timeModel.hour isEqualToString:valueString]) {
+            hourRow = i;
+        }
+    }
+    for (NSInteger i = 0; i < 60; i ++) {
+        NSString *valueString = [NSString stringWithFormat:@"%ld",(long)i];
+        NSString *unit = @"mins";
+        if (i == 0 || i == 1) {
+            unit = @"min";
+        }
+        NSString *tempString = [valueString stringByAppendingString:unit];
+        [self.minList addObject:tempString];
+        if ([self.timeModel.minutes isEqualToString:valueString]) {
+            minRow = i;
+        }
+    }
+    return @{
+             @"hour":@(hourRow),
+             @"min":@(minRow)
+             };
 }
 
 #pragma mark - setter & getter
@@ -173,7 +172,7 @@ static CGFloat const kpickViewH = 300.f;
         cancelButton.frame = CGRectMake(10, 10, 60, 30);
         [cancelButton setBackgroundColor:COLOR_CLEAR_MACROS];
         [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-        [cancelButton setTitleColor:DEFAULT_TEXT_COLOR forState:UIControlStateNormal];
+        [cancelButton setTitleColor:NAVIGATION_BAR_COLOR forState:UIControlStateNormal];
         [cancelButton.titleLabel setFont:MKFont(16)];
         [cancelButton addTarget:self action:@selector(cancelButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:cancelButton];
@@ -182,7 +181,7 @@ static CGFloat const kpickViewH = 300.f;
         confirmBtn.frame = CGRectMake(kScreenWidth - 10 - 60, 10, 60, 30);
         [confirmBtn setBackgroundColor:COLOR_CLEAR_MACROS];
         [confirmBtn setTitle:@"Confirm" forState:UIControlStateNormal];
-        [confirmBtn setTitleColor:DEFAULT_TEXT_COLOR forState:UIControlStateNormal];
+        [confirmBtn setTitleColor:NAVIGATION_BAR_COLOR forState:UIControlStateNormal];
         [confirmBtn.titleLabel setFont:MKFont(16)];
         [confirmBtn addTarget:self action:@selector(confirmButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:confirmBtn];

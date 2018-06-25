@@ -192,7 +192,7 @@ static CGFloat const buttonViewHeight = 50.f;
     [self.switchButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view.mas_centerX);
         make.width.mas_equalTo(switchButtonWidth);
-        make.top.mas_equalTo(112.f);
+        make.top.mas_equalTo(176.f);
         make.height.mas_equalTo(switchButtonHeight);
     }];
     [self.stateLabel mas_makeConstraints:^(MASConstraintMaker *make) {

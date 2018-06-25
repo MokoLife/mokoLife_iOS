@@ -73,7 +73,7 @@
     }
     if (ValidNum(deviceDic[@"current"])) {
         MKElectricityModel *currentModel = self.dataList[0];
-        currentModel.value = deviceDic[@"current"];
+        currentModel.value = [NSString stringWithFormat:@"%ld",(long)[deviceDic[@"current"] integerValue]];
     }
     if (ValidNum(deviceDic[@"voltage"])) {
         MKElectricityModel *volModel = self.dataList[1];
@@ -81,7 +81,7 @@
     }
     if (ValidNum(deviceDic[@"power"])) {
         MKElectricityModel *powerModel = self.dataList[2];
-        powerModel.value = deviceDic[@"power"];
+        powerModel.value = [NSString stringWithFormat:@"%ld",(long)[deviceDic[@"power"] integerValue]];
     }
     [self.tableView reloadData];
 }

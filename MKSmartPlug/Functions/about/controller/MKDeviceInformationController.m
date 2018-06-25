@@ -135,6 +135,7 @@
     MKAboutModel *firmModel = [[MKAboutModel alloc] init];
     firmModel.leftMsg = @"Firmware Version";
     firmModel.rightMsg = infoDic[@"firmware_version"];
+    [self.dataList addObject:firmModel];
     
     [self.tableView reloadData];
 }
