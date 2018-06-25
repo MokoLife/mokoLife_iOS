@@ -10,8 +10,8 @@
 #import "MKConfigServerAdopter.h"
 #import "MKTextField.h"
 
-static CGFloat const starIconWidth = 6.f;
-static CGFloat const starIconHeight = 6.f;
+//static CGFloat const starIconWidth = 6.f;
+//static CGFloat const starIconHeight = 6.f;
 static CGFloat const msgLabelWidth = 40.f;
 static CGFloat const textFieldHeight = 45.f;
 
@@ -41,7 +41,7 @@ static NSString *const MKConfigServerHostCellIdenty = @"MKConfigServerHostCellId
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.contentView.backgroundColor = UIColorFromRGB(0xf2f2f2);
-        [self.contentView addSubview:self.starIcon];
+//        [self.contentView addSubview:self.starIcon];
         [self.contentView addSubview:self.msgLabel];
         [self.contentView addSubview:self.textField];
     }
@@ -51,14 +51,14 @@ static NSString *const MKConfigServerHostCellIdenty = @"MKConfigServerHostCellId
 #pragma mark - 父类方法
 - (void)layoutSubviews{
     [super layoutSubviews];
-    [self.starIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(12.f);
-        make.width.mas_equalTo(starIconWidth);
-        make.centerY.mas_equalTo(self.contentView.mas_centerY);
-        make.height.mas_equalTo(starIconHeight);
-    }];
+//    [self.starIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(12.f);
+//        make.width.mas_equalTo(starIconWidth);
+//        make.centerY.mas_equalTo(self.contentView.mas_centerY);
+//        make.height.mas_equalTo(starIconHeight);
+//    }];
     [self.msgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.starIcon.mas_right).mas_offset(0.f);
+        make.left.mas_equalTo(12.f);
         make.width.mas_equalTo(msgLabelWidth);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo([MKConfigServerAdopter defaultMsgLabelHeight]);

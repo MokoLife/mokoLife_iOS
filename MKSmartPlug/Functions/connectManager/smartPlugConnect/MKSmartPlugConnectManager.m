@@ -82,6 +82,15 @@
 };
 
 /**
+ 清除本地记录的设置信息
+ */
+- (void)clearLocalData{
+    MKConfigServerModel *model = [[MKConfigServerModel alloc] init];
+    [self.configServerModel updateServerDataWithModel:model];
+    [self synchronize];
+}
+
+/**
  连接plug设备并且配置各项参数过程，配置成功之后，该设备会存储到本地数据库
  
  @param wifi_ssid 指定plug连接的wifi ssid

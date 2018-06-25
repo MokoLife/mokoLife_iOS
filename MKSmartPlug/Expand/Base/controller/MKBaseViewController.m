@@ -54,14 +54,14 @@
     _titleLabel.backgroundColor   = COLOR_CLEAR_MACROS;
     self.navigationItem.titleView = _titleLabel;
     
-    self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 2.0f, 40.0f, 40.0f)];
+    self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 2.0f, 50.0f, 40.0f)];
     [_leftButton setImage:LOADIMAGE(@"navigation_back_button",@"png") forState:UIControlStateNormal];
     [_leftButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [_leftButton.titleLabel setFont:MKFont(16)];
     [_leftButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
     [_leftButton setTitleColor:[UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:0.4] forState:UIControlStateHighlighted];
     
-    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth-40.0f, 2.0f, 40.0f, 40.0f)];
+    self.rightButton = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth-50.0f, 2.0f, 50.0f, 40.0f)];
     [_rightButton.titleLabel setFont:MKFont(16)];
     [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_rightButton setTitleColor:RGBACOLOR(255, 255, 255, 0.4) forState:UIControlStateHighlighted];

@@ -59,6 +59,7 @@
     [MKConfigServerAdopter clearAction:^{
         [MKConfigServerAdopter clearAllConfigCellValuesWithTable:weakSelf.tableView];
     } cancelAction:^{
+        
     }];
 }
 
@@ -97,11 +98,6 @@
 - (void)saveButtonPressed{
     BOOL isApp = (self.controllerType == MKConfigServerForApp);
     MKConfigServerModel *serverModel = [MKConfigServerAdopter currentServerModelWithTable:self.tableView isApp:isApp];
-    if (!serverModel) {
-        //
-        [self.view showCentralToast:@"Required options cannot be empty."];
-        return;
-    }
     BOOL paramCheck = [MKConfigServerAdopter checkConfigServerParams:serverModel target:self];
     if (!paramCheck) {
         //存在参数错误

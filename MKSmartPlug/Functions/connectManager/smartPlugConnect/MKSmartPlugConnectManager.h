@@ -18,6 +18,11 @@
 - (void)saveServerConfigDataToLocal:(MKConfigServerModel *)model;
 
 /**
+ 清除本地记录的设置信息
+ */
+- (void)clearLocalData;
+
+/**
  记录到本地
  */
 - (void)synchronize;

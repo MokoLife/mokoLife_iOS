@@ -122,6 +122,10 @@
         }];
         return;
     }
+    if ([MKMQTTServerManager sharedInstance].managerState == MKMQTTSessionManagerStateError) {
+        //连接出错
+        [self.view showCentralToast:@"Connect MQTT Server error"];
+    }
     [EasyLodingView hidenLoingInView:self.loadingView];
 }
 

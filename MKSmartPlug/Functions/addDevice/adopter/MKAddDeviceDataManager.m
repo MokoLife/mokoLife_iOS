@@ -130,7 +130,7 @@
     }
     MKConnectDeviceProgressView *progressView = self.viewList[2];
     [progressView setProgress:1.f duration:0.2];
-    [self saveDeviceToLocal];
+    [self performSelector:@selector(saveDeviceToLocal) withObject:nil afterDelay:0.5];
 }
 
 #pragma mark - public method
@@ -179,51 +179,6 @@
         return;
     }
     [self showDeviceWifiView];
-}
-
-#pragma mark - alertView
-
-/**
- 当前网络不是plug ap wifi，需要引导用户去连接plug wifi
- */
-- (void)showConnectDeviceView{
-    id <MKConnectViewProtocol>connectDeviceView = self.viewList[0];
-    [connectDeviceView showConnectAlertView];
-    id <MKConnectViewProtocol>wifiView = self.viewList[1];
-    [wifiView dismiss];
-    id <MKConnectViewProtocol>progressView = self.viewList[2];
-    [progressView dismiss];
-}
-
-/**
- 当前网络是plug ap wifi，需要用户输入周围可用的wifi给plug
- */
-- (void)showDeviceWifiView{
-    id <MKConnectViewProtocol>connectDeviceView = self.viewList[0];
-    [connectDeviceView dismiss];
-    id <MKConnectViewProtocol>wifiView = self.viewList[1];
-    [wifiView showConnectAlertView];
-    id <MKConnectViewProtocol>progressView = self.viewList[2];
-    [progressView dismiss];
-}
-
-/**
- 开始连接流程
- */
-- (void)showProcessView{
-    id <MKConnectViewProtocol>connectDeviceView = self.viewList[0];
-    [connectDeviceView dismiss];
-    id <MKConnectViewProtocol>wifiView = self.viewList[1];
-    [wifiView dismiss];
-    MKConnectDeviceProgressView *progressView = self.viewList[2];
-    [progressView showConnectAlertView];
-    [progressView setProgress:0.3 duration:30.f];
-}
-
-- (void)dismisAllAlertView{
-    for (id <MKConnectViewProtocol>view in self.viewList) {
-        [view dismiss];
-    }
 }
 
 #pragma mark - SDK
@@ -315,6 +270,51 @@
             weakSelf.completeBlock(error, NO, nil);
         }
     }];
+}
+
+#pragma mark - alertView
+
+/**
+ 当前网络不是plug ap wifi，需要引导用户去连接plug wifi
+ */
+- (void)showConnectDeviceView{
+    id <MKConnectViewProtocol>connectDeviceView = self.viewList[0];
+    [connectDeviceView showConnectAlertView];
+    id <MKConnectViewProtocol>wifiView = self.viewList[1];
+    [wifiView dismiss];
+    id <MKConnectViewProtocol>progressView = self.viewList[2];
+    [progressView dismiss];
+}
+
+/**
+ 当前网络是plug ap wifi，需要用户输入周围可用的wifi给plug
+ */
+- (void)showDeviceWifiView{
+    id <MKConnectViewProtocol>connectDeviceView = self.viewList[0];
+    [connectDeviceView dismiss];
+    id <MKConnectViewProtocol>wifiView = self.viewList[1];
+    [wifiView showConnectAlertView];
+    id <MKConnectViewProtocol>progressView = self.viewList[2];
+    [progressView dismiss];
+}
+
+/**
+ 开始连接流程
+ */
+- (void)showProcessView{
+    id <MKConnectViewProtocol>connectDeviceView = self.viewList[0];
+    [connectDeviceView dismiss];
+    id <MKConnectViewProtocol>wifiView = self.viewList[1];
+    [wifiView dismiss];
+    MKConnectDeviceProgressView *progressView = self.viewList[2];
+    [progressView showConnectAlertView];
+    [progressView setProgress:0.3 duration:30.f];
+}
+
+- (void)dismisAllAlertView{
+    for (id <MKConnectViewProtocol>view in self.viewList) {
+        [view dismiss];
+    }
 }
 
 - (void)loadViewList{

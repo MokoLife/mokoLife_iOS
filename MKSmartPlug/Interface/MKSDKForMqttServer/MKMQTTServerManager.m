@@ -52,6 +52,10 @@
         //连接成功了，订阅主题
         self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
     }
+    if (self.managerState == MKMQTTSessionManagerStateError) {
+        //连接出错
+        [self disconnect];
+    }
 }
 
 - (void)messageDelivered:(UInt16)msgID{

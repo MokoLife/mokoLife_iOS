@@ -10,8 +10,8 @@
 #import "MKConfigServerAdopter.h"
 #import "MKTextField.h"
 
-static CGFloat const starIconWidth = 6.f;
-static CGFloat const starIconHeight = 6.f;
+//static CGFloat const starIconWidth = 6.f;
+//static CGFloat const starIconHeight = 6.f;
 static CGFloat const portLabelWidth = 40.f;
 static CGFloat const textFieldHeight = 45.f;
 
@@ -45,7 +45,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.contentView.backgroundColor = UIColorFromRGB(0xf2f2f2);
-        [self.contentView addSubview:self.starIcon];
+//        [self.contentView addSubview:self.starIcon];
         [self.contentView addSubview:self.portLabel];
         [self.contentView addSubview:self.textField];
         [self.contentView addSubview:self.cleanSessionLabel];
@@ -57,14 +57,14 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
 #pragma mark - 父类方法
 - (void)layoutSubviews{
     [super layoutSubviews];
-    [self.starIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(12.f);
-        make.width.mas_equalTo(starIconWidth);
-        make.centerY.mas_equalTo(self.contentView.mas_centerY);
-        make.height.mas_equalTo(starIconHeight);
-    }];
+//    [self.starIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(12.f);
+//        make.width.mas_equalTo(starIconWidth);
+//        make.centerY.mas_equalTo(self.contentView.mas_centerY);
+//        make.height.mas_equalTo(starIconHeight);
+//    }];
     [self.portLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.starIcon.mas_right).mas_offset(0.f);
+        make.left.mas_equalTo(15.f);
         make.width.mas_equalTo(portLabelWidth);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo([MKConfigServerAdopter defaultMsgLabelHeight]);
@@ -167,6 +167,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.keyboardType = UIKeyboardTypePhonePad;
+        _textField.maxLength = 5;
         _textField.delegate = self;
     }
     return _textField;

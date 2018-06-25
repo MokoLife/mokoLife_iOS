@@ -11,8 +11,8 @@
 
 static CGFloat const triangleIconWidth = 9.f;
 static CGFloat const triangleIconHeight = 8.f;
-static CGFloat const starIconWidth = 6.f;
-static CGFloat const starIconHeight = 6.f;
+//static CGFloat const starIconWidth = 6.f;
+//static CGFloat const starIconHeight = 6.f;
 static CGFloat const valueViewHeight = 45.f;
 
 static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIdenty";
@@ -55,7 +55,7 @@ static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIden
         [self.contentView addSubview:self.qosValueView];
         [self.qosValueView addSubview:self.triangleIcon];
         [self.qosValueView addSubview:self.qosValueLabel];
-        [self.contentView addSubview:self.starIcon];
+//        [self.contentView addSubview:self.starIcon];
         [self.contentView addSubview:self.aliveLabel];
         [self.contentView addSubview:self.aliveValueView];
         [self.aliveValueView addSubview:self.aliveTextField];
@@ -67,7 +67,7 @@ static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIden
 - (void)layoutSubviews{
     [super layoutSubviews];
     [self.qosLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(21.f);
+        make.left.mas_equalTo(15.f);
         make.width.mas_equalTo(40.f);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo([MKConfigServerAdopter defaultMsgLabelHeight]);
@@ -90,14 +90,14 @@ static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIden
         make.centerY.mas_equalTo(_qosValueView.mas_centerY);
         make.height.mas_equalTo(triangleIconHeight);
     }];
-    [self.starIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.mas_centerX).mas_offset(5.f);
-        make.width.mas_equalTo(starIconWidth);
-        make.centerY.mas_equalTo(self.contentView.mas_centerY);
-        make.height.mas_equalTo(starIconHeight);
-    }];
+//    [self.starIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(self.contentView.mas_centerX).mas_offset(5.f);
+//        make.width.mas_equalTo(starIconWidth);
+//        make.centerY.mas_equalTo(self.contentView.mas_centerY);
+//        make.height.mas_equalTo(starIconHeight);
+//    }];
     [self.aliveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.starIcon.mas_right);
+        make.left.mas_equalTo(self.contentView.mas_centerX).mas_offset(5.f);
         make.width.mas_equalTo(85.f);
         make.centerY.mas_equalTo(self.contentView.mas_centerY);
         make.height.mas_equalTo([MKConfigServerAdopter defaultMsgLabelHeight]);

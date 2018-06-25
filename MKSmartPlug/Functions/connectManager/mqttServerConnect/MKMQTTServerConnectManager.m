@@ -133,6 +133,15 @@
     [[MKMQTTServerManager sharedInstance] subscriptions:topicList];
 }
 
+/**
+ 清除本地记录的设置信息
+ */
+- (void)clearLocalData{
+    MKConfigServerModel *model = [[MKConfigServerModel alloc] init];
+    [self.configServerModel updateServerDataWithModel:model];
+    [self synchronize];
+}
+
 #pragma mark - setter & getter
 - (MKConfigServerModel *)configServerModel{
     if (!_configServerModel) {
