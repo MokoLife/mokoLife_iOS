@@ -97,10 +97,18 @@
     MKMQTTServerSessionManager *sessionManager = [[MKMQTTServerSessionManager alloc] init];
     sessionManager.delegate = self;
     self.sessionManager = sessionManager;
+    MQTTSSLSecurityPolicy *securityPolicy = nil;
+    if (tls) {
+        //需要tls
+        securityPolicy = [MQTTSSLSecurityPolicy policyWithPinningMode:MQTTSSLPinningModeNone];
+        securityPolicy.allowInvalidCertificates = YES;
+        securityPolicy.validatesDomainName = NO;
+        securityPolicy.validatesCertificateChain = NO;
+    }
     [self.sessionManager connectTo:host
                               port:port
                                tls:tls
-                         keepalive:keepalive  //心跳间隔不得大于120s
+                         keepalive:keepalive
                              clean:clean
                               auth:auth
                               user:user
@@ -110,7 +118,9 @@
                            willMsg:nil
                            willQos:0
                     willRetainFlag:false
-                      withClientId:clientId];
+                      withClientId:clientId
+                    securityPolicy:securityPolicy
+                      certificates:nil];
 }
 
 /**

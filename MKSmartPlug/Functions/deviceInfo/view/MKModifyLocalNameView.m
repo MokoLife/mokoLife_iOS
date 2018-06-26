@@ -106,13 +106,11 @@ static NSString *const titleMsg = @"Modify Device Name";
 - (MKConnectAlertView *)alertView{
     if (!_alertView) {
         WS(weakSelf);
-        _alertView = [[MKConnectAlertView alloc] initWithTitleMsg:titleMsg
-                                                     cancelAction:^{
-                                                         [weakSelf cancelButtonPressed];
-                                                     }
-                                                    confirmAction:^{
-                                                        [weakSelf confirmButtonPressed];
-                                                    }];
+        _alertView = [[MKConnectAlertView alloc] initWithTitleMsg:titleMsg confirmButtonTitle:@"Save" cancelButtonTitle:@"Cancel" cancelAction:^{
+            [weakSelf cancelButtonPressed];
+        } confirmAction:^{
+            [weakSelf confirmButtonPressed];
+        }];
     }
     return _alertView;
 }

@@ -116,8 +116,9 @@
     }
     [[MKMQTTServerManager sharedInstance] connectMQTTServer:self.configServerModel.host
                                                        port:[self.configServerModel.port integerValue]
-                                                        tls:NO
-                                                  keepalive:[self.configServerModel.keepAlive integerValue] clean:self.configServerModel.cleanSession auth:NO
+                                                        tls:(self.configServerModel.connectMode == 1)
+                                                  keepalive:[self.configServerModel.keepAlive integerValue] clean:self.configServerModel.cleanSession
+                                                       auth:NO
                                                        user:self.configServerModel.userName
                                                        pass:self.configServerModel.password
                                                    clientId:self.configServerModel.clientId];

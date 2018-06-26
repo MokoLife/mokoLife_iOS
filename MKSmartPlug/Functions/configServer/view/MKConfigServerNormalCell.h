@@ -13,6 +13,8 @@
 
 @property (nonatomic, copy)NSString *msg;
 
+@property (nonatomic, assign)BOOL secureTextEntry;
+
 + (MKConfigServerNormalCell *)initCellWithTableView:(UITableView *)tableView;
 
 @end

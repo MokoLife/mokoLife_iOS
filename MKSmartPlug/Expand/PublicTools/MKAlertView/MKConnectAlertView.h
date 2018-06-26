@@ -14,4 +14,10 @@
                     cancelAction:(void (^)(void))cancelAction
                    confirmAction:(void (^)(void))confirmAction;
 
+- (instancetype)initWithTitleMsg:(NSString *)titleMsg
+              confirmButtonTitle:(NSString *)confirmTitle
+               cancelButtonTitle:(NSString *)cancelTitle
+                    cancelAction:(void (^)(void))cancelAction
+                   confirmAction:(void (^)(void))confirmAction;
+
 @end

@@ -46,6 +46,8 @@ static CGFloat const buttonViewHeight = 50.f;
 - (void)dealloc{
     NSLog(@"MKConfigDeviceController销毁");
     [self.deviceModel cancel];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedDelayTimeNotification object:nil];
 }
 
 - (void)viewDidLoad {

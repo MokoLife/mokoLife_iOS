@@ -43,6 +43,17 @@
     return self;
 }
 
+- (instancetype)initWithTitleMsg:(NSString *)titleMsg
+              confirmButtonTitle:(NSString *)confirmTitle
+               cancelButtonTitle:(NSString *)cancelTitle
+                    cancelAction:(void (^)(void))cancelAction
+                   confirmAction:(void (^)(void))confirmAction{
+    self = [self initWithTitleMsg:titleMsg cancelAction:cancelAction confirmAction:confirmAction];
+    [self.confirmButton setTitle:confirmTitle forState:UIControlStateNormal];
+    [self.cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
+    return self;
+}
+
 - (instancetype)init{
     if (self = [super init]) {
 //        self.frame = kAppWindow.bounds;

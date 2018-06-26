@@ -114,6 +114,11 @@ static NSString *const MKConfigServerNormalCellIdenty = @"MKConfigServerNormalCe
     self.msgLabel.text = (!ValidStr(_msg) ? @"" : _msg);
 }
 
+- (void)setSecureTextEntry:(BOOL)secureTextEntry{
+    _secureTextEntry = secureTextEntry;
+    self.textField.secureTextEntry = _secureTextEntry;
+}
+
 #pragma mark - setter & getter
 - (UILabel *)msgLabel{
     if (!_msgLabel) {

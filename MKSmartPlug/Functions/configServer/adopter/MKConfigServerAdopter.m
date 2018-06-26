@@ -92,6 +92,7 @@
         //Password
         MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
         cell.msg = @"Password";
+        cell.secureTextEntry = YES;
         [cell setParams:SafeStr(configModel.password)];
         return cell;
     }
@@ -106,6 +107,7 @@
     //Password
     MKConfigServerNormalCell *cell = [MKConfigServerNormalCell initCellWithTableView:tableView];
     cell.msg = @"Password";
+    cell.secureTextEntry = YES;
     [cell setParams:SafeStr(configModel.password)];
     return cell;
 }
