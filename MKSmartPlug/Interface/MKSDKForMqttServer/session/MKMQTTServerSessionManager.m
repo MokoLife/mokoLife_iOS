@@ -415,11 +415,22 @@
 }
 
 - (void)unsubscriptions:(NSArray <NSString *>*)topicList{
-    if (!self.session || self.state != MKMQTTSessionManagerStateConnected || !topicList || topicList.count == 0) {
+    if (self.state != MKMQTTSessionManagerStateConnected) {
         return;
     }
     for (NSString *topic in topicList) {
-        [self.session unsubscribeTopic:topic];
+        [self.session unsubscribeTopic:topic unsubscribeHandler:^(NSError *error) {
+            if (!error) {
+                [self.subscriptionLock lock];
+                NSMutableDictionary *newEffectiveSubscriptions = [self.subscriptions mutableCopy];
+                [newEffectiveSubscriptions removeObjectForKey:topic];
+                NSMutableDictionary *newInternalSubscriptions = [self.internalSubscriptions mutableCopy];
+                [newInternalSubscriptions removeObjectForKey:topic];
+                self.effectiveSubscriptions = newEffectiveSubscriptions;
+                self.internalSubscriptions = newInternalSubscriptions;
+                [self.subscriptionLock unlock];
+            }
+        }];
     }
 }
 

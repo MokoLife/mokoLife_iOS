@@ -35,6 +35,8 @@
 - (void)dealloc{
     NSLog(@"MKDeviceInformationController销毁");
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedFirmwareInfoNotification object:nil];
+    //取消订阅固件主题
+    [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"firmware_infor"]]];
 }
 
 - (void)viewDidLoad {
@@ -49,6 +51,8 @@
                                        name:MKMQTTServerReceivedFirmwareInfoNotification
                                      object:nil];
     [self initReadTimer];
+    //订阅固件信息通知
+    [[MKMQTTServerManager sharedInstance] subscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"firmware_infor"]]];
     // Do any additional setup after loading the view.
 }
 
@@ -75,11 +79,11 @@
 
 #pragma mark -
 - (void)receiveDeviceFirmware:(NSNotification *)note{
-    if (self.readTimeout || !ValidStr(self.device_mac)) {
+    if (self.readTimeout) {
         return;
     }
     NSDictionary *deviceDic = note.userInfo[@"userInfo"];
-    if (!ValidDict(deviceDic) || ![deviceDic[@"mac"] isEqualToString:self.device_mac]) {
+    if (!ValidDict(deviceDic) || ![deviceDic[@"mac"] isEqualToString:self.deviceModel.device_mac]) {
         return;
     }
     if (self.readTimer) {

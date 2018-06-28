@@ -125,16 +125,6 @@
 }
 
 /**
- 订阅主题
- */
-- (void)updateMQTTServerTopic:(NSArray <NSString *>*)topicList{
-    if (!ValidArray(topicList)) {
-        return;
-    }
-    [[MKMQTTServerManager sharedInstance] subscriptions:topicList];
-}
-
-/**
  清除本地记录的设置信息
  */
 - (void)clearLocalData{

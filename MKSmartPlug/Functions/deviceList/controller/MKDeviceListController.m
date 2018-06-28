@@ -196,9 +196,9 @@
     }
     NSMutableArray *topicList = [NSMutableArray arrayWithCapacity:self.dataList.count];
     for (MKDeviceModel *deviceModel in self.dataList) {
-        [topicList addObject:[deviceModel subscribeTopicInfo]];
+        [topicList addObject:[deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"switch_state"]];
     }
-    [[MKMQTTServerConnectManager sharedInstance] updateMQTTServerTopic:topicList];
+    [[MKMQTTServerManager sharedInstance] subscriptions:topicList];
 }
 
 #pragma mark -

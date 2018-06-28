@@ -34,7 +34,7 @@
         return;
     }
     [[MKHudManager share] showHUDWithTitle:@"Reseting..." inView:target.view isPenetration:NO];
-    NSString *topic = [[deviceModel sendDataTopic] stringByAppendingString:@"reset"];
+    NSString *topic = [deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"reset"];
     __weak __typeof(&*target)weakTarget = target;
     WS(weakSelf);
     [[MKMQTTServerManager sharedInstance] resetDeviceWithTopic:topic sucBlock:^{
@@ -51,7 +51,7 @@
     __weak __typeof(&*target)weakTarget = target;
     [MKDeviceDataBaseManager deleteDeviceWithMacAddress:deviceModel.device_mac sucBlock:^{
         [[MKHudManager share] hide];
-        NSString *topic = [deviceModel subscribeTopicInfo];
+        NSString *topic = [deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"#"];
         [[MKMQTTServerManager sharedInstance] unsubscriptions:@[topic]];
         [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
         [weakTarget.navigationController popToRootViewControllerAnimated:YES];

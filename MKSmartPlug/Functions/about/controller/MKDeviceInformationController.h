@@ -10,6 +10,6 @@
 
 @interface MKDeviceInformationController : MKBaseViewController
 
-@property (nonatomic, copy)NSString *device_mac;
+@property (nonatomic, strong)MKDeviceModel *deviceModel;
 
 @end

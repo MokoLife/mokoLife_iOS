@@ -92,12 +92,14 @@
 
 - (void)readFirmwareInfo{
     [[MKHudManager share] showHUDWithTitle:@"Loading..." inView:self.view isPenetration:NO];
-    NSString *topic = [[self.deviceModel sendDataTopic] stringByAppendingString:@"read_firmware_infor"];
+    NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"read_firmware_infor"];
     WS(weakSelf);
     [[MKMQTTServerManager sharedInstance] readDeviceFirmwareInformationWithTopic:topic sucBlock:^{
         [[MKHudManager share] hide];
         MKDeviceInformationController *vc = [[MKDeviceInformationController alloc] initWithNavigationType:GYNaviTypeShow];
-        vc.device_mac = weakSelf.deviceModel.device_mac;
+        MKDeviceModel *model = [[MKDeviceModel alloc] init];
+        [model updatePropertyWithModel:weakSelf.deviceModel];
+        vc.deviceModel = model;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];

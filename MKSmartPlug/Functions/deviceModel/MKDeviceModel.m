@@ -32,30 +32,21 @@
 
 /**
  订阅的主题
- 
- @return 设备功能/设备名称/型号/mac/device/#
+
+ @param topicType 主题类型，是app发布数据的主题还是设备发布数据的主题
+ @param function 主题功能
+ @return 设备功能/设备名称/型号/mac/topicType/function
  */
-- (NSString *)subscribeTopicInfo{
+- (NSString *)subscribeTopicInfoWithType:(deviceModelTopicType)topicType
+                                function:(NSString *)function{
+    NSString *typeIden = (topicType == deviceModelTopicDeviceType ? @"device" : @"app");
     return [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@",
             self.device_function,
             self.device_name,
             self.device_specifications,
             self.device_mac,
-            @"device",@"#"];
-}
-
-/**
- 发布主题，注意，这个只是精确到设备功能/设备名称/型号/mac/app这一级，具体的得加上功能位
-
- @return 设备功能/设备名称/型号/mac/app/
- */
-- (NSString *)sendDataTopic{
-    return [NSString stringWithFormat:@"%@/%@/%@/%@/%@/",
-            self.device_function,
-            self.device_name,
-            self.device_specifications,
-            self.device_mac,
-            @"app"];
+            typeIden,
+            function];
 }
 
 - (void)updatePropertyWithModel:(MKDeviceModel *)model{

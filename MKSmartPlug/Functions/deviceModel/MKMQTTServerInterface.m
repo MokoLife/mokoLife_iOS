@@ -26,7 +26,7 @@
         return;
     }
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:target.view isPenetration:NO];
-    NSString *topic = [[deviceModel sendDataTopic] stringByAppendingString:@"switch_state"];
+    NSString *topic = [deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"switch_state"];
     __weak __typeof(&*target)weakTarget = target;
     [[MKMQTTServerManager sharedInstance] setSmartPlugSwitchState:isOn topic:topic sucBlock:^{
         [[MKHudManager share] hide];
@@ -56,7 +56,7 @@
         return;
     }
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:target.view isPenetration:NO];
-    NSString *topic = [[deviceModel sendDataTopic] stringByAppendingString:@"delay_time"];
+    NSString *topic = [deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"delay_time"];
     __weak __typeof(&*target)weakTarget = target;
     [[MKMQTTServerManager sharedInstance] setDelayHour:[hour integerValue] delayMin:[minutes integerValue] topic:topic sucBlock:^{
         [[MKHudManager share] hide];

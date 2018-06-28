@@ -29,11 +29,6 @@
 - (void)connectServer;
 
 /**
- 订阅主题
- */
-- (void)updateMQTTServerTopic:(NSArray <NSString *>*)topicList;
-
-/**
  清除本地记录的设置信息
  */
 - (void)clearLocalData;

@@ -48,6 +48,8 @@ static CGFloat const buttonViewHeight = 50.f;
     [self.deviceModel cancel];
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedDelayTimeNotification object:nil];
+    //取消订阅倒计时主题
+    [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"delay_time"]]];
 }
 
 - (void)viewDidLoad {
@@ -56,6 +58,8 @@ static CGFloat const buttonViewHeight = 50.f;
     [self loadDataList];
     [self configView];
     [self addNotifications];
+    //订阅倒计时主题
+    [[MKMQTTServerManager sharedInstance] subscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"delay_time"]]];
     // Do any additional setup after loading the view.
 }
 
@@ -149,7 +153,9 @@ static CGFloat const buttonViewHeight = 50.f;
         return;
     }
     MKElectricityController *vc = [[MKElectricityController alloc] initWithNavigationType:GYNaviTypeShow];
-    vc.device_mac = self.deviceModel.device_mac;
+    MKDeviceModel *model = [[MKDeviceModel alloc] init];
+    [model updatePropertyWithModel:self.deviceModel];
+    vc.deviceModel = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -14,6 +14,11 @@ typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
     smartPlugDeviceStatusOff,           //在线并且关闭
 };
 
+typedef NS_ENUM(NSInteger, deviceModelTopicType) {
+    deviceModelTopicDeviceType,             //设备发布数据的主题
+    deviceModelTopicAppType,                //APP发布数据的主题
+};
+
 @protocol MKDeviceModelDelegate;
 @interface MKDeviceModel : MKBaseDataModel
 
@@ -68,17 +73,13 @@ typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
 
 /**
  订阅的主题
-
- @return 设备功能/设备名称/型号/mac/device/#
- */
-- (NSString *)subscribeTopicInfo;
-
-/**
- 发布主题，注意，这个只是精确到设备功能/设备名称/型号/mac/app这一级，具体的得加上功能位
  
- @return 设备功能/设备名称/型号/mac/app/
+ @param topicType 主题类型，是app发布数据的主题还是设备发布数据的主题
+ @param function 主题功能
+ @return 设备功能/设备名称/型号/mac/topicType/function
  */
-- (NSString *)sendDataTopic;
+- (NSString *)subscribeTopicInfoWithType:(deviceModelTopicType)topicType
+                                function:(NSString *)function;
 
 - (void)updatePropertyWithModel:(MKDeviceModel *)model;
 
