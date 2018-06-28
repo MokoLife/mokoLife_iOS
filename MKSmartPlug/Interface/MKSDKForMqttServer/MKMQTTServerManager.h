@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "MKMQTTServerSessionManager.h"
 
+typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
+    MKFirmwareUpdateHostTypeIP,
+    MKFirmwareUpdateHostTypeUrl,
+};
+
 @interface MKMQTTServerManager : NSObject
 
 @property (nonatomic, assign, readonly)MKMQTTSessionManagerState managerState;
@@ -104,5 +109,22 @@
 - (void)readDeviceFirmwareInformationWithTopic:(NSString *)topic
                                       sucBlock:(void (^)(void))sucBlock
                                    failedBlock:(void (^)(NSError *error))failedBlock;
-
+/**
+ 插座OTA升级
+ 
+ @param hostType hostType
+ @param host 放新固件的主机的ip地址或域名
+ @param port 端口号,取值：0~65535
+ @param catalogue 目录，长度小于100个字节
+ @param topic 固件升级主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)updateFirmware:(MKFirmwareUpdateHostType)hostType
+                  host:(NSString *)host
+                  port:(NSInteger)port
+             catalogue:(NSString *)catalogue
+                 topic:(NSString *)topic
+              sucBlock:(void (^)(void))sucBlock
+           failedBlock:(void (^)(NSError *error))failedBlock;
 @end

@@ -248,6 +248,45 @@
     [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
 }
 
+/**
+ 插座OTA升级
+
+ @param hostType hostType
+ @param host 放新固件的主机的ip地址或域名
+ @param port 端口号,取值：0~65535
+ @param catalogue 目录，长度小于100个字节
+ @param topic 固件升级主题
+ @param sucBlock 成功回调
+ @param failedBlock 失败回调
+ */
+- (void)updateFirmware:(MKFirmwareUpdateHostType)hostType
+                  host:(NSString *)host
+                  port:(NSInteger)port
+             catalogue:(NSString *)catalogue
+                 topic:(NSString *)topic
+              sucBlock:(void (^)(void))sucBlock
+           failedBlock:(void (^)(NSError *error))failedBlock{
+    if (!(hostType == MKFirmwareUpdateHostTypeIP && [self isValidatIP:host])) {
+        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    if (!(hostType == MKFirmwareUpdateHostTypeUrl && [self isDomainName:host])) {
+        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    if (port < 0 || port > 65535 || !catalogue) {
+        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSDictionary *dataDic = @{
+                              @"type":@(hostType),
+                              @"realm":host,
+                              @"port":@(port),
+                              @"catalogue":catalogue,
+                              };
+    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
+}
+
 #pragma mark - private method
 
 - (void)sendData:(NSData *)data
@@ -302,6 +341,22 @@
     }
     NSString *dataString = [NSString convertToJsonData:dic];
     return [dataString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (BOOL)isValidatIP:(NSString *)IPAddress{
+    NSString  *urlRegEx =@"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
+    return [pred evaluateWithObject:IPAddress];
+}
+
+- (BOOL)isDomainName:(NSString *)host{
+    NSString *regex =@"[a-zA-z]+://[^\\s]*";
+    NSPredicate *hostTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [hostTest evaluateWithObject:host];
 }
 
 #pragma mark - setter & getter

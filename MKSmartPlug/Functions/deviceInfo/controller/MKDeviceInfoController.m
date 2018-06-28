@@ -29,6 +29,9 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKDeviceInfoController销毁");
+    //取消订阅
+    [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"ota_upgrade_state"]]];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedUpdateResultNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -63,10 +66,16 @@
         [self readFirmwareInfo];
         return;
     }
+    if (indexPath.row == 2) {
+        //固件升级
+        [self updateFirmware];
+        return;
+    }
     if (indexPath.row == 3) {
         //关于
         MKAboutController *vc = [[MKAboutController alloc] initWithNavigationType:GYNaviTypeShow];
         [self.navigationController pushViewController:vc animated:YES];
+        return;
     }
 }
 
@@ -107,6 +116,26 @@
     }];
 }
 
+#pragma mark - note
+- (void)firmwareUpdateResult:(NSNotification *)note{
+    NSDictionary *deviceDic = note.userInfo[@"userInfo"];
+    if (!ValidDict(deviceDic) || ![deviceDic[@"mac"] isEqualToString:self.deviceModel.device_mac]) {
+        return;
+    }
+    //固件升级结果
+    //取消订阅的固件升级主题,取消升级结果监听通知
+    [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"ota_upgrade_state"]]];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedUpdateResultNotification object:nil];
+    [[MKHudManager share] hide];
+    if ([deviceDic[@"ota_result"] isEqualToString:@"R1"]) {
+        //升级成功
+        [self.view showCentralToast:@"Update Success!"];
+        return;
+    }
+    //升级失败
+    [self.view showCentralToast:@"Update Failed!"];
+}
+
 #pragma mark - 数据库操作
 - (void)getDeviceLocalName{
     [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
@@ -130,6 +159,29 @@
     [MKDeviceDataBaseManager updateDevice:model sucBlock:^{
         [[MKHudManager share] hide];
         [weakSelf modifyNameSuccess:localName];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+#pragma mark - interface
+- (void)updateFirmware{
+    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
+        [self.view showCentralToast:@"Device offline,please check."];
+        return;
+    }
+    NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"upgrade"];
+    [[MKHudManager share] showHUDWithTitle:@"Updating..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [[MKMQTTServerManager sharedInstance] updateFirmware:MKFirmwareUpdateHostTypeIP host:@"23.83.237.116" port:80 catalogue:@"smartplug/20180623/" topic:topic sucBlock:^{
+        //发送成功订阅升级结果主题
+        [[MKMQTTServerManager sharedInstance] subscriptions:@[[weakSelf.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"ota_upgrade_state"]]];
+        //监听升级结果
+        [kNotificationCenterSington addObserver:self
+                                       selector:@selector(firmwareUpdateResult:)
+                                           name:MKMQTTServerReceivedUpdateResultNotification
+                                         object:nil];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];

@@ -28,3 +28,8 @@ static NSString *const MKMQTTServerReceivedElectricityNotification = @"MKMQTTSer
  接收到设备固件信息通知
  */
 static NSString *const MKMQTTServerReceivedFirmwareInfoNotification = @"MKMQTTServerReceivedFirmwareInfoNotification";
+
+/*
+ 接收到设备固件升级结果通知
+ */
+static NSString *const MKMQTTServerReceivedUpdateResultNotification = @"MKMQTTServerReceivedUpdateResultNotification";

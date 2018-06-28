@@ -62,6 +62,13 @@
                                                           userInfo:@{@"userInfo" : tempDic}];
         return;
     }
+    if ([function isEqualToString:@"ota_upgrade_state"]) {
+        //固件升级结果
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerReceivedUpdateResultNotification
+                                                            object:nil
+                                                          userInfo:@{@"userInfo" : tempDic}];
+        return;
+    }
 }
 
 @end
