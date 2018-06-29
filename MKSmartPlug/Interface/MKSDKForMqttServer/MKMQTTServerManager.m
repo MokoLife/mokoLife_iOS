@@ -266,11 +266,11 @@
                  topic:(NSString *)topic
               sucBlock:(void (^)(void))sucBlock
            failedBlock:(void (^)(NSError *error))failedBlock{
-    if (!(hostType == MKFirmwareUpdateHostTypeIP && [self isValidatIP:host])) {
+    if (hostType == MKFirmwareUpdateHostTypeIP && ![self isValidatIP:host]) {
         [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
         return;
     }
-    if (!(hostType == MKFirmwareUpdateHostTypeUrl && [self isDomainName:host])) {
+    if (hostType == MKFirmwareUpdateHostTypeUrl && ![self isDomainName:host]) {
         [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
         return;
     }
