@@ -147,12 +147,14 @@
         || topicList.count == 0) {
         return;
     }
-    for (NSString *topic in topicList) {
-        [self.subscriptions setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
-    }
-    if (self.sessionManager && self.managerState == MKMQTTSessionManagerStateConnected) {
-        //连接成功了，订阅主题
-        self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
+    @synchronized(self){
+        for (NSString *topic in topicList) {
+            [self.subscriptions setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
+        }
+        if (self.sessionManager && self.managerState == MKMQTTSessionManagerStateConnected) {
+            //连接成功了，订阅主题
+            self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
+        }
     }
 }
 
@@ -167,10 +169,17 @@
         || topicList.count == 0) {
         return;
     }
-    for (NSString *topic in topicList) {
-        [self.subscriptions removeObjectForKey:topic];
+    @synchronized(self){
+        NSMutableArray *removeTopicList = [NSMutableArray array];
+        for (NSString *topic in topicList) {
+            NSString *value = self.subscriptions[topic];
+            if (value) {
+                [self.subscriptions removeObjectForKey:topic];
+                [removeTopicList addObject:topic];
+            }
+        }
+        [self.sessionManager unsubscriptions:removeTopicList];
     }
-    [self.sessionManager unsubscriptions:topicList];
 }
 
 #pragma mark - interface

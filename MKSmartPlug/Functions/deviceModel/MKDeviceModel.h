@@ -81,6 +81,8 @@ typedef NS_ENUM(NSInteger, deviceModelTopicType) {
 - (NSString *)subscribeTopicInfoWithType:(deviceModelTopicType)topicType
                                 function:(NSString *)function;
 
+- (NSArray <NSString *>*)allTopicForDevice;
+
 - (void)updatePropertyWithModel:(MKDeviceModel *)model;
 
 /**
