@@ -137,7 +137,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
 /**
  隐藏键盘
  */
-- (void)resignFirstResponder{
+- (void)hiddenKeyBoard{
     [self.textField resignFirstResponder];
 }
 

@@ -94,7 +94,7 @@
         return;
     }
     NSNumber *msgId = note.userInfo[@"userInfo"];
-    if (!msgId) {
+    if (msgId == nil) {
         return;
     }
     if ([msgId integerValue] != self.taskID) {

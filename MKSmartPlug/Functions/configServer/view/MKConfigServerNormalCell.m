@@ -103,7 +103,7 @@ static NSString *const MKConfigServerNormalCellIdenty = @"MKConfigServerNormalCe
 /**
  隐藏键盘
  */
-- (void)resignFirstResponder{
+- (void)hiddenKeyBoard{
     [self.textField resignFirstResponder];
 }
 

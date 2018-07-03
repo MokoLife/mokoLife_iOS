@@ -44,12 +44,13 @@ NSString *const smartPlugWifiSSIDKey = @"MK";
 + (NSString *)currentWifiSSID{
     CFArrayRef tempArray = CNCopySupportedInterfaces();
     if (!tempArray) {
-        CFRelease(tempArray);
         return @"<<NONE>>";
     }
-    NSDictionary* wifiDic = (__bridge NSDictionary *) CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(tempArray, 0));
+    CFStringRef interfaceName = CFArrayGetValueAtIndex(tempArray, 0);
+    CFDictionaryRef captiveNtwrkDict = CNCopyCurrentNetworkInfo(interfaceName);
+    NSDictionary* wifiDic = (__bridge NSDictionary *) captiveNtwrkDict;
     NSLog(@"%@",wifiDic);
-    if (!ValidDict(wifiDic)) {
+    if (!wifiDic || wifiDic.allValues.count == 0) {
         CFRelease(tempArray);
         return @"<<NONE>>";
     }

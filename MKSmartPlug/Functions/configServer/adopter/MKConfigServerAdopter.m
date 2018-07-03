@@ -119,8 +119,8 @@
     for (NSInteger row = 0; row < [tableView numberOfRowsInSection:0]; row ++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
         id <MKConfigServerCellProtocol>cell = [tableView cellForRowAtIndexPath:indexPath];
-        if ([cell respondsToSelector:@selector(resignFirstResponder)]) {
-            [cell resignFirstResponder];
+        if ([cell respondsToSelector:@selector(hiddenKeyBoard)]) {
+            [cell hiddenKeyBoard];
         }
     }
 }

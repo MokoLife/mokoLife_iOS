@@ -577,7 +577,7 @@
         NSDictionary *currentSubscriptions = [self.effectiveSubscriptions copy];
         
         for (NSString *topicFilter in currentSubscriptions) {
-            if (![newSubscriptions objectForKey:topicFilter]) {
+            if ([newSubscriptions objectForKey:topicFilter] == nil) {
                 [self.session unsubscribeTopic:topicFilter unsubscribeHandler:^(NSError *error) {
                     if (!error) {
                         [self.subscriptionLock lock];

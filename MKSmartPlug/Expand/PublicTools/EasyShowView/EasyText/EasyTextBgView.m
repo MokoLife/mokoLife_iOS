@@ -39,7 +39,7 @@
 }
 - (instancetype)initWithFrame:(CGRect)frame status:(ShowTextStatus)status text:(NSString *)text imageName:(NSString *)imageName config:(EasyTextConfig *)config
 {
-    if ([super initWithFrame:frame]) {
+    if (self = [super initWithFrame:frame]) {
         
         _config = config ;
         self.backgroundColor = self.config.bgColor ; //[UIColor redColor]; //

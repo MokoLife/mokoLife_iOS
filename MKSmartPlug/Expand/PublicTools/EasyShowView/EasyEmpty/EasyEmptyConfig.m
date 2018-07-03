@@ -16,7 +16,7 @@
     return [[EasyEmptyConfig alloc]init];
 }
 - (instancetype)init{
-    if ([super init]) {
+    if (self = [super init]) {
         EasyEmptyGlobalConfig *globalC = [EasyEmptyGlobalConfig shared] ;
         _scrollVerticalEnable = globalC.scrollVerticalEnable ;
         _easyViewEdgeInsets = UIEdgeInsetsZero ;

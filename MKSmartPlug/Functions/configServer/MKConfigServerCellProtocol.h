@@ -28,6 +28,6 @@
 /**
  隐藏键盘
  */
-- (void)resignFirstResponder;
+- (void)hiddenKeyBoard;
 
 @end

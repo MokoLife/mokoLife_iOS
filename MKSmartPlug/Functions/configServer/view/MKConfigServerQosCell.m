@@ -168,7 +168,7 @@ static NSString *const MKConfigServerQosCellIdenty = @"MKConfigServerQosCellIden
 /**
  隐藏键盘
  */
-- (void)resignFirstResponder{
+- (void)hiddenKeyBoard{
     [self.aliveTextField resignFirstResponder];
 }
 
