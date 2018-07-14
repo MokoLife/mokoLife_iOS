@@ -92,7 +92,7 @@ typedef NS_ENUM(NSInteger, wifiSecurity) {
                     sucBlock:(void (^)(id returnData))sucBlock
                  failedBlock:(void (^)(NSError *error))failedBlock;
 /**
- 手机给插座指定连接特定ssid的WiFi网络。注意:调用该方法的时候，应该确保已经把mqtt服务器信息设置给plug了，否则调用该方法会出现错误
+ 手机给插座指定连接特定ssid的WiFi网络。注意:调用该方法的时候，应该确保已经把mqtt服务器信息设置给plug了，否则调用该方法会出现错误.mqtt服务器信息和wifi信息都发送给plug的情况之下，plug会先断开跟SDK的连接，然后去连接wifi，并且通过指定的wifi连接mqtt服务器.
  
  @param ssid wifi ssid
  @param password wifi密码,不需要密码的wifi网络，密码可以不填

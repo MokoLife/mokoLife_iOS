@@ -76,6 +76,7 @@
                 break ;
             }
         }
+        [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
     } failedBlock:^(NSError *error) {
         [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
     }];

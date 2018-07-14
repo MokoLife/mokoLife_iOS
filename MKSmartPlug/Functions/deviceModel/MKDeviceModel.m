@@ -11,7 +11,7 @@
 @interface MKDeviceModel()
 
 /**
- 超过10s没有接收到信息，则认为离线
+ 超过40s没有接收到信息，则认为离线
  */
 @property (nonatomic, strong)dispatch_source_t receiveTimer;
 
@@ -80,7 +80,7 @@
     dispatch_source_set_timer(self.receiveTimer, dispatch_walltime(NULL, 0), 1 * NSEC_PER_SEC, 0);
     WS(weakSelf);
     dispatch_source_set_event_handler(self.receiveTimer, ^{
-        if (weakSelf.receiveTimerCount >= 10.f) {
+        if (weakSelf.receiveTimerCount >= 40.f) {
             //接受数据超时
             dispatch_cancel(weakSelf.receiveTimer);
             weakSelf.receiveTimerCount = 0;

@@ -146,7 +146,7 @@
     NSIndexPath *portPath = [NSIndexPath indexPathForRow:1 inSection:0];
     id <MKConfigServerCellProtocol>portCell = [tableView cellForRowAtIndexPath:portPath];
     NSDictionary *portDic = [portCell configServerCellValue];
-    serverModel.port = portDic[@"port"];
+    serverModel.port = [NSString stringWithFormat:@"%ld",(long)[portDic[@"port"] integerValue]];
     serverModel.cleanSession = [portDic[@"cleanSession"] boolValue];
     
     //connect mode
@@ -160,7 +160,7 @@
     id <MKConfigServerCellProtocol>qosCell = [tableView cellForRowAtIndexPath:qosPath];
     NSDictionary *qosDic = [qosCell configServerCellValue];
     serverModel.qos = qosDic[@"qos"];
-    serverModel.keepAlive = qosDic[@"keepAlive"];
+    serverModel.keepAlive = [NSString stringWithFormat:@"%ld",(long)[qosDic[@"keepAlive"] integerValue]];
     
     if (isApp) {
         //app
