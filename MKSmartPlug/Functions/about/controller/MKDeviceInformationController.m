@@ -141,6 +141,11 @@
     firmModel.rightMsg = infoDic[@"firmware_version"];
     [self.dataList addObject:firmModel];
     
+    MKAboutModel *macModel = [[MKAboutModel alloc] init];
+    macModel.leftMsg = @"Device Mac";
+    macModel.rightMsg = infoDic[@"device_mac"];
+    [self.dataList addObject:macModel];
+    
     [self.tableView reloadData];
 }
 

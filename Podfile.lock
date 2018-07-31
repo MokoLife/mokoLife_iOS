@@ -53,6 +53,21 @@ DEPENDENCIES:
   - Toast
   - YYKit
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - CircleProgressBar
+    - CocoaAsyncSocket
+    - FLAnimatedImage
+    - FMDB
+    - Masonry
+    - MBProgressHUD
+    - MJRefresh
+    - MLInputDodger
+    - MQTTClient
+    - Toast
+    - YYKit
+
 EXTERNAL SOURCES:
   HJTabViewController:
     :git: https://github.com/panghaijiao/HJTabViewController.git
@@ -79,4 +94,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ab0bac76b04c4c5e20ae025e0b07f3ab8c8f27d0
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.3

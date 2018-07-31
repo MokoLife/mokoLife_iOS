@@ -118,6 +118,7 @@ static NSString *const titleMsg = @"Modify Device Name";
 - (MKTextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
+        _textField.maxLength = 20;
     }
     return _textField;
 }

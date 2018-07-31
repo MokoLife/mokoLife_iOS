@@ -42,15 +42,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    NSString *mac = [[self.deviceModel.device_mac stringByReplacingOccurrencesOfString:@":" withString:@""] uppercaseString];
-    mac = [mac substringWithRange:NSMakeRange(8, 4)];
-    NSString *text = @"MK102-";
-    if ([self.deviceModel.device_type isEqualToString:@"1"]) {
-        //带计电量
-        text = @"MK112-";
+    if (ValidStr(self.deviceModel.device_name)) {
+        self.textField.text = self.deviceModel.device_name;
     }
-    text = [text stringByAppendingString:mac];
-    self.textField.text = text;
     // Do any additional setup after loading the view.
 }
 
@@ -68,6 +62,10 @@
 #pragma mark - event method
 - (void)doneButtonPressed{
     self.deviceModel.local_name = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (!ValidStr(self.deviceModel.local_name)) {
+        [self.view showCentralToast:@"Device name cann't be blank."];
+        return;
+    }
     WS(weakSelf);
     [MKDeviceDataBaseManager updateDevice:self.deviceModel sucBlock:^{
         for (MKBaseViewController *vc in weakSelf.navigationController.viewControllers) {
@@ -123,6 +121,7 @@
 - (MKTextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
+        _textField.maxLength = 20;
         _textField.delegate = self;
     }
     return _textField;

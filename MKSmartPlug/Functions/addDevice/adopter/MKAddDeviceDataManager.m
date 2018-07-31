@@ -227,7 +227,7 @@
     dispatch_source_set_timer(self.receiveTimer, dispatch_walltime(NULL, 0), 1 * NSEC_PER_SEC, 0);
     WS(weakSelf);
     dispatch_source_set_event_handler(self.receiveTimer, ^{
-        if (weakSelf.receiveTimerCount >= 30.f) {
+        if (weakSelf.receiveTimerCount >= 90.f) {
             //接受数据超时
             [weakSelf connectFailed];
             return ;
@@ -255,9 +255,7 @@
 
 - (void)saveDeviceToLocal{
     MKDeviceModel *dataModel = [[MKDeviceModel alloc] initWithDictionary:self.deviceDic];
-    NSString *macAddress = self.deviceDic[@"device_mac"];
-    macAddress = [[macAddress stringByReplacingOccurrencesOfString:@":" withString:@""] uppercaseString];
-    dataModel.local_name = [@"MK102-" stringByAppendingString:[macAddress substringWithRange:NSMakeRange(8, 4)]];
+    dataModel.local_name = self.deviceDic[@"device_name"];
     WS(weakSelf);
     [MKDeviceDataBaseManager insertDeviceList:@[dataModel] sucBlock:^{
         [weakSelf dismisAllAlertView];
@@ -308,7 +306,7 @@
     [wifiView dismiss];
     MKConnectDeviceProgressView *progressView = self.viewList[2];
     [progressView showConnectAlertView];
-    [progressView setProgress:0.3 duration:30.f];
+    [progressView setProgress:0.90 duration:90.f];
 }
 
 - (void)dismisAllAlertView{

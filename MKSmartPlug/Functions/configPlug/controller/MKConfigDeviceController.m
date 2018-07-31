@@ -92,6 +92,7 @@ static CGFloat const buttonViewHeight = 50.f;
     BOOL status = ([deviceDic[@"switch_state"] isEqualToString:@"on"]);
     self.deviceModel.device_state = (status ? smartPlugDeviceOn : smartPlugDeviceStatusOff);
     [self configView];
+    [self.delayTimeLabel setHidden:YES];
 }
 
 - (void)delayTimeNotification:(NSNotification *)note{
