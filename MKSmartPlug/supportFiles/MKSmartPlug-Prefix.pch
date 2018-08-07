@@ -4,17 +4,31 @@
 #import "MBProgressHUD.h"
 #import "FMDB.h"
 #import "UIView+Toast.h"
-#import "HCKHudManager.h"
+#import "MKHudManager.h"
 #import "MJRefresh.h"
 #import "MLInputDodger.h"
+#import "AFNetworking.h"
 
 /***************/
-#import "HCKDefines.h"
+#import "MKDefines.h"
 #import "AppDelegate.h"
-#import "HCKCategories.h"
+#import "MKCategories.h"
 
 /******自定义工具类********/
-#import "HCKAttributedStringManager.h"
-#import "HCKSystemResource.h"
-#import "HCKDateFormatter.h"
-#import "HCKPhotoPicker.h"
+#import "MKNetworkManager.h"
+#import "MKAttributedStringManager.h"
+#import "MKSystemResource.h"
+#import "MKDateFormatter.h"
+#import "MKPhotoPicker.h"
+#import "MKCommonlyUIHelper.h"
+#import "MKAnimationAdopter.h"
+#import "MKDeviceModel.h"
+
+/*********interface***********/
+#import "MKSocketManager.h"
+#import "MKMQTTServer.h"
+#import "MKMQTTServerConnectManager.h"
+#import "MKSmartPlugConnectManager.h"
+#import "MKMQTTServerInterface.h"
+
+

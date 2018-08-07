@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '37B0067079D2EECA0433DAFA2278508E'
-               BlueprintName = 'Pods-MKSmartPlug'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-MKSmartPlug.a'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A5A3600D7719FCB454BB960124F57918"
+               BlueprintName = "Pods-MKSmartPlug"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "libPods-MKSmartPlug.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

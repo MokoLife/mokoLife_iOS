@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F7D6D4D5DB6628F5B730A28E3D75382C'
-               BlueprintName = 'MLInputDodger'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libMLInputDodger.a'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A15DFA5E4BCADEE042F04BF2BBCA0A2A"
+               BlueprintName = "MLInputDodger"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "libMLInputDodger.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

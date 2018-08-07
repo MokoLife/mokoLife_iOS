@@ -1,4 +1,4 @@
-platform :ios,'8.0'
+platform :ios,’9.0’
 inhibit_all_warnings!
 
 target 'MKSmartPlug' do
@@ -12,5 +12,9 @@ pod 'HJTabViewController',     :git => 'https://github.com/panghaijiao/HJTabView
 pod ‘YYKit’
 pod ‘MLInputDodger’
 pod 'MQTTClient'
+pod 'FLAnimatedImage'
+pod 'AFNetworking'
+pod 'CircleProgressBar'
+pod 'CocoaAsyncSocket'
 
 end

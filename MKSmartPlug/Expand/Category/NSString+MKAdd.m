@@ -1,0 +1,188 @@
+//
+//  NSString+MKAdd.m
+//  FitPolo
+//
+//  Created by aa on 17/5/10.
+//  Copyright © 2017年 MK. All rights reserved.
+//
+
+#import "NSString+MKAdd.h"
+
+@implementation NSString (MKAdd)
+
+/**
+ 判断当前string是否是全数字
+ 
+ @return YES:全数字，NO:不是全数字
+ */
+- (BOOL)isRealNumbers{
+    NSString *regex = @"^(0|[1-9][0-9]*)$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [pred evaluateWithObject:self];
+}
+
+/**
+ 判断当前string是否是全汉字
+ 
+ @return YES:全汉字，NO:不是全汉字
+ */
+- (BOOL)isChinese{
+    if (self.length == 0) return NO;
+    NSString *regex = @"[\u4e00-\u9fa5]+";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [pred evaluateWithObject:self];
+}
+
+/**
+ 判断当前string是否是全字母
+ 
+ @return YES:全字母，NO:不是全字母
+ */
+- (BOOL)isLetter{
+    if (self.length == 0) return NO;
+    NSString *regex =@"[a-zA-Z]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [pred evaluateWithObject:self];
+}
+
+/**
+ 判断当前string是否全部是数字和字母
+ 
+ @return YES:全部是数字和字母，NO:不是全部是数字和字母
+ */
+- (BOOL)isLetterOrRealNumbers{
+    if (self.length == 0) return NO;
+    NSString *regex =@"[a-zA-Z0-9]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [pred evaluateWithObject:self];
+}
+
+/**
+ 校验输入的字符是否合法，必须是数字或者A、B、C、D、E、F其中的一种
+ 
+ @return NO不合法，YES合法
+ */
+- (BOOL)checkInputIsHexString{
+    if ([self isRealNumbers]) {
+        return YES;
+    }
+    if ([self isEqualToString:@"A"]
+        || [self isEqualToString:@"B"]
+        || [self isEqualToString:@"C"]
+        || [self isEqualToString:@"D"]
+        || [self isEqualToString:@"E"]
+        || [self isEqualToString:@"F"]
+        || [self isEqualToString:@"a"]
+        || [self isEqualToString:@"b"]
+        || [self isEqualToString:@"c"]
+        || [self isEqualToString:@"d"]
+        || [self isEqualToString:@"e"]
+        || [self isEqualToString:@"f"]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isValidatIP{
+    if (!ValidStr(self)) return NO;
+    NSString  *urlRegEx =@"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
+    return [pred evaluateWithObject:self];
+}
+
+/**
+ 判断当前字符串是否是url
+ 
+ @return result
+ */
+- (BOOL)checkIsUrl{
+    if (!ValidStr(self)) {
+        return NO;
+    }
+    NSString *regex =@"[a-zA-z]+://[^\\s]*";
+    NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    return [urlTest evaluateWithObject:self];
+}
+
+#pragma mark - ===============类方法====================
+
++ (CGSize)sizeWithLabel:(UILabel *)label
+{
+    NSString *text = label.text;
+    if (text == nil)
+        text = @"字体";
+    return [NSString sizeWithText:text andFont:label.font andMaxSize:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+}
+
++ (CGSize)sizeWithText:(NSString *)text andFont:(UIFont *)font
+{
+    return [NSString sizeWithText:text andFont:font andMaxSize:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+}
+
++ (CGSize)sizeWithText:(NSString *)text andFont:(UIFont *)font andMaxSize:(CGSize)maxSize
+{
+    CGSize expectedLabelSize = CGSizeZero;
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    [paragraphStyle setLineSpacing:0];
+    NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
+    
+    expectedLabelSize = [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributes context:nil].size;
+    
+    return CGSizeMake(ceil(expectedLabelSize.width), ceil(expectedLabelSize.height));
+}
+
+/**
+ 字典转json字符串方法
+ 
+ @param dict json
+ @return string
+ */
++ (NSString *)convertToJsonData:(NSDictionary *)dict{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+    if (!jsonData) {
+        return nil;
+    }
+    NSString *jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    if (!jsonString || jsonString.length == 0) {
+        return nil;
+    }
+    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+    NSRange range = {0,jsonString.length};
+    //去掉字符串中的空格
+    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+    NSRange range2 = {0,mutStr.length};
+    //去掉字符串中的换行符
+    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
+    return mutStr;
+}
+
+/**
+ JSON字符串转化为字典
+ 
+ @param jsonString string
+ @return dic
+ */
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString{
+    if (jsonString == nil) {
+        return nil;
+    }
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err){
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+@end

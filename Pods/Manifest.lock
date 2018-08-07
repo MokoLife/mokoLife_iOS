@@ -1,4 +1,22 @@
 PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - CircleProgressBar (0.32)
+  - CocoaAsyncSocket (7.6.0)
+  - FLAnimatedImage (1.0.12)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -21,6 +39,10 @@ PODS:
   - YYKit/no-arc (1.0.9)
 
 DEPENDENCIES:
+  - AFNetworking
+  - CircleProgressBar
+  - CocoaAsyncSocket
+  - FLAnimatedImage
   - FMDB
   - HJTabViewController (from `https://github.com/panghaijiao/HJTabViewController.git`)
   - Masonry
@@ -30,6 +52,21 @@ DEPENDENCIES:
   - MQTTClient
   - Toast
   - YYKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - CircleProgressBar
+    - CocoaAsyncSocket
+    - FLAnimatedImage
+    - FMDB
+    - Masonry
+    - MBProgressHUD
+    - MJRefresh
+    - MLInputDodger
+    - MQTTClient
+    - Toast
+    - YYKit
 
 EXTERNAL SOURCES:
   HJTabViewController:
@@ -41,6 +78,10 @@ CHECKOUT OPTIONS:
     :git: https://github.com/panghaijiao/HJTabViewController.git
 
 SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
+  CocoaAsyncSocket: b9d5589f07baf9de8f34cc25abd4fcba28f13805
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HJTabViewController: 578a5bbab471587e7cc49a2f0f49fc8601c833bf
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
@@ -51,6 +92,6 @@ SPEC CHECKSUMS:
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: f138ad29403ac38e47c0b581625d4c53d60120f6
+PODFILE CHECKSUM: ab0bac76b04c4c5e20ae025e0b07f3ab8c8f27d0
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.3
