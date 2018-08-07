@@ -146,7 +146,9 @@
     NSIndexPath *portPath = [NSIndexPath indexPathForRow:1 inSection:0];
     id <MKConfigServerCellProtocol>portCell = [tableView cellForRowAtIndexPath:portPath];
     NSDictionary *portDic = [portCell configServerCellValue];
-    serverModel.port = [NSString stringWithFormat:@"%ld",(long)[portDic[@"port"] integerValue]];
+    if (ValidStr(portDic[@"port"])) {
+        serverModel.port = [NSString stringWithFormat:@"%ld",(long)[portDic[@"port"] integerValue]];
+    }
     serverModel.cleanSession = [portDic[@"cleanSession"] boolValue];
     
     //connect mode
@@ -160,7 +162,9 @@
     id <MKConfigServerCellProtocol>qosCell = [tableView cellForRowAtIndexPath:qosPath];
     NSDictionary *qosDic = [qosCell configServerCellValue];
     serverModel.qos = qosDic[@"qos"];
-    serverModel.keepAlive = [NSString stringWithFormat:@"%ld",(long)[qosDic[@"keepAlive"] integerValue]];
+    if (ValidStr(qosDic[@"keepAlive"])) {
+        serverModel.keepAlive = [NSString stringWithFormat:@"%ld",(long)[qosDic[@"keepAlive"] integerValue]];
+    }
     
     if (isApp) {
         //app
@@ -269,9 +273,21 @@
         [target.view showCentralToast:@"Host error"];
         return NO;
     }
+    if (!ValidStr(serverModel.port)) {
+        [target.view showCentralToast:@"Port error"];
+        return NO;
+    }
     if ([serverModel.port integerValue] < 0 || [serverModel.port integerValue] > 65535) {
         //port错误
-        [target.view showCentralToast:@"Port effective range : 0~65535"];
+        [target.view showCentralToast:@"Port range : 0~65535"];
+        return NO;
+    }
+    if (!ValidStr(serverModel.keepAlive)) {
+        [target.view showCentralToast:@"keepAlive error"];
+        return NO;
+    }
+    if ([serverModel.keepAlive integerValue] < 60 || [serverModel.keepAlive integerValue] > 120) {
+        [target.view showCentralToast:@"Keep alive range : 60~120"];
         return NO;
     }
     if (target.controllerType == MKConfigServerForApp) {

@@ -19,9 +19,17 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>2018060101</string>
+	<string>2018080701</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>If not allowed ,you will be unable to take photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>是否允许SmartPlug使用麦克风</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>SmartPlug need to add photos to your photo library.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>If not allowed ,you will be unable to choose photos from Camera Roll.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

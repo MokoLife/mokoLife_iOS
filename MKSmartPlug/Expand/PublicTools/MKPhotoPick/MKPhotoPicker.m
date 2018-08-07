@@ -70,10 +70,10 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
                                                                              message:@"The camera is not available"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:LS(@"MKPersonInfoSetController_cancel")
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:nil];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:LS(@"MKPersonInfoSetController_ok")
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
     
@@ -107,15 +107,15 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:LS(@"MKPersonInfoSetController_camera")
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"Camera"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
         [[MKSystemResource share] handleAccessCameraWithTarget:self selecter:@selector(openCamera)];
     }];
-    UIAlertAction *photoAction = [UIAlertAction actionWithTitle:LS(@"MKPersonInfoSetController_photo") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[MKSystemResource share] handleAccessPhotosWithTarget:self selecter:@selector(openPhoto)];
     }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:LS(@"MKPersonInfoSetController_cancel")
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:nil];
     [alertController addAction:cancelAction];

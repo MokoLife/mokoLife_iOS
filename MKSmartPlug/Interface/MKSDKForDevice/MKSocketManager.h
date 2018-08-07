@@ -72,7 +72,7 @@ typedef NS_ENUM(NSInteger, wifiSecurity) {
  @param port mqtt服务器主机端口号，范围0~65535
  @param mode 连接方式 0：tcp,1:ssl
  @param qos mqqt服务质量
- @param keepalive plug跟mqtt服务器连接之后保持活跃状态的时间，0~2的32次方，单位：s
+ @param keepalive plug跟mqtt服务器连接之后心跳包发送间隔，60~120，单位：s
  @param clean NO:表示创建一个持久会话，在客户端断开连接时，会话仍然保持并保存离线消息，直到会话超时注销。YES:表示创建一个新的临时会话，在客户端断开时，会话自动销毁。
  @param clientId plug作为客户端的id,mqtt服务器使用该id来区分不同的plug设备,如果该项为空，则plug默认会用mac地址作为clientID跟mqtt服务器通信。建议使用设备mac地址。长度0~32
  @param username plug连接mqtt服务器时候的用户名,长度1~32
@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, wifiSecurity) {
                         port:(NSInteger)port
                  connectMode:(mqttServerConnectMode)mode
                          qos:(mqttServerQosMode)qos
-                   keepalive:(NSUInteger)keepalive
+                   keepalive:(NSInteger)keepalive
                 cleanSession:(BOOL)clean
                     clientId:(NSString *)clientId
                     username:(NSString *)username

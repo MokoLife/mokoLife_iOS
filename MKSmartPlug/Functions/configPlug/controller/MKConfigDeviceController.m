@@ -114,8 +114,7 @@ static CGFloat const buttonViewHeight = 50.f;
 
 #pragma mark - event method
 - (void)switchButtonPressed{
-    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
-        [self.view showCentralToast:@"Device offline,please check."];
+    if (![self canClickEnable]) {
         return;
     }
     BOOL isOn = (self.deviceModel.device_state == smartPlugDeviceOn);
@@ -123,16 +122,14 @@ static CGFloat const buttonViewHeight = 50.f;
 }
 
 - (void)scheduleButtonPressed{
-    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
-        [self.view showCentralToast:@"Device offline,please check."];
+    if (![self canClickEnable]) {
         return;
     }
     [self.view showCentralToast:@"The timing function needs to be improved."];
 }
 
 - (void)timerButtonPressed{
-    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
-        [self.view showCentralToast:@"Device offline,please check."];
+    if (![self canClickEnable]) {
         return;
     }
     BOOL isOn = (self.deviceModel.device_state == smartPlugDeviceOn);
@@ -149,8 +146,7 @@ static CGFloat const buttonViewHeight = 50.f;
 }
 
 - (void)statisticsButtonPressed{
-    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
-        [self.view showCentralToast:@"Device offline,please check."];
+    if (![self canClickEnable]) {
         return;
     }
     MKElectricityController *vc = [[MKElectricityController alloc] initWithNavigationType:GYNaviTypeShow];
@@ -186,6 +182,18 @@ static CGFloat const buttonViewHeight = 50.f;
                                    selector:@selector(delayTimeNotification:)
                                        name:MKMQTTServerReceivedDelayTimeNotification
                                      object:nil];
+}
+
+- (BOOL)canClickEnable{
+    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
+        [self.view showCentralToast:@"Device offline,please check."];
+        return NO;
+    }
+    if ([MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnected) {
+        [self.view showCentralToast:@"Network error,please check."];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - config view

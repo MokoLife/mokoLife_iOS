@@ -61,6 +61,15 @@
         }];
         return;
     }
+    if (indexPath.row == 3) {
+        //关于
+        MKAboutController *vc = [[MKAboutController alloc] initWithNavigationType:GYNaviTypeShow];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    if (![self canClickEnable]) {
+        return;
+    }
     if (indexPath.row == 1) {
         //设备信息
         [self readFirmwareInfo];
@@ -69,12 +78,6 @@
     if (indexPath.row == 2) {
         //固件升级
         [self updateFirmware];
-        return;
-    }
-    if (indexPath.row == 3) {
-        //关于
-        MKAboutController *vc = [[MKAboutController alloc] initWithNavigationType:GYNaviTypeShow];
-        [self.navigationController pushViewController:vc animated:YES];
         return;
     }
 }
@@ -186,6 +189,18 @@
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
     }];
+}
+
+- (BOOL)canClickEnable{
+    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
+        [self.view showCentralToast:@"Device offline,please check."];
+        return NO;
+    }
+    if ([MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnected) {
+        [self.view showCentralToast:@"Network error,please check."];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - ui
