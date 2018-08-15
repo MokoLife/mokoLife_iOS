@@ -14,9 +14,17 @@ typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
     MKFirmwareUpdateHostTypeUrl,
 };
 
+@protocol MKMQTTServerManagerStateChangedDelegate <NSObject>
+
+- (void)mqttServerManagerStateChanged:(MKMQTTSessionManagerState)state;
+
+@end
+
 @interface MKMQTTServerManager : NSObject
 
 @property (nonatomic, assign, readonly)MKMQTTSessionManagerState managerState;
+
+@property (nonatomic, weak)id <MKMQTTServerManagerStateChangedDelegate>stateDelegate;
 
 + (MKMQTTServerManager *)sharedInstance;
 /**

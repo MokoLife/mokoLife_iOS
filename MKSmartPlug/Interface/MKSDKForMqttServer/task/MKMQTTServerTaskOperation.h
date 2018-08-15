@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MKMQTTServerTaskOperation : NSOperation
+@protocol MKMQTTServerOperationProtocol <NSObject>
+
+- (void)sendMessageSuccess:(NSInteger)operationID;
+
+@end
+
+@interface MKMQTTServerTaskOperation : NSOperation<MKMQTTServerOperationProtocol>
 
 /**
  初始化通信线程

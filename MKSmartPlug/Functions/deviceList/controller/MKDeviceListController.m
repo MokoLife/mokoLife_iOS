@@ -17,7 +17,7 @@
 #import "EasyLodingView.h"
 #import "MKConfigDeviceController.h"
 
-@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate, MKDeviceListCellDelegate>
+@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate, MKDeviceListCellDelegate, MKMQTTServerManagerStateChangedDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
@@ -33,7 +33,6 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKDeviceListController销毁");
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerManagerStateChangedNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKNeedReadDataFromLocalNotification object:nil];
@@ -43,6 +42,7 @@
     [super viewDidLoad];
     [self loadSubViews];
     [self addNotification];
+    [MKMQTTServerManager sharedInstance].stateDelegate = self;
     [self performSelector:@selector(networkStatusChanged) withObject:nil afterDelay:2.f];
     [self getDeviceList];
     // Do any additional setup after loading the view.
@@ -101,8 +101,8 @@
     [MKMQTTServerInterface setSwitchState:isOn deviceModel:deviceModel target:self];
 }
 
-#pragma mark - Notification Method
-- (void)MQTTServerManagerStateChanged{
+#pragma mark - MKMQTTServerManagerStateChangedDelegate
+- (void)mqttServerManagerStateChanged:(MKMQTTSessionManagerState)state{
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
         || [[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         //网络不可用
@@ -129,6 +129,7 @@
     [EasyLodingView hidenLoingInView:self.loadingView];
 }
 
+#pragma mark - Notification Method
 - (void)networkStatusChanged{
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]) {
         //网络不可用
@@ -226,10 +227,6 @@
 }
 
 - (void)addNotification{
-    [kNotificationCenterSington addObserver:self
-                                   selector:@selector(MQTTServerManagerStateChanged)
-                                       name:MKMQTTServerManagerStateChangedNotification
-                                     object:nil];
     [kNotificationCenterSington addObserver:self
                                    selector:@selector(networkStatusChanged)
                                        name:MKNetworkStatusChangedNotification

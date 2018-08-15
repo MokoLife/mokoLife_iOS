@@ -46,7 +46,9 @@
 - (void)sessionManager:(MKMQTTServerSessionManager *)sessonManager didChangeState:(MKMQTTSessionManagerState)newState{
     //更新当前state
     self.managerState = newState;
-    [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerManagerStateChangedNotification object:nil];
+    if ([self.stateDelegate respondsToSelector:@selector(mqttServerManagerStateChanged:)]) {
+        [self.stateDelegate mqttServerManagerStateChanged:newState];
+    }
     NSLog(@"连接状态发生改变:---%ld",(long)newState);
     if (self.managerState == MKMQTTSessionManagerStateConnected) {
         //连接成功了，订阅主题
@@ -59,9 +61,15 @@
 }
 
 - (void)messageDelivered:(UInt16)msgID{
-    [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTServerManagerSendDataSuccessNotification
-                                                        object:nil
-                                                      userInfo:@{@"userInfo" : @(msgID)}];
+    @synchronized(self.operationQueue) {
+        NSArray *operations = [self.operationQueue.operations copy];
+        for (MKMQTTServerTaskOperation *operation in operations) {
+            if (operation.executing) {
+                [operation sendMessageSuccess:msgID];
+                break;
+            }
+        }
+    }
 }
 
 #pragma mark - public method

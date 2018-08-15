@@ -37,7 +37,6 @@
 
 - (void)dealloc{
     NSLog(@"MKMQTTServerTaskOperation任务销毁");
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerManagerSendDataSuccessNotification object:nil];
 }
 
 /**
@@ -54,10 +53,6 @@
         _finished = NO;
         _completeBlock = completeBlock;
         _taskID = operationID;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(sendDataSuccess:)
-                                                     name:MKMQTTServerManagerSendDataSuccessNotification
-                                                   object:nil];
     }
     return self;
 }
@@ -88,16 +83,12 @@
     [self didChangeValueForKey:@"isExecuting"];
 }
 
-#pragma mark - Notification Event
-- (void)sendDataSuccess:(NSNotification *)note{
+#pragma mark - MKMQTTServerOperationProtocol
+- (void)sendMessageSuccess:(NSInteger)operationID{
     if (self.isCancelled || !_executing || self.timeout) {
         return;
     }
-    NSNumber *msgId = note.userInfo[@"userInfo"];
-    if (msgId == nil) {
-        return;
-    }
-    if ([msgId integerValue] != self.taskID) {
+    if (operationID != self.taskID) {
         return;
     }
     if (self.receiveTimer) {

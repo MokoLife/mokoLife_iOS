@@ -146,6 +146,10 @@ static CGFloat const buttonViewHeight = 50.f;
 }
 
 - (void)statisticsButtonPressed{
+    if (![self.deviceModel.device_type isEqualToString:@"1"]) {
+        [self.view showCentralToast:@"The device does not have this function."];
+        return;
+    }
     if (![self canClickEnable]) {
         return;
     }
