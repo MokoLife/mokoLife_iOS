@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "mokoLife_iOS"    #存储库名称
+  s.name         = "SDKForMqttServer"    #存储库名称
   s.version      = "0.0.1"      #版本号，与tag值一致
   s.summary      = "SDK For MqttServer"  #简介
   s.description  = "SDK For MqttServer"  #描述
@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
 
   s.source_files = "SDK/MKSDKForMqttServer/**"
 
-  s.dependency "MQTTClient", "~> 3.1.1"    #所依赖的第三方库，没有就不用写
+  s.dependency "MQTTClient"     #所依赖的第三方库，没有就不用写
 
 end

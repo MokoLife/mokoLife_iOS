@@ -346,8 +346,7 @@
                                                      willQoS:willQos
                                               willRetainFlag:willRetainFlag
                                                protocolLevel:protocolLevel
-                                                     runLoop:[NSRunLoop currentRunLoop]
-                                                     forMode:NSDefaultRunLoopMode
+                                                       queue:dispatch_get_main_queue()
                                               securityPolicy:securityPolicy
                                                 certificates:certificates];
         

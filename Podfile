@@ -11,10 +11,10 @@ pod ‘MJRefresh’
 pod 'HJTabViewController',     :git => 'https://github.com/panghaijiao/HJTabViewController.git'
 pod ‘YYKit’
 pod ‘MLInputDodger’
-pod 'MQTTClient'
 pod 'FLAnimatedImage'
 pod 'AFNetworking'
 pod 'CircleProgressBar'
 pod 'CocoaAsyncSocket'
+pod 'MQTTClient'
 
 end

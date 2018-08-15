@@ -12,7 +12,7 @@
 @implementation MKMQTTServerDataParser
 
 + (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained{
-    if (!ValidStr(topic)) {
+    if (!topic) {
         return;
     }
     NSArray *keyList = [topic componentsSeparatedByString:@"/"];
@@ -20,12 +20,12 @@
         return;
     }
     NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if (!ValidStr(dataString)) {
+    if (!dataString) {
         return;
     }
 //    NSDictionary *dataDic = [NSString dictionaryWithJsonString:dataString];
     NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    if (!ValidDict(dataDic)) {
+    if (!dataDic || dataDic.allValues.count == 0) {
         return;
     }
     NSString *macAddress = keyList[3];
