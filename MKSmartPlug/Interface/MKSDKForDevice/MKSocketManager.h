@@ -34,10 +34,7 @@ typedef NS_ENUM(NSInteger, wifiSecurity) {
     wifiSecurity_WPA_WPA2_PSK,
 };
 
-@class MKSocketDataModel;
 @interface MKSocketManager : NSObject
-
-@property (nonatomic, strong)NSMutableArray <MKSocketDataModel *>*dataList;
 
 + (MKSocketManager *)sharedInstance;
 

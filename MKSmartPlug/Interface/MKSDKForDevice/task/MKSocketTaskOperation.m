@@ -8,7 +8,6 @@
 
 #import "MKSocketTaskOperation.h"
 #import "MKSocketManager.h"
-#import "MKSocketDataModel.h"
 
 @interface MKSocketTaskOperation()
 
@@ -17,17 +16,12 @@
  */
 @property (nonatomic, copy)communicationCompleteBlock completeBlock;
 
-@property (nonatomic, assign)MKSocketTaskID taskID;
+@property (nonatomic, assign)MKSocketOperationID taskID;
 
 /**
  是否结束当前线程的标志
  */
 @property (nonatomic, assign)BOOL complete;
-
-/**
- 只有添加了监听的operation才需要移除监听
- */
-@property (nonatomic, assign)BOOL shouldRemoveObser;
 
 /**
  超过5s没有接收到新的数据，超时
@@ -47,10 +41,6 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKSocketTaskOperation销毁");
-    if (!self.shouldRemoveObser) {
-        return;
-    }
-    [[MKSocketManager sharedInstance] removeObserver:self forKeyPath:@"dataList" context:nil];
 }
 
 /**
@@ -60,7 +50,7 @@
  @param completeBlock 数据通信完成回调
  @return operation
  */
-- (instancetype)initOperationWithID:(MKSocketTaskID)operationID
+- (instancetype)initOperationWithID:(MKSocketOperationID)operationID
                       completeBlock:(communicationCompleteBlock)completeBlock{
     if (self = [super init]) {
         _executing = NO;
@@ -97,37 +87,24 @@
     [self didChangeValueForKey:@"isExecuting"];
 }
 
-#pragma mark - observer
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
-    if (self.isCancelled
-        || object != [MKSocketManager sharedInstance]
-        || ![keyPath isEqualToString:@"dataList"]
-        || !_executing) {
+#pragma mark - MKSocketOperationProtocol
+- (void)sendDataToPlugSuccess:(BOOL)success operationID:(MKSocketOperationID)operationID returnData:(NSDictionary *)returnData{
+    if (self.isCancelled || !_executing) {
         return;
     }
-    NSArray *list = change[@"new"];
-    if (!list || list.count != 1) {
-        return;
-    }
-    MKSocketDataModel *model = list[0];
-    if (self.timeout
-        || !model
-        || model.taskID != self.taskID
-        || model.taskID == socketUnknowTask
-        || !model.returnData) {
+    if (operationID == socketUnknowOperation || self.timeout || operationID != self.taskID) {
         return;
     }
     if (self.receiveTimer) {
         dispatch_cancel(self.receiveTimer);
     }
     [self finishOperation];
-    if (model.timeout) {
-        //超时
+    if (!success) {
         self.completeBlock([self getErrorWithMsg:@"Communication timeout"], self.taskID, nil);
         return;
     }
     if (self.completeBlock) {
-        self.completeBlock(nil, self.taskID, model.returnData);
+        self.completeBlock(nil, self.taskID, returnData);
     }
 }
 
@@ -136,21 +113,20 @@
     if (self.isCancelled) {
         return;
     }
-    [[MKSocketManager sharedInstance] addObserver:self forKeyPath:@"dataList" options:NSKeyValueObservingOptionNew context:nil];
-    self.shouldRemoveObser = YES;
     __weak __typeof(&*self)weakSelf = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.receiveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     //当2s内没有接收到新的数据的时候，也认为是接受超时
     dispatch_source_set_timer(self.receiveTimer, dispatch_walltime(NULL, 0), 0.1 * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(self.receiveTimer, ^{
-        if (weakSelf.timeout || weakSelf.receiveTimerCount >= 50.f) {
+        __strong typeof(self) sself = weakSelf;
+        if (sself.timeout || sself.receiveTimerCount >= 50.f) {
             //接受数据超时
-            weakSelf.receiveTimerCount = 0;
-            [weakSelf communicationTimeout];
+            sself.receiveTimerCount = 0;
+            [sself communicationTimeout];
             return ;
         }
-        weakSelf.receiveTimerCount ++;
+        sself.receiveTimerCount ++;
     });
     if (self.isCancelled) {
         return;

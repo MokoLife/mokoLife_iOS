@@ -74,7 +74,6 @@
 		0014591B20C8026000AB7759 /* MKSocketAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014591820C8026000AB7759 /* MKSocketAdopter.m */; };
 		0014591C20C8026000AB7759 /* MKSocketBlockAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014591A20C8026000AB7759 /* MKSocketBlockAdopter.m */; };
 		0014592120C8040A00AB7759 /* MKSocketTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */; };
-		0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014592320C8090400AB7759 /* MKSocketDataModel.m */; };
 		001A0D8220CBAFF10096E8A6 /* MKSaveDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */; };
 		001A0D8920CBB7640096E8A6 /* MKDeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */; };
 		001A0D8D20CBBA440096E8A6 /* MKDeviceDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8C20CBBA440096E8A6 /* MKDeviceDataBaseManager.m */; };
@@ -321,11 +320,8 @@
 		0014591820C8026000AB7759 /* MKSocketAdopter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKSocketAdopter.m; sourceTree = "<group>"; };
 		0014591920C8026000AB7759 /* MKSocketBlockAdopter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSocketBlockAdopter.h; sourceTree = "<group>"; };
 		0014591A20C8026000AB7759 /* MKSocketBlockAdopter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKSocketBlockAdopter.m; sourceTree = "<group>"; };
-		0014591E20C8027000AB7759 /* MKSocketTaskID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSocketTaskID.h; sourceTree = "<group>"; };
 		0014591F20C8040A00AB7759 /* MKSocketTaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketTaskOperation.h; sourceTree = "<group>"; };
 		0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketTaskOperation.m; sourceTree = "<group>"; };
-		0014592220C8090400AB7759 /* MKSocketDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketDataModel.h; sourceTree = "<group>"; };
-		0014592320C8090400AB7759 /* MKSocketDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSocketDataModel.m; sourceTree = "<group>"; };
 		001A0D8020CBAFF10096E8A6 /* MKSaveDeviceNameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSaveDeviceNameController.h; sourceTree = "<group>"; };
 		001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSaveDeviceNameController.m; sourceTree = "<group>"; };
 		001A0D8720CBB7640096E8A6 /* MKDeviceListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceListController.h; sourceTree = "<group>"; };
@@ -336,6 +332,7 @@
 		001A0D9220CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceDataBaseAdopter.m; sourceTree = "<group>"; };
 		001A0D9420CBCFDE0096E8A6 /* MKAddDeviceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKAddDeviceView.h; sourceTree = "<group>"; };
 		001A0D9520CBCFDE0096E8A6 /* MKAddDeviceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKAddDeviceView.m; sourceTree = "<group>"; };
+		001AF76121240F420085EE97 /* MKSocketTaskDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSocketTaskDefine.h; sourceTree = "<group>"; };
 		0024A5A220D0B995003AD20E /* MKConfigDeviceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigDeviceController.h; sourceTree = "<group>"; };
 		0024A5A320D0B995003AD20E /* MKConfigDeviceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigDeviceController.m; sourceTree = "<group>"; };
 		0024A5A520D0BA6B003AD20E /* MKConfigDeviceButtonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigDeviceButtonView.h; sourceTree = "<group>"; };
@@ -845,11 +842,9 @@
 		0014591D20C8027000AB7759 /* task */ = {
 			isa = PBXGroup;
 			children = (
-				0014591E20C8027000AB7759 /* MKSocketTaskID.h */,
 				0014591F20C8040A00AB7759 /* MKSocketTaskOperation.h */,
 				0014592020C8040A00AB7759 /* MKSocketTaskOperation.m */,
-				0014592220C8090400AB7759 /* MKSocketDataModel.h */,
-				0014592320C8090400AB7759 /* MKSocketDataModel.m */,
+				001AF76121240F420085EE97 /* MKSocketTaskDefine.h */,
 			);
 			path = task;
 			sourceTree = "<group>";
@@ -1585,7 +1580,6 @@
 			children = (
 				00BB0EAB20C51B51006F2DEA /* adopter */,
 				0055EB1D20C4D1E5003C4C70 /* controller */,
-				0055EB1E20C4D1E5003C4C70 /* model */,
 				0055EB1F20C4D1E5003C4C70 /* view */,
 			);
 			path = addDevice;
@@ -1598,13 +1592,6 @@
 				0055EB2E20C4D283003C4C70 /* MKAddDeviceController.m */,
 			);
 			path = controller;
-			sourceTree = "<group>";
-		};
-		0055EB1E20C4D1E5003C4C70 /* model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = model;
 			sourceTree = "<group>";
 		};
 		0055EB1F20C4D1E5003C4C70 /* view */ = {
@@ -1980,7 +1967,6 @@
 				003F6D6A20C161F50002C833 /* UITextField+MKAdd.m in Sources */,
 				000B278520C61D3200D305EA /* MKAnimationAdopter.m in Sources */,
 				0014480B20C2A7B200A87037 /* MKSelectDeviceTypeCell.m in Sources */,
-				0014592420C8090400AB7759 /* MKSocketDataModel.m in Sources */,
 				0024A5A720D0BA6B003AD20E /* MKConfigDeviceButtonView.m in Sources */,
 				000E860020CFAEAC006B8831 /* EasyLodingView.m in Sources */,
 				000E85F520CFAEAB006B8831 /* EasyAlertPart.m in Sources */,

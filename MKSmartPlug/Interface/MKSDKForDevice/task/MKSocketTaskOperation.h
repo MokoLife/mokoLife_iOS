@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MKSocketTaskID.h"
+#import "MKSocketTaskDefine.h"
 
 /**
  任务完成回调
@@ -16,8 +16,8 @@
  @param operationID 当前任务ID
  @param returnData 返回的数据
  */
-typedef void(^communicationCompleteBlock)(NSError *error, MKSocketTaskID operationID, id returnData);
-@interface MKSocketTaskOperation : NSOperation
+typedef void(^communicationCompleteBlock)(NSError *error, MKSocketOperationID operationID, id returnData);
+@interface MKSocketTaskOperation : NSOperation<MKSocketOperationProtocol>
 
 /**
  初始化通信线程
@@ -26,7 +26,7 @@ typedef void(^communicationCompleteBlock)(NSError *error, MKSocketTaskID operati
  @param completeBlock 数据通信完成回调
  @return operation
  */
-- (instancetype)initOperationWithID:(MKSocketTaskID)operationID
+- (instancetype)initOperationWithID:(MKSocketOperationID)operationID
                       completeBlock:(communicationCompleteBlock)completeBlock;
 
 @end

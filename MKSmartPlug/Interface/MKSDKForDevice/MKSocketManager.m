@@ -10,8 +10,6 @@
 #import <CocoaAsyncSocket/GCDAsyncSocket.h>
 #import "MKSocketBlockAdopter.h"
 #import "MKSocketAdopter.h"
-#import "MKSocketTaskID.h"
-#import "MKSocketDataModel.h"
 #import "MKSocketTaskOperation.h"
 
 //设备默认的ip地址
@@ -118,7 +116,15 @@ static NSTimeInterval const defaultCommandTime = 2.f;
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length{
-    [self taskTimeoutWithTag:tag];
+    @synchronized(self.operationQueue) {
+        NSArray *operations = [self.operationQueue.operations copy];
+        for (MKSocketTaskOperation *operation in operations) {
+            if (operation.executing) {
+                [operation sendDataToPlugSuccess:NO operationID:tag returnData:nil];
+                break;
+            }
+        }
+    }
     return 0.f;
 }
 
@@ -126,13 +132,31 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     NSLog(@"socket:%p didReadData:withTag:%ld", sock, tag);
     NSString *httpResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"HTTP Response:\n%@", httpResponse);
-    [self taskSuccessWithTag:tag returnData:[MKSocketAdopter dictionaryWithJsonString:httpResponse]];
+    @synchronized(self.operationQueue) {
+        NSArray *operations = [self.operationQueue.operations copy];
+        for (MKSocketTaskOperation *operation in operations) {
+            if (operation.executing) {
+                [operation sendDataToPlugSuccess:YES
+                                     operationID:tag
+                                      returnData:[MKSocketAdopter dictionaryWithJsonString:httpResponse]];
+                break;
+            }
+        }
+    }
 }
 
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length{
-    [self taskTimeoutWithTag:tag];
+    @synchronized(self.operationQueue) {
+        NSArray *operations = [self.operationQueue.operations copy];
+        for (MKSocketTaskOperation *operation in operations) {
+            if (operation.executing) {
+                [operation sendDataToPlugSuccess:NO operationID:tag returnData:nil];
+                break;
+            }
+        }
+    }
     return 0.f;
 }
 
@@ -159,12 +183,14 @@ static NSTimeInterval const defaultCommandTime = 2.f;
         if (sucBlock) {
             sucBlock(IP,port);
         }
-        [weakSelf clearConnectBlock];
+        __strong typeof(self) sself = weakSelf;
+        [sself clearConnectBlock];
     } failedBlock:^(NSError *error) {
         if (failedBlock) {
             failedBlock(error);
         }
-        [weakSelf clearConnectBlock];
+        __strong typeof(self) sself = weakSelf;
+        [sself clearConnectBlock];
     }];
 }
 
@@ -185,7 +211,10 @@ static NSTimeInterval const defaultCommandTime = 2.f;
 - (void)readSmartPlugDeviceInformationWithSucBlock:(void (^)(id returnData))sucBlock
                                        failedBlock:(void (^)(NSError *error))failedBlock{
     NSString *jsonString = [MKSocketAdopter convertToJsonData:@{@"header":@(4001)}];
-    [self addTaskWithTaskID:socketReadDeviceInformationTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];
+    [self addTaskWithTaskID:socketReadDeviceInformationOperation
+                 jsonString:jsonString
+                   sucBlock:sucBlock
+                failedBlock:failedBlock];
 }
 
 /**
@@ -258,7 +287,10 @@ static NSTimeInterval const defaultCommandTime = 2.f;
                                  @"clean_session":(clean ? @(1) : @(0)),
                                  };
     NSString *jsonString = [MKSocketAdopter convertToJsonData:commandDic];
-    [self addTaskWithTaskID:socketConfigMQTTServerTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];
+    [self addTaskWithTaskID:socketConfigMQTTServerOperation
+                 jsonString:jsonString
+                   sucBlock:sucBlock
+                failedBlock:failedBlock];
 }
 
 /**
@@ -296,7 +328,10 @@ static NSTimeInterval const defaultCommandTime = 2.f;
                                  @"wifi_security":@(wifi_security),
                                  };
     NSString *jsonString = [MKSocketAdopter convertToJsonData:commandDic];
-    [self addTaskWithTaskID:socketConfigWifiTask jsonString:jsonString sucBlock:sucBlock failedBlock:failedBlock];
+    [self addTaskWithTaskID:socketConfigWifiOperation
+                 jsonString:jsonString
+                   sucBlock:sucBlock
+                failedBlock:failedBlock];
 }
 
 #pragma mark - connect private method
@@ -328,7 +363,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     }
 }
 
-- (void)addTaskWithTaskID:(MKSocketTaskID)taskID
+- (void)addTaskWithTaskID:(MKSocketOperationID)taskID
                jsonString:(NSString *)jsonString
                  sucBlock:(void (^)(id returnData))sucBlock
               failedBlock:(void (^)(NSError *error))failedBlock{
@@ -340,7 +375,7 @@ static NSTimeInterval const defaultCommandTime = 2.f;
         [MKSocketBlockAdopter operationDisConnectedErrorBlock:failedBlock];
         return;
     }
-    MKSocketTaskOperation *operation = [[MKSocketTaskOperation alloc] initOperationWithID:taskID completeBlock:^(NSError *error, MKSocketTaskID operationID, id returnData) {
+    MKSocketTaskOperation *operation = [[MKSocketTaskOperation alloc] initOperationWithID:taskID completeBlock:^(NSError *error, MKSocketOperationID operationID, id returnData) {
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (failedBlock) {
@@ -388,37 +423,16 @@ static NSTimeInterval const defaultCommandTime = 2.f;
     dispatch_source_set_timer(self.connectTimer, start, interval, 0);
     __weak __typeof(&*self)weakSelf = self;
     dispatch_source_set_event_handler(self.connectTimer, ^{
-        weakSelf.connectTimeout = YES;
-        dispatch_cancel(weakSelf.connectTimer);
-        [weakSelf.socket disconnect];
-        [MKSocketBlockAdopter operationConnectTimeoutBlock:weakSelf.connectFailedBlock];
+        __strong typeof(self) sself = weakSelf;
+        sself.connectTimeout = YES;
+        dispatch_cancel(sself.connectTimer);
+        [sself.socket disconnect];
+        [MKSocketBlockAdopter operationConnectTimeoutBlock:sself.connectFailedBlock];
     });
     dispatch_resume(self.connectTimer);
 }
 
-- (void)taskSuccessWithTag:(long)tag returnData:(NSDictionary *)returnData{
-    MKSocketDataModel *dataModel = [[MKSocketDataModel alloc] init];
-    dataModel.taskID = tag;
-    dataModel.timeout = NO;
-    dataModel.returnData = returnData;
-    [self addDataToList:dataModel];
-}
 
-- (void)taskTimeoutWithTag:(long)tag{
-    MKSocketDataModel *dataModel = [[MKSocketDataModel alloc] init];
-    dataModel.taskID = tag;
-    dataModel.timeout = YES;
-    dataModel.returnData = nil;
-    [self addDataToList:dataModel];
-}
-
-- (void)addDataToList:(MKSocketDataModel *)dataModel{
-    if (!dataModel) {
-        return;
-    }
-    [[self mutableArrayValueForKey:@"dataList"] removeAllObjects];
-    [[self mutableArrayValueForKey:@"dataList"] addObject:dataModel];
-}
 
 #pragma mark - setter & getter
 - (NSOperationQueue *)operationQueue{
@@ -427,13 +441,6 @@ static NSTimeInterval const defaultCommandTime = 2.f;
         _operationQueue.maxConcurrentOperationCount = 1;
     }
     return _operationQueue;
-}
-
-- (NSMutableArray *)dataList{
-    if (!_dataList) {
-        _dataList = [NSMutableArray array];
-    }
-    return _dataList;
 }
 
 @end
