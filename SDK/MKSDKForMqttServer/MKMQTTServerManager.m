@@ -12,11 +12,11 @@
 #import "MKMQTTServerDataNotifications.h"
 #import "MKMQTTServerTaskOperation.h"
 
-@interface MKMQTTServerManager()<MKMQTTSessionManagerDelegate>
+@interface MKMQTTServerManager()<MQTTSessionManagerDelegate>
 
-@property (nonatomic, strong)MKMQTTServerSessionManager *sessionManager;
+@property (nonatomic, strong)MQTTSessionManager *sessionManager;
 
-@property (nonatomic, assign)MKMQTTSessionManagerState managerState;
+@property (nonatomic, assign)MQTTSessionManagerState managerState;
 
 @property (nonatomic, strong)NSOperationQueue *operationQueue;
 
@@ -39,28 +39,20 @@
 
 #pragma mark - MQTTSessionManagerDelegate
 
-- (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained{
+- (void)sessionManager:(MQTTSessionManager *)sessionManager
+     didReceiveMessage:(NSData *)data
+               onTopic:(NSString *)topic
+              retained:(BOOL)retained{
+    if (sessionManager != self.sessionManager) {
+        return;
+    }
     [MKMQTTServerDataParser handleMessage:data onTopic:topic retained:retained];
 }
 
-- (void)sessionManager:(MKMQTTServerSessionManager *)sessonManager didChangeState:(MKMQTTSessionManagerState)newState{
-    //更新当前state
-    self.managerState = newState;
-    if ([self.stateDelegate respondsToSelector:@selector(mqttServerManagerStateChanged:)]) {
-        [self.stateDelegate mqttServerManagerStateChanged:newState];
+- (void)sessionManager:(MQTTSessionManager *)sessionManager didDeliverMessage:(UInt16)msgID{
+    if (sessionManager != self.sessionManager) {
+        return;
     }
-    NSLog(@"连接状态发生改变:---%ld",(long)newState);
-    if (self.managerState == MKMQTTSessionManagerStateConnected) {
-        //连接成功了，订阅主题
-        self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
-    }
-    if (self.managerState == MKMQTTSessionManagerStateError) {
-        //连接出错
-        [self disconnect];
-    }
-}
-
-- (void)messageDelivered:(UInt16)msgID{
     @synchronized(self.operationQueue) {
         NSArray *operations = [self.operationQueue.operations copy];
         for (MKMQTTServerTaskOperation *operation in operations) {
@@ -69,6 +61,23 @@
                 break;
             }
         }
+    }
+}
+
+- (void)sessionManager:(MQTTSessionManager *)sessionManager didChangeState:(MQTTSessionManagerState)newState{
+    //更新当前state
+    self.managerState = newState;
+    if ([self.stateDelegate respondsToSelector:@selector(mqttServerManagerStateChanged:)]) {
+        [self.stateDelegate mqttServerManagerStateChanged:newState];
+    }
+    NSLog(@"连接状态发生改变:---%ld",(long)newState);
+    if (self.managerState == MQTTSessionManagerStateConnected) {
+        //连接成功了，订阅主题
+        self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
+    }
+    if (self.managerState == MQTTSessionManagerStateError) {
+        //连接出错
+        [self disconnect];
     }
 }
 
@@ -98,11 +107,11 @@
                  clientId:(NSString *)clientId{
     if (self.sessionManager) {
         self.sessionManager.delegate = nil;
-        [self.sessionManager disconnect];
+        [self.sessionManager disconnectWithDisconnectHandler:nil];
         self.sessionManager = nil;
     }
     [self.operationQueue cancelAllOperations];
-    MKMQTTServerSessionManager *sessionManager = [[MKMQTTServerSessionManager alloc] init];
+    MQTTSessionManager *sessionManager = [[MQTTSessionManager alloc] init];
     sessionManager.delegate = self;
     self.sessionManager = sessionManager;
     MQTTSSLSecurityPolicy *securityPolicy = nil;
@@ -128,7 +137,9 @@
                     willRetainFlag:false
                       withClientId:clientId
                     securityPolicy:securityPolicy
-                      certificates:nil];
+                      certificates:nil
+                     protocolLevel:MQTTProtocolVersion0
+                    connectHandler:nil];
 }
 
 /**
@@ -140,9 +151,9 @@
         return;
     }
     self.sessionManager.delegate = nil;
-    [self.sessionManager disconnect];
+    [self.sessionManager disconnectWithDisconnectHandler:nil];
     self.sessionManager = nil;
-    self.managerState = MKMQTTSessionManagerStateStarting;
+    self.managerState = MQTTSessionManagerStateStarting;
 }
 
 /**
@@ -159,7 +170,7 @@
         for (NSString *topic in topicList) {
             [self.subscriptions setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
         }
-        if (self.sessionManager && self.managerState == MKMQTTSessionManagerStateConnected) {
+        if (self.sessionManager && self.managerState == MQTTSessionManagerStateConnected) {
             //连接成功了，订阅主题
             self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
         }
@@ -186,7 +197,7 @@
                 [removeTopicList addObject:topic];
             }
         }
-        [self.sessionManager unsubscriptions:removeTopicList];
+        [self.sessionManager.session unsubscribeTopics:removeTopicList];
     }
 }
 
@@ -356,8 +367,23 @@
     if (!dic) {
         return nil;
     }
-    NSString *dataString = [self convertToJsonData:dic];
-    return [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&error];
+    if (!jsonData) {
+        return nil;
+    }
+    NSString *jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    if (!jsonString || jsonString.length == 0) {
+        return nil;
+    }
+    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+    NSRange range = {0,jsonString.length};
+    //去掉字符串中的空格
+    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+    NSRange range2 = {0,mutStr.length};
+    //去掉字符串中的换行符
+    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
+    return [mutStr dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (BOOL)isValidatIP:(NSString *)IPAddress{
@@ -374,54 +400,6 @@
     NSString *regex =@"[a-zA-z]+://[^\\s]*";
     NSPredicate *hostTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [hostTest evaluateWithObject:host];
-}
-
-/**
- 字典转json字符串方法
- 
- @param dict json
- @return string
- */
-- (NSString *)convertToJsonData:(NSDictionary *)dict{
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-    if (!jsonData) {
-        return nil;
-    }
-    NSString *jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    if (!jsonString || jsonString.length == 0) {
-        return nil;
-    }
-    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
-    NSRange range = {0,jsonString.length};
-    //去掉字符串中的空格
-    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
-    NSRange range2 = {0,mutStr.length};
-    //去掉字符串中的换行符
-    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
-    return mutStr;
-}
-
-/**
- JSON字符串转化为字典
- 
- @param jsonString string
- @return dic
- */
-- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString{
-    if (jsonString == nil) {
-        return nil;
-    }
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                        options:NSJSONReadingMutableContainers
-                                                          error:&err];
-    if(err){
-        NSLog(@"json解析失败：%@",err);
-        return nil;
-    }
-    return dic;
 }
 
 #pragma mark - setter & getter

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MKMQTTServerSessionManager.h"
+#import "MQTTSessionManager.h"
 
 typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
     MKFirmwareUpdateHostTypeIP,
@@ -16,13 +16,13 @@ typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
 
 @protocol MKMQTTServerManagerStateChangedDelegate <NSObject>
 
-- (void)mqttServerManagerStateChanged:(MKMQTTSessionManagerState)state;
+- (void)mqttServerManagerStateChanged:(MQTTSessionManagerState)state;
 
 @end
 
 @interface MKMQTTServerManager : NSObject
 
-@property (nonatomic, assign, readonly)MKMQTTSessionManagerState managerState;
+@property (nonatomic, assign, readonly)MQTTSessionManagerState managerState;
 
 @property (nonatomic, weak)id <MKMQTTServerManagerStateChangedDelegate>stateDelegate;
 

@@ -60,19 +60,5 @@
 
 + (CGSize)sizeWithText:(NSString *)text andFont:(UIFont *)font andMaxSize:(CGSize)maxSize;
 
-/**
- 字典转json字符串方法
- 
- @param dict json
- @return string
- */
-+ (NSString *)convertToJsonData:(NSDictionary *)dict;
-/**
- JSON字符串转化为字典
- 
- @param jsonString string
- @return dic
- */
-+ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
 
 @end

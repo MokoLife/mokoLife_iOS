@@ -71,8 +71,8 @@
         [[MKMQTTServerManager sharedInstance] disconnect];
         return;
     }
-    if ([MKMQTTServerManager sharedInstance].managerState == MKMQTTSessionManagerStateConnected
-        || [MKMQTTServerManager sharedInstance].managerState == MKMQTTSessionManagerStateConnecting) {
+    if ([MKMQTTServerManager sharedInstance].managerState == MQTTSessionManagerStateConnected
+        || [MKMQTTServerManager sharedInstance].managerState == MQTTSessionManagerStateConnecting) {
         //已经连接或者正在连接，直接返回
         return;
     }
