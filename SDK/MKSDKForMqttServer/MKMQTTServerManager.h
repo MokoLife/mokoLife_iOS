@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MQTTSessionManager.h"
+#import <MQTTClient/MQTTSessionManager.h>
 
 typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
     MKFirmwareUpdateHostTypeIP,
