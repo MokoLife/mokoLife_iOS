@@ -2912,6 +2912,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB0110D0B807D6659E7C1A38A71A14CD /* CocoaAsyncSocket.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -3125,6 +3126,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB0110D0B807D6659E7C1A38A71A14CD /* CocoaAsyncSocket.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -3316,6 +3318,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB0110D0B807D6659E7C1A38A71A14CD /* CocoaAsyncSocket.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
