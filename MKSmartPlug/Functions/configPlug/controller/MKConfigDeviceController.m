@@ -193,7 +193,7 @@ static CGFloat const buttonViewHeight = 50.f;
         [self.view showCentralToast:@"Device offline,please check."];
         return NO;
     }
-    if ([MKMQTTServerManager sharedInstance].managerState != MQTTSessionManagerStateConnected) {
+    if ([MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnected) {
         [self.view showCentralToast:@"Network error,please check."];
         return NO;
     }

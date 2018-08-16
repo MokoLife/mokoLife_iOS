@@ -11,12 +11,13 @@
 #import "MKMQTTServerDataParser.h"
 #import "MKMQTTServerDataNotifications.h"
 #import "MKMQTTServerTaskOperation.h"
+#import <MQTTClient/MQTTSessionManager.h>
 
 @interface MKMQTTServerManager()<MQTTSessionManagerDelegate>
 
 @property (nonatomic, strong)MQTTSessionManager *sessionManager;
 
-@property (nonatomic, assign)MQTTSessionManagerState managerState;
+@property (nonatomic, assign)MKMQTTSessionManagerState managerState;
 
 @property (nonatomic, strong)NSOperationQueue *operationQueue;
 
@@ -66,16 +67,16 @@
 
 - (void)sessionManager:(MQTTSessionManager *)sessionManager didChangeState:(MQTTSessionManagerState)newState{
     //更新当前state
-    self.managerState = newState;
+    self.managerState = [self fecthSessionState:newState];
     if ([self.stateDelegate respondsToSelector:@selector(mqttServerManagerStateChanged:)]) {
-        [self.stateDelegate mqttServerManagerStateChanged:newState];
+        [self.stateDelegate mqttServerManagerStateChanged:self.managerState];
     }
     NSLog(@"连接状态发生改变:---%ld",(long)newState);
-    if (self.managerState == MQTTSessionManagerStateConnected) {
+    if (self.managerState == MKMQTTSessionManagerStateConnected) {
         //连接成功了，订阅主题
         self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
     }
-    if (self.managerState == MQTTSessionManagerStateError) {
+    if (self.managerState == MKMQTTSessionManagerStateError) {
         //连接出错
         [self disconnect];
     }
@@ -400,6 +401,23 @@
     NSString *regex =@"[a-zA-z]+://[^\\s]*";
     NSPredicate *hostTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [hostTest evaluateWithObject:host];
+}
+
+- (MKMQTTSessionManagerState)fecthSessionState:(MQTTSessionManagerState)orignState{
+    switch (orignState) {
+        case MQTTSessionManagerStateError:
+            return MKMQTTSessionManagerStateError;
+        case MQTTSessionManagerStateClosed:
+            return MKMQTTSessionManagerStateClosed;
+        case MQTTSessionManagerStateClosing:
+            return MKMQTTSessionManagerStateClosing;
+        case MQTTSessionManagerStateStarting:
+            return MKMQTTSessionManagerStateStarting;
+        case MQTTSessionManagerStateConnected:
+            return MKMQTTSessionManagerStateConnected;
+        case MQTTSessionManagerStateConnecting:
+            return MKMQTTSessionManagerStateConnecting;
+    }
 }
 
 #pragma mark - setter & getter

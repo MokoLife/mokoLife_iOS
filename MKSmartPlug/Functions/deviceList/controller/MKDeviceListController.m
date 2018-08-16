@@ -102,14 +102,14 @@
 }
 
 #pragma mark - MKMQTTServerManagerStateChangedDelegate
-- (void)mqttServerManagerStateChanged:(MQTTSessionManagerState)state{
+- (void)mqttServerManagerStateChanged:(MKMQTTSessionManagerState)state{
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
         || [[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         //网络不可用
         [EasyLodingView hidenLoingInView:self.loadingView];
         return;
     }
-    if ([MKMQTTServerManager sharedInstance].managerState == MQTTSessionManagerStateConnecting) {
+    if ([MKMQTTServerManager sharedInstance].managerState == MKMQTTSessionManagerStateConnecting) {
         //开始连接
         [EasyLodingView showLodingText:@"Connecting..." config:^EasyLodingConfig *{
             EasyLodingConfig *config = [EasyLodingConfig shared];
@@ -122,7 +122,7 @@
         }];
         return;
     }
-    if ([MKMQTTServerManager sharedInstance].managerState == MQTTSessionManagerStateError) {
+    if ([MKMQTTServerManager sharedInstance].managerState == MKMQTTSessionManagerStateError) {
         //连接出错
         [self.view showCentralToast:@"Connect MQTT Server error"];
     }
@@ -184,8 +184,8 @@
         model.delegate = self;
         [model startStateMonitoringTimer];
     }
-    if ([MKMQTTServerManager sharedInstance].managerState != MQTTSessionManagerStateConnected
-        && [MKMQTTServerManager sharedInstance].managerState != MQTTSessionManagerStateConnecting) {
+    if ([MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnected
+        && [MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnecting) {
         [[MKMQTTServerConnectManager sharedInstance] connectServer];
     }
     [self resetMQTTServerTopic];
