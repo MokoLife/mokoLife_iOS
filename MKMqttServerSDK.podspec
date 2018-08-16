@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "SDKForMqttServer"    #存储库名称
+  s.name         = "MKMqttServerSDK"    #存储库名称
   s.version      = "0.0.1"      #版本号，与tag值一致
   s.summary      = "SDK For MqttServer"  #简介
   s.description  = "SDK For MqttServer"  #描述
