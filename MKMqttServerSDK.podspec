@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/MokoLife/mokoLife_iOS.git", :tag => "#{s.version}" }         #存储库的git地址，以及tag值
   s.requires_arc = true #是否支持ARC
 
-  s.source_files = "SDK/MKSDKForMqttServer/**"
+  s.source_files = "SDK/MKSDKForMqttServer/*.{h,m}"
 
   s.dependency "MQTTClient"     #所依赖的第三方库，没有就不用写
 
