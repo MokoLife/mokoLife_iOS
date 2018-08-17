@@ -139,7 +139,7 @@
                       withClientId:clientId
                     securityPolicy:securityPolicy
                       certificates:nil
-                     protocolLevel:MQTTProtocolVersion0
+                     protocolLevel:MQTTProtocolVersion311
                     connectHandler:nil];
 }
 
@@ -198,6 +198,10 @@
                 [removeTopicList addObject:topic];
             }
         }
+        if (removeTopicList.count == 0) {
+            return;
+        }
+        self.sessionManager.subscriptions = [NSDictionary dictionaryWithDictionary:self.subscriptions];
         [self.sessionManager.session unsubscribeTopics:removeTopicList];
     }
 }

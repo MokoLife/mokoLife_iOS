@@ -829,7 +829,6 @@
 			children = (
 				000AF77420CE61F600BD74B6 /* adopter */,
 				001A0D8420CBB73D0096E8A6 /* controller */,
-				001A0D8520CBB73D0096E8A6 /* model */,
 				001A0D8620CBB73D0096E8A6 /* view */,
 			);
 			path = deviceList;
@@ -842,13 +841,6 @@
 				001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */,
 			);
 			path = controller;
-			sourceTree = "<group>";
-		};
-		001A0D8520CBB73D0096E8A6 /* model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = model;
 			sourceTree = "<group>";
 		};
 		001A0D8620CBB73D0096E8A6 /* view */ = {
