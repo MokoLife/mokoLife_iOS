@@ -168,6 +168,7 @@
                                                     userName:auth ? user : nil
                                                     password:auth ? pass : nil
                                                    keepAlive:keepalive
+                                              connectMessage:nil
                                                 cleanSession:clean
                                                         will:will
                                                    willTopic:willTopic
@@ -332,10 +333,7 @@
 - (void)connectToInternal:(MQTTConnectHandler)connectHandler {
     if (self.session && self.state == MQTTSessionManagerStateStarting) {
         [self updateState:MQTTSessionManagerStateConnecting];
-        [self.session connectToHost:self.host
-                               port:self.port
-                           usingSSL:self.tls
-                     connectHandler:connectHandler];
+        [self.session connectWithConnectHandler:connectHandler];
     }
 }
 

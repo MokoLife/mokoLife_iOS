@@ -24,15 +24,19 @@ PODS:
   - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
   - MJRefresh (3.1.15.3)
+  - MKMqttServerSDK (0.0.2):
+    - MQTTClient (~> 0.15.0)
+  - MKSocketSDK (0.0.2):
+    - CocoaAsyncSocket (~> 7.6.3)
   - MLInputDodger (1.5.1)
-  - MQTTClient (0.14.0):
-    - MQTTClient/Core (= 0.14.0)
-  - MQTTClient/Core (0.14.0):
+  - MQTTClient (0.15.0):
+    - MQTTClient/Core (= 0.15.0)
+  - MQTTClient/Core (0.15.0):
     - MQTTClient/Manager
     - MQTTClient/Min
-  - MQTTClient/Manager (0.14.0):
+  - MQTTClient/Manager (0.15.0):
     - MQTTClient/Min
-  - MQTTClient/Min (0.14.0)
+  - MQTTClient/Min (0.15.0)
   - Toast (4.0.0)
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
@@ -41,15 +45,15 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - CircleProgressBar
-  - CocoaAsyncSocket
   - FLAnimatedImage
   - FMDB
   - HJTabViewController (from `https://github.com/panghaijiao/HJTabViewController.git`)
   - Masonry
   - MBProgressHUD
   - MJRefresh
+  - MKMqttServerSDK (~> 0.0.2)
+  - MKSocketSDK (~> 0.0.2)
   - MLInputDodger
-  - MQTTClient
   - Toast
   - YYKit
 
@@ -63,6 +67,8 @@ SPEC REPOS:
     - Masonry
     - MBProgressHUD
     - MJRefresh
+    - MKMqttServerSDK
+    - MKSocketSDK
     - MLInputDodger
     - MQTTClient
     - Toast
@@ -87,11 +93,13 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
+  MKMqttServerSDK: c6bb148923b6641fca2bb832706b61eeeeb6daa6
+  MKSocketSDK: 6c3cfc03a9e2e393163e26897d1ab987a8efe148
   MLInputDodger: d63474b47c6e83392590742ee1b868a71af0eb0c
-  MQTTClient: eea2eaaa6ddef852a1019a4dda091e22ad928b58
+  MQTTClient: 8f68f0c22014110e964413a137b15e569aa7786f
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: f83f04e3754cc488511a0b5aea11551108bcc708
+PODFILE CHECKSUM: afb0f16dc01779d85d29e6b105a19be6da5ca455
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.1

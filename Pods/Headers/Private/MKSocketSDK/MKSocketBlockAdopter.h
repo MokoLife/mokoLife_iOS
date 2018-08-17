@@ -1,0 +1,1 @@
+../../../MKSocketSDK/SDK/MKSDKForDevice/MKSocketBlockAdopter.h

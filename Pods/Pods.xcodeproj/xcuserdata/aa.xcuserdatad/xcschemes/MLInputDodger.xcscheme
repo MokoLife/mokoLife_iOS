@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A15DFA5E4BCADEE042F04BF2BBCA0A2A"
+               BlueprintIdentifier = "4531AFF7B940132310A56D5FE7BED468"
                BlueprintName = "MLInputDodger"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libMLInputDodger.a">
