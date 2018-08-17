@@ -1,2 +1,3 @@
-1、MKSDKForDevice文件夹下面是配置智能插座的SDK，确保当前手机连接的wifi是plug，通过调用MKSocketManager下面的接口可以配置插座
-2、MKSDKForMqttServer文件夹下面是配置app与mqttServer的SDK，MKMQTTServerDataNotifications.h下面的通知是SDK接收到相关数据之后抛出的通知，在需要接受数据的地方注册相应的通知可以拿到目标数据
+1、Support pod，pod ‘MKMqttServerSDK’, ‘~> 0.0.2’，pod ‘MKSocketSDK’, ‘~> 0.0.2’
+2、Below the MKSDKForDevice folder is the SDK for configuring the smart plug, make sure that the mobile phone is currently connected to the plug hotspot,you can configure the smart plug by calling the interface below the MKSocketManager folder.
+3、Below the MKSDKForMqttServer folder is the SDK for configuring the APP and mqttServer,the notification of the MKMQTTServerDataNotifications.h is the notification thrown by the SDK after receiving the relevant data,register the corresponding notification in the place where you need to accept the data, you can get the target data.
