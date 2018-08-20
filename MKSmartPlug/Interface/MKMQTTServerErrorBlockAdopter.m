@@ -1,19 +1,19 @@
 //
-//  MKMQTTServerBlockAdopter.m
+//  MKMQTTServerErrorBlockAdopter.m
 //  MKSmartPlug
 //
-//  Created by aa on 2018/6/22.
+//  Created by aa on 2018/8/20.
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "MKMQTTServerBlockAdopter.h"
+#import "MKMQTTServerErrorBlockAdopter.h"
 
-NSString * const mqttServerCustomErrorDomain = @"com.moko.MKMQTTServerSDK";
+NSString * const mqttServerCustomDomain = @"com.moko.MKMQTTServerSDK";
 
-@implementation MKMQTTServerBlockAdopter
+@implementation MKMQTTServerErrorBlockAdopter
 
 + (NSError *)getErrorWithCode:(serverCustomErrorCode)code message:(NSString *)message{
-    NSError *error = [[NSError alloc] initWithDomain:mqttServerCustomErrorDomain
+    NSError *error = [[NSError alloc] initWithDomain:mqttServerCustomDomain
                                                 code:code
                                             userInfo:@{@"errorInfo":(message == nil ? @"" : message)}];
     return error;

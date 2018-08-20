@@ -1,8 +1,8 @@
 //
-//  MKMQTTServerBlockAdopter.h
+//  MKMQTTServerErrorBlockAdopter.h
 //  MKSmartPlug
 //
-//  Created by aa on 2018/6/22.
+//  Created by aa on 2018/8/20.
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, serverCustomErrorCode){
     serverSetParamsError = -10004,                                  //设置参数出错
 };
 
-@interface MKMQTTServerBlockAdopter : NSObject
+@interface MKMQTTServerErrorBlockAdopter : NSObject
 
 + (NSError *)getErrorWithCode:(serverCustomErrorCode)code message:(NSString *)message;
 

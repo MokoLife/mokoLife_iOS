@@ -14,7 +14,7 @@ pod ‘MLInputDodger’
 pod 'FLAnimatedImage'
 pod 'AFNetworking'
 pod 'CircleProgressBar'
-pod ‘MKMqttServerSDK’, ‘~> 0.0.2’
+pod ‘MKMqttServerSDK’, ‘~> 0.0.5’
 pod ‘MKSocketSDK’, ‘~> 0.0.2’
 
 end

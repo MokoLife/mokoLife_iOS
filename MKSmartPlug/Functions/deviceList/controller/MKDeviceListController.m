@@ -17,7 +17,7 @@
 #import "EasyLodingView.h"
 #import "MKConfigDeviceController.h"
 
-@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate, MKDeviceListCellDelegate, MKMQTTServerManagerStateChangedDelegate>
+@interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate, MKDeviceListCellDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
@@ -36,13 +36,13 @@
     [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKNeedReadDataFromLocalNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKMQTTSessionManagerStateChangedNotification object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
     [self addNotification];
-    [MKMQTTServerManager sharedInstance].stateDelegate = self;
     [self performSelector:@selector(networkStatusChanged) withObject:nil afterDelay:2.f];
     [self getDeviceList];
     // Do any additional setup after loading the view.
@@ -102,7 +102,7 @@
 }
 
 #pragma mark - MKMQTTServerManagerStateChangedDelegate
-- (void)mqttServerManagerStateChanged:(MKMQTTSessionManagerState)state{
+- (void)mqttServerManagerStateChanged{
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
         || [[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
         //网络不可用
@@ -238,6 +238,10 @@
     [kNotificationCenterSington addObserver:self
                                    selector:@selector(getDeviceList)
                                        name:MKNeedReadDataFromLocalNotification
+                                     object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(mqttServerManagerStateChanged)
+                                       name:MKMQTTSessionManagerStateChangedNotification
                                      object:nil];
 }
 

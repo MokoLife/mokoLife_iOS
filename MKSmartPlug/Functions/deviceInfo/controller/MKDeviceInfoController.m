@@ -106,7 +106,7 @@
     [[MKHudManager share] showHUDWithTitle:@"Loading..." inView:self.view isPenetration:NO];
     NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"read_firmware_infor"];
     WS(weakSelf);
-    [[MKMQTTServerManager sharedInstance] readDeviceFirmwareInformationWithTopic:topic sucBlock:^{
+    [MKMQTTServerInterface readDeviceFirmwareInformationWithTopic:topic sucBlock:^{
         [[MKHudManager share] hide];
         MKDeviceInformationController *vc = [[MKDeviceInformationController alloc] initWithNavigationType:GYNaviTypeShow];
         MKDeviceModel *model = [[MKDeviceModel alloc] init];
@@ -177,7 +177,7 @@
     NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"upgrade"];
     [[MKHudManager share] showHUDWithTitle:@"Updating..." inView:self.view isPenetration:NO];
     WS(weakSelf);
-    [[MKMQTTServerManager sharedInstance] updateFirmware:MKFirmwareUpdateHostTypeIP host:@"23.83.237.116" port:80 catalogue:@"smartplug/20180623/" topic:topic sucBlock:^{
+    [MKMQTTServerInterface updateFirmware:MKFirmwareUpdateHostTypeIP host:@"23.83.237.116" port:80 catalogue:@"smartplug/20180623/" topic:topic sucBlock:^{
         //发送成功订阅升级结果主题
         [[MKMQTTServerManager sharedInstance] subscriptions:@[[weakSelf.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"ota_upgrade_state"]]];
         //监听升级结果

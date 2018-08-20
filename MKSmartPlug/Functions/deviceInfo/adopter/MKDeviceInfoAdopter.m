@@ -37,7 +37,7 @@
     NSString *topic = [deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"reset"];
     __weak __typeof(&*target)weakTarget = target;
     WS(weakSelf);
-    [[MKMQTTServerManager sharedInstance] resetDeviceWithTopic:topic sucBlock:^{
+    [MKMQTTServerInterface resetDeviceWithTopic:topic sucBlock:^{
         [[MKHudManager share] hide];
         [weakSelf deleteDeviceModel:deviceModel target:weakTarget];
     } failedBlock:^(NSError *error) {

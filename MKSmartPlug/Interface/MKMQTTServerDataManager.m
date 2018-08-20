@@ -1,17 +1,54 @@
 //
-//  MKMQTTServerDataParser.m
+//  MKMQTTServerDataManager.m
 //  MKSmartPlug
 //
-//  Created by aa on 2018/6/22.
+//  Created by aa on 2018/8/18.
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "MKMQTTServerDataParser.h"
-#import "MKMQTTServerDataNotifications.h"
+#import "MKMQTTServerDataManager.h"
 
-@implementation MKMQTTServerDataParser
+NSString *const MKMQTTSessionManagerStateChangedNotification = @"MKMQTTSessionManagerStateChangedNotification";
 
-+ (void)handleMessage:(NSData *)data onTopic:(NSString *)topic retained:(BOOL)retained{
+NSString *const MKMQTTServerReceivedSwitchStateNotification = @"MKMQTTServerReceivedSwitchStateNotification";
+NSString *const MKMQTTServerReceivedDelayTimeNotification = @"MKMQTTServerReceivedDelayTimeNotification";
+NSString *const MKMQTTServerReceivedElectricityNotification = @"MKMQTTServerReceivedElectricityNotification";
+NSString *const MKMQTTServerReceivedFirmwareInfoNotification = @"MKMQTTServerReceivedFirmwareInfoNotification";
+NSString *const MKMQTTServerReceivedUpdateResultNotification = @"MKMQTTServerReceivedUpdateResultNotification";
+
+@interface MKMQTTServerDataManager()<MKMQTTServerManagerDelegate>
+
+@property (nonatomic, assign)MKMQTTSessionManagerState state;
+
+@end
+
+@implementation MKMQTTServerDataManager
+
+- (instancetype)init{
+    if (self = [super init]) {
+//        [MKMQTTServerManager sharedInstance].delegate = self;
+    }
+    return self;
+}
+
++ (MKMQTTServerDataManager *)sharedInstance{
+    static MKMQTTServerDataManager *manager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (!manager) {
+            manager = [[MKMQTTServerDataManager alloc] init];
+        }
+    });
+    return manager;
+}
+
+#pragma mark - MKMQTTServerManagerDelegate
+- (void)mqttServerManagerStateChanged:(MKMQTTSessionManagerState)state{
+    self.state = state;
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKMQTTSessionManagerStateChangedNotification object:nil];
+}
+
+- (void)sessionManager:(MKMQTTServerManager *)sessionManager didReceiveMessage:(NSData *)data onTopic:(NSString *)topic{
     if (!topic) {
         return;
     }
@@ -23,7 +60,7 @@
     if (!dataString) {
         return;
     }
-//    NSDictionary *dataDic = [NSString dictionaryWithJsonString:dataString];
+    //    NSDictionary *dataDic = [NSString dictionaryWithJsonString:dataString];
     NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     if (!dataDic || dataDic.allValues.count == 0) {
         return;

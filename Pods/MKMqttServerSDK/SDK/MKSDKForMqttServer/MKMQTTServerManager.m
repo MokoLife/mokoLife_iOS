@@ -7,11 +7,29 @@
 //
 
 #import "MKMQTTServerManager.h"
-#import "MKMQTTServerBlockAdopter.h"
-#import "MKMQTTServerDataParser.h"
-#import "MKMQTTServerDataNotifications.h"
 #import "MKMQTTServerTaskOperation.h"
 #import <MQTTClient/MQTTSessionManager.h>
+
+#ifndef moko_main_safe
+#define moko_main_safe(block)\
+    if (strcmp(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL), dispatch_queue_get_label(dispatch_get_main_queue())) == 0) {\
+        block();\
+} else {\
+        dispatch_async(dispatch_get_main_queue(), block);\
+}
+#endif
+
+NSString * const MKMqttServerCustomErrorDomain = @"com.moko.MKMQTTServerSDK";
+
+typedef NS_ENUM(NSInteger, serverCustomErrorCode){
+    MKServerDisconnected = -10001,                                    //与服务器断开状态
+    MKServerTopicError = -10002,                                      //发布信息的主题错误
+    MKServerParamsError = -10003,                                     //输入的参数有误
+    MKServerSetParamsError = -10004,                                  //设置参数出错
+};
+
+static MKMQTTServerManager *manager = nil;
+static dispatch_once_t onceToken;
 
 @interface MKMQTTServerManager()<MQTTSessionManagerDelegate>
 
@@ -28,8 +46,6 @@
 @implementation MKMQTTServerManager
 
 + (MKMQTTServerManager *)sharedInstance{
-    static MKMQTTServerManager *manager = nil;
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (!manager) {
             manager = [MKMQTTServerManager new];
@@ -47,7 +63,9 @@
     if (sessionManager != self.sessionManager) {
         return;
     }
-    [MKMQTTServerDataParser handleMessage:data onTopic:topic retained:retained];
+    if ([self.delegate respondsToSelector:@selector(sessionManager:didReceiveMessage:onTopic:)]) {
+        moko_main_safe(^{[self.delegate sessionManager:manager didReceiveMessage:data onTopic:topic];});
+    }
 }
 
 - (void)sessionManager:(MQTTSessionManager *)sessionManager didDeliverMessage:(UInt16)msgID{
@@ -68,8 +86,8 @@
 - (void)sessionManager:(MQTTSessionManager *)sessionManager didChangeState:(MQTTSessionManagerState)newState{
     //更新当前state
     self.managerState = [self fecthSessionState:newState];
-    if ([self.stateDelegate respondsToSelector:@selector(mqttServerManagerStateChanged:)]) {
-        [self.stateDelegate mqttServerManagerStateChanged:self.managerState];
+    if ([self.delegate respondsToSelector:@selector(mqttServerManagerStateChanged:)]) {
+        moko_main_safe(^{[self.delegate mqttServerManagerStateChanged:self.managerState];});
     }
     NSLog(@"连接状态发生改变:---%ld",(long)newState);
     if (self.managerState == MKMQTTSessionManagerStateConnected) {
@@ -169,7 +187,9 @@
     }
     @synchronized(self){
         for (NSString *topic in topicList) {
-            [self.subscriptions setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
+            if ([topic isKindOfClass:[NSString class]] && topic.length > 0) {
+                [self.subscriptions setObject:@(MQTTQosLevelExactlyOnce) forKey:topic];
+            }
         }
         if (self.sessionManager && self.managerState == MQTTSessionManagerStateConnected) {
             //连接成功了，订阅主题
@@ -192,10 +212,12 @@
     @synchronized(self){
         NSMutableArray *removeTopicList = [NSMutableArray array];
         for (NSString *topic in topicList) {
-            NSString *value = self.subscriptions[topic];
-            if (value) {
-                [self.subscriptions removeObjectForKey:topic];
-                [removeTopicList addObject:topic];
+            if ([topic isKindOfClass:[NSString class]] && topic.length > 0) {
+                NSString *value = self.subscriptions[topic];
+                if (value) {
+                    [self.subscriptions removeObjectForKey:topic];
+                    [removeTopicList addObject:topic];
+                }
             }
         }
         if (removeTopicList.count == 0) {
@@ -206,149 +228,49 @@
     }
 }
 
-#pragma mark - interface
-
-/**
- 设置plug的开关状态
-
- @param isOn YES:开，NO:关
- @param topic 发布开关状态的主题
- @param sucBlock 成功回调
- @param failedBlock 失败回调
- */
-- (void)setSmartPlugSwitchState:(BOOL)isOn
-                          topic:(NSString *)topic
-                       sucBlock:(void (^)(void))sucBlock
-                    failedBlock:(void (^)(NSError *error))failedBlock{
-    NSDictionary *dataDic = @{@"switch_state" : (isOn ? @"on" : @"off")};
-    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
-
-/**
- 插座便进入倒计时，当计时时间到了，插座便会切换当前的状态，如当前为”on”状态，便会切换为”off”状态
-
- @param delay_hour 倒计时,0~23
- @param delay_minutes 倒计分,0~59
- @param topic 发布倒计时功能的主题
- @param sucBlock 成功回调
- @param failedBlock 失败回调
- */
-- (void)setDelayHour:(NSInteger)delay_hour
-            delayMin:(NSInteger)delay_minutes
-               topic:(NSString *)topic
-            sucBlock:(void (^)(void))sucBlock
-         failedBlock:(void (^)(NSError *error))failedBlock{
-    if (delay_hour < 0 || delay_hour > 23) {
-        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    if (delay_minutes < 0 || delay_minutes > 59) {
-        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    NSDictionary *dataDic = @{
-                              @"delay_hour":@(delay_hour),
-                              @"delay_minute":@(delay_minutes),
-                              };
-    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
-
-/**
- 恢复出厂设置
- 
- @param topic 主题
- @param sucBlock 成功回调
- @param failedBlock 失败回调
- */
-- (void)resetDeviceWithTopic:(NSString *)topic
-                    sucBlock:(void (^)(void))sucBlock
-                 failedBlock:(void (^)(NSError *error))failedBlock{
-    NSDictionary *dataDic = @{};
-    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
-
-/**
- 读取设备固件信息
- 
- @param topic 主题
- @param sucBlock 成功回调
- @param failedBlock 失败回调
- */
-- (void)readDeviceFirmwareInformationWithTopic:(NSString *)topic
-                                      sucBlock:(void (^)(void))sucBlock
-                                   failedBlock:(void (^)(NSError *error))failedBlock{
-    NSDictionary *dataDic = @{};
-    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
-
-/**
- 插座OTA升级
-
- @param hostType hostType
- @param host 放新固件的主机的ip地址或域名
- @param port 端口号,取值：0~65535
- @param catalogue 目录，长度小于100个字节
- @param topic 固件升级主题
- @param sucBlock 成功回调
- @param failedBlock 失败回调
- */
-- (void)updateFirmware:(MKFirmwareUpdateHostType)hostType
-                  host:(NSString *)host
-                  port:(NSInteger)port
-             catalogue:(NSString *)catalogue
-                 topic:(NSString *)topic
-              sucBlock:(void (^)(void))sucBlock
-           failedBlock:(void (^)(NSError *error))failedBlock{
-    if (hostType == MKFirmwareUpdateHostTypeIP && ![self isValidatIP:host]) {
-        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    if (hostType == MKFirmwareUpdateHostTypeUrl && ![self isDomainName:host]) {
-        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    if (port < 0 || port > 65535 || !catalogue) {
-        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    NSDictionary *dataDic = @{
-                              @"type":@(hostType),
-                              @"realm":host,
-                              @"port":@(port),
-                              @"catalogue":catalogue,
-                              };
-    [self sendData:[self dataWithJson:dataDic] topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
-
-#pragma mark - private method
-
-- (void)sendData:(NSData *)data
+- (void)sendData:(NSDictionary *)data
            topic:(NSString *)topic
         sucBlock:(void (^)(void))sucBlock
      failedBlock:(void (^)(NSError *error))failedBlock{
-    if (!data) {
-        [MKMQTTServerBlockAdopter operationParamsErrorBlock:failedBlock];
+    if (!data || ![data isKindOfClass:[NSDictionary class]]) {
+        if (failedBlock) {
+            moko_main_safe(^{
+                failedBlock([self getErrorWithCode:MKServerParamsError message:@"params error"]);
+            })
+        }
         return;
     }
     if (!topic || topic.length == 0) {
-        [MKMQTTServerBlockAdopter operationTopicErrorBlock:failedBlock];
+        if (failedBlock) {
+            moko_main_safe(^{
+                failedBlock([self getErrorWithCode:MKServerTopicError message:@"the theme of the error to publish information"]);
+            })
+        }
         return;
     }
     if (!self.sessionManager) {
-        [MKMQTTServerBlockAdopter operationDisConnectedErrorBlock:failedBlock];
+        if (failedBlock) {
+            moko_main_safe(^{
+                failedBlock([self getErrorWithCode:MKServerDisconnected message:@"please connect server"]);
+            })
+        }
         return;
     }
-    UInt16 msgid = [self.sessionManager sendData:data //要发送的消息体
+    UInt16 msgid = [self.sessionManager sendData:[self dataWithJson:data] //要发送的消息体
                                            topic:topic //要往哪个topic发送消息
                                              qos:MQTTQosLevelExactlyOnce //消息级别
                                           retain:false];
     if (msgid <= 0) {
-        [MKMQTTServerBlockAdopter operationSetDataErrorBlock:failedBlock];
+        if (failedBlock) {
+            moko_main_safe(^{
+                failedBlock([self getErrorWithCode:MKServerSetParamsError message:@"set data error"]);
+            })
+        }
         return;
     }
     MKMQTTServerTaskOperation *operation = [[MKMQTTServerTaskOperation alloc] initOperationWithID:msgid completeBlock:^(NSError *error, NSInteger operationID) {
         if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            moko_main_safe(^{
                 if (failedBlock) {
                     failedBlock(error);
                 }
@@ -356,10 +278,14 @@
             return ;
         }
         if (msgid != operationID) {
-            [MKMQTTServerBlockAdopter operationSetDataErrorBlock:failedBlock];
+            if (failedBlock) {
+                moko_main_safe(^{
+                    failedBlock([self getErrorWithCode:MKServerSetParamsError message:@"set data error"]);
+                })
+            }
             return;
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
+        moko_main_safe(^{
             if (sucBlock) {
                 sucBlock();
             }
@@ -391,22 +317,6 @@
     return [mutStr dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (BOOL)isValidatIP:(NSString *)IPAddress{
-    NSString  *urlRegEx =@"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-    
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
-    return [pred evaluateWithObject:IPAddress];
-}
-
-- (BOOL)isDomainName:(NSString *)host{
-    NSString *regex =@"[a-zA-z]+://[^\\s]*";
-    NSPredicate *hostTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
-    return [hostTest evaluateWithObject:host];
-}
-
 - (MKMQTTSessionManagerState)fecthSessionState:(MQTTSessionManagerState)orignState{
     switch (orignState) {
         case MQTTSessionManagerStateError:
@@ -422,6 +332,13 @@
         case MQTTSessionManagerStateConnecting:
             return MKMQTTSessionManagerStateConnecting;
     }
+}
+
+- (NSError *)getErrorWithCode:(serverCustomErrorCode)code message:(NSString *)message{
+    NSError *error = [[NSError alloc] initWithDomain:MKMqttServerCustomErrorDomain
+                                                code:code
+                                            userInfo:@{@"errorInfo":(message == nil ? @"" : message)}];
+    return error;
 }
 
 #pragma mark - setter & getter
