@@ -186,7 +186,7 @@
     }
     if ([MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnected
         && [MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnecting) {
-        [[MKMQTTServerConnectManager sharedInstance] connectServer];
+        [[MKMQTTServerDataManager sharedInstance] connectServer];
     }
     [self resetMQTTServerTopic];
 }

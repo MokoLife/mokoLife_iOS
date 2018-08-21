@@ -41,7 +41,7 @@
                                              selector:@selector(configCellNeedHiddenKeyboard) name:configCellNeedHiddenKeyboardNotification
                                                object:nil];
     if (self.controllerType == MKConfigServerForApp) {
-        [self.serverModel updateServerDataWithModel:[MKMQTTServerConnectManager sharedInstance].configServerModel];
+        [self.serverModel updateServerDataWithModel:[MKMQTTServerDataManager sharedInstance].configServerModel];
     }else{
         [self.serverModel updateServerDataWithModel:[MKSmartPlugConnectManager sharedInstance].configServerModel];
     }

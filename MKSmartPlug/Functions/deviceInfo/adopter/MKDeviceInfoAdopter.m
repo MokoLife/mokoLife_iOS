@@ -15,13 +15,25 @@
     if (!deviceModel) {
         return;
     }
-    if (reset) {
-        //恢复出厂设置
-        [self resetDeviceWithModel:deviceModel target:target];
-        return;
-    }
-    //移除设备
-    [self deleteDeviceModel:deviceModel target:target];
+    NSString *title = (reset ? @"After reset,the device will be removed from the device list,and relevant data will be totally cleared." : @"Please confirm again whether to remove the devoce.");
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:title
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (reset) {
+            //恢复出厂设置
+            [self resetDeviceWithModel:deviceModel target:target];
+            return;
+        }
+        //移除设备
+        [self deleteDeviceModel:deviceModel target:target];
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    [kAppRootController presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark -

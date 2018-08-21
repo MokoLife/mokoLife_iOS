@@ -14,7 +14,7 @@
 @implementation MKDeviceListAdopter
 
 + (void)addDeviceButtonPressed:(UIViewController *)target{
-    if (![[MKMQTTServerConnectManager sharedInstance].configServerModel needParametersHasValue]) {
+    if (![[MKMQTTServerDataManager sharedInstance].configServerModel needParametersHasValue]) {
         //如果app的mqtt服务器信息没有，则去设置
         MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
         vc.controllerType = MKConfigServerForApp;
