@@ -58,7 +58,7 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
 
 #pragma mark - 父类方法
 - (NSString *)defaultTitle{
-    return @"Check Firmware Updates";
+    return @"Check Firmware Update";
 }
 
 #pragma mark - UITableViewDelegate
