@@ -23,6 +23,8 @@
 #import "MKCommonlyUIHelper.h"
 #import "MKAnimationAdopter.h"
 #import "MKDeviceModel.h"
+#import "MKAddDeviceCenter.h"
+#import "MKAddDeviceKeys.h"
 
 /*********interface***********/
 #import "MKSocketManager.h"

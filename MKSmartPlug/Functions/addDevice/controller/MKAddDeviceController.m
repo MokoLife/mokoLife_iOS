@@ -15,8 +15,6 @@
 #import "MKSaveDeviceNameController.h"
 
 static CGFloat const offset_X = 20.f;
-static CGFloat const centerGifWidth = 144.f;
-static CGFloat const centerGifHeight = 253.f;
 
 @interface MKAddDeviceController ()
 
@@ -31,6 +29,12 @@ static CGFloat const centerGifHeight = 253.f;
 @property (nonatomic, strong)UILabel *instructionsLabel;
 
 @property (nonatomic, strong)MKAddDeviceDataManager *dataManager;
+
+@property (nonatomic, assign)currentDeviceType deviceType;
+
+@property (nonatomic, assign)CGFloat gifWidth;
+
+@property (nonatomic, assign)CGFloat gifHeight;
 
 @end
 
@@ -50,6 +54,31 @@ static CGFloat const centerGifHeight = 253.f;
 #pragma mark - 父类方法
 - (NSString *)defaultTitle{
     return @"Add Device";
+}
+
+#pragma mark - addDeviceControllerConfigProtocol
+- (void)configAddDeviceController:(NSDictionary *)params{
+    if (!ValidDict(params)) {
+        return;
+    }
+    if (ValidStr(params[addDevice_messageKey])) {
+        self.msgLabel.text = params[addDevice_messageKey];
+    }
+    if (ValidStr(params[addDevice_gifNameKey])) {
+        NSString *imageName = [params[addDevice_gifNameKey] stringByAppendingString:(iPhone6Plus ? @"@3x" : @"@2x")];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"gif"];
+        NSData* imageData = [NSData dataWithContentsOfFile:filePath];
+        self.gifIcon.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+    }
+    if (ValidStr(params[addDevice_linkMessageKey])) {
+        self.linkLabel.text = params[addDevice_linkMessageKey];
+    }
+    if (ValidStr(params[addDevice_blinkButtonTitleKey])) {
+        [self.blinkButton setTitle:params[addDevice_blinkButtonTitleKey] forState:UIControlStateNormal];
+    }
+    self.deviceType = [params[addDevice_currentDeviceTypeKey] integerValue];
+    self.gifWidth = [params[addDevice_gifWidthKey] floatValue];
+    self.gifHeight = [params[addDevice_gifHeightKey] floatValue];
 }
 
 #pragma mark - event method
@@ -98,9 +127,9 @@ static CGFloat const centerGifHeight = 253.f;
     }];
     [self.gifIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(centerGifWidth);
+        make.width.mas_equalTo(self.gifWidth);
         make.top.mas_equalTo(self.msgLabel.mas_bottom).mas_offset(64.f);
-        make.height.mas_equalTo(centerGifHeight);
+        make.height.mas_equalTo(self.gifHeight);
     }];
     CGSize linkSize = [NSString sizeWithText:self.linkLabel.text
                                      andFont:self.linkLabel.font
@@ -133,7 +162,6 @@ static CGFloat const centerGifHeight = 253.f;
         _msgLabel.textAlignment = NSTextAlignmentCenter;
         _msgLabel.textColor = UIColorFromRGB(0x808080);
         _msgLabel.font = MKFont(15.f);
-        _msgLabel.text = @"Plug in the device and confirm that indicator is blinking amber";
         _msgLabel.numberOfLines = 0;
     }
     return _msgLabel;
@@ -142,17 +170,13 @@ static CGFloat const centerGifHeight = 253.f;
 - (FLAnimatedImageView *)gifIcon{
     if (!_gifIcon) {
         _gifIcon = [[FLAnimatedImageView alloc] init];
-        NSString *imageName = [@"addDevice_centerGif" stringByAppendingString:(iPhone6Plus ? @"@3x" : @"@2x")];
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:imageName ofType:@"gif"];
-        NSData* imageData = [NSData dataWithContentsOfFile:filePath];
-        _gifIcon.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
     }
     return _gifIcon;
 }
 
 - (UILabel *)linkLabel{
     if (!_linkLabel) {
-        _linkLabel = [MKCommonlyUIHelper clickEnableLabelWithText:@"My light is not blinking amber"
+        _linkLabel = [MKCommonlyUIHelper clickEnableLabelWithText:@""
                                                         textColor:NAVIGATION_BAR_COLOR
                                                            target:self
                                                            action:@selector(linkLabelPressed)];
@@ -162,7 +186,7 @@ static CGFloat const centerGifHeight = 253.f;
 
 - (UIButton *)blinkButton{
     if (!_blinkButton) {
-        _blinkButton = [MKCommonlyUIHelper commonBottomButtonWithTitle:@"Indicator blink amber light"
+        _blinkButton = [MKCommonlyUIHelper commonBottomButtonWithTitle:@""
                                                                 target:self
                                                                 action:@selector(blinkButtonPressed)];
     }

@@ -8,6 +8,6 @@
 
 #import "MKBaseViewController.h"
 
-@interface MKAddDeviceController : MKBaseViewController
+@interface MKAddDeviceController : MKBaseViewController<addDeviceControllerConfigProtocol>
 
 @end

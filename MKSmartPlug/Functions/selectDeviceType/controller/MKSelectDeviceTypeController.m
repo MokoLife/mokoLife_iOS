@@ -25,6 +25,7 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKSelectDeviceTypeController销毁");
+    [MKAddDeviceCenter deallocCenter];
 }
 
 - (void)viewDidLoad {
@@ -45,11 +46,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        MKAddDeviceController *vc = [[MKAddDeviceController alloc] initWithNavigationType:GYNaviTypeShow];
-        [self.navigationController pushViewController:vc animated:YES];
-        return;
+    currentDeviceType deviceType = device_plug;
+    if (indexPath.row == 1){
+        //面板
+        deviceType = device_swich;
     }
+    [MKAddDeviceCenter sharedInstance].deviceType = deviceType;
+    MKAddDeviceController *vc = [[MKAddDeviceController alloc] initWithNavigationType:GYNaviTypeShow];
+    NSDictionary *params = [[MKAddDeviceCenter sharedInstance] fecthAddDeviceParams];
+    [vc configAddDeviceController:params];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -65,10 +71,15 @@
 
 #pragma mark -
 - (void)loadDatas{
-    MKSelectDeviceTypeModel *typeModel = [[MKSelectDeviceTypeModel alloc] init];
-    typeModel.msg = @"Moko plug";
-    typeModel.leftIconName = @"selectDeviceType_plugIcon";
-    [self.dataList addObject:typeModel];
+    MKSelectDeviceTypeModel *plugModel = [[MKSelectDeviceTypeModel alloc] init];
+    plugModel.msg = @"Moko plug";
+    plugModel.leftIconName = @"selectDeviceType_plugIcon";
+    [self.dataList addObject:plugModel];
+    
+    MKSelectDeviceTypeModel *swichModel = [[MKSelectDeviceTypeModel alloc] init];
+    swichModel.msg = @"Wall Swich";
+    swichModel.leftIconName = @"selectDeviceType_swichIcon";
+    [self.dataList addObject:swichModel];
     [self.tableView reloadData];
 }
 

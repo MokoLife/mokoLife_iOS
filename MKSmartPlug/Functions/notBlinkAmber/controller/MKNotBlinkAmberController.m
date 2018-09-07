@@ -9,6 +9,8 @@
 #import "MKNotBlinkAmberController.h"
 #import "MKNotBlinkAmberCell.h"
 #import "MKNotBlinkAmberModel.h"
+#import "MKNotBlinkRedModel.h"
+#import "MKNotBlinkRedCell.h"
 #import "MKBaseTableView.h"
 
 @interface MKNotBlinkAmberController ()<UITableViewDelegate, UITableViewDataSource>
@@ -39,6 +41,9 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([MKAddDeviceCenter sharedInstance].deviceType == device_swich && indexPath.row == 0) {
+        return 100.f;
+    }
     return 225.f;
 }
 
@@ -49,6 +54,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([MKAddDeviceCenter sharedInstance].deviceType == device_swich) {
+        //面板
+        MKNotBlinkRedCell *cell = [MKNotBlinkRedCell initCellWithTableView:tableView];
+        cell.dataModel = self.dataList[indexPath.row];
+        return cell;
+    }
     MKNotBlinkAmberCell *cell = [MKNotBlinkAmberCell initCellWithTableView:tableView];
     cell.dataModel = self.dataList[indexPath.row];
     return cell;
@@ -65,19 +76,20 @@
 #pragma mark - loadSubViews
 
 - (void)getInitDatas{
-    MKNotBlinkAmberModel *step1Model = [[MKNotBlinkAmberModel alloc] init];
-    step1Model.stepMsg = @"Step 1";
-    step1Model.operationMsg = @"Plug the device in power";
-    step1Model.leftIconName = @"notBlinkAmberStep1_leftIcon";
-    step1Model.rightIconName = @"notBlinkAmberStep1_rightIcon";
-    [self.dataList addObject:step1Model];
-    
-    MKNotBlinkAmberModel *step2Model = [[MKNotBlinkAmberModel alloc] init];
-    step2Model.stepMsg = @"Step 2";
-    step2Model.operationMsg = @"Hold the button for 10s until the LED blink amber";
-    step2Model.leftIconName = @"notBlinkAmberStep2_leftIcon";
-    step2Model.rightIconName = @"notBlinkAmberStep2_rightIcon";
-    [self.dataList addObject:step2Model];
+    NSArray *sourceList = [[MKAddDeviceCenter sharedInstance] fecthNotBlinkAmberDataSource];
+    for (NSDictionary *dic in sourceList) {
+        if ([MKAddDeviceCenter sharedInstance].deviceType == device_swich) {
+            MKNotBlinkRedModel *stepModel = [MKNotBlinkRedModel modelWithJSON:dic];
+            if (stepModel) {
+                [self.dataList addObject:stepModel];
+            }
+        }else{
+            MKNotBlinkAmberModel *stepModel = [MKNotBlinkAmberModel modelWithJSON:dic];
+            if (stepModel) {
+                [self.dataList addObject:stepModel];
+            }
+        }
+    }
     [self.tableView reloadData];
 }
 

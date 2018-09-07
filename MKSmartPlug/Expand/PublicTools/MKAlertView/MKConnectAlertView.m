@@ -56,7 +56,6 @@
 
 - (instancetype)init{
     if (self = [super init]) {
-//        self.frame = kAppWindow.bounds;
         [self setLayerProperty];
         [self addSubview:self.titleLabel];
         [self addSubview:self.horizontalLine];

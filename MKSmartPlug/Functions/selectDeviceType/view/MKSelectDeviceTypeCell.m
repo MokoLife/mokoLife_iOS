@@ -98,7 +98,6 @@ static NSString *const MKSelectDeviceTypeCellIdenty = @"MKSelectDeviceTypeCellId
 - (UIImageView *)leftIcon{
     if (!_leftIcon) {
         _leftIcon = [[UIImageView alloc] init];
-        _leftIcon.image = LOADIMAGE(@"selectDeviceType_plugIcon", @"png");
     }
     return _leftIcon;
 }
