@@ -30,8 +30,6 @@ static CGFloat const offset_X = 20.f;
 
 @property (nonatomic, strong)MKAddDeviceDataManager *dataManager;
 
-@property (nonatomic, assign)currentDeviceType deviceType;
-
 @property (nonatomic, assign)CGFloat gifWidth;
 
 @property (nonatomic, assign)CGFloat gifHeight;
@@ -76,7 +74,6 @@ static CGFloat const offset_X = 20.f;
     if (ValidStr(params[addDevice_blinkButtonTitleKey])) {
         [self.blinkButton setTitle:params[addDevice_blinkButtonTitleKey] forState:UIControlStateNormal];
     }
-    self.deviceType = [params[addDevice_currentDeviceTypeKey] integerValue];
     self.gifWidth = [params[addDevice_gifWidthKey] floatValue];
     self.gifHeight = [params[addDevice_gifHeightKey] floatValue];
 }

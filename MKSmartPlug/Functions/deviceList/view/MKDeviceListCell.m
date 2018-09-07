@@ -111,16 +111,16 @@ static CGFloat const switchHeight = 30.f;
     if (ValidStr(_dataModel.local_name)) {
         self.deviceNameLabel.text = _dataModel.local_name;
     }
-    NSString *stateIconName = (_dataModel.device_state == smartPlugDeviceOn ? @"deviceList_switchStateOnIcon" : @"deviceList_switchStateOffIcon");
+    NSString *stateIconName = (_dataModel.device_state == MKSmartPlugOn ? @"deviceList_switchStateOnIcon" : @"deviceList_switchStateOffIcon");
     [self.stateButton setImage:LOADIMAGE(stateIconName, @"png") forState:UIControlStateNormal];
-    self.stateButton.selected = (_dataModel.device_state == smartPlugDeviceOn);
-    if (_dataModel.device_state == smartPlugDeviceOn) {
+    self.stateButton.selected = (_dataModel.device_state == MKSmartPlugOn);
+    if (_dataModel.device_state == MKSmartPlugOn) {
         self.deviceStateLabel.textColor = NAVIGATION_BAR_COLOR;
         self.deviceStateLabel.text = @"On";
-    }else if (_dataModel.device_state == smartPlugDeviceOffline){
+    }else if (_dataModel.device_state == MKSmartPlugOffline){
         self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
         self.deviceStateLabel.text = @"Offline";
-    }else if (_dataModel.device_state == smartPlugDeviceStatusOff){
+    }else if (_dataModel.device_state == MKSmartPlugOff){
         self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
         self.deviceStateLabel.text = @"Off";
     }

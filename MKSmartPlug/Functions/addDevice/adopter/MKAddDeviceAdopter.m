@@ -34,19 +34,14 @@
  跳转到设置->wifi页面
  */
 + (void)gotoSystemWifiPage{
-    if (@available(iOS 11.0, *)) {
-        NSURL *url2 = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-        [[UIApplication sharedApplication] openURL:url2 options:@{} completionHandler:nil];
+    if (@available(iOS 10.0, *)) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                           options:@{}
+                                 completionHandler:nil];
         return;
     }
-    NSURL *url1 = [NSURL URLWithString:@"App-Prefs:root=WIFI"];
-    if ([[UIApplication sharedApplication] canOpenURL:url1]){
-        if (@available(iOS 10.0, *)) {
-            [[UIApplication sharedApplication] openURL:url1 options:@{} completionHandler:nil];
-        } else {
-            [[UIApplication sharedApplication] openURL:url1];
-        }
-    }
+    //低于10
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
 }
 
 @end

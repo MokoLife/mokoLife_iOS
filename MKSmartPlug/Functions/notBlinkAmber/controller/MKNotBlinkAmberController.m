@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
+@property (nonatomic, strong)UIButton *blinkButton;
+
 @property (nonatomic, strong)NSMutableArray *dataList;
 
 @end
@@ -41,7 +43,7 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([MKAddDeviceCenter sharedInstance].deviceType == device_swich && indexPath.row == 0) {
+    if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich && indexPath.row == 0) {
         return 100.f;
     }
     return 225.f;
@@ -54,7 +56,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([MKAddDeviceCenter sharedInstance].deviceType == device_swich) {
+    if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich) {
         //面板
         MKNotBlinkRedCell *cell = [MKNotBlinkRedCell initCellWithTableView:tableView];
         cell.dataModel = self.dataList[indexPath.row];
@@ -76,9 +78,10 @@
 #pragma mark - loadSubViews
 
 - (void)getInitDatas{
-    NSArray *sourceList = [[MKAddDeviceCenter sharedInstance] fecthNotBlinkAmberDataSource];
+     NSDictionary *params = [[MKAddDeviceCenter sharedInstance] fecthNotBlinkParams];
+    NSArray *sourceList = params[@"sourceList"];
     for (NSDictionary *dic in sourceList) {
-        if ([MKAddDeviceCenter sharedInstance].deviceType == device_swich) {
+        if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich) {
             MKNotBlinkRedModel *stepModel = [MKNotBlinkRedModel modelWithJSON:dic];
             if (stepModel) {
                 [self.dataList addObject:stepModel];
@@ -91,6 +94,7 @@
         }
     }
     [self.tableView reloadData];
+    [self.blinkButton setTitle:params[@"blinkButtonTitle"] forState:UIControlStateNormal];
 }
 
 - (void)loadSubViews{
@@ -112,15 +116,21 @@
     return _tableView;
 }
 
+- (UIButton *)blinkButton{
+    if (!_blinkButton) {
+        _blinkButton = [MKCommonlyUIHelper commonBottomButtonWithTitle:@""
+                                                                target:self
+                                                                action:@selector(blinkButtonPressed)];
+    }
+    return _blinkButton;
+}
+
 - (UIView *)tableFooter{
     UIView *tableFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 150.f)];
     tableFooter.backgroundColor = UIColorFromRGB(0xf2f2f2);
     
-    UIButton *blinkButton = [MKCommonlyUIHelper commonBottomButtonWithTitle:@"Indicator blink amber light"
-                                                                     target:self
-                                                                     action:@selector(blinkButtonPressed)];
-    [tableFooter addSubview:blinkButton];
-    [blinkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [tableFooter addSubview:self.blinkButton];
+    [self.blinkButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(58.f);
         make.width.mas_equalTo(kScreenWidth - 2 * 58);
         make.bottom.mas_equalTo(-50.f);

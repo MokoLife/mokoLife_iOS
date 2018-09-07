@@ -93,7 +93,7 @@
     if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
         return;
     }
-    [self updateDeviceModelWithState:smartPlugDeviceOffline mac:deviceModel.device_mac];
+    [self updateDeviceModelWithState:MKSmartPlugOffline mac:deviceModel.device_mac];
 }
 
 #pragma mark - MKDeviceListCellDelegate
@@ -104,7 +104,8 @@
 #pragma mark - MKMQTTServerManagerStateChangedDelegate
 - (void)mqttServerManagerStateChanged{
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
-        || [[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
+        || [MKDeviceAdopterCenter currentWifiIsCorrect:MKDevice_swich]
+        || [MKDeviceAdopterCenter currentWifiIsCorrect:MKDevice_plug]) {
         //网络不可用
         [EasyLodingView hidenLoingInView:self.loadingView];
         return;
@@ -143,7 +144,7 @@
     if (!ValidDict(deviceDic) || self.dataList.count == 0) {
         return;
     }
-    smartPlugDeviceState state = ([deviceDic[@"switch_state"] isEqualToString:@"on"] ? smartPlugDeviceOn : smartPlugDeviceStatusOff);
+    MKSmartPlugState state = ([deviceDic[@"switch_state"] isEqualToString:@"on"] ? MKSmartPlugOn : MKSmartPlugOff);
     [self updateDeviceModelWithState:state mac:deviceDic[@"mac"]];
 }
 
@@ -203,7 +204,7 @@
 }
 
 #pragma mark -
-- (void)updateDeviceModelWithState:(smartPlugDeviceState)state mac:(NSString *)mac{
+- (void)updateDeviceModelWithState:(MKSmartPlugState)state mac:(NSString *)mac{
     @synchronized(self) {
         //需要执行的代码
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
@@ -211,7 +212,7 @@
                 MKDeviceModel *model = self.dataList[i];
                 if ([model.device_mac isEqualToString:mac]) {
                     model.device_state = state;
-                    if (state != smartPlugDeviceOffline) {
+                    if (state != MKSmartPlugOffline) {
                         [model resetTimerCounter];
                     }
                     dispatch_async(dispatch_get_main_queue(), ^{

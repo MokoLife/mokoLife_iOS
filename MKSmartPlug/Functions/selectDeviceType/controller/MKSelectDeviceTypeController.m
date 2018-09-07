@@ -46,10 +46,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    currentDeviceType deviceType = device_plug;
+    MKDeviceType deviceType = MKDevice_plug;
     if (indexPath.row == 1){
         //面板
-        deviceType = device_swich;
+        deviceType = MKDevice_swich;
     }
     [MKAddDeviceCenter sharedInstance].deviceType = deviceType;
     MKAddDeviceController *vc = [[MKAddDeviceController alloc] initWithNavigationType:GYNaviTypeShow];

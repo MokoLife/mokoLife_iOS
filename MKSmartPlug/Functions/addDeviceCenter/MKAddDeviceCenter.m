@@ -38,7 +38,7 @@ static MKAddDeviceCenter *center = nil;
     NSString *blinkButtonTitle = @"Indicator blink amber light";
     CGFloat gifWidth = 144.f;
     CGFloat gifHeight = 253.f;
-    if (self.deviceType == device_swich) {
+    if (self.deviceType == MKDevice_swich) {
         message = @"Plug in the device and confirm that indicator is blinking red";
         gifName = @"addDevice_centerSwichGif";
         gifWidth = 200.f;
@@ -52,7 +52,6 @@ static MKAddDeviceCenter *center = nil;
                  addDevice_gifHeightKey:@(gifHeight),
                  addDevice_linkMessageKey:linkMessage,
                  addDevice_blinkButtonTitleKey:blinkButtonTitle,
-                 addDevice_currentDeviceTypeKey:@(device_swich),
                  };
     }
     //默认插座
@@ -63,12 +62,23 @@ static MKAddDeviceCenter *center = nil;
              addDevice_gifHeightKey:@(gifHeight),
              addDevice_linkMessageKey:linkMessage,
              addDevice_blinkButtonTitleKey:blinkButtonTitle,
-             addDevice_currentDeviceTypeKey:@(device_plug),
+             };
+}
+
+- (NSDictionary *)fecthNotBlinkParams{
+    NSArray *sourceList = [self fecthNotBlinkAmberDataSource];
+    NSString *buttonTitle = @"Indicator blink amber light";
+    if (self.deviceType == MKDevice_swich) {
+        buttonTitle = @"Indicator blink red light";
+    }
+    return @{
+             @"sourceList":sourceList,
+             @"blinkButtonTitle":buttonTitle,
              };
 }
 
 - (NSArray *)fecthNotBlinkAmberDataSource{
-    if (self.deviceType == device_swich) {
+    if (self.deviceType == MKDevice_swich) {
         NSDictionary *dic1 = @{
                                 @"stepMsg":@"Step 1",
                                 @"operationMsg":@"Plug the device in power",

@@ -41,7 +41,7 @@
     if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
         return;
     }
-    if (deviceModel.device_state == smartPlugDeviceOffline) {
+    if (deviceModel.device_state == MKSmartPlugOffline) {
         [target.view showCentralToast:@"Device offline,please check."];
         return;
     }
@@ -63,7 +63,7 @@
     __weak __typeof(&*target)weakTarget = target;
     [MKDeviceDataBaseManager deleteDeviceWithMacAddress:deviceModel.device_mac sucBlock:^{
         [[MKHudManager share] hide];
-        [[MKMQTTServerManager sharedInstance] unsubscriptions:[deviceModel allTopicForDevice]];
+        [[MKMQTTServerManager sharedInstance] unsubscriptions:[MKDeviceAdopterCenter allTopicForDevice:deviceModel]];
         [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
         [weakTarget.navigationController popToRootViewControllerAnimated:YES];
     } failedBlock:^(NSError *error) {

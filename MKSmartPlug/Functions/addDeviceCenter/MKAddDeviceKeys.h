@@ -1,10 +1,5 @@
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, currentDeviceType) {
-    device_plug,
-    device_swich,
-};
-
 //动图上面的message
 static NSString *const addDevice_messageKey = @"addDevice_messageKey";
 //动图名称
@@ -17,8 +12,6 @@ static NSString *const addDevice_gifHeightKey = @"addDevice_gifHeightKey";
 static NSString *const addDevice_linkMessageKey = @"addDevice_linkMessageKey";
 //底部按钮title
 static NSString *const addDevice_blinkButtonTitleKey = @"addDevice_blinkButtonTitleKey";
-//当前设备类型,currentDeviceType枚举
-static NSString *const addDevice_currentDeviceTypeKey = @"addDevice_currentDeviceTypeKey";
 
 @protocol addDeviceControllerConfigProtocol <NSObject>
 

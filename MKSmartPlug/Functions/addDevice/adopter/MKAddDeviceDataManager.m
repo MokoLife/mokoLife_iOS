@@ -106,7 +106,7 @@
         //正在走连接进度流程，直接返回，
         return;
     }
-    if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
+    if (![MKDeviceAdopterCenter currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
         //需要引导用户去连接smart plug
         [self showConnectDeviceView];
         return;
@@ -173,7 +173,7 @@
     }
     [self.viewList removeAllObjects];
     [self loadViewList];
-    if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
+    if (![MKDeviceAdopterCenter currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
         //需要引导用户去连接smart plug
         [self showConnectDeviceView];
         return;
@@ -184,8 +184,12 @@
 #pragma mark - SDK
 - (void)connectPlug{
     MKConnectDeviceWifiView *wifiView = self.viewList[1];
-    if (![[MKNetworkManager sharedInstance] currentWifiIsSmartPlug]) {
-        [wifiView showCentralToast:@"Please connect smart plug"];
+    if (![MKDeviceAdopterCenter currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
+        NSString *errorMsg = @"Please connect smart plug";
+        if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich) {
+            errorMsg = @"Please connect smart swich";
+        }
+        [wifiView showCentralToast:errorMsg];
         return;
     }
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:wifiView isPenetration:NO];
@@ -201,7 +205,6 @@
             weakSelf.completeBlock(error, NO, nil);
         }
         [weakSelf dismisAllAlertView];
-//        [weakView showCentralToast:error.userInfo[@"errorInfo"]];
     }];
 }
 

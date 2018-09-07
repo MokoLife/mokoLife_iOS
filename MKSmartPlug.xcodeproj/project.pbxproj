@@ -84,6 +84,7 @@
 		001E66F621420E25004487B3 /* notBlinkRedStep3Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 001E66F221420E25004487B3 /* notBlinkRedStep3Icon@2x.png */; };
 		001E66F721420E25004487B3 /* notBlinkRedStep2Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 001E66F321420E25004487B3 /* notBlinkRedStep2Icon@3x.png */; };
 		001E66F821420E25004487B3 /* notBlinkRedStep3Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 001E66F421420E25004487B3 /* notBlinkRedStep3Icon@3x.png */; };
+		001E6700214271DF004487B3 /* MKDeviceAdopterCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 001E66FE214271DE004487B3 /* MKDeviceAdopterCenter.m */; };
 		0024A5A420D0B995003AD20E /* MKConfigDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5A320D0B995003AD20E /* MKConfigDeviceController.m */; };
 		0024A5A720D0BA6B003AD20E /* MKConfigDeviceButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5A620D0BA6B003AD20E /* MKConfigDeviceButtonView.m */; };
 		0024A5AA20D0BD4B003AD20E /* MKConfigDeviceButtonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5A920D0BD4B003AD20E /* MKConfigDeviceButtonModel.m */; };
@@ -346,6 +347,9 @@
 		001E66F221420E25004487B3 /* notBlinkRedStep3Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notBlinkRedStep3Icon@2x.png"; sourceTree = "<group>"; };
 		001E66F321420E25004487B3 /* notBlinkRedStep2Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notBlinkRedStep2Icon@3x.png"; sourceTree = "<group>"; };
 		001E66F421420E25004487B3 /* notBlinkRedStep3Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notBlinkRedStep3Icon@3x.png"; sourceTree = "<group>"; };
+		001E66FE214271DE004487B3 /* MKDeviceAdopterCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKDeviceAdopterCenter.m; sourceTree = "<group>"; };
+		001E66FF214271DF004487B3 /* MKDeviceAdopterCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKDeviceAdopterCenter.h; sourceTree = "<group>"; };
+		001E6702214278FC004487B3 /* MKDeviceNormalDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceNormalDefines.h; sourceTree = "<group>"; };
 		0024A5A220D0B995003AD20E /* MKConfigDeviceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigDeviceController.h; sourceTree = "<group>"; };
 		0024A5A320D0B995003AD20E /* MKConfigDeviceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigDeviceController.m; sourceTree = "<group>"; };
 		0024A5A520D0BA6B003AD20E /* MKConfigDeviceButtonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigDeviceButtonView.h; sourceTree = "<group>"; };
@@ -694,8 +698,12 @@
 		0011533720DC96AA00F80B1D /* deviceModel */ = {
 			isa = PBXGroup;
 			children = (
+				001E6701214278E8004487B3 /* deviceSubModels */,
+				001E66FF214271DF004487B3 /* MKDeviceAdopterCenter.h */,
+				001E66FE214271DE004487B3 /* MKDeviceAdopterCenter.m */,
 				0011533820DC96AA00F80B1D /* MKDeviceModel.h */,
 				0011533920DC96AA00F80B1D /* MKDeviceModel.m */,
+				001E6702214278FC004487B3 /* MKDeviceNormalDefines.h */,
 			);
 			path = deviceModel;
 			sourceTree = "<group>";
@@ -864,6 +872,13 @@
 				001A0D9220CBC0B50096E8A6 /* MKDeviceDataBaseAdopter.m */,
 			);
 			path = DataBaseManager;
+			sourceTree = "<group>";
+		};
+		001E6701214278E8004487B3 /* deviceSubModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = deviceSubModels;
 			sourceTree = "<group>";
 		};
 		0024A59E20D0B97D003AD20E /* configPlug */ = {
@@ -1954,6 +1969,7 @@
 				003F6D6C20C161F50002C833 /* MKAttributedStringManager.m in Sources */,
 				000E860320CFAEAC006B8831 /* UIView+EasyShowExt.m in Sources */,
 				000E85F420CFAEAB006B8831 /* EasyAlertItem.m in Sources */,
+				001E6700214271DF004487B3 /* MKDeviceAdopterCenter.m in Sources */,
 				000E860820CFAEAC006B8831 /* EasyTextView.m in Sources */,
 				000FED7820C911180082705A /* MKAddDeviceDataManager.m in Sources */,
 				003F6D6820C161F50002C833 /* UIButton+MKAdd.m in Sources */,

@@ -21,7 +21,7 @@
     if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
         return;
     }
-    if (deviceModel.device_state == smartPlugDeviceOffline) {
+    if (deviceModel.device_state == MKSmartPlugOffline) {
         [target.view showCentralToast:@"Device offline,please check."];
         return;
     }
@@ -51,7 +51,7 @@
     if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
         return;
     }
-    if (deviceModel.device_state == smartPlugDeviceOffline) {
+    if (deviceModel.device_state == MKSmartPlugOffline) {
         [target.view showCentralToast:@"Device offline,please check."];
         return;
     }

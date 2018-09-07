@@ -7,20 +7,17 @@
 //
 
 #import "MKBaseDataModel.h"
+#import "MKDeviceNormalDefines.h"
 
-typedef NS_ENUM(NSInteger, smartPlugDeviceState) {
-    smartPlugDeviceOffline,             //离线状态
-    smartPlugDeviceOn,                  //在线并且打开
-    smartPlugDeviceStatusOff,           //在线并且关闭
-};
 
-typedef NS_ENUM(NSInteger, deviceModelTopicType) {
-    deviceModelTopicDeviceType,             //设备发布数据的主题
-    deviceModelTopicAppType,                //APP发布数据的主题
-};
 
 @protocol MKDeviceModelDelegate;
 @interface MKDeviceModel : MKBaseDataModel
+
+/**
+ 设备类型，目前有插座和面板
+ */
+@property (nonatomic, assign)MKDeviceType device_mode;
 
 /**
  保存的时候的设备icon名字
@@ -40,7 +37,7 @@ typedef NS_ENUM(NSInteger, deviceModelTopicType) {
 /**
  当前设备的状态，离线、开、关
  */
-@property (nonatomic, assign)smartPlugDeviceState device_state;
+@property (nonatomic, assign)MKSmartPlugState device_state;
 
 /**
  设备id，plug的mac address
@@ -58,7 +55,9 @@ typedef NS_ENUM(NSInteger, deviceModelTopicType) {
 @property (nonatomic, copy)NSString *device_function;
 
 /**
- 设备类型，现在分为带计电量和不带两种
+ 设备类型，
+ 1、智能插座:现在分为带计电量和不带两种
+ 2、智能面板:一路开关、两路开关、三路开关
  */
 @property (nonatomic, copy)NSString *device_type;
 
@@ -80,8 +79,6 @@ typedef NS_ENUM(NSInteger, deviceModelTopicType) {
  */
 - (NSString *)subscribeTopicInfoWithType:(deviceModelTopicType)topicType
                                 function:(NSString *)function;
-
-- (NSArray <NSString *>*)allTopicForDevice;
 
 - (void)updatePropertyWithModel:(MKDeviceModel *)model;
 

@@ -25,6 +25,7 @@
 #import "MKDeviceModel.h"
 #import "MKAddDeviceCenter.h"
 #import "MKAddDeviceKeys.h"
+#import "MKDeviceAdopterCenter.h"
 
 /*********interface***********/
 #import "MKSocketManager.h"

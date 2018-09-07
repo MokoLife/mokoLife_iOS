@@ -49,19 +49,11 @@
             function];
 }
 
-- (NSArray <NSString *>*)allTopicForDevice{
-    NSString *firmware = [self subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"firmware_infor"];
-    NSString *electricity = [self subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"electricity_information"];
-    NSString *ota = [self subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"ota_upgrade_state"];
-    NSString *delay = [self subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"delay_time"];
-    NSString *swicthState = [self subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"switch_state"];
-    return @[firmware,electricity,ota,delay,swicthState];
-}
-
 - (void)updatePropertyWithModel:(MKDeviceModel *)model{
     if (!model) {
         return;
     }
+    self.device_mode = model.device_mode;
     self.device_icon = model.device_icon;
     self.device_name = model.device_name;
     self.local_name = model.local_name;

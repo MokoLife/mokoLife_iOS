@@ -75,7 +75,7 @@
     }
     if (indexPath.row == 2) {
         //固件升级
-        if (self.deviceModel.device_state == smartPlugDeviceOffline) {
+        if (self.deviceModel.device_state == MKSmartPlugOffline) {
             [self.view showCentralToast:@"Device offline,please check."];
             return;
         }
@@ -164,7 +164,7 @@
 }
 
 - (BOOL)canClickEnable{
-    if (self.deviceModel.device_state == smartPlugDeviceOffline) {
+    if (self.deviceModel.device_state == MKSmartPlugOffline) {
         [self.view showCentralToast:@"Device offline,please check."];
         return NO;
     }

@@ -37,11 +37,4 @@ extern NSString *const MKNetworkStatusChangedNotification;
  */
 - (BOOL)currentNetworkIsWifi;
 
-/**
- 是否已经连接到plug了，点击连接的时候，必须先连接plug的wifi，然后把mqtt服务器参数和周围可用的wifi信息设置给plug之后才进行mqtt服务器的连接
- 
- @return YES:plug,NO:not plug
- */
-- (BOOL)currentWifiIsSmartPlug;
-
 @end

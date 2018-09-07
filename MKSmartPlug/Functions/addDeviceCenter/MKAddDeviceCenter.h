@@ -11,7 +11,7 @@
 
 @interface MKAddDeviceCenter : NSObject
 
-@property (nonatomic, assign)currentDeviceType deviceType;
+@property (nonatomic, assign)MKDeviceType deviceType;
 
 + (MKAddDeviceCenter *)sharedInstance;
 
@@ -19,6 +19,6 @@
 
 - (NSDictionary *)fecthAddDeviceParams;
 
-- (NSArray *)fecthNotBlinkAmberDataSource;
+- (NSDictionary *)fecthNotBlinkParams;
 
 @end
