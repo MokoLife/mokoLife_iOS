@@ -211,7 +211,7 @@
 #pragma mark - private method
 - (void)connectMQTTServer{
     //开始连接mqtt服务器
-    MKDeviceModel *model = [[MKDeviceModel alloc] initWithDictionary:self.deviceDic];
+    MKDeviceModel *model = [MKDeviceModel modelWithJSON:self.deviceDic];
     [[MKMQTTServerManager sharedInstance] subscriptions:@[[model subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"switch_state"]]];
     [kNotificationCenterSington addObserver:self
                                    selector:@selector(receiveDeviceTopicData:)

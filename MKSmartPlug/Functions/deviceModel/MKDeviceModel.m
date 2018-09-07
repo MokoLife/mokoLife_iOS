@@ -49,6 +49,8 @@
             function];
 }
 
+#pragma mark - MKDeviceModelProtocol
+
 - (void)updatePropertyWithModel:(MKDeviceModel *)model{
     if (!model) {
         return;
