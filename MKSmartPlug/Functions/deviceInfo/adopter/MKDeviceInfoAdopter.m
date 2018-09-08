@@ -63,7 +63,7 @@
     __weak __typeof(&*target)weakTarget = target;
     [MKDeviceDataBaseManager deleteDeviceWithMacAddress:deviceModel.device_mac sucBlock:^{
         [[MKHudManager share] hide];
-        [[MKMQTTServerManager sharedInstance] unsubscriptions:[MKDeviceAdopterCenter allTopicForDevice:deviceModel]];
+        [[MKMQTTServerManager sharedInstance] unsubscriptions:[deviceModel allTopicList]];
         [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
         [weakTarget.navigationController popToRootViewControllerAnimated:YES];
     } failedBlock:^(NSError *error) {

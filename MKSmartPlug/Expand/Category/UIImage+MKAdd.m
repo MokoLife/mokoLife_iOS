@@ -293,12 +293,6 @@
     return img;
 }
 
-
-static inline CGFloat DegreesToRadians(CGFloat degrees)
-{
-    return M_PI * (degrees / 180.0);
-}
-
 - (UIImage *)rotatedByDegrees:(CGFloat)degrees
 {
     // calculate the size of the rotated view's containing box for our drawing space

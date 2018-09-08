@@ -10,7 +10,6 @@
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
 #import "MKNotBlinkAmberController.h"
-#import "MKAddDeviceAdopter.h"
 #import "MKAddDeviceDataManager.h"
 #import "MKSaveDeviceNameController.h"
 

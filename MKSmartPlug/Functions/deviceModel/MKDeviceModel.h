@@ -6,10 +6,10 @@
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "MKBaseDataModel.h"
+#import <Foundation/Foundation.h>
 #import "MKDeviceNormalDefines.h"
 
-@interface MKDeviceModel : MKBaseDataModel<MKDeviceModelProtocol>
+@interface MKDeviceModel : NSObject<MKDeviceModelProtocol>
 
 /**
  设备类型，目前有插座和面板
@@ -61,15 +61,5 @@
 #pragma mark - 业务流程相关
 
 @property (nonatomic, weak)id <MKDeviceModelDelegate>delegate;
-
-/**
- 订阅的主题
- 
- @param topicType 主题类型，是app发布数据的主题还是设备发布数据的主题
- @param function 主题功能
- @return 设备功能/设备名称/型号/mac/topicType/function
- */
-- (NSString *)subscribeTopicInfoWithType:(deviceModelTopicType)topicType
-                                function:(NSString *)function;
 
 @end

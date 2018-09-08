@@ -60,8 +60,9 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
                 [db executeUpdate:@"UPDATE deviceTable SET device_mode = ?, device_type = ?, device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? WHERE device_mac = ?",[NSString stringWithFormat:@"%ld",(long)model.device_mode], SafeStr(model.device_type),                         SafeStr(model.device_name),SafeStr(model.local_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function),SafeStr(model.device_mac)];
             }else{
                 //不存在，插入设备
-                [db executeUpdate:@"INSERT INTO deviceTable (device_mode, device_mac, device_type, local_name, device_name, device_icon, device_specifications, device_function) VALUES (?,?,?,?,?,?,?,?);",
-                 [NSString stringWithFormat:@"%ld",(long)model.device_mode],model.device_mac,model.device_type,model.local_name,model.device_name,model.device_icon,model.device_specifications,model.device_function];
+                NSString *mode = [NSString stringWithFormat:@"%ld",(long)model.device_mode];
+                [db executeUpdate:@"INSERT INTO deviceTable (device_mode, device_mac, device_type, local_name, device_name, device_icon, device_specifications, device_function) VALUES (?,?,?,?,?,?,?,?);",mode
+                 ,SafeStr(model.device_mac),SafeStr(model.device_type),SafeStr(model.local_name),SafeStr(model.device_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function)];
             }
             
         }

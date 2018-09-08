@@ -7,7 +7,6 @@
 //
 
 #import "MKConnectDeviceView.h"
-#import "MKAddDeviceAdopter.h"
 #import "MKConnectAlertView.h"
 
 static CGFloat const offset_X = 15.f;
@@ -158,14 +157,14 @@ static NSString *const step3Msg = @"3.Back to the App and continue";
 
 - (UILabel *)step1Label{
     if (!_step1Label) {
-        _step1Label = [MKAddDeviceAdopter connectAlertMsgLabel:step1Msg];
+        _step1Label = [MKAddDeviceCenter connectAlertMsgLabel:step1Msg];
     }
     return _step1Label;
 }
 
 - (UILabel *)step2Label{
     if (!_step2Label) {
-        _step2Label = [MKAddDeviceAdopter connectAlertMsgLabel:step2Msg];
+        _step2Label = [MKAddDeviceCenter connectAlertMsgLabel:step2Msg];
     }
     return _step2Label;
 }
@@ -180,7 +179,7 @@ static NSString *const step3Msg = @"3.Back to the App and continue";
 
 - (UILabel *)step3Label{
     if (!_step3Label) {
-        _step3Label = [MKAddDeviceAdopter connectAlertMsgLabel:step3Msg];
+        _step3Label = [MKAddDeviceCenter connectAlertMsgLabel:step3Msg];
     }
     return _step3Label;
 }

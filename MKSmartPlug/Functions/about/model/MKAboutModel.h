@@ -6,9 +6,9 @@
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "MKBaseDataModel.h"
+#import <Foundation/Foundation.h>
 
-@interface MKAboutModel : MKBaseDataModel
+@interface MKAboutModel : NSObject
 
 @property (nonatomic, copy)NSString *leftMsg;
 

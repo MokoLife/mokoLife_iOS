@@ -17,6 +17,14 @@
 
 + (void)deallocCenter;
 
++ (UILabel *)connectAlertTitleLabel:(NSString *)title;
+
++ (UILabel *)connectAlertMsgLabel:(NSString *)text;
+/**
+ 跳转到设置->wifi页面
+ */
++ (void)gotoSystemWifiPage;
+
 - (NSDictionary *)fecthAddDeviceParams;
 
 - (NSDictionary *)fecthNotBlinkParams;

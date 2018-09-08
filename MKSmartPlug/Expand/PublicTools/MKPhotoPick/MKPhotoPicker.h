@@ -6,9 +6,9 @@
 //  Copyright © 2018年 MK. All rights reserved.
 //
 
-#import "MKBaseDataModel.h"
+#import <Foundation/Foundation.h>
 
-@interface MKPhotoPicker : MKBaseDataModel
+@interface MKPhotoPicker : NSObject
 
 /**
  相机或者相册选择照片

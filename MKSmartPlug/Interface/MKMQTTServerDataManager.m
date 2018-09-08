@@ -143,8 +143,8 @@ NSString *const MKMQTTServerReceivedUpdateResultNotification = @"MKMQTTServerRec
         return;
     }
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
-        || [MKDeviceAdopterCenter currentWifiIsCorrect:MKDevice_swich]
-        || [MKDeviceAdopterCenter currentWifiIsCorrect:MKDevice_plug]) {
+        || [MKDeviceModel currentWifiIsCorrect:MKDevice_swich]
+        || [MKDeviceModel currentWifiIsCorrect:MKDevice_plug]) {
         //如果是当前网络不可用或者是连接的plug设备，则断开当前手机与mqtt服务器的连接操作
         [[MKMQTTServerManager sharedInstance] disconnect];
         return;

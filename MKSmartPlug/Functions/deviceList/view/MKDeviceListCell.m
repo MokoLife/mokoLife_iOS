@@ -105,14 +105,13 @@ static CGFloat const switchHeight = 30.f;
     if (!_dataModel) {
         return;
     }
-    if (ValidStr(_dataModel.device_icon)) {
-        self.deviceIcon.image = LOADIMAGE(_dataModel.device_icon, @"png");
-    }
     if (ValidStr(_dataModel.local_name)) {
         self.deviceNameLabel.text = _dataModel.local_name;
     }
     if (_dataModel.device_mode == MKDevice_plug) {
         self.stateButton.hidden = NO;
+        NSString *deviceIconName = (ValidStr(_dataModel.device_icon) ? _dataModel.device_icon : @"device_plug_icon");
+        self.deviceIcon.image = LOADIMAGE(deviceIconName, @"png");
         NSString *stateIconName = (_dataModel.device_state == MKSmartPlugOn ? @"deviceList_switchStateOnIcon" : @"deviceList_switchStateOffIcon");
         [self.stateButton setImage:LOADIMAGE(stateIconName, @"png") forState:UIControlStateNormal];
         self.stateButton.selected = (_dataModel.device_state == MKSmartPlugOn);
@@ -130,6 +129,8 @@ static CGFloat const switchHeight = 30.f;
         return;
     }
     self.stateButton.hidden = YES;
+    NSString *deviceIconName = (ValidStr(_dataModel.device_icon) ? _dataModel.device_icon : @"device_swich_icon");
+    self.deviceIcon.image = LOADIMAGE(deviceIconName, @"png");
     if (_dataModel.device_state == MKSmartPlugOffline){
         self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
         self.deviceStateLabel.text = @"Offline";
@@ -144,7 +145,7 @@ static CGFloat const switchHeight = 30.f;
 - (UIImageView *)deviceIcon{
     if (!_deviceIcon) {
         _deviceIcon = [[UIImageView alloc] init];
-        _deviceIcon.image = LOADIMAGE(@"device_icon", @"png");
+        _deviceIcon.image = LOADIMAGE(@"device_plug_icon", @"png");
     }
     return _deviceIcon;
 }

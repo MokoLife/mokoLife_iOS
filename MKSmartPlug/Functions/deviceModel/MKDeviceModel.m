@@ -30,25 +30,6 @@
     NSLog(@"MKDeviceModel销毁");
 }
 
-/**
- 订阅的主题
-
- @param topicType 主题类型，是app发布数据的主题还是设备发布数据的主题
- @param function 主题功能
- @return 设备功能/设备名称/型号/mac/topicType/function
- */
-- (NSString *)subscribeTopicInfoWithType:(deviceModelTopicType)topicType
-                                function:(NSString *)function{
-    NSString *typeIden = (topicType == deviceModelTopicDeviceType ? @"device" : @"app");
-    return [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@",
-            self.device_function,
-            self.device_name,
-            self.device_specifications,
-            self.device_mac,
-            typeIden,
-            function];
-}
-
 #pragma mark - MKDeviceModelProtocol
 
 - (void)updatePropertyWithModel:(MKDeviceModel *)model{

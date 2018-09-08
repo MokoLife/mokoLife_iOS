@@ -7,7 +7,6 @@
 //
 
 #import "MKConnectDeviceProgressView.h"
-#import "MKAddDeviceAdopter.h"
 #import "CircleProgressBar.h"
 
 static CGFloat const alertViewHeight = 340.f;
@@ -117,7 +116,7 @@ static CGFloat const alertViewHeight = 340.f;
 
 - (UILabel *)titleLabel{
     if (!_titleLabel) {
-        _titleLabel = [MKAddDeviceAdopter connectAlertTitleLabel:@"Connecting now"];
+        _titleLabel = [MKAddDeviceCenter connectAlertTitleLabel:@"Connecting now"];
     }
     return _titleLabel;
 }

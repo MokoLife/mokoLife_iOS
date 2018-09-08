@@ -104,8 +104,8 @@
 #pragma mark - MKMQTTServerManagerStateChangedDelegate
 - (void)mqttServerManagerStateChanged{
     if (![[MKNetworkManager sharedInstance] currentNetworkAvailable]
-        || [MKDeviceAdopterCenter currentWifiIsCorrect:MKDevice_swich]
-        || [MKDeviceAdopterCenter currentWifiIsCorrect:MKDevice_plug]) {
+        || [MKDeviceModel currentWifiIsCorrect:MKDevice_swich]
+        || [MKDeviceModel currentWifiIsCorrect:MKDevice_plug]) {
         //网络不可用
         [EasyLodingView hidenLoingInView:self.loadingView];
         return;

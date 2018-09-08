@@ -8,6 +8,7 @@
 #import "MJRefresh.h"
 #import "MLInputDodger.h"
 #import "AFNetworking.h"
+#import "YYKit.h"
 
 /***************/
 #import "MKDefines.h"
@@ -23,9 +24,9 @@
 #import "MKCommonlyUIHelper.h"
 #import "MKAnimationAdopter.h"
 #import "MKDeviceModel.h"
+#import "MKDeviceModel+MKTopic.h"
 #import "MKAddDeviceCenter.h"
 #import "MKAddDeviceKeys.h"
-#import "MKDeviceAdopterCenter.h"
 
 /*********interface***********/
 #import "MKSocketManager.h"

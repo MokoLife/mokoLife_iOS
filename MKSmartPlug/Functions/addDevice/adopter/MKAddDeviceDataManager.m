@@ -10,7 +10,6 @@
 #import "MKConnectDeviceView.h"
 #import "MKConnectDeviceProgressView.h"
 #import "MKConnectDeviceWifiView.h"
-#import "MKAddDeviceAdopter.h"
 #import "MKConnectViewProtocol.h"
 #import "MKDeviceDataBaseManager.h"
 
@@ -69,7 +68,7 @@
     }
     if (view == self.viewList[0]) {
         //MKConnectDeviceView
-        [MKAddDeviceAdopter gotoSystemWifiPage];
+        [MKAddDeviceCenter gotoSystemWifiPage];
         return;
     }
     if (view == self.viewList[1]) {
@@ -106,7 +105,7 @@
         //正在走连接进度流程，直接返回，
         return;
     }
-    if (![MKDeviceAdopterCenter currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
+    if (![MKDeviceModel currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
         //需要引导用户去连接smart plug
         [self showConnectDeviceView];
         return;
@@ -173,7 +172,7 @@
     }
     [self.viewList removeAllObjects];
     [self loadViewList];
-    if (![MKDeviceAdopterCenter currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
+    if (![MKDeviceModel currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
         //需要引导用户去连接smart plug
         [self showConnectDeviceView];
         return;
@@ -184,7 +183,7 @@
 #pragma mark - SDK
 - (void)connectPlug{
     MKConnectDeviceWifiView *wifiView = self.viewList[1];
-    if (![MKDeviceAdopterCenter currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
+    if (![MKDeviceModel currentWifiIsCorrect:[MKAddDeviceCenter sharedInstance].deviceType]) {
         NSString *errorMsg = @"Please connect smart plug";
         if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich) {
             errorMsg = @"Please connect smart swich";
@@ -257,7 +256,8 @@
 }
 
 - (void)saveDeviceToLocal{
-    MKDeviceModel *dataModel = [[MKDeviceModel alloc] initWithDictionary:self.deviceDic];
+    MKDeviceModel *dataModel = [MKDeviceModel modelWithJSON:self.deviceDic];
+    dataModel.device_mode = [MKAddDeviceCenter sharedInstance].deviceType;
     dataModel.local_name = self.deviceDic[@"device_name"];
     WS(weakSelf);
     [MKDeviceDataBaseManager insertDeviceList:@[dataModel] sucBlock:^{

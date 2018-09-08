@@ -17,10 +17,6 @@
 #pragma mark - *************************  硬件相关  *************************
 /** 获取屏幕尺寸、宽度、高度 */
 #define kScreenRect                 ([[UIScreen mainScreen] bounds])            //屏幕frame
-#define kScreenSize                 ([UIScreen mainScreen].bounds.size)         //屏幕size
-#define kScreenWidth                ([UIScreen mainScreen].bounds.size.width)   //屏幕宽度
-#define kScreenHeight               ([UIScreen mainScreen].bounds.size.height)  //屏幕高度
-#define kScreenScale                ([[UIScreen mainScreen] scale])             //缩放系数
 #define kScreenCurrModeSize         [[UIScreen mainScreen] currentMode].size    //currentModel的size
 
 #define kScreenMaxLength            (MAX(kScreenWidth, kScreenHeight))          //获取屏幕宽高最大者
@@ -74,7 +70,6 @@
 
 /** 获取系统版本 */
 #define kSystemVersionString    ([[UIDevice currentDevice] systemVersion])
-#define kSystemVersion          ([[[UIDevice currentDevice] systemVersion] floatValue])
 
 /** 获取APP名称 */
 #define kAppName                ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"])

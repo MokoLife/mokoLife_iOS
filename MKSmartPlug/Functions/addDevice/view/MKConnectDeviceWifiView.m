@@ -7,7 +7,6 @@
 //
 
 #import "MKConnectDeviceWifiView.h"
-#import "MKAddDeviceAdopter.h"
 #import "MKConnectAlertView.h"
 #import "MKTextField.h"
 
@@ -160,7 +159,7 @@ static CGFloat const alertViewHeight = 230.f;
 
 - (UILabel *)wifiNameLabel{
     if (!_wifiNameLabel) {
-        _wifiNameLabel = [MKAddDeviceAdopter connectAlertMsgLabel:@"Wi-Fi:"];
+        _wifiNameLabel = [MKAddDeviceCenter connectAlertMsgLabel:@"Wi-Fi:"];
     }
     return _wifiNameLabel;
 }
@@ -174,7 +173,7 @@ static CGFloat const alertViewHeight = 230.f;
 
 - (UILabel *)wifiPasswordLabel{
     if (!_wifiPasswordLabel) {
-        _wifiPasswordLabel = [MKAddDeviceAdopter connectAlertMsgLabel:@"Password:"];
+        _wifiPasswordLabel = [MKAddDeviceCenter connectAlertMsgLabel:@"Password:"];
     }
     return _wifiPasswordLabel;
 }

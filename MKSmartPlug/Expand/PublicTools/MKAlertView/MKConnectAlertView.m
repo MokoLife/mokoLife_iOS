@@ -7,7 +7,6 @@
 //
 
 #import "MKConnectAlertView.h"
-#import "MKAddDeviceAdopter.h"
 
 @interface MKConnectAlertView()
 
@@ -135,7 +134,7 @@
 #pragma mark - setter & getter
 - (UILabel *)titleLabel{
     if (!_titleLabel) {
-        _titleLabel = [MKAddDeviceAdopter connectAlertTitleLabel:@""];
+        _titleLabel = [MKAddDeviceCenter connectAlertTitleLabel:@""];
     }
     return _titleLabel;
 }
