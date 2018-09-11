@@ -8,28 +8,51 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
+    MKFirmwareUpdateHostTypeIP,
+    MKFirmwareUpdateHostTypeUrl,
+};
+
 @interface MKMQTTServerInterface : NSObject
 
 /**
- 改变开关状态
+ Factory Reset
  
- @param isOn isOn
- @param deviceModel deviceModel
- @param target vc
+ @param topic topic
+ @param sucBlock       Success callback
+ @param failedBlock    Failed callback
  */
-+ (void)setSwitchState:(BOOL)isOn deviceModel:(MKDeviceModel *)deviceModel target:(UIViewController *)target;
++ (void)resetDeviceWithTopic:(NSString *)topic
+                    sucBlock:(void (^)(void))sucBlock
+                 failedBlock:(void (^)(NSError *error))failedBlock;
 
 /**
- 设置延时功能
-
- @param hour 延时时
- @param minutes 延时分
- @param deviceModel deviceModel
- @param target vc
+ Read device information
+ 
+ @param topic topic
+ @param sucBlock      Success callback
+ @param failedBlock   Failed callback
  */
-+ (void)setDelayHour:(NSString *)hour
-             minutes:(NSString *)minutes
-         deviceModel:(MKDeviceModel *)deviceModel
-              target:(UIViewController *)target;
++ (void)readDeviceFirmwareInformationWithTopic:(NSString *)topic
+                                      sucBlock:(void (^)(void))sucBlock
+                                   failedBlock:(void (^)(NSError *error))failedBlock;
+/**
+ Plug OTA upgrade
+ 
+ @param hostType hostType
+ @param host          The IP address or domain name of the new firmware host
+ @param port          Range£∫0~65535
+ @param catalogue     The length is less than 100 bytes
+ @param topic         Firmware upgrade topic
+ @param sucBlock      Success callback
+ @param failedBlock   Failed callback
+ */
++ (void)updateFirmware:(MKFirmwareUpdateHostType)hostType
+                  host:(NSString *)host
+                  port:(NSInteger)port
+             catalogue:(NSString *)catalogue
+                 topic:(NSString *)topic
+              sucBlock:(void (^)(void))sucBlock
+           failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end

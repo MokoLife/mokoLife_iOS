@@ -13,6 +13,7 @@
 #import "MKDeviceDataBaseManager.h"
 #import "MKModifyLocalNameView.h"
 #import "MKConfigDeviceTimePickerView.h"
+#import "MKDeviceInfoController.h"
 
 @interface MKConfigSwichController ()<UITableViewDelegate, UITableViewDataSource, MKConfigSwichCellDelegate>
 
@@ -36,9 +37,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.rightButton setImage:LOADIMAGE(@"configPlugPage_moreIcon", @"png") forState:UIControlStateNormal];
+    UIView *footView = [self footerView];
+    [self.view addSubview:footView];
+    [footView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(0);
+        make.height.mas_equalTo(90.f);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+    }];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.bottom.mas_equalTo(footView.mas_top);
     }];
     [self getTableDatas];
     [self addNotifications];
@@ -51,6 +64,15 @@
 #pragma mark - 父类方法
 - (NSString *)defaultTitle{
     return @"MokoLife";
+}
+
+- (void)rightButtonMethod{
+    MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKDeviceModel *model = [[MKDeviceModel alloc] init];
+    [model updatePropertyWithModel:self.deviceModel];
+    model.swichState = self.deviceModel.swichState;
+    vc.deviceModel = model;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - UITableViewDelegate
@@ -96,11 +118,10 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     for (NSInteger i = 0; i < self.dataList.count; i ++) {
         MKConfigSwichModel *model = self.dataList[i];
-        NSString *key = [NSString stringWithFormat:@"%@%ld",@"switch_state_0",(long)(i + 1)];
         NSString *state = (model.isOn ? @"on" : @"off");
-        [dic setObject:state forKey:key];
+        [dic setObject:state forKey:[MKDeviceModel keyForSwitchStateWithIndex:i]];
     }
-    NSString *changeKey = [NSString stringWithFormat:@"%@%ld",@"switch_state_0",(long)(index + 1)];
+    NSString *changeKey = [MKDeviceModel keyForSwitchStateWithIndex:index];
     NSString *changeState = (isOn ? @"on" : @"off");
     [dic setObject:changeState forKey:changeKey];
     NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"switch_state"];
@@ -148,7 +169,7 @@
 
 #pragma mark - event method
 - (void)updateSwichWayName:(NSString *)name index:(NSInteger)index{
-    NSString *key = [NSString stringWithFormat:@"%@%ld",@"switch_state_0",(long)(index + 1)];
+    NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:index];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:self.deviceModel.swich_way_nameDic];
     [dic setObject:name forKey:key];
     self.deviceModel.swich_way_nameDic = dic;
@@ -163,20 +184,23 @@
 
 - (void)startCountdownWithIndex:(NSInteger)index hour:(NSString *)hour min:(NSString *)min{
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:self.view isPenetration:NO];
-    NSString *indexString = [NSString stringWithFormat:@"%ld",(long)(index + 1)];
-    NSString *function = [@"delay_time_0" stringByAppendingString:indexString];
+    NSString *function = [MKDeviceModel keyForDelayTimeWithIndex:index];
     NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:function];
-    NSDictionary *dataDic = @{
-                              [@"delay_hour_0" stringByAppendingString:indexString]:@([hour integerValue]),
-                              [@"delay_minute_0" stringByAppendingString:indexString]:@([min integerValue]),
-                              };
     WS(weakSelf);
-    [[MKMQTTServerManager sharedInstance] sendData:dataDic topic:topic sucBlock:^{
+    [MKMQTTServerInterface setSwichWithIndex:index delayHour:[hour integerValue] delayMin:[min integerValue] topic:topic sucBlock:^{
         [[MKHudManager share] hide];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
     }];
+}
+
+- (void)setAllSwichWayOnMethod{
+    [self setSwichAllWaySwitchStateOn:YES];
+}
+
+- (void)setAllSwichWayOffMethod{
+    [self setSwichAllWaySwitchStateOn:NO];
 }
 
 #pragma mark - 通知处理
@@ -189,7 +213,7 @@
     [self.deviceModel resetTimerCounter];
     for (NSInteger i = 0; i < self.dataList.count; i ++) {
         MKConfigSwichModel *model = self.dataList[i];
-        NSString *key = [NSString stringWithFormat:@"%@%ld",@"switch_state_0",(long)(i + 1)];
+        NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
         model.isOn = [deviceDic[key] isEqualToString:@"on"];
     }
     [self.tableView reloadData];
@@ -202,7 +226,7 @@
     }
     [self.deviceModel resetTimerCounter];
     for (NSInteger i = 0; i < self.dataList.count; i ++) {
-        NSString *key = [NSString stringWithFormat:@"%@%ld",@"delay_time_0",(long)(i + 1)];
+        NSString *key = [MKDeviceModel keyForDelayTimeWithIndex:i];
         MKConfigSwichModel *model = self.dataList[i];
         model.countdown = deviceDic[key];
     }
@@ -233,7 +257,25 @@
     return YES;
 }
 
+- (void)setSwichAllWaySwitchStateOn:(BOOL)allOn{
+    [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:self.view isPenetration:NO];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    for (NSInteger i = 0; i < self.dataList.count; i ++) {
+        NSString *state = (allOn ? @"on" : @"off");
+        [dic setObject:state forKey:[MKDeviceModel keyForSwitchStateWithIndex:i]];
+    }
+    NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"switch_state"];
+    WS(weakSelf);
+    [[MKMQTTServerManager sharedInstance] sendData:dic topic:topic sucBlock:^{
+        [[MKHudManager share] hide];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
 #pragma mark - local data
+
 - (void)getTableDatas{
     if (!self.deviceModel) {
         return;
@@ -244,7 +286,7 @@
     NSDictionary *swichStateDic = self.deviceModel.swich_way_stateDic;
     for (NSInteger i = 0; i < listCount; i ++) {
         MKConfigSwichModel *model = [[MKConfigSwichModel alloc] init];
-        NSString *key = [NSString stringWithFormat:@"%@%ld",@"switch_state_0",(long)(i + 1)];
+        NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
         model.currentWaySwitchName = swichNameDic[key];
         model.index = i;
         model.isOn = [swichStateDic[key] isEqualToString:@"on"];
@@ -258,10 +300,64 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
     return _tableView;
+}
+
+- (UIView *)bottomButtonViewWithTitle:(NSString *)title iconName:(NSString *)iconName sel:(SEL)sel{
+    UIView *buttonView = [[UIView alloc] initWithFrame:CGRectZero];
+    UIImageView *icon = [[UIImageView alloc] init];
+    icon.image = LOADIMAGE(iconName, @"png");
+    [buttonView addSubview:icon];
+    [icon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.centerX.mas_equalTo(buttonView.mas_centerX);
+        make.width.mas_equalTo(25.f);
+        make.height.mas_equalTo(25.f);
+    }];
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = UIColorFromRGB(0x0188cc);
+    titleLabel.font = MKFont(12.f);
+    titleLabel.text = title;
+    [buttonView addSubview:titleLabel];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(0);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.height.mas_equalTo(MKFont(12.f).lineHeight);
+    }];
+    [buttonView addTapAction:self selector:sel];
+    return buttonView;
+}
+
+- (UIView *)footerView{
+    UIView *footerView = [[UIView alloc] init];
+    footerView.backgroundColor = COLOR_WHITE_MACROS;
+    UIView *allOnView = [self bottomButtonViewWithTitle:@"ALL ON"
+                                               iconName:@"configSwichAllOff"
+                                                    sel:@selector(setAllSwichWayOnMethod)];
+    UIView *allOffView = [self bottomButtonViewWithTitle:@"ALL OFF"
+                                                iconName:@"configSwichAllOn"
+                                                     sel:@selector(setAllSwichWayOffMethod)];
+    [footerView addSubview:allOnView];
+    [footerView addSubview:allOffView];
+    [allOnView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(footerView.mas_centerX).mas_offset(-50.f);
+        make.width.mas_equalTo(50.f);
+        make.top.mas_equalTo(5.f);
+        make.height.mas_equalTo(50.f);
+    }];
+    [allOffView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(footerView.mas_centerX).mas_offset(50.f);
+        make.width.mas_equalTo(50.f);
+        make.top.mas_equalTo(5.f);
+        make.height.mas_equalTo(50.f);
+    }];
+    return footerView;
 }
 
 - (NSMutableArray *)dataList{

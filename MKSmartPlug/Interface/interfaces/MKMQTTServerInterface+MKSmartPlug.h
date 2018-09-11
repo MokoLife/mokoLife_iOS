@@ -8,11 +8,6 @@
 
 #import "MKMQTTServerInterface.h"
 
-typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
-    MKFirmwareUpdateHostTypeIP,
-    MKFirmwareUpdateHostTypeUrl,
-};
-
 @interface MKMQTTServerInterface (MKSmartPlug)
 
 /**
@@ -36,50 +31,10 @@ typedef NS_ENUM(NSInteger, MKFirmwareUpdateHostType) {
  @param sucBlock       Success callback
  @param failedBlock    Failed callback
  */
-+ (void)setDelayHour:(NSInteger)delay_hour
-            delayMin:(NSInteger)delay_minutes
-               topic:(NSString *)topic
-            sucBlock:(void (^)(void))sucBlock
-         failedBlock:(void (^)(NSError *error))failedBlock;
-
-/**
- Factory Reset
- 
- @param topic topic
- @param sucBlock       Success callback
- @param failedBlock    Failed callback
- */
-+ (void)resetDeviceWithTopic:(NSString *)topic
-                    sucBlock:(void (^)(void))sucBlock
-                 failedBlock:(void (^)(NSError *error))failedBlock;
-
-/**
- Read device information
- 
- @param topic topic
- @param sucBlock      Success callback
- @param failedBlock   Failed callback
- */
-+ (void)readDeviceFirmwareInformationWithTopic:(NSString *)topic
-                                      sucBlock:(void (^)(void))sucBlock
-                                   failedBlock:(void (^)(NSError *error))failedBlock;
-/**
- Plug OTA upgrade
- 
- @param hostType hostType
- @param host          The IP address or domain name of the new firmware host
- @param port          Range£∫0~65535
- @param catalogue     The length is less than 100 bytes
- @param topic         Firmware upgrade topic
- @param sucBlock      Success callback
- @param failedBlock   Failed callback
- */
-+ (void)updateFirmware:(MKFirmwareUpdateHostType)hostType
-                  host:(NSString *)host
-                  port:(NSInteger)port
-             catalogue:(NSString *)catalogue
-                 topic:(NSString *)topic
-              sucBlock:(void (^)(void))sucBlock
-           failedBlock:(void (^)(NSError *error))failedBlock;
++ (void)setPlugDelayHour:(NSInteger)delay_hour
+                delayMin:(NSInteger)delay_minutes
+                   topic:(NSString *)topic
+                sucBlock:(void (^)(void))sucBlock
+             failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end

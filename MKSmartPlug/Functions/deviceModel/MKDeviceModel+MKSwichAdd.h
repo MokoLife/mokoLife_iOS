@@ -22,4 +22,20 @@
  */
 @property (nonatomic, strong)NSDictionary *swich_way_stateDic;
 
+/**
+ 接收和设置多路开关状态的key
+
+ @param index index，0~2
+ @return key
+ */
++ (NSString *)keyForSwitchStateWithIndex:(NSInteger)index;
+
+/**
+ 接收和设置多路开关倒计时的key
+
+ @param index index，0~2
+ @return key
+ */
++ (NSString *)keyForDelayTimeWithIndex:(NSInteger)index;
+
 @end

@@ -118,6 +118,10 @@
 		0024A5D920D0FFE2003AD20E /* MKDeviceInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5D820D0FFE2003AD20E /* MKDeviceInfoCell.m */; };
 		0024A5DC20D1029D003AD20E /* MKDeviceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5DB20D1029D003AD20E /* MKDeviceInfoModel.m */; };
 		002517A5214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 002517A4214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m */; };
+		002517AA21476FB800B93ED4 /* configSwichAllOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002517A621476FB700B93ED4 /* configSwichAllOn@2x.png */; };
+		002517AB21476FB800B93ED4 /* configSwichAllOn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002517A721476FB700B93ED4 /* configSwichAllOn@3x.png */; };
+		002517AC21476FB800B93ED4 /* configSwichAllOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002517A821476FB800B93ED4 /* configSwichAllOff@2x.png */; };
+		002517AD21476FB800B93ED4 /* configSwichAllOff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002517A921476FB800B93ED4 /* configSwichAllOff@3x.png */; };
 		002ABFD12140D9F70054F285 /* selectDeviceType_swichIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002ABFCF2140D9F60054F285 /* selectDeviceType_swichIcon@2x.png */; };
 		002ABFD22140D9F70054F285 /* selectDeviceType_swichIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002ABFD02140D9F60054F285 /* selectDeviceType_swichIcon@3x.png */; };
 		002ABFDA2141118D0054F285 /* addDevice_centerPlugGif@3x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 002ABFD62141118D0054F285 /* addDevice_centerPlugGif@3x.gif */; };
@@ -407,6 +411,10 @@
 		0024A5DB20D1029D003AD20E /* MKDeviceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceInfoModel.m; sourceTree = "<group>"; };
 		002517A3214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MKDeviceModel+MKPlugAdd.h"; sourceTree = "<group>"; };
 		002517A4214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MKDeviceModel+MKPlugAdd.m"; sourceTree = "<group>"; };
+		002517A621476FB700B93ED4 /* configSwichAllOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "configSwichAllOn@2x.png"; sourceTree = "<group>"; };
+		002517A721476FB700B93ED4 /* configSwichAllOn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "configSwichAllOn@3x.png"; sourceTree = "<group>"; };
+		002517A821476FB800B93ED4 /* configSwichAllOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "configSwichAllOff@2x.png"; sourceTree = "<group>"; };
+		002517A921476FB800B93ED4 /* configSwichAllOff@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "configSwichAllOff@3x.png"; sourceTree = "<group>"; };
 		002ABFCF2140D9F60054F285 /* selectDeviceType_swichIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectDeviceType_swichIcon@2x.png"; sourceTree = "<group>"; };
 		002ABFD02140D9F60054F285 /* selectDeviceType_swichIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectDeviceType_swichIcon@3x.png"; sourceTree = "<group>"; };
 		002ABFD62141118D0054F285 /* addDevice_centerPlugGif@3x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "addDevice_centerPlugGif@3x.gif"; sourceTree = "<group>"; };
@@ -875,6 +883,10 @@
 		001585692146118300C6D93C /* configSwich */ = {
 			isa = PBXGroup;
 			children = (
+				002517A821476FB800B93ED4 /* configSwichAllOff@2x.png */,
+				002517A921476FB800B93ED4 /* configSwichAllOff@3x.png */,
+				002517A621476FB700B93ED4 /* configSwichAllOn@2x.png */,
+				002517A721476FB700B93ED4 /* configSwichAllOn@3x.png */,
 				0015856A2146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png */,
 				0015856B2146118300C6D93C /* swich_modifyDeviceNameIcon@3x.png */,
 				0015856C2146118300C6D93C /* swich_state_off@2x.png */,
@@ -1827,8 +1839,10 @@
 				0024A5C120D0CB6A003AD20E /* configPlugPage_scheduleOff@3x.png in Resources */,
 				00729051214370C800F1E30F /* device_swich_icon@2x.png in Resources */,
 				001585752146118300C6D93C /* swich_state_on@3x.png in Resources */,
+				002517AA21476FB800B93ED4 /* configSwichAllOn@2x.png in Resources */,
 				001E66F621420E25004487B3 /* notBlinkRedStep3Icon@2x.png in Resources */,
 				0024A5C220D0CB6A003AD20E /* configPlugPage_scheduleOn@2x.png in Resources */,
+				002517AC21476FB800B93ED4 /* configSwichAllOff@2x.png in Resources */,
 				0055EB5020C51339003C4C70 /* notBlinkAmberStep1_leftIcon@2x.png in Resources */,
 				001E66F521420E25004487B3 /* notBlinkRedStep2Icon@2x.png in Resources */,
 				00729052214370C800F1E30F /* device_plug_icon@3x.png in Resources */,
@@ -1839,6 +1853,7 @@
 				0011534520DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png in Resources */,
 				002ABFDE214115290054F285 /* addDevice_centerSwichGif@3x.gif in Resources */,
 				0055EB5720C51339003C4C70 /* notBlinkAmberStep1_rightIcon@2x.png in Resources */,
+				002517AB21476FB800B93ED4 /* configSwichAllOn@3x.png in Resources */,
 				0024A5CD20D0CB6A003AD20E /* configPlugPage_TimerOff@3x.png in Resources */,
 				003F6DAB20C179080002C833 /* configServer_ConnectMode_normal@2x.png in Resources */,
 				0014480120C29A9300A87037 /* MKSmartPlugRightNextIcon@3x.png in Resources */,
@@ -1875,6 +1890,7 @@
 				0024A5C020D0CB6A003AD20E /* configPlugPage_scheduleOff@2x.png in Resources */,
 				0024A5BF20D0CB6A003AD20E /* configPlugPage_moreIcon@3x.png in Resources */,
 				003F6D7920C161F50002C833 /* refresh_loading_2@2x.png in Resources */,
+				002517AD21476FB800B93ED4 /* configSwichAllOff@3x.png in Resources */,
 				001E66F821420E25004487B3 /* notBlinkRedStep3Icon@3x.png in Resources */,
 				003F6D8120C162AC0002C833 /* navigation_back_button@2x.png in Resources */,
 				003D436E20DE191D00A02036 /* electricityPowerIcon@3x.png in Resources */,

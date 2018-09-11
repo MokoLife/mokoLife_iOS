@@ -74,6 +74,7 @@
         MKConfigDeviceController *vc = [[MKConfigDeviceController alloc] initWithNavigationType:GYNaviTypeHide];
         MKDeviceModel *model = [[MKDeviceModel alloc] init];
         [model updatePropertyWithModel:dataModel];
+        model.plugState = dataModel.plugState;
         vc.dataModel = model;
         [self.navigationController pushViewController:vc animated:YES];
         return;
@@ -84,6 +85,7 @@
         [model updatePropertyWithModel:dataModel];
         model.swich_way_nameDic = [NSDictionary dictionaryWithDictionary:dataModel.swich_way_nameDic];
         model.swich_way_stateDic = [NSDictionary dictionaryWithDictionary:dataModel.swich_way_stateDic];
+        model.swichState = dataModel.swichState;
         vc.deviceModel = model;
         [self.navigationController pushViewController:vc animated:YES];
         return;
@@ -112,7 +114,25 @@
 
 #pragma mark - MKDeviceListCellDelegate
 - (void)deviceSwitchStateChanged:(MKDeviceModel *)deviceModel isOn:(BOOL)isOn{
-    [MKMQTTServerInterface setSwitchState:isOn deviceModel:deviceModel target:self];
+    if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
+        return;
+    }
+    if (deviceModel.device_mode == MKDevice_plug) {
+        //插座
+        if (deviceModel.plugState == MKSmartPlugOffline) {
+            [self.view showCentralToast:@"Device offline,please check."];
+            return;
+        }
+        [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:self.view isPenetration:NO];
+        NSString *topic = [deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"switch_state"];
+        WS(weakSelf);
+        [MKMQTTServerInterface setSmartPlugSwitchState:isOn topic:topic sucBlock:^{
+            [[MKHudManager share] hide];
+        } failedBlock:^(NSError *error) {
+            [[MKHudManager share] hide];
+            [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+        }];
+    }
 }
 
 #pragma mark - MKMQTTServerManagerStateChangedDelegate

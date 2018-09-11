@@ -19,11 +19,11 @@
     [[MKMQTTServerManager sharedInstance] sendData:dataDic topic:topic sucBlock:sucBlock failedBlock:failedBlock];
 }
 
-+ (void)setDelayHour:(NSInteger)delay_hour
-            delayMin:(NSInteger)delay_minutes
-               topic:(NSString *)topic
-            sucBlock:(void (^)(void))sucBlock
-         failedBlock:(void (^)(NSError *error))failedBlock{
++ (void)setPlugDelayHour:(NSInteger)delay_hour
+                delayMin:(NSInteger)delay_minutes
+                   topic:(NSString *)topic
+                sucBlock:(void (^)(void))sucBlock
+             failedBlock:(void (^)(NSError *error))failedBlock{
     if (delay_hour < 0 || delay_hour > 23) {
         [MKMQTTServerErrorBlockAdopter operationParamsErrorBlock:failedBlock];
         return;
@@ -39,44 +39,6 @@
     [[MKMQTTServerManager sharedInstance] sendData:dataDic topic:topic sucBlock:sucBlock failedBlock:failedBlock];
 }
 
-+ (void)resetDeviceWithTopic:(NSString *)topic
-                    sucBlock:(void (^)(void))sucBlock
-                 failedBlock:(void (^)(NSError *error))failedBlock{
-    [[MKMQTTServerManager sharedInstance] sendData:@{} topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
 
-+ (void)readDeviceFirmwareInformationWithTopic:(NSString *)topic
-                                      sucBlock:(void (^)(void))sucBlock
-                                   failedBlock:(void (^)(NSError *error))failedBlock{
-    [[MKMQTTServerManager sharedInstance] sendData:@{} topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
-
-+ (void)updateFirmware:(MKFirmwareUpdateHostType)hostType
-                  host:(NSString *)host
-                  port:(NSInteger)port
-             catalogue:(NSString *)catalogue
-                 topic:(NSString *)topic
-              sucBlock:(void (^)(void))sucBlock
-           failedBlock:(void (^)(NSError *error))failedBlock{
-    if (hostType == MKFirmwareUpdateHostTypeIP && ![host isValidatIP]) {
-        [MKMQTTServerErrorBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    if (hostType == MKFirmwareUpdateHostTypeUrl && ![host checkIsUrl]) {
-        [MKMQTTServerErrorBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    if (port < 0 || port > 65535 || !catalogue) {
-        [MKMQTTServerErrorBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    NSDictionary *dataDic = @{
-                              @"type":@(hostType),
-                              @"realm":host,
-                              @"port":@(port),
-                              @"catalogue":catalogue,
-                              };
-    [[MKMQTTServerManager sharedInstance] sendData:dataDic topic:topic sucBlock:sucBlock failedBlock:failedBlock];
-}
 
 @end

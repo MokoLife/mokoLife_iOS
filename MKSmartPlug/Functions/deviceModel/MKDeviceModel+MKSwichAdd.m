@@ -48,4 +48,20 @@ static const char *swich_way_StateDicKey = "swich_way_StateDicKey";
     return [objc_getAssociatedObject(self, &swichStateKey) integerValue];
 }
 
++ (NSString *)keyForSwitchStateWithIndex:(NSInteger)index{
+    if (index < 0 || index > 2) {
+        return nil;
+    }
+    NSString *key = [NSString stringWithFormat:@"%@%ld",@"switch_state_0",(long)(index + 1)];
+    return key;
+}
+
++ (NSString *)keyForDelayTimeWithIndex:(NSInteger)index{
+    if (index < 0 || index > 2) {
+        return nil;
+    }
+    NSString *key = [NSString stringWithFormat:@"%@%ld",@"delay_time_0",(long)(index + 1)];
+    return key;
+}
+
 @end

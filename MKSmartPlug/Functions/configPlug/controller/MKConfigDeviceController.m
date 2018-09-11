@@ -72,6 +72,7 @@ static CGFloat const buttonViewHeight = 50.f;
     MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] initWithNavigationType:GYNaviTypeShow];
     MKDeviceModel *model = [[MKDeviceModel alloc] init];
     [model updatePropertyWithModel:self.deviceModel];
+    model.plugState = self.deviceModel.plugState;
     vc.deviceModel = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -118,7 +119,15 @@ static CGFloat const buttonViewHeight = 50.f;
         return;
     }
     BOOL isOn = (self.deviceModel.plugState == MKSmartPlugOn);
-    [MKMQTTServerInterface setSwitchState:!isOn deviceModel:self.deviceModel target:self];
+    [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:self.view isPenetration:NO];
+    NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"switch_state"];
+    WS(weakSelf);
+    [MKMQTTServerInterface setSmartPlugSwitchState:!isOn topic:topic sucBlock:^{
+        [[MKHudManager share] hide];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 - (void)scheduleButtonPressed{
@@ -168,12 +177,21 @@ static CGFloat const buttonViewHeight = 50.f;
         return;
     }
     [self.deviceModel updatePropertyWithModel:_dataModel];
+    self.deviceModel.plugState = _dataModel.plugState;
     [self.deviceModel startStateMonitoringTimer];
 }
 
 #pragma mark - setting
 - (void)setDelay:(NSString *)hour delayMin:(NSString *)min{
-    [MKMQTTServerInterface setDelayHour:hour minutes:min deviceModel:self.deviceModel target:self];
+    [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:self.view isPenetration:NO];
+    NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"delay_time"];
+    WS(weakSelf);
+    [MKMQTTServerInterface setPlugDelayHour:[hour integerValue] delayMin:[min integerValue] topic:topic sucBlock:^{
+        [[MKHudManager share] hide];
+    } failedBlock:^(NSError *error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - private method
