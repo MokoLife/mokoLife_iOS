@@ -259,6 +259,13 @@
     MKDeviceModel *dataModel = [MKDeviceModel modelWithJSON:self.deviceDic];
     dataModel.device_mode = [MKAddDeviceCenter sharedInstance].deviceType;
     dataModel.local_name = self.deviceDic[@"device_name"];
+    if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich) {
+        dataModel.swich_way_nameDic = @{
+                                        @"switch_state_01":@"Switch1",
+                                        @"switch_state_02":@"Switch2",
+                                        @"switch_state_03":@"Switch3",
+                                        };
+    }
     WS(weakSelf);
     [MKDeviceDataBaseManager insertDeviceList:@[dataModel] sucBlock:^{
         [weakSelf dismisAllAlertView];

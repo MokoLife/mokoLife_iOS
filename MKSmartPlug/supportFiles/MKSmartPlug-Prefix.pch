@@ -23,8 +23,7 @@
 #import "MKPhotoPicker.h"
 #import "MKCommonlyUIHelper.h"
 #import "MKAnimationAdopter.h"
-#import "MKDeviceModel.h"
-#import "MKDeviceModel+MKTopic.h"
+#import "MKDeviceModelHeader.h"
 #import "MKAddDeviceCenter.h"
 #import "MKAddDeviceKeys.h"
 

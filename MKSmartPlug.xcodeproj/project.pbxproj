@@ -73,6 +73,17 @@
 		0014480F20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0014480D20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png */; };
 		0014481020C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0014480E20C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png */; };
 		0014481320C2A92400A87037 /* MKSelectDeviceTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0014481220C2A92400A87037 /* MKSelectDeviceTypeModel.m */; };
+		001585652146051000C6D93C /* MKConfigSwichController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001585642146051000C6D93C /* MKConfigSwichController.m */; };
+		00158568214606A300C6D93C /* MKConfigSwichCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00158567214606A300C6D93C /* MKConfigSwichCell.m */; };
+		001585702146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0015856A2146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png */; };
+		001585712146118300C6D93C /* swich_modifyDeviceNameIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0015856B2146118300C6D93C /* swich_modifyDeviceNameIcon@3x.png */; };
+		001585722146118300C6D93C /* swich_state_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0015856C2146118300C6D93C /* swich_state_off@2x.png */; };
+		001585732146118300C6D93C /* swich_state_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0015856D2146118300C6D93C /* swich_state_off@3x.png */; };
+		001585742146118300C6D93C /* swich_state_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0015856E2146118300C6D93C /* swich_state_on@2x.png */; };
+		001585752146118300C6D93C /* swich_state_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0015856F2146118300C6D93C /* swich_state_on@3x.png */; };
+		00158578214611B200C6D93C /* MKConfigSwichModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00158577214611B200C6D93C /* MKConfigSwichModel.m */; };
+		0015857B2146178300C6D93C /* MKDeviceModel+MKSwichAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 0015857A2146178300C6D93C /* MKDeviceModel+MKSwichAdd.m */; };
+		00158582214669B800C6D93C /* MKMQTTServerInterface+MKSmartSwich.m in Sources */ = {isa = PBXBuildFile; fileRef = 00158581214669B800C6D93C /* MKMQTTServerInterface+MKSmartSwich.m */; };
 		001A0D8220CBAFF10096E8A6 /* MKSaveDeviceNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */; };
 		001A0D8920CBB7640096E8A6 /* MKDeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8820CBB7640096E8A6 /* MKDeviceListController.m */; };
 		001A0D8D20CBBA440096E8A6 /* MKDeviceDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A0D8C20CBBA440096E8A6 /* MKDeviceDataBaseManager.m */; };
@@ -106,6 +117,7 @@
 		0024A5D620D0FEBA003AD20E /* MKDeviceInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5D520D0FEBA003AD20E /* MKDeviceInfoController.m */; };
 		0024A5D920D0FFE2003AD20E /* MKDeviceInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5D820D0FFE2003AD20E /* MKDeviceInfoCell.m */; };
 		0024A5DC20D1029D003AD20E /* MKDeviceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0024A5DB20D1029D003AD20E /* MKDeviceInfoModel.m */; };
+		002517A5214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 002517A4214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m */; };
 		002ABFD12140D9F70054F285 /* selectDeviceType_swichIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002ABFCF2140D9F60054F285 /* selectDeviceType_swichIcon@2x.png */; };
 		002ABFD22140D9F70054F285 /* selectDeviceType_swichIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002ABFD02140D9F60054F285 /* selectDeviceType_swichIcon@3x.png */; };
 		002ABFDA2141118D0054F285 /* addDevice_centerPlugGif@3x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 002ABFD62141118D0054F285 /* addDevice_centerPlugGif@3x.gif */; };
@@ -331,6 +343,23 @@
 		0014480E20C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectDeviceType_plugIcon@3x.png"; sourceTree = "<group>"; };
 		0014481120C2A92400A87037 /* MKSelectDeviceTypeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSelectDeviceTypeModel.h; sourceTree = "<group>"; };
 		0014481220C2A92400A87037 /* MKSelectDeviceTypeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSelectDeviceTypeModel.m; sourceTree = "<group>"; };
+		001585632146051000C6D93C /* MKConfigSwichController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigSwichController.h; sourceTree = "<group>"; };
+		001585642146051000C6D93C /* MKConfigSwichController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigSwichController.m; sourceTree = "<group>"; };
+		00158566214606A300C6D93C /* MKConfigSwichCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigSwichCell.h; sourceTree = "<group>"; };
+		00158567214606A300C6D93C /* MKConfigSwichCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigSwichCell.m; sourceTree = "<group>"; };
+		0015856A2146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swich_modifyDeviceNameIcon@2x.png"; sourceTree = "<group>"; };
+		0015856B2146118300C6D93C /* swich_modifyDeviceNameIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swich_modifyDeviceNameIcon@3x.png"; sourceTree = "<group>"; };
+		0015856C2146118300C6D93C /* swich_state_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swich_state_off@2x.png"; sourceTree = "<group>"; };
+		0015856D2146118300C6D93C /* swich_state_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swich_state_off@3x.png"; sourceTree = "<group>"; };
+		0015856E2146118300C6D93C /* swich_state_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swich_state_on@2x.png"; sourceTree = "<group>"; };
+		0015856F2146118300C6D93C /* swich_state_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swich_state_on@3x.png"; sourceTree = "<group>"; };
+		00158576214611B200C6D93C /* MKConfigSwichModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigSwichModel.h; sourceTree = "<group>"; };
+		00158577214611B200C6D93C /* MKConfigSwichModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigSwichModel.m; sourceTree = "<group>"; };
+		001585792146178300C6D93C /* MKDeviceModel+MKSwichAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MKDeviceModel+MKSwichAdd.h"; sourceTree = "<group>"; };
+		0015857A2146178300C6D93C /* MKDeviceModel+MKSwichAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MKDeviceModel+MKSwichAdd.m"; sourceTree = "<group>"; };
+		0015857C214617F300C6D93C /* MKDeviceModelHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceModelHeader.h; sourceTree = "<group>"; };
+		00158580214669B800C6D93C /* MKMQTTServerInterface+MKSmartSwich.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MKMQTTServerInterface+MKSmartSwich.h"; sourceTree = "<group>"; };
+		00158581214669B800C6D93C /* MKMQTTServerInterface+MKSmartSwich.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MKMQTTServerInterface+MKSmartSwich.m"; sourceTree = "<group>"; };
 		001A0D8020CBAFF10096E8A6 /* MKSaveDeviceNameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKSaveDeviceNameController.h; sourceTree = "<group>"; };
 		001A0D8120CBAFF10096E8A6 /* MKSaveDeviceNameController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKSaveDeviceNameController.m; sourceTree = "<group>"; };
 		001A0D8720CBB7640096E8A6 /* MKDeviceListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceListController.h; sourceTree = "<group>"; };
@@ -376,6 +405,8 @@
 		0024A5D820D0FFE2003AD20E /* MKDeviceInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceInfoCell.m; sourceTree = "<group>"; };
 		0024A5DA20D1029D003AD20E /* MKDeviceInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDeviceInfoModel.h; sourceTree = "<group>"; };
 		0024A5DB20D1029D003AD20E /* MKDeviceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDeviceInfoModel.m; sourceTree = "<group>"; };
+		002517A3214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MKDeviceModel+MKPlugAdd.h"; sourceTree = "<group>"; };
+		002517A4214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MKDeviceModel+MKPlugAdd.m"; sourceTree = "<group>"; };
 		002ABFCF2140D9F60054F285 /* selectDeviceType_swichIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectDeviceType_swichIcon@2x.png"; sourceTree = "<group>"; };
 		002ABFD02140D9F60054F285 /* selectDeviceType_swichIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectDeviceType_swichIcon@3x.png"; sourceTree = "<group>"; };
 		002ABFD62141118D0054F285 /* addDevice_centerPlugGif@3x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "addDevice_centerPlugGif@3x.gif"; sourceTree = "<group>"; };
@@ -575,6 +606,8 @@
 				000C2DE8212A964800F14A7C /* MKMQTTServerInterface+MKSmartPlug.m */,
 				000C2DE9212A964800F14A7C /* MKMQTTServerInterface.h */,
 				000C2DEA212A964800F14A7C /* MKMQTTServerInterface.m */,
+				00158580214669B800C6D93C /* MKMQTTServerInterface+MKSmartSwich.h */,
+				00158581214669B800C6D93C /* MKMQTTServerInterface+MKSmartSwich.m */,
 			);
 			path = interfaces;
 			sourceTree = "<group>";
@@ -701,6 +734,11 @@
 				001E6702214278FC004487B3 /* MKDeviceNormalDefines.h */,
 				007290542143741900F1E30F /* MKDeviceModel+MKTopic.h */,
 				007290552143741900F1E30F /* MKDeviceModel+MKTopic.m */,
+				001585792146178300C6D93C /* MKDeviceModel+MKSwichAdd.h */,
+				0015857A2146178300C6D93C /* MKDeviceModel+MKSwichAdd.m */,
+				0015857C214617F300C6D93C /* MKDeviceModelHeader.h */,
+				002517A3214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.h */,
+				002517A4214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m */,
 			);
 			path = deviceModel;
 			sourceTree = "<group>";
@@ -795,6 +833,56 @@
 				0014480E20C2A8BE00A87037 /* selectDeviceType_plugIcon@3x.png */,
 			);
 			path = selectDeviceType;
+			sourceTree = "<group>";
+		};
+		0015855F214604D900C6D93C /* configSwich */ = {
+			isa = PBXGroup;
+			children = (
+				00158561214604F200C6D93C /* controller */,
+				00158562214604F200C6D93C /* model */,
+				00158560214604F200C6D93C /* view */,
+			);
+			path = configSwich;
+			sourceTree = "<group>";
+		};
+		00158560214604F200C6D93C /* view */ = {
+			isa = PBXGroup;
+			children = (
+				00158566214606A300C6D93C /* MKConfigSwichCell.h */,
+				00158567214606A300C6D93C /* MKConfigSwichCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		00158561214604F200C6D93C /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				001585632146051000C6D93C /* MKConfigSwichController.h */,
+				001585642146051000C6D93C /* MKConfigSwichController.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		00158562214604F200C6D93C /* model */ = {
+			isa = PBXGroup;
+			children = (
+				00158576214611B200C6D93C /* MKConfigSwichModel.h */,
+				00158577214611B200C6D93C /* MKConfigSwichModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		001585692146118300C6D93C /* configSwich */ = {
+			isa = PBXGroup;
+			children = (
+				0015856A2146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png */,
+				0015856B2146118300C6D93C /* swich_modifyDeviceNameIcon@3x.png */,
+				0015856C2146118300C6D93C /* swich_state_off@2x.png */,
+				0015856D2146118300C6D93C /* swich_state_off@3x.png */,
+				0015856E2146118300C6D93C /* swich_state_on@2x.png */,
+				0015856F2146118300C6D93C /* swich_state_on@3x.png */,
+			);
+			path = configSwich;
 			sourceTree = "<group>";
 		};
 		001A0D7C20CBAFE00096E8A6 /* saveDevice */ = {
@@ -1130,6 +1218,7 @@
 		003F6AFA20C161E80002C833 /* FunctionImages */ = {
 			isa = PBXGroup;
 			children = (
+				001585692146118300C6D93C /* configSwich */,
 				003D436420DE191D00A02036 /* electricity */,
 				0024A5AB20D0CB6A003AD20E /* configDevice */,
 				0055EB2020C4D219003C4C70 /* mokoLife */,
@@ -1154,6 +1243,7 @@
 		003F6D0020C161EF0002C833 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				0015855F214604D900C6D93C /* configSwich */,
 				002ABFE421411D260054F285 /* addDeviceCenter */,
 				003D437120DE222B00A02036 /* about */,
 				003D435720DE139000A02036 /* electricity */,
@@ -1723,10 +1813,12 @@
 				0024A5C920D0CB6A003AD20E /* configPlugPage_switchButtonOff@3x.png in Resources */,
 				00C6803220C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png in Resources */,
 				003D436D20DE191D00A02036 /* electricityPowerIcon@2x.png in Resources */,
+				001585732146118300C6D93C /* swich_state_off@3x.png in Resources */,
 				00729053214370C800F1E30F /* device_swich_icon@3x.png in Resources */,
 				0055EB5220C51339003C4C70 /* notBlinkAmberStep1_leftIcon@3x.png in Resources */,
 				003F6D7A20C161F50002C833 /* refresh_loading_3@2x.png in Resources */,
 				003D436C20DE191D00A02036 /* electricityCurrentIcon@3x.png in Resources */,
+				001585712146118300C6D93C /* swich_modifyDeviceNameIcon@3x.png in Resources */,
 				0014480020C29A9300A87037 /* MKSmartPlugRightNextIcon@2x.png in Resources */,
 				002ABFD22140D9F70054F285 /* selectDeviceType_swichIcon@3x.png in Resources */,
 				003D436F20DE191D00A02036 /* electricityVoltageIcon@2x.png in Resources */,
@@ -1734,6 +1826,7 @@
 				003F6DA820C179080002C833 /* configServer_ConnectMode_selected@2x.png in Resources */,
 				0024A5C120D0CB6A003AD20E /* configPlugPage_scheduleOff@3x.png in Resources */,
 				00729051214370C800F1E30F /* device_swich_icon@2x.png in Resources */,
+				001585752146118300C6D93C /* swich_state_on@3x.png in Resources */,
 				001E66F621420E25004487B3 /* notBlinkRedStep3Icon@2x.png in Resources */,
 				0024A5C220D0CB6A003AD20E /* configPlugPage_scheduleOn@2x.png in Resources */,
 				0055EB5020C51339003C4C70 /* notBlinkAmberStep1_leftIcon@2x.png in Resources */,
@@ -1741,6 +1834,7 @@
 				00729052214370C800F1E30F /* device_plug_icon@3x.png in Resources */,
 				001447E520C23ADA00A87037 /* configServer_triangleIcon@3x.png in Resources */,
 				0024A5CB20D0CB6A003AD20E /* configPlugPage_switchButtonOn@3x.png in Resources */,
+				001585742146118300C6D93C /* swich_state_on@2x.png in Resources */,
 				0024A5C820D0CB6A003AD20E /* configPlugPage_switchButtonOff@2x.png in Resources */,
 				0011534520DCD21700F80B1D /* deviceList_switchStateOnIcon@3x.png in Resources */,
 				002ABFDE214115290054F285 /* addDevice_centerSwichGif@3x.gif in Resources */,
@@ -1755,6 +1849,7 @@
 				0055EB2720C4D219003C4C70 /* mokoLife_addIcon@2x.png in Resources */,
 				0011534320DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png in Resources */,
 				0014480F20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png in Resources */,
+				001585722146118300C6D93C /* swich_state_off@2x.png in Resources */,
 				002ABFDF214115290054F285 /* addDevice_centerSwichGif@2x.gif in Resources */,
 				003F6D9C20C16DAB0002C833 /* configServer_starIcon@2x.png in Resources */,
 				0055EB5320C51339003C4C70 /* notBlinkAmberStep2_rightIcon@3x.png in Resources */,
@@ -1774,6 +1869,7 @@
 				0055EB2820C4D219003C4C70 /* mokoLife_addIcon@3x.png in Resources */,
 				001447E620C23ADA00A87037 /* configServer_triangleIcon@2x.png in Resources */,
 				0055EB5420C51339003C4C70 /* notBlinkAmberStep1_rightIcon@3x.png in Resources */,
+				001585702146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png in Resources */,
 				003F6D8020C162AC0002C833 /* navigation_back_button@3x.png in Resources */,
 				00C6803120C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png in Resources */,
 				0024A5C020D0CB6A003AD20E /* configPlugPage_scheduleOff@2x.png in Resources */,
@@ -1839,6 +1935,7 @@
 				0011533A20DC96AA00F80B1D /* MKDeviceModel.m in Sources */,
 				000AF77A20CE636200BD74B6 /* MKDeviceListCell.m in Sources */,
 				000E85FA20CFAEAB006B8831 /* EasyEmptyPart.m in Sources */,
+				00158568214606A300C6D93C /* MKConfigSwichCell.m in Sources */,
 				001447DF20C22C1A00A87037 /* MKConfigServerQosCell.m in Sources */,
 				000B279120C636E800D305EA /* MKConnectDeviceWifiView.m in Sources */,
 				003D436020DE148B00A02036 /* MKElectricityModel.m in Sources */,
@@ -1855,6 +1952,7 @@
 				000E85F620CFAEAB006B8831 /* EasyAlertTypes.m in Sources */,
 				0014481320C2A92400A87037 /* MKSelectDeviceTypeModel.m in Sources */,
 				003F6D6120C161F50002C833 /* MKCustomNaviView.m in Sources */,
+				00158582214669B800C6D93C /* MKMQTTServerInterface+MKSmartSwich.m in Sources */,
 				007290562143741900F1E30F /* MKDeviceModel+MKTopic.m in Sources */,
 				000C2DF1212AB14600F14A7C /* MKUpdateFirmwareController.m in Sources */,
 				001447E920C2650F00A87037 /* MKConfigServerPickView.m in Sources */,
@@ -1883,6 +1981,8 @@
 				000E85BC20CF6F8E006B8831 /* MKTextField.m in Sources */,
 				001A0D9620CBCFDE0096E8A6 /* MKAddDeviceView.m in Sources */,
 				000C2DFD212AB86000F14A7C /* MKUpdateFirmwareHostTypeCell.m in Sources */,
+				00158578214611B200C6D93C /* MKConfigSwichModel.m in Sources */,
+				001585652146051000C6D93C /* MKConfigSwichController.m in Sources */,
 				001A0D8920CBB7640096E8A6 /* MKDeviceListController.m in Sources */,
 				000E85AE20CF6910006B8831 /* twlt_uuid_util.m in Sources */,
 				000E85F220CFAEAB006B8831 /* EasyAlertConfig.m in Sources */,
@@ -1894,6 +1994,7 @@
 				003F6D6220C161F50002C833 /* MKHaveRefreshTableView.m in Sources */,
 				003F6D9520C16A7D0002C833 /* MKConfigServerController.m in Sources */,
 				000E85F320CFAEAB006B8831 /* EasyAlertGlobalConfig.m in Sources */,
+				002517A5214760C000B93ED4 /* MKDeviceModel+MKPlugAdd.m in Sources */,
 				000E860520CFAEAC006B8831 /* EasyTextConfig.m in Sources */,
 				0024A5A420D0B995003AD20E /* MKConfigDeviceController.m in Sources */,
 				0055EB2F20C4D283003C4C70 /* MKAddDeviceController.m in Sources */,
@@ -1910,6 +2011,7 @@
 				000E860020CFAEAC006B8831 /* EasyLodingView.m in Sources */,
 				000E85F520CFAEAB006B8831 /* EasyAlertPart.m in Sources */,
 				003D437720DE223A00A02036 /* MKAboutController.m in Sources */,
+				0015857B2146178300C6D93C /* MKDeviceModel+MKSwichAdd.m in Sources */,
 				002ABFEE21412CD90054F285 /* MKNotBlinkRedModel.m in Sources */,
 				000E85AD20CF6910006B8831 /* SFHFKeychainUtils.m in Sources */,
 				000E85F920CFAEAB006B8831 /* EasyEmptyGlobalConfig.m in Sources */,

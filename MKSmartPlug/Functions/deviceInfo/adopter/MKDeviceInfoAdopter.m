@@ -41,7 +41,11 @@
     if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
         return;
     }
-    if (deviceModel.device_state == MKSmartPlugOffline) {
+    if (deviceModel.device_mode == MKDevice_plug && deviceModel.plugState == MKSmartPlugOffline) {
+        [target.view showCentralToast:@"Device offline,please check."];
+        return;
+    }
+    if (deviceModel.device_mode == MKDevice_swich && deviceModel.swichState == MKSmartSwichOffline) {
         [target.view showCentralToast:@"Device offline,please check."];
         return;
     }

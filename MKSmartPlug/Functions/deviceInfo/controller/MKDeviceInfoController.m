@@ -75,7 +75,11 @@
     }
     if (indexPath.row == 2) {
         //固件升级
-        if (self.deviceModel.device_state == MKSmartPlugOffline) {
+        if (self.deviceModel.device_mode == MKDevice_plug && self.deviceModel.plugState == MKSmartPlugOffline) {
+            [self.view showCentralToast:@"Device offline,please check."];
+            return;
+        }
+        if (self.deviceModel.device_mode == MKDevice_swich && self.deviceModel.swichState == MKSmartSwichOffline) {
             [self.view showCentralToast:@"Device offline,please check."];
             return;
         }
@@ -164,7 +168,11 @@
 }
 
 - (BOOL)canClickEnable{
-    if (self.deviceModel.device_state == MKSmartPlugOffline) {
+    if (self.deviceModel.device_mode == MKDevice_plug && self.deviceModel.plugState == MKSmartPlugOffline) {
+        [self.view showCentralToast:@"Device offline,please check."];
+        return NO;
+    }
+    if (self.deviceModel.device_mode == MKDevice_swich && self.deviceModel.swichState == MKSmartSwichOffline) {
         [self.view showCentralToast:@"Device offline,please check."];
         return NO;
     }

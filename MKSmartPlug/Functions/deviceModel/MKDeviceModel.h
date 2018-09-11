@@ -32,11 +32,6 @@
 @property (nonatomic, copy)NSString *local_name;
 
 /**
- 当前设备的状态，离线、开、关
- */
-@property (nonatomic, assign)MKSmartPlugState device_state;
-
-/**
  设备id，plug的mac address
  */
 @property (nonatomic, copy)NSString *device_mac;

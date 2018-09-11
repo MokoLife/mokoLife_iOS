@@ -112,16 +112,16 @@ static CGFloat const switchHeight = 30.f;
         self.stateButton.hidden = NO;
         NSString *deviceIconName = (ValidStr(_dataModel.device_icon) ? _dataModel.device_icon : @"device_plug_icon");
         self.deviceIcon.image = LOADIMAGE(deviceIconName, @"png");
-        NSString *stateIconName = (_dataModel.device_state == MKSmartPlugOn ? @"deviceList_switchStateOnIcon" : @"deviceList_switchStateOffIcon");
+        NSString *stateIconName = (_dataModel.plugState == MKSmartPlugOn ? @"deviceList_switchStateOnIcon" : @"deviceList_switchStateOffIcon");
         [self.stateButton setImage:LOADIMAGE(stateIconName, @"png") forState:UIControlStateNormal];
-        self.stateButton.selected = (_dataModel.device_state == MKSmartPlugOn);
-        if (_dataModel.device_state == MKSmartPlugOn) {
+        self.stateButton.selected = (_dataModel.plugState == MKSmartPlugOn);
+        if (_dataModel.plugState == MKSmartPlugOn) {
             self.deviceStateLabel.textColor = NAVIGATION_BAR_COLOR;
             self.deviceStateLabel.text = @"On";
-        }else if (_dataModel.device_state == MKSmartPlugOffline){
+        }else if (_dataModel.plugState == MKSmartPlugOffline){
             self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
             self.deviceStateLabel.text = @"Offline";
-        }else if (_dataModel.device_state == MKSmartPlugOff){
+        }else if (_dataModel.plugState == MKSmartPlugOff){
             self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
             self.deviceStateLabel.text = @"Off";
         }
@@ -131,7 +131,7 @@ static CGFloat const switchHeight = 30.f;
     self.stateButton.hidden = YES;
     NSString *deviceIconName = (ValidStr(_dataModel.device_icon) ? _dataModel.device_icon : @"device_swich_icon");
     self.deviceIcon.image = LOADIMAGE(deviceIconName, @"png");
-    if (_dataModel.device_state == MKSmartPlugOffline){
+    if (_dataModel.swichState == MKSmartSwichOffline){
         self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
         self.deviceStateLabel.text = @"Offline";
     }else{

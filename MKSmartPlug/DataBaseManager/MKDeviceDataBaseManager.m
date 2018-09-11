@@ -41,7 +41,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             return;
         }
         
-        BOOL resCreate = [db executeUpdate:@"CREATE TABLE IF NOT EXISTS deviceTable (device_mode text NOT NULL,device_mac text NOT NULL,device_type text NOT NULL ,local_name text NOT NULL,device_name text NOT NULL, device_icon text NOT NULL, device_specifications text NOT NULL, device_function text NOT NULL);"];
+        BOOL resCreate = [db executeUpdate:@"CREATE TABLE IF NOT EXISTS deviceTable (device_mode text NOT NULL,device_mac text NOT NULL,device_type text NOT NULL ,local_name text NOT NULL,device_name text NOT NULL, device_icon text NOT NULL, device_specifications text NOT NULL, device_function text NOT NULL,swich_way_nameDic text NOT NULL);"];
         if (!resCreate) {
             [db close];
             [MKDeviceDataBaseAdopter operationInsertFailedBlock:failedBlock];
@@ -57,12 +57,38 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             }
             if (exist) {
                 //存在该设备，更新设备
-                [db executeUpdate:@"UPDATE deviceTable SET device_mode = ?, device_type = ?, device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? WHERE device_mac = ?",[NSString stringWithFormat:@"%ld",(long)model.device_mode], SafeStr(model.device_type),                         SafeStr(model.device_name),SafeStr(model.local_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function),SafeStr(model.device_mac)];
+                NSString *swichListJsonString = @"";
+                if (model.device_mode == MKDevice_swich && !ValidDict(model.swich_way_nameDic)) {
+                    //默认插入三路面板状态
+                    NSDictionary *jsonDic = @{
+                                              @"switch_state_01":@"Switch1",
+                                              @"switch_state_02":@"Switch2",
+                                              @"switch_state_03":@"Switch3",
+                                              };
+                    swichListJsonString = [jsonDic jsonStringEncoded];
+                }
+                if (model.device_mode == MKDevice_swich && ValidDict(model.swich_way_nameDic)) {
+                    swichListJsonString = [model.swich_way_nameDic jsonStringEncoded];
+                }
+                [db executeUpdate:@"UPDATE deviceTable SET device_mode = ?, device_type = ?, device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? ,swich_way_nameDic = ? WHERE device_mac = ?",[NSString stringWithFormat:@"%ld",(long)model.device_mode], SafeStr(model.device_type),                         SafeStr(model.device_name),SafeStr(model.local_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function),swichListJsonString,SafeStr(model.device_mac)];
             }else{
                 //不存在，插入设备
                 NSString *mode = [NSString stringWithFormat:@"%ld",(long)model.device_mode];
-                [db executeUpdate:@"INSERT INTO deviceTable (device_mode, device_mac, device_type, local_name, device_name, device_icon, device_specifications, device_function) VALUES (?,?,?,?,?,?,?,?);",mode
-                 ,SafeStr(model.device_mac),SafeStr(model.device_type),SafeStr(model.local_name),SafeStr(model.device_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function)];
+                NSString *swichListJsonString = @"";
+                if (model.device_mode == MKDevice_swich && !ValidDict(model.swich_way_nameDic)) {
+                    //默认插入三路面板状态
+                    NSDictionary *jsonDic = @{
+                                              @"switch_state_01":@"Switch1",
+                                              @"switch_state_02":@"Switch2",
+                                              @"switch_state_03":@"Switch3",
+                                              };
+                    swichListJsonString = [jsonDic jsonStringEncoded];
+                }
+                if (model.device_mode == MKDevice_swich && ValidDict(model.swich_way_nameDic)) {
+                    swichListJsonString = [model.swich_way_nameDic jsonStringEncoded];
+                }
+                [db executeUpdate:@"INSERT INTO deviceTable (device_mode, device_mac, device_type, local_name, device_name, device_icon, device_specifications, device_function, swich_way_nameDic) VALUES (?,?,?,?,?,?,?,?,?);",mode
+                 ,SafeStr(model.device_mac),SafeStr(model.device_type),SafeStr(model.local_name),SafeStr(model.device_name),SafeStr(model.device_icon),SafeStr(model.device_specifications),SafeStr(model.device_function),swichListJsonString];
             }
             
         }
@@ -102,6 +128,10 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             deviceModel.device_icon = [result stringForColumn:@"device_icon"];
             deviceModel.device_specifications = [result stringForColumn:@"device_specifications"];
             deviceModel.device_function = [result stringForColumn:@"device_function"];
+            if (deviceModel.device_mode == MKDevice_swich) {
+                NSString *nameDicString = [result stringForColumn:@"swich_way_nameDic"];
+                deviceModel.swich_way_nameDic = [nameDicString jsonValueDecoded];
+            }
             [dataList addObject:deviceModel];
         }
         [db close];
@@ -134,7 +164,20 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             [MKDeviceDataBaseAdopter operationUpdateFailedBlock:failedBlock];
             return;
         }
-        BOOL resUpdate = [db executeUpdate:@"UPDATE deviceTable SET device_mode = ?, device_type = ?, device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? WHERE device_mac = ?",[NSString stringWithFormat:@"%ld",(long)deviceModel.device_mode], SafeStr(deviceModel.device_type),                         SafeStr(deviceModel.device_name),SafeStr(deviceModel.local_name),SafeStr(deviceModel.device_icon),SafeStr(deviceModel.device_specifications),SafeStr(deviceModel.device_function),SafeStr(deviceModel.device_mac)];
+        NSString *swichListJsonString = @"";
+        if (deviceModel.device_mode == MKDevice_swich && !ValidDict(deviceModel.swich_way_nameDic)) {
+            //默认插入三路面板状态
+            NSDictionary *jsonDic = @{
+                                      @"switch_state_01":@"Switch1",
+                                      @"switch_state_02":@"Switch2",
+                                      @"switch_state_03":@"Switch3",
+                                      };
+            swichListJsonString = [jsonDic jsonStringEncoded];
+        }
+        if (deviceModel.device_mode == MKDevice_swich && ValidDict(deviceModel.swich_way_nameDic)) {
+            swichListJsonString = [deviceModel.swich_way_nameDic jsonStringEncoded];
+        }
+        BOOL resUpdate = [db executeUpdate:@"UPDATE deviceTable SET device_mode = ?, device_type = ?, device_name = ? ,local_name = ?,device_icon = ? , device_specifications = ? ,device_function = ? ,swich_way_nameDic = ? WHERE device_mac = ?",[NSString stringWithFormat:@"%ld",(long)deviceModel.device_mode], SafeStr(deviceModel.device_type),                         SafeStr(deviceModel.device_name),SafeStr(deviceModel.local_name),SafeStr(deviceModel.device_icon),SafeStr(deviceModel.device_specifications),SafeStr(deviceModel.device_function),swichListJsonString,SafeStr(deviceModel.device_mac)];
         [db close];
         if (!resUpdate) {
             [MKDeviceDataBaseAdopter operationUpdateFailedBlock:failedBlock];

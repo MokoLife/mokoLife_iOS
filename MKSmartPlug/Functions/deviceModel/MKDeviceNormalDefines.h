@@ -20,6 +20,14 @@ typedef NS_ENUM(NSInteger, MKSmartPlugState) {
     MKSmartPlugOff,           //在线并且关闭
 };
 
+/**
+ 智能面板状态
+ */
+typedef NS_ENUM(NSInteger, MKSmartSwichState) {
+    MKSmartSwichOffline,
+    MKSmartSwichOnline,             //只有在线和离线两种状态
+};
+
 typedef NS_ENUM(NSInteger, deviceModelTopicType) {
     deviceModelTopicDeviceType,             //设备发布数据的主题
     deviceModelTopicAppType,                //APP发布数据的主题

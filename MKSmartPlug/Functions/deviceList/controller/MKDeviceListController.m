@@ -16,6 +16,7 @@
 #import "MKDeviceDataBaseManager.h"
 #import "EasyLodingView.h"
 #import "MKConfigDeviceController.h"
+#import "MKConfigSwichController.h"
 
 @interface MKDeviceListController ()<UITableViewDelegate, UITableViewDataSource, MKDeviceModelDelegate, MKDeviceListCellDelegate>
 
@@ -69,11 +70,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MKDeviceModel *dataModel = self.dataList[indexPath.row];
-    MKConfigDeviceController *vc = [[MKConfigDeviceController alloc] initWithNavigationType:GYNaviTypeHide];
-    MKDeviceModel *model = [[MKDeviceModel alloc] init];
-    [model updatePropertyWithModel:dataModel];
-    vc.dataModel = model;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (dataModel.device_mode == MKDevice_plug) {
+        MKConfigDeviceController *vc = [[MKConfigDeviceController alloc] initWithNavigationType:GYNaviTypeHide];
+        MKDeviceModel *model = [[MKDeviceModel alloc] init];
+        [model updatePropertyWithModel:dataModel];
+        vc.dataModel = model;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    if (dataModel.device_mode == MKDevice_swich) {
+        MKConfigSwichController *vc = [[MKConfigSwichController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKDeviceModel *model = [[MKDeviceModel alloc] init];
+        [model updatePropertyWithModel:dataModel];
+        model.swich_way_nameDic = [NSDictionary dictionaryWithDictionary:dataModel.swich_way_nameDic];
+        model.swich_way_stateDic = [NSDictionary dictionaryWithDictionary:dataModel.swich_way_stateDic];
+        vc.deviceModel = model;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -93,7 +107,7 @@
     if (!deviceModel || !ValidStr(deviceModel.device_mac)) {
         return;
     }
-    [self updateDeviceModelWithState:MKSmartPlugOffline mac:deviceModel.device_mac];
+    [self updateDeviceModelState:YES mac:deviceModel.device_mac stateDic:@{}];
 }
 
 #pragma mark - MKDeviceListCellDelegate
@@ -144,8 +158,7 @@
     if (!ValidDict(deviceDic) || self.dataList.count == 0) {
         return;
     }
-    MKSmartPlugState state = ([deviceDic[@"switch_state"] isEqualToString:@"on"] ? MKSmartPlugOn : MKSmartPlugOff);
-    [self updateDeviceModelWithState:state mac:deviceDic[@"mac"]];
+    [self updateDeviceModelState:NO mac:deviceDic[@"mac"] stateDic:deviceDic];
 }
 
 #pragma mark - get device list
@@ -204,17 +217,25 @@
 }
 
 #pragma mark -
-- (void)updateDeviceModelWithState:(MKSmartPlugState)state mac:(NSString *)mac{
+- (void)updateDeviceModelState:(BOOL)offline mac:(NSString *)mac stateDic:(NSDictionary *)stateDic{
     @synchronized(self) {
         //需要执行的代码
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             for (NSInteger i = 0; i < self.dataList.count; i ++) {
                 MKDeviceModel *model = self.dataList[i];
                 if ([model.device_mac isEqualToString:mac]) {
-                    model.device_state = state;
-                    if (state != MKSmartPlugOffline) {
-                        [model resetTimerCounter];
+                    if (offline && model.device_mode == MKDevice_swich) {
+                        model.swichState = MKSmartSwichOffline;
+                    }else if (!offline && model.device_mode == MKDevice_swich){
+                        model.swich_way_stateDic = stateDic;
+                        model.swichState = MKSmartSwichOnline;
+                    }else if (offline && model.device_mode == MKDevice_plug){
+                        model.plugState = MKSmartPlugOffline;
+                    }else if (!offline && model.device_mode == MKDevice_plug){
+                        MKSmartPlugState state = ([stateDic[@"switch_state"] isEqualToString:@"on"] ? MKSmartPlugOn : MKSmartPlugOff);
+                        model.plugState = state;
                     }
+                    [model resetTimerCounter];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [UIView performWithoutAnimation:^{
                             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
