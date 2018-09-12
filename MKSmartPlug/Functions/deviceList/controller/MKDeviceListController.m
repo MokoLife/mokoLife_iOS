@@ -38,6 +38,7 @@
     [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKNeedReadDataFromLocalNotification object:nil];
     [kNotificationCenterSington removeObserver:self name:MKMQTTSessionManagerStateChangedNotification object:nil];
+    [kNotificationCenterSington removeObserver:self name:MKNeedUpdateSwichWayNameNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -181,6 +182,28 @@
     [self updateDeviceModelState:NO mac:deviceDic[@"mac"] stateDic:deviceDic];
 }
 
+- (void)updateSwichWayNameNotification:(NSNotification *)note{
+    NSDictionary *dic = note.userInfo;
+    if (!ValidDict(dic) || self.dataList.count == 0) {
+        return;
+    }
+    /*
+     @{@"swich_way_nameDic" : dic, @"device_mac" : weakSelf.deviceModel.device_mac}
+     */
+    @synchronized(self) {
+        //需要执行的代码
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            for (NSInteger i = 0; i < self.dataList.count; i ++) {
+                MKDeviceModel *model = self.dataList[i];
+                if ([model.device_mac isEqualToString:dic[@"device_mac"]] && model.device_mode == MKDevice_swich) {
+                    model.swich_way_nameDic = dic[@"swich_way_nameDic"];
+                    break;
+                }
+            }
+        });
+    }
+}
+
 #pragma mark - get device list
 - (void)getDeviceList{
     WS(weakSelf);
@@ -284,6 +307,10 @@
     [kNotificationCenterSington addObserver:self
                                    selector:@selector(mqttServerManagerStateChanged)
                                        name:MKMQTTSessionManagerStateChangedNotification
+                                     object:nil];
+    [kNotificationCenterSington addObserver:self
+                                   selector:@selector(updateSwichWayNameNotification:)
+                                       name:MKNeedUpdateSwichWayNameNotification
                                      object:nil];
 }
 

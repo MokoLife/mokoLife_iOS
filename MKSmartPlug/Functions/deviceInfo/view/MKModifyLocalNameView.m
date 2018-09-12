@@ -13,8 +13,6 @@
 static CGFloat const offset_X = 15.f;
 static CGFloat const alertViewHeight = 190.f;
 
-static NSString *const titleMsg = @"Modify Device Name";
-
 @interface MKModifyLocalNameView()
 
 @property (nonatomic, strong)MKConnectAlertView *alertView;
@@ -53,8 +51,8 @@ static NSString *const titleMsg = @"Modify Device Name";
     }];
     CGFloat width = self.frame.size.width - 2 * 37.f;
     //注意这个，alertView上面的title会自动换行，所以需要动态计算postion_Y
-    CGSize titleSize = [NSString sizeWithText:titleMsg
-                                      andFont:MKFont(18.f)
+    CGSize titleSize = [NSString sizeWithText:self.alertView.titleLabel.text
+                                      andFont:self.alertView.titleLabel.font
                                    andMaxSize:CGSizeMake(width - 2 * offset_X, MAXFLOAT)];
     [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(30.f);
@@ -82,11 +80,14 @@ static NSString *const titleMsg = @"Modify Device Name";
 }
 
 #pragma mark - public method
-- (void)showConnectAlertView:(NSString *)text block:(void (^)(NSString *name))block{
+- (void)showConnectAlertViewTitle:(NSString *)titleMsg text:(NSString *)text block:(void (^)(NSString *name))block{
     self.confirmBlock = nil;
     self.confirmBlock = block;
     [kAppWindow addSubview:self];
     [self.textField becomeFirstResponder];
+    if (ValidStr(titleMsg)) {
+        self.alertView.titleLabel.text = titleMsg;
+    }
     if (ValidStr(text)) {
         self.textField.text = text;
     }
@@ -106,7 +107,7 @@ static NSString *const titleMsg = @"Modify Device Name";
 - (MKConnectAlertView *)alertView{
     if (!_alertView) {
         WS(weakSelf);
-        _alertView = [[MKConnectAlertView alloc] initWithTitleMsg:titleMsg confirmButtonTitle:@"Save" cancelButtonTitle:@"Cancel" cancelAction:^{
+        _alertView = [[MKConnectAlertView alloc] initWithTitleMsg:@"" confirmButtonTitle:@"Save" cancelButtonTitle:@"Cancel" cancelAction:^{
             [weakSelf cancelButtonPressed];
         } confirmAction:^{
             [weakSelf confirmButtonPressed];

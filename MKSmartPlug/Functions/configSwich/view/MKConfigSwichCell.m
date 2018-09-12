@@ -41,6 +41,7 @@ static NSString *const MKConfigSwichCellIdenty = @"MKConfigSwichCellIdenty";
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self.contentView addSubview:self.switchButton];
         [self.contentView addSubview:self.countdownLabel];
         [self.contentView addSubview:self.deviceNameLabel];
@@ -212,3 +213,4 @@ static NSString *const MKConfigSwichCellIdenty = @"MKConfigSwichCellIdenty";
 }
 
 @end
+

@@ -138,7 +138,7 @@
     MKConfigSwichModel *model = self.dataList[index];
     MKModifyLocalNameView *view = [[MKModifyLocalNameView alloc] init];
     WS(weakSelf);
-    [view showConnectAlertView:model.currentWaySwitchName block:^(NSString *name) {
+    [view showConnectAlertViewTitle:@"Modify Switch Name" text:model.currentWaySwitchName block:^(NSString *name) {
         [weakSelf updateSwichWayName:name index:index];
     }];
 }

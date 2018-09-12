@@ -54,7 +54,7 @@
         //修改名称
         MKModifyLocalNameView *view = [[MKModifyLocalNameView alloc] init];
         WS(weakSelf);
-        [view showConnectAlertView:self.deviceModel.local_name block:^(NSString *name) {
+        [view showConnectAlertViewTitle:@"Modify Device Name" text:self.deviceModel.local_name block:^(NSString *name) {
             [weakSelf updateDeviceLocalName:name];
         }];
         return;

@@ -60,11 +60,12 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
                 NSString *swichListJsonString = @"";
                 if (model.device_mode == MKDevice_swich && !ValidDict(model.swich_way_nameDic)) {
                     //默认插入三路面板状态
-                    NSDictionary *jsonDic = @{
-                                              @"switch_state_01":@"Switch1",
-                                              @"switch_state_02":@"Switch2",
-                                              @"switch_state_03":@"Switch3",
-                                              };
+                    NSMutableDictionary *jsonDic = [NSMutableDictionary dictionary];
+                    for (NSInteger i = 0; i < [model.device_type integerValue]; i ++) {
+                        NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)i]];
+                        NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
+                        [jsonDic setObject:name forKey:key];
+                    }
                     swichListJsonString = [jsonDic jsonStringEncoded];
                 }
                 if (model.device_mode == MKDevice_swich && ValidDict(model.swich_way_nameDic)) {
@@ -77,11 +78,12 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
                 NSString *swichListJsonString = @"";
                 if (model.device_mode == MKDevice_swich && !ValidDict(model.swich_way_nameDic)) {
                     //默认插入三路面板状态
-                    NSDictionary *jsonDic = @{
-                                              @"switch_state_01":@"Switch1",
-                                              @"switch_state_02":@"Switch2",
-                                              @"switch_state_03":@"Switch3",
-                                              };
+                    NSMutableDictionary *jsonDic = [NSMutableDictionary dictionary];
+                    for (NSInteger i = 0; i < [model.device_type integerValue]; i ++) {
+                        NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)i]];
+                        NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
+                        [jsonDic setObject:name forKey:key];
+                    }
                     swichListJsonString = [jsonDic jsonStringEncoded];
                 }
                 if (model.device_mode == MKDevice_swich && ValidDict(model.swich_way_nameDic)) {
@@ -167,11 +169,12 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
         NSString *swichListJsonString = @"";
         if (deviceModel.device_mode == MKDevice_swich && !ValidDict(deviceModel.swich_way_nameDic)) {
             //默认插入三路面板状态
-            NSDictionary *jsonDic = @{
-                                      @"switch_state_01":@"Switch1",
-                                      @"switch_state_02":@"Switch2",
-                                      @"switch_state_03":@"Switch3",
-                                      };
+            NSMutableDictionary *jsonDic = [NSMutableDictionary dictionary];
+            for (NSInteger i = 0; i < [deviceModel.device_type integerValue]; i ++) {
+                NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)i]];
+                NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
+                [jsonDic setObject:name forKey:key];
+            }
             swichListJsonString = [jsonDic jsonStringEncoded];
         }
         if (deviceModel.device_mode == MKDevice_swich && ValidDict(deviceModel.swich_way_nameDic)) {

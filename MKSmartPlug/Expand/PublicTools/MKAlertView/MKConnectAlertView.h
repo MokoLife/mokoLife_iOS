@@ -10,6 +10,8 @@
 
 @interface MKConnectAlertView : UIView
 
+@property (nonatomic, strong, readonly)UILabel *titleLabel;
+
 - (instancetype)initWithTitleMsg:(NSString *)titleMsg
                     cancelAction:(void (^)(void))cancelAction
                    confirmAction:(void (^)(void))confirmAction;
