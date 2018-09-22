@@ -188,6 +188,10 @@
 		003F6DAA20C179080002C833 /* configServer_ConnectMode_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6DA620C179080002C833 /* configServer_ConnectMode_normal@3x.png */; };
 		003F6DAB20C179080002C833 /* configServer_ConnectMode_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6DA720C179080002C833 /* configServer_ConnectMode_normal@2x.png */; };
 		003F6DAF20C17A250002C833 /* MKConfigServerAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6DAE20C17A250002C833 /* MKConfigServerAdopter.m */; };
+		0051279B214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00512797214BA8950071B827 /* connectAlertWifiSettingsIcon_switch@2x.png */; };
+		0051279C214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00512798214BA8950071B827 /* connectAlertWifiSettingsIcon_plug@3x.png */; };
+		0051279D214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00512799214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png */; };
+		0051279E214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0051279A214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@2x.png */; };
 		0055EB2720C4D219003C4C70 /* mokoLife_addIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0055EB2120C4D219003C4C70 /* mokoLife_addIcon@2x.png */; };
 		0055EB2820C4D219003C4C70 /* mokoLife_addIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0055EB2220C4D219003C4C70 /* mokoLife_addIcon@3x.png */; };
 		0055EB2920C4D219003C4C70 /* mokoLife_centerIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0055EB2320C4D219003C4C70 /* mokoLife_centerIcon@2x.png */; };
@@ -214,8 +218,6 @@
 		007290562143741900F1E30F /* MKDeviceModel+MKTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 007290552143741900F1E30F /* MKDeviceModel+MKTopic.m */; };
 		00BB0EAA20C519C8006F2DEA /* MKNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00BB0EA920C519C8006F2DEA /* MKNetworkManager.m */; };
 		00C6802820C53D9D00EEFFF3 /* MKConnectDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6802720C53D9D00EEFFF3 /* MKConnectDeviceView.m */; };
-		00C6803120C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6802F20C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png */; };
-		00C6803220C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6803020C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png */; };
 		00C6803520C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6803420C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m */; };
 		CF1A8D503A9A0F50468A9B31 /* libPods-MKSmartPlug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C70A99AF7622EA9C6E25B107 /* libPods-MKSmartPlug.a */; };
 /* End PBXBuildFile section */
@@ -530,6 +532,10 @@
 		003F6DA720C179080002C833 /* configServer_ConnectMode_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "configServer_ConnectMode_normal@2x.png"; sourceTree = "<group>"; };
 		003F6DAD20C17A250002C833 /* MKConfigServerAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerAdopter.h; sourceTree = "<group>"; };
 		003F6DAE20C17A250002C833 /* MKConfigServerAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerAdopter.m; sourceTree = "<group>"; };
+		00512797214BA8950071B827 /* connectAlertWifiSettingsIcon_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon_switch@2x.png"; sourceTree = "<group>"; };
+		00512798214BA8950071B827 /* connectAlertWifiSettingsIcon_plug@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon_plug@3x.png"; sourceTree = "<group>"; };
+		00512799214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon_switch@3x.png"; sourceTree = "<group>"; };
+		0051279A214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon_plug@2x.png"; sourceTree = "<group>"; };
 		0055EB2120C4D219003C4C70 /* mokoLife_addIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mokoLife_addIcon@2x.png"; sourceTree = "<group>"; };
 		0055EB2220C4D219003C4C70 /* mokoLife_addIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mokoLife_addIcon@3x.png"; sourceTree = "<group>"; };
 		0055EB2320C4D219003C4C70 /* mokoLife_centerIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mokoLife_centerIcon@2x.png"; sourceTree = "<group>"; };
@@ -564,8 +570,6 @@
 		00BB0EA920C519C8006F2DEA /* MKNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKNetworkManager.m; sourceTree = "<group>"; };
 		00C6802620C53D9D00EEFFF3 /* MKConnectDeviceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectDeviceView.h; sourceTree = "<group>"; };
 		00C6802720C53D9D00EEFFF3 /* MKConnectDeviceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConnectDeviceView.m; sourceTree = "<group>"; };
-		00C6802F20C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon@2x.png"; sourceTree = "<group>"; };
-		00C6803020C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon@3x.png"; sourceTree = "<group>"; };
 		00C6803320C56FAE00EEFFF3 /* MKConnectDeviceProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConnectDeviceProgressView.h; sourceTree = "<group>"; };
 		00C6803420C56FAE00EEFFF3 /* MKConnectDeviceProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConnectDeviceProgressView.m; sourceTree = "<group>"; };
 		08762769006BC3B202AFD33B /* Pods-MKSmartPlug.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKSmartPlug.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-MKSmartPlug/Pods-MKSmartPlug.adhoc.xcconfig"; sourceTree = "<group>"; };
@@ -1495,6 +1499,10 @@
 		003F6D8220C163390002C833 /* addDevice */ = {
 			isa = PBXGroup;
 			children = (
+				0051279A214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@2x.png */,
+				00512798214BA8950071B827 /* connectAlertWifiSettingsIcon_plug@3x.png */,
+				00512797214BA8950071B827 /* connectAlertWifiSettingsIcon_switch@2x.png */,
+				00512799214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png */,
 				0072904C214370C700F1E30F /* device_plug_icon@2x.png */,
 				0072904E214370C800F1E30F /* device_plug_icon@3x.png */,
 				0072904D214370C800F1E30F /* device_swich_icon@2x.png */,
@@ -1507,8 +1515,6 @@
 				002ABFDC214115280054F285 /* addDevice_centerSwichGif@3x.gif */,
 				002ABFD72141118D0054F285 /* addDevice_centerPlugGif@2x.gif */,
 				002ABFD62141118D0054F285 /* addDevice_centerPlugGif@3x.gif */,
-				00C6802F20C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png */,
-				00C6803020C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png */,
 				0055EB4820C51338003C4C70 /* notBlinkAmberStep1_leftIcon@2x.png */,
 				0055EB4A20C51338003C4C70 /* notBlinkAmberStep1_leftIcon@3x.png */,
 				0055EB4F20C51339003C4C70 /* notBlinkAmberStep1_rightIcon@2x.png */,
@@ -1817,15 +1823,16 @@
 				003D436B20DE191D00A02036 /* electricityCurrentIcon@2x.png in Resources */,
 				0011534420DCD21700F80B1D /* deviceList_switchStateOffIcon@3x.png in Resources */,
 				003F6DAA20C179080002C833 /* configServer_ConnectMode_normal@3x.png in Resources */,
+				0051279E214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@2x.png in Resources */,
 				003F6D7020C161F50002C833 /* keyboardDelIcon@3x.png in Resources */,
 				0024A5CA20D0CB6A003AD20E /* configPlugPage_switchButtonOn@2x.png in Resources */,
 				0055EB5120C51339003C4C70 /* notBlinkAmberStep2_rightIcon@2x.png in Resources */,
 				002ABFD12140D9F70054F285 /* selectDeviceType_swichIcon@2x.png in Resources */,
 				003F6D7820C161F50002C833 /* refresh_loading_1@2x.png in Resources */,
 				0024A5C920D0CB6A003AD20E /* configPlugPage_switchButtonOff@3x.png in Resources */,
-				00C6803220C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@3x.png in Resources */,
 				003D436D20DE191D00A02036 /* electricityPowerIcon@2x.png in Resources */,
 				001585732146118300C6D93C /* swich_state_off@3x.png in Resources */,
+				0051279D214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png in Resources */,
 				00729053214370C800F1E30F /* device_swich_icon@3x.png in Resources */,
 				0055EB5220C51339003C4C70 /* notBlinkAmberStep1_leftIcon@3x.png in Resources */,
 				003F6D7A20C161F50002C833 /* refresh_loading_3@2x.png in Resources */,
@@ -1865,6 +1872,7 @@
 				0011534320DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png in Resources */,
 				0014480F20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png in Resources */,
 				001585722146118300C6D93C /* swich_state_off@2x.png in Resources */,
+				0051279B214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@2x.png in Resources */,
 				002ABFDF214115290054F285 /* addDevice_centerSwichGif@2x.gif in Resources */,
 				003F6D9C20C16DAB0002C833 /* configServer_starIcon@2x.png in Resources */,
 				0055EB5320C51339003C4C70 /* notBlinkAmberStep2_rightIcon@3x.png in Resources */,
@@ -1883,10 +1891,10 @@
 				0055EB2920C4D219003C4C70 /* mokoLife_centerIcon@2x.png in Resources */,
 				0055EB2820C4D219003C4C70 /* mokoLife_addIcon@3x.png in Resources */,
 				001447E620C23ADA00A87037 /* configServer_triangleIcon@2x.png in Resources */,
+				0051279C214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@3x.png in Resources */,
 				0055EB5420C51339003C4C70 /* notBlinkAmberStep1_rightIcon@3x.png in Resources */,
 				001585702146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png in Resources */,
 				003F6D8020C162AC0002C833 /* navigation_back_button@3x.png in Resources */,
-				00C6803120C55A1B00EEFFF3 /* connectAlertWifiSettingsIcon@2x.png in Resources */,
 				0024A5C020D0CB6A003AD20E /* configPlugPage_scheduleOff@2x.png in Resources */,
 				0024A5BF20D0CB6A003AD20E /* configPlugPage_moreIcon@3x.png in Resources */,
 				003F6D7920C161F50002C833 /* refresh_loading_2@2x.png in Resources */,

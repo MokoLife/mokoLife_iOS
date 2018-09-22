@@ -10,6 +10,6 @@
 
 @interface MKModifyLocalNameView : UIView
 
-- (void)showConnectAlertViewTitle:(NSString *)titleMsg text:(NSString *)text block:(void (^)(NSString *name))block;
+- (void)showConnectAlertViewTitle:(NSString *)titleMsg text:(NSString *)text block:(void (^)(BOOL empty,NSString *name))block;
 
 @end

@@ -138,7 +138,11 @@
     MKConfigSwichModel *model = self.dataList[index];
     MKModifyLocalNameView *view = [[MKModifyLocalNameView alloc] init];
     WS(weakSelf);
-    [view showConnectAlertViewTitle:@"Modify Switch Name" text:model.currentWaySwitchName block:^(NSString *name) {
+    [view showConnectAlertViewTitle:@"Modify Switch Name" text:model.currentWaySwitchName block:^(BOOL empty, NSString *name) {
+        if (empty) {
+            [view showCentralToast:@"Switch name can't be blank."];
+            return ;
+        }
         [weakSelf updateSwichWayName:name index:index];
     }];
 }
@@ -258,6 +262,9 @@
 }
 
 - (void)setSwichAllWaySwitchStateOn:(BOOL)allOn{
+    if (![self canClickEnable]) {
+        return;
+    }
     [[MKHudManager share] showHUDWithTitle:@"Setting..." inView:self.view isPenetration:NO];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     for (NSInteger i = 0; i < self.dataList.count; i ++) {

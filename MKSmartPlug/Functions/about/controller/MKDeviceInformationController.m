@@ -132,7 +132,7 @@
     [self.dataList addObject:dateModel];
     
     MKAboutModel *nameModel = [[MKAboutModel alloc] init];
-    nameModel.leftMsg = @"Device Name";
+    nameModel.leftMsg = @"Product Model";
     nameModel.rightMsg = infoDic[@"product_model"];
     [self.dataList addObject:nameModel];
     

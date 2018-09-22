@@ -54,7 +54,11 @@
         //修改名称
         MKModifyLocalNameView *view = [[MKModifyLocalNameView alloc] init];
         WS(weakSelf);
-        [view showConnectAlertViewTitle:@"Modify Device Name" text:self.deviceModel.local_name block:^(NSString *name) {
+        [view showConnectAlertViewTitle:@"Modify Device Name" text:self.deviceModel.local_name block:^(BOOL empty, NSString *name) {
+            if (empty) {
+                [view showCentralToast:@"Device name can't be blank."];
+                return ;
+            }
             [weakSelf updateDeviceLocalName:name];
         }];
         return;

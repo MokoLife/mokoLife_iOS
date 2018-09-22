@@ -62,7 +62,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
                     //默认插入三路面板状态
                     NSMutableDictionary *jsonDic = [NSMutableDictionary dictionary];
                     for (NSInteger i = 0; i < [model.device_type integerValue]; i ++) {
-                        NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)i]];
+                        NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)(i + 1)]];
                         NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
                         [jsonDic setObject:name forKey:key];
                     }
@@ -80,7 +80,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
                     //默认插入三路面板状态
                     NSMutableDictionary *jsonDic = [NSMutableDictionary dictionary];
                     for (NSInteger i = 0; i < [model.device_type integerValue]; i ++) {
-                        NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)i]];
+                        NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)(i + 1)]];
                         NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
                         [jsonDic setObject:name forKey:key];
                     }
@@ -171,7 +171,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             //默认插入三路面板状态
             NSMutableDictionary *jsonDic = [NSMutableDictionary dictionary];
             for (NSInteger i = 0; i < [deviceModel.device_type integerValue]; i ++) {
-                NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)i]];
+                NSString *name = [@"Switch" stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)(i + 1)]];
                 NSString *key = [MKDeviceModel keyForSwitchStateWithIndex:i];
                 [jsonDic setObject:name forKey:key];
             }

@@ -104,6 +104,11 @@ static NSString *const step3Msg = @"3.Back to the App and continue";
 #pragma mark - MKConnectViewProtocol method
 - (void)showConnectAlertView{
     [self dismiss];
+    if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich) {
+        self.wifiIcon.image = LOADIMAGE(@"connectAlertWifiSettingsIcon_switch", @"png");
+    }else{
+        self.wifiIcon.image = LOADIMAGE(@"connectAlertWifiSettingsIcon_plug", @"png");
+    }
     [kAppWindow addSubview:self];
     [UIView animateWithDuration:.3f animations:^{
         self.alertView.transform = CGAffineTransformMakeTranslation(-kScreenWidth, 0);
@@ -172,7 +177,6 @@ static NSString *const step3Msg = @"3.Back to the App and continue";
 - (UIImageView *)wifiIcon{
     if (!_wifiIcon) {
         _wifiIcon = [[UIImageView alloc] init];
-        _wifiIcon.image = LOADIMAGE(@"connectAlertWifiSettingsIcon", @"png");
     }
     return _wifiIcon;
 }

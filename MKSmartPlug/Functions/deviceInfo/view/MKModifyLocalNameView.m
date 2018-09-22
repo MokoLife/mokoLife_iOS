@@ -19,7 +19,7 @@ static CGFloat const alertViewHeight = 190.f;
 
 @property (nonatomic, strong)MKTextField *textField;
 
-@property (nonatomic, copy)void (^confirmBlock)(NSString *name);
+@property (nonatomic, copy)void (^confirmBlock)(BOOL empty, NSString *name);
 
 @end
 
@@ -66,11 +66,13 @@ static CGFloat const alertViewHeight = 190.f;
 - (void)confirmButtonPressed{
     NSString *name = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (!ValidStr(name)) {
-        [self showCentralToast:@"Device name can't be blank."];
+        if (self.confirmBlock) {
+            self.confirmBlock(YES, nil);
+        }
         return;
     }
     if (self.confirmBlock) {
-        self.confirmBlock(name);
+        self.confirmBlock(NO,name);
     }
     [self dismiss];
 }
@@ -80,7 +82,7 @@ static CGFloat const alertViewHeight = 190.f;
 }
 
 #pragma mark - public method
-- (void)showConnectAlertViewTitle:(NSString *)titleMsg text:(NSString *)text block:(void (^)(NSString *name))block{
+- (void)showConnectAlertViewTitle:(NSString *)titleMsg text:(NSString *)text block:(void (^)(BOOL empty, NSString *name))block{
     self.confirmBlock = nil;
     self.confirmBlock = block;
     [kAppWindow addSubview:self];
