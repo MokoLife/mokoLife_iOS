@@ -15,7 +15,7 @@
 #import "MKConfigDeviceTimePickerView.h"
 #import "MKDeviceInfoController.h"
 
-@interface MKConfigSwichController ()<UITableViewDelegate, UITableViewDataSource, MKConfigSwichCellDelegate>
+@interface MKConfigSwichController ()<UITableViewDelegate, UITableViewDataSource, MKConfigSwichCellDelegate, MKDeviceModelDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
@@ -57,6 +57,7 @@
     [self addNotifications];
     //订阅倒计时主题
     [[MKMQTTServerManager sharedInstance] subscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"delay_time"]]];
+    self.deviceModel.delegate = self;
     [self.deviceModel startStateMonitoringTimer];
     // Do any additional setup after loading the view.
 }
@@ -169,6 +170,11 @@
         return;
     }
     [self.view showCentralToast:@"The timing function needs to be improved."];
+}
+
+#pragma mark - MKDeviceModelDelegate
+- (void)deviceModelStateChanged:(MKDeviceModel *)deviceModel{
+    self.deviceModel.swichState = MKSmartSwichOffline;
 }
 
 #pragma mark - event method

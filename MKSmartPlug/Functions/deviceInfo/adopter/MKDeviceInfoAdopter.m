@@ -49,6 +49,10 @@
         [target.view showCentralToast:@"Device offline,please check."];
         return;
     }
+    if ([MKMQTTServerManager sharedInstance].managerState != MKMQTTSessionManagerStateConnected) {
+        [target.view showCentralToast:@"Network error,please check."];
+        return;
+    }
     [[MKHudManager share] showHUDWithTitle:@"Reseting..." inView:target.view isPenetration:NO];
     NSString *topic = [deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"reset"];
     __weak __typeof(&*target)weakTarget = target;
