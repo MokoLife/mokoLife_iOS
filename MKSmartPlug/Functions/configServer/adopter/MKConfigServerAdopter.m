@@ -283,7 +283,7 @@
         return NO;
     }
     if (!ValidStr(serverModel.keepAlive)) {
-        [target.view showCentralToast:@"keepAlive error"];
+        [target.view showCentralToast:@"Keep alive range : 60~120"];
         return NO;
     }
     if ([serverModel.keepAlive integerValue] < 60 || [serverModel.keepAlive integerValue] > 120) {

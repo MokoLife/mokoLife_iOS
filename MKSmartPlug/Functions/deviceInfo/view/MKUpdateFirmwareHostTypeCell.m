@@ -99,7 +99,7 @@ static NSString *const MKUpdateFirmwareHostTypeCellIdenty = @"MKUpdateFirmwareHo
 - (UILabel *)msgLabel{
     if (!_msgLabel) {
         _msgLabel = [MKConfigServerAdopter configServerDefaultMsgLabel];
-        _msgLabel.text = @"Connect Mode";
+        _msgLabel.text = @"Type";
     }
     return _msgLabel;
 }

@@ -130,8 +130,12 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
     if (!ValidDict(params)) {
         return;
     }
-    self.textField.text = params[@"port"];
-    self.switchView.on = [params[@"clean"] boolValue];
+    if (ValidStr(params[@"port"])) {
+        self.textField.text = params[@"port"];
+    }
+    if (ValidStr(params[@"clean"])) {
+        self.switchView.on = [params[@"clean"] boolValue];
+    }
 }
 
 /**

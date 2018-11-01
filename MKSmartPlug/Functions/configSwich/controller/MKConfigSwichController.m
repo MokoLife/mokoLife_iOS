@@ -64,13 +64,14 @@
 
 #pragma mark - 父类方法
 - (NSString *)defaultTitle{
-    return @"MokoLife";
+    return @"Moko Life";
 }
 
 - (void)rightButtonMethod{
     MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] initWithNavigationType:GYNaviTypeShow];
     MKDeviceModel *model = [[MKDeviceModel alloc] init];
     [model updatePropertyWithModel:self.deviceModel];
+    model.swich_way_nameDic = self.deviceModel.swich_way_nameDic;
     model.swichState = self.deviceModel.swichState;
     vc.deviceModel = model;
     [self.navigationController pushViewController:vc animated:YES];
@@ -351,10 +352,10 @@
     UIView *footerView = [[UIView alloc] init];
     footerView.backgroundColor = COLOR_WHITE_MACROS;
     UIView *allOnView = [self bottomButtonViewWithTitle:@"ALL ON"
-                                               iconName:@"configSwichAllOff"
+                                               iconName:@"configSwichAllOn"
                                                     sel:@selector(setAllSwichWayOnMethod)];
     UIView *allOffView = [self bottomButtonViewWithTitle:@"ALL OFF"
-                                                iconName:@"configSwichAllOn"
+                                                iconName:@"configSwichAllOff"
                                                      sel:@selector(setAllSwichWayOffMethod)];
     [footerView addSubview:allOnView];
     [footerView addSubview:allOffView];

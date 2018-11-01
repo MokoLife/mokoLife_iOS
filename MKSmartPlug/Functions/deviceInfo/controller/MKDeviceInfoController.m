@@ -147,6 +147,9 @@
     [[MKHudManager share] showHUDWithTitle:@"Setting" inView:self.view isPenetration:NO];
     MKDeviceModel *model = [[MKDeviceModel alloc] init];
     [model updatePropertyWithModel:self.deviceModel];
+    if (self.deviceModel.device_mode == MKDevice_swich) {
+        model.swich_way_nameDic = self.deviceModel.swich_way_nameDic;
+    }
     model.local_name = localName;
     WS(weakSelf);
     [MKDeviceDataBaseManager updateDevice:model sucBlock:^{
