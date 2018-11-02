@@ -154,9 +154,7 @@
 		003F6D6120C161F50002C833 /* MKCustomNaviView.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D1520C161F50002C833 /* MKCustomNaviView.m */; };
 		003F6D6220C161F50002C833 /* MKHaveRefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D1720C161F50002C833 /* MKHaveRefreshTableView.m */; };
 		003F6D6420C161F50002C833 /* NSDateFormatter+MKAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D1D20C161F50002C833 /* NSDateFormatter+MKAdd.m */; };
-		003F6D6520C161F50002C833 /* NSInvocation+MKAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D1F20C161F50002C833 /* NSInvocation+MKAdd.m */; };
 		003F6D6620C161F50002C833 /* NSString+MKAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D2120C161F50002C833 /* NSString+MKAdd.m */; };
-		003F6D6720C161F50002C833 /* UIApplication+MKAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D2320C161F50002C833 /* UIApplication+MKAdd.m */; };
 		003F6D6820C161F50002C833 /* UIButton+MKAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D2520C161F50002C833 /* UIButton+MKAdd.m */; };
 		003F6D6920C161F50002C833 /* UIImage+MKAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D2720C161F50002C833 /* UIImage+MKAdd.m */; };
 		003F6D6A20C161F50002C833 /* UITextField+MKAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D2920C161F50002C833 /* UITextField+MKAdd.m */; };
@@ -169,14 +167,12 @@
 		003F6D7120C161F50002C833 /* MKHudManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D4120C161F50002C833 /* MKHudManager.m */; };
 		003F6D7220C161F50002C833 /* KSUIImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D4420C161F50002C833 /* KSUIImagePickerController.m */; };
 		003F6D7320C161F50002C833 /* MKPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D4720C161F50002C833 /* MKPageControl.m */; };
-		003F6D7420C161F50002C833 /* MKPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D4A20C161F50002C833 /* MKPhotoPicker.m */; };
 		003F6D7620C161F50002C833 /* MKRefreshGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D5020C161F50002C833 /* MKRefreshGifFooter.m */; };
 		003F6D7720C161F50002C833 /* MKRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D5220C161F50002C833 /* MKRefreshGifHeader.m */; };
 		003F6D7820C161F50002C833 /* refresh_loading_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6D5320C161F50002C833 /* refresh_loading_1@2x.png */; };
 		003F6D7920C161F50002C833 /* refresh_loading_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6D5420C161F50002C833 /* refresh_loading_2@2x.png */; };
 		003F6D7A20C161F50002C833 /* refresh_loading_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6D5520C161F50002C833 /* refresh_loading_3@2x.png */; };
 		003F6D7B20C161F50002C833 /* refresh_loading_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6D5620C161F50002C833 /* refresh_loading_4@2x.png */; };
-		003F6D7C20C161F50002C833 /* MKSystemResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D5920C161F50002C833 /* MKSystemResource.m */; };
 		003F6D7D20C161F50002C833 /* MKTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6D5C20C161F50002C833 /* MKTimePickerView.m */; };
 		003F6D8020C162AC0002C833 /* navigation_back_button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6D7E20C162AC0002C833 /* navigation_back_button@3x.png */; };
 		003F6D8120C162AC0002C833 /* navigation_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6D7F20C162AC0002C833 /* navigation_back_button@2x.png */; };
@@ -473,12 +469,8 @@
 		003F6D1920C161F50002C833 /* MKCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKCategories.h; sourceTree = "<group>"; };
 		003F6D1C20C161F50002C833 /* NSDateFormatter+MKAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+MKAdd.h"; sourceTree = "<group>"; };
 		003F6D1D20C161F50002C833 /* NSDateFormatter+MKAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+MKAdd.m"; sourceTree = "<group>"; };
-		003F6D1E20C161F50002C833 /* NSInvocation+MKAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+MKAdd.h"; sourceTree = "<group>"; };
-		003F6D1F20C161F50002C833 /* NSInvocation+MKAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+MKAdd.m"; sourceTree = "<group>"; };
 		003F6D2020C161F50002C833 /* NSString+MKAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MKAdd.h"; sourceTree = "<group>"; };
 		003F6D2120C161F50002C833 /* NSString+MKAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MKAdd.m"; sourceTree = "<group>"; };
-		003F6D2220C161F50002C833 /* UIApplication+MKAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+MKAdd.h"; sourceTree = "<group>"; };
-		003F6D2320C161F50002C833 /* UIApplication+MKAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+MKAdd.m"; sourceTree = "<group>"; };
 		003F6D2420C161F50002C833 /* UIButton+MKAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MKAdd.h"; sourceTree = "<group>"; };
 		003F6D2520C161F50002C833 /* UIButton+MKAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MKAdd.m"; sourceTree = "<group>"; };
 		003F6D2620C161F50002C833 /* UIImage+MKAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MKAdd.h"; sourceTree = "<group>"; };
@@ -507,8 +499,6 @@
 		003F6D4420C161F50002C833 /* KSUIImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSUIImagePickerController.m; sourceTree = "<group>"; };
 		003F6D4620C161F50002C833 /* MKPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPageControl.h; sourceTree = "<group>"; };
 		003F6D4720C161F50002C833 /* MKPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPageControl.m; sourceTree = "<group>"; };
-		003F6D4920C161F50002C833 /* MKPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPhotoPicker.h; sourceTree = "<group>"; };
-		003F6D4A20C161F50002C833 /* MKPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPhotoPicker.m; sourceTree = "<group>"; };
 		003F6D4F20C161F50002C833 /* MKRefreshGifFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKRefreshGifFooter.h; sourceTree = "<group>"; };
 		003F6D5020C161F50002C833 /* MKRefreshGifFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKRefreshGifFooter.m; sourceTree = "<group>"; };
 		003F6D5120C161F50002C833 /* MKRefreshGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKRefreshGifHeader.h; sourceTree = "<group>"; };
@@ -517,8 +507,6 @@
 		003F6D5420C161F50002C833 /* refresh_loading_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh_loading_2@2x.png"; sourceTree = "<group>"; };
 		003F6D5520C161F50002C833 /* refresh_loading_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh_loading_3@2x.png"; sourceTree = "<group>"; };
 		003F6D5620C161F50002C833 /* refresh_loading_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh_loading_4@2x.png"; sourceTree = "<group>"; };
-		003F6D5820C161F50002C833 /* MKSystemResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKSystemResource.h; sourceTree = "<group>"; };
-		003F6D5920C161F50002C833 /* MKSystemResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKSystemResource.m; sourceTree = "<group>"; };
 		003F6D5B20C161F50002C833 /* MKTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKTimePickerView.h; sourceTree = "<group>"; };
 		003F6D5C20C161F50002C833 /* MKTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKTimePickerView.m; sourceTree = "<group>"; };
 		003F6D7E20C162AC0002C833 /* navigation_back_button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_back_button@3x.png"; sourceTree = "<group>"; };
@@ -1345,12 +1333,8 @@
 				003F6D1920C161F50002C833 /* MKCategories.h */,
 				003F6D1C20C161F50002C833 /* NSDateFormatter+MKAdd.h */,
 				003F6D1D20C161F50002C833 /* NSDateFormatter+MKAdd.m */,
-				003F6D1E20C161F50002C833 /* NSInvocation+MKAdd.h */,
-				003F6D1F20C161F50002C833 /* NSInvocation+MKAdd.m */,
 				003F6D2020C161F50002C833 /* NSString+MKAdd.h */,
 				003F6D2120C161F50002C833 /* NSString+MKAdd.m */,
-				003F6D2220C161F50002C833 /* UIApplication+MKAdd.h */,
-				003F6D2320C161F50002C833 /* UIApplication+MKAdd.m */,
 				003F6D2420C161F50002C833 /* UIButton+MKAdd.h */,
 				003F6D2520C161F50002C833 /* UIButton+MKAdd.m */,
 				003F6D2620C161F50002C833 /* UIImage+MKAdd.h */,
@@ -1392,9 +1376,7 @@
 				003F6D3F20C161F50002C833 /* MKHudManager */,
 				003F6D4220C161F50002C833 /* MKImagePicker */,
 				003F6D4520C161F50002C833 /* MKPageControl */,
-				003F6D4820C161F50002C833 /* MKPhotoPick */,
 				003F6D4E20C161F50002C833 /* MKRefresh */,
-				003F6D5720C161F50002C833 /* MKSystemResource */,
 				003F6D5A20C161F50002C833 /* MKTimePicker */,
 			);
 			path = PublicTools;
@@ -1456,15 +1438,6 @@
 			path = MKPageControl;
 			sourceTree = "<group>";
 		};
-		003F6D4820C161F50002C833 /* MKPhotoPick */ = {
-			isa = PBXGroup;
-			children = (
-				003F6D4920C161F50002C833 /* MKPhotoPicker.h */,
-				003F6D4A20C161F50002C833 /* MKPhotoPicker.m */,
-			);
-			path = MKPhotoPick;
-			sourceTree = "<group>";
-		};
 		003F6D4E20C161F50002C833 /* MKRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -1478,15 +1451,6 @@
 				003F6D5620C161F50002C833 /* refresh_loading_4@2x.png */,
 			);
 			path = MKRefresh;
-			sourceTree = "<group>";
-		};
-		003F6D5720C161F50002C833 /* MKSystemResource */ = {
-			isa = PBXGroup;
-			children = (
-				003F6D5820C161F50002C833 /* MKSystemResource.h */,
-				003F6D5920C161F50002C833 /* MKSystemResource.m */,
-			);
-			path = MKSystemResource;
 			sourceTree = "<group>";
 		};
 		003F6D5A20C161F50002C833 /* MKTimePicker */ = {
@@ -1979,7 +1943,6 @@
 				0014480820C2A72800A87037 /* MKSelectDeviceTypeController.m in Sources */,
 				000C2DF7212AB2C000F14A7C /* MKUpdateFirmwareCell.m in Sources */,
 				000E860120CFAEAC006B8831 /* EasyShowLabel.m in Sources */,
-				003F6D7420C161F50002C833 /* MKPhotoPicker.m in Sources */,
 				000E85F620CFAEAB006B8831 /* EasyAlertTypes.m in Sources */,
 				0014481320C2A92400A87037 /* MKSelectDeviceTypeModel.m in Sources */,
 				003F6D6120C161F50002C833 /* MKCustomNaviView.m in Sources */,
@@ -1990,7 +1953,6 @@
 				000E860720CFAEAC006B8831 /* EasyTextTypes.m in Sources */,
 				00BB0EAA20C519C8006F2DEA /* MKNetworkManager.m in Sources */,
 				000E85F820CFAEAB006B8831 /* EasyEmptyConfig.m in Sources */,
-				003F6D6720C161F50002C833 /* UIApplication+MKAdd.m in Sources */,
 				003D436320DE14DA00A02036 /* MKElectricityCell.m in Sources */,
 				001A0D8D20CBBA440096E8A6 /* MKDeviceDataBaseManager.m in Sources */,
 				001447D620C22BC700A87037 /* MKConfigServerHostCell.m in Sources */,
@@ -1998,7 +1960,6 @@
 				000E85F720CFAEAB006B8831 /* EasyAlertView.m in Sources */,
 				000E85FB20CFAEAB006B8831 /* EasyEmptyTypes.m in Sources */,
 				000E860620CFAEAC006B8831 /* EasyTextGlobalConfig.m in Sources */,
-				003F6D6520C161F50002C833 /* NSInvocation+MKAdd.m in Sources */,
 				0055EB4720C50F2C003C4C70 /* MKNotBlinkAmberModel.m in Sources */,
 				0024A5D920D0FFE2003AD20E /* MKDeviceInfoCell.m in Sources */,
 				003F6D7720C161F50002C833 /* MKRefreshGifHeader.m in Sources */,
@@ -2057,7 +2018,6 @@
 				003F6A6520C145BC0002C833 /* main.m in Sources */,
 				003F6D5E20C161F50002C833 /* MKBaseViewController.m in Sources */,
 				000C2DEB212A964800F14A7C /* MKMQTTServerErrorBlockAdopter.m in Sources */,
-				003F6D7C20C161F50002C833 /* MKSystemResource.m in Sources */,
 				000E85FE20CFAEAC006B8831 /* EasyLodingGlobalConfig.m in Sources */,
 				003D435D20DE13D200A02036 /* MKElectricityController.m in Sources */,
 				000AF77720CE620500BD74B6 /* MKDeviceListAdopter.m in Sources */,

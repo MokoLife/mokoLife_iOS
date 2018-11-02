@@ -109,7 +109,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
     NSString *port = [self.textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     return @{
              @"port":port,
-             @"cleanSession":@(self.switchView.isOn)
+             @"cleanSession":@(self.switchView.on)
              };
 }
 
@@ -133,13 +133,11 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
     if (ValidStr(params[@"port"])) {
         self.textField.text = params[@"port"];
     }
-    if (ValidStr(params[@"clean"])) {
-        self.switchView.on = [params[@"clean"] boolValue];
-    }
+    self.switchView.on = [params[@"clean"] boolValue];
 }
 
 /**
- 隐藏键盘
+ 隐藏键盘a
  */
 - (void)hiddenKeyBoard{
     [self.textField resignFirstResponder];
@@ -188,7 +186,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
 - (UISwitch *)switchView{
     if (!_switchView) {
         _switchView = [[UISwitch alloc] init];
-        _switchView.on = YES;
+//        _switchView.on = YES;
         [_switchView addTarget:self action:@selector(switchValueChanged) forControlEvents:UIControlEventValueChanged];
     }
     return _switchView;
