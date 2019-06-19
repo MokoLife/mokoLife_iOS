@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6D7738F930CB5824489D603F65320DBA"
+               BlueprintIdentifier = "6D41FAD742A74F86E86A1C6884D0DBE6"
+               BuildableName = "libPods-MKSmartPlug.a"
                BlueprintName = "Pods-MKSmartPlug"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libPods-MKSmartPlug.a">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

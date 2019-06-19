@@ -10,7 +10,6 @@
 #import <CocoaAsyncSocket/GCDAsyncSocket.h>
 #import "MKSocketBlockAdopter.h"
 #import "MKSocketAdopter.h"
-#import "MKSocketTaskOperation.h"
 
 //设备默认的ip地址
 NSString *const defaultHostIpAddress = @"192.168.4.1";
@@ -243,10 +242,10 @@ static NSTimeInterval const defaultCommandTime = 2.f;
                     password:(NSString *)password
                     sucBlock:(void (^)(id returnData))sucBlock
                  failedBlock:(void (^)(NSError *error))failedBlock{
-    if (![MKSocketAdopter isValidatIP:host] && ![MKSocketAdopter isDomainName:host]) {
-        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Host error" block:failedBlock];
-        return;
-    }
+//    if (![MKSocketAdopter isValidatIP:host] && ![MKSocketAdopter isDomainName:host]) {
+//        [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Host error" block:failedBlock];
+//        return;
+//    }
     if (port < 0 || port > 65535) {
         [MKSocketBlockAdopter operationParamsErrorWithMessage:@"Port effective range : 0~65535" block:failedBlock];
         return;

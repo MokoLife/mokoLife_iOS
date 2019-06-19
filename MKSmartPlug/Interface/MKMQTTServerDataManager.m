@@ -196,7 +196,7 @@ NSString *const MKMQTTServerReceivedUpdateResultNotification = @"MKMQTTServerRec
                                                        port:[self.configServerModel.port integerValue]
                                                         tls:(self.configServerModel.connectMode == 1)
                                                   keepalive:[self.configServerModel.keepAlive integerValue] clean:self.configServerModel.cleanSession
-                                                       auth:NO
+                                                       auth:YES
                                                        user:self.configServerModel.userName
                                                        pass:self.configServerModel.password
                                                    clientId:self.configServerModel.clientId];

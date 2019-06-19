@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BFD3448A3D351271D3272787C7F50AB7"
+               BlueprintIdentifier = "9F944F08F72A00E0C2995BF7C62C2111"
+               BuildableName = "libMKMqttServerSDK.a"
                BlueprintName = "MKMqttServerSDK"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libMKMqttServerSDK.a">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

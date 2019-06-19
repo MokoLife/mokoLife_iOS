@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MKSocketTaskOperation.h"
 
 //Device default address
 extern NSString *const defaultHostIpAddress;
@@ -37,6 +38,11 @@ typedef NS_ENUM(NSInteger, wifiSecurity) {
 @interface MKSocketManager : NSObject
 
 + (MKSocketManager *)sharedInstance;
+
+- (void)addTaskWithTaskID:(MKSocketOperationID)taskID
+               jsonString:(NSString *)jsonString
+                 sucBlock:(void (^)(id returnData))sucBlock
+              failedBlock:(void (^)(NSError *error))failedBlock;
 
 /**
  Plug connection
@@ -105,6 +111,5 @@ typedef NS_ENUM(NSInteger, wifiSecurity) {
               security:(wifiSecurity)security
               sucBlock:(void (^)(id returnData))sucBlock
            failedBlock:(void (^)(NSError *error))failedBlock;
-
 
 @end

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4088DB87895BF84247CAE84DD10F9299"
+               BlueprintIdentifier = "517C9D4102ACE0E8E200C8F898419299"
+               BuildableName = "libMKSocketSDK.a"
                BlueprintName = "MKSocketSDK"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libMKSocketSDK.a">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

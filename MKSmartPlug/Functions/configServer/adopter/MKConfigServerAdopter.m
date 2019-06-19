@@ -268,7 +268,7 @@
  @return YES:正确，NO:存在参数错误
  */
 + (BOOL)checkConfigServerParams:(MKConfigServerModel *)serverModel target:(MKConfigServerController *)target{
-    if (![serverModel.host checkIsUrl] && ![serverModel.host isValidatIP]) {
+    if (!ValidStr(serverModel.host) && ![serverModel.host isValidatIP]) {
         //host校验错误
         [target.view showCentralToast:@"Host error"];
         return NO;
