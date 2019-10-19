@@ -28,6 +28,8 @@
 
 @property (nonatomic, strong)NSMutableArray *dataList;
 
+@property (nonatomic, strong)CLLocationManager *locationManager;
+
 @end
 
 @implementation MKDeviceListController
@@ -61,6 +63,11 @@
 }
 
 - (void)rightButtonMethod{
+    if ([kSystemVersionString floatValue] >= 13 && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
+        //未授权位置信息
+        [self showAuthAlert];
+        return;
+    }
     [MKDeviceListAdopter addDeviceButtonPressed:self];
 }
 
@@ -314,6 +321,22 @@
                                      object:nil];
 }
 
+- (void)showAuthAlert {
+    NSString *msg = @"Please go to Settings-Privacy-Location Services to turn on location services permission.";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Note"
+                                                                             message:msg
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [MKAddDeviceCenter gotoSystemWifiPage];
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    [kAppRootController presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - loadSubViews
 - (void)loadSubViews{
     [self.customNaviView.leftButton setImage:LOADIMAGE(@"mokoLife_menuIcon", @"png") forState:UIControlStateNormal];
@@ -377,6 +400,13 @@
         _dataList = [NSMutableArray array];
     }
     return _dataList;
+}
+
+- (CLLocationManager *)locationManager {
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+    }
+    return _locationManager;
 }
 
 @end

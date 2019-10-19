@@ -11,6 +11,8 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong)CLLocationManager *locationManager;
+
 @end
 
 @implementation AppDelegate
@@ -24,6 +26,7 @@
     [MKMQTTServerDataManager sharedInstance];
     [MKNetworkManager sharedInstance];
     [self enterAddDevicePage];
+    [self addLocationAuth];
     return YES;
 }
 
@@ -62,5 +65,15 @@
     [_window makeKeyAndVisible];
 }
 
+- (void)addLocationAuth {
+    if ([kSystemVersionString floatValue] < 13) {
+        return;
+    }
+    //iOS13版本系统新增位置权限
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+}
 
 @end
