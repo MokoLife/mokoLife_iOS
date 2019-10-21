@@ -38,6 +38,8 @@
 	<string>SmartPlug need to add photos to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>If not allowed ,you will be unable to choose photos from Camera Roll.</string>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

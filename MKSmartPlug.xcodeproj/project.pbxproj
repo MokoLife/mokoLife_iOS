@@ -158,6 +158,8 @@
 		003F6DAA20C179080002C833 /* configServer_ConnectMode_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6DA620C179080002C833 /* configServer_ConnectMode_normal@3x.png */; };
 		003F6DAB20C179080002C833 /* configServer_ConnectMode_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003F6DA720C179080002C833 /* configServer_ConnectMode_normal@2x.png */; };
 		003F6DAF20C17A250002C833 /* MKConfigServerAdopter.m in Sources */ = {isa = PBXBuildFile; fileRef = 003F6DAE20C17A250002C833 /* MKConfigServerAdopter.m */; };
+		004B85BB235D9A330095DA06 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 004B85BA235D9A330095DA06 /* Launch Screen.storyboard */; };
+		004B85BD235D9B110095DA06 /* mokoLife_startIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 004B85BC235D9B110095DA06 /* mokoLife_startIcon.png */; };
 		0051279B214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00512797214BA8950071B827 /* connectAlertWifiSettingsIcon_switch@2x.png */; };
 		0051279C214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00512798214BA8950071B827 /* connectAlertWifiSettingsIcon_plug@3x.png */; };
 		0051279D214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00512799214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png */; };
@@ -441,6 +443,8 @@
 		003F6DA720C179080002C833 /* configServer_ConnectMode_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "configServer_ConnectMode_normal@2x.png"; sourceTree = "<group>"; };
 		003F6DAD20C17A250002C833 /* MKConfigServerAdopter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKConfigServerAdopter.h; sourceTree = "<group>"; };
 		003F6DAE20C17A250002C833 /* MKConfigServerAdopter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKConfigServerAdopter.m; sourceTree = "<group>"; };
+		004B85BA235D9A330095DA06 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		004B85BC235D9B110095DA06 /* mokoLife_startIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mokoLife_startIcon.png; sourceTree = "<group>"; };
 		00512797214BA8950071B827 /* connectAlertWifiSettingsIcon_switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon_switch@2x.png"; sourceTree = "<group>"; };
 		00512798214BA8950071B827 /* connectAlertWifiSettingsIcon_plug@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon_plug@3x.png"; sourceTree = "<group>"; };
 		00512799214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectAlertWifiSettingsIcon_switch@3x.png"; sourceTree = "<group>"; };
@@ -1183,6 +1187,7 @@
 		003F6BFA20C161E80002C833 /* PublicImages */ = {
 			isa = PBXGroup;
 			children = (
+				004B85BC235D9B110095DA06 /* mokoLife_startIcon.png */,
 				001447FE20C29A9200A87037 /* MKSmartPlugRightNextIcon@2x.png */,
 				001447FF20C29A9200A87037 /* MKSmartPlugRightNextIcon@3x.png */,
 				003F6D7F20C162AC0002C833 /* navigation_back_button@2x.png */,
@@ -1208,6 +1213,7 @@
 				0014480220C2A71600A87037 /* selectDeviceType */,
 				001447F120C2971300A87037 /* settings */,
 				003F6D8F20C16A690002C833 /* configServer */,
+				004B85BA235D9A330095DA06 /* Launch Screen.storyboard */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -1590,6 +1596,7 @@
 				0055EB2720C4D219003C4C70 /* mokoLife_addIcon@2x.png in Resources */,
 				0011534320DCD21700F80B1D /* deviceList_switchStateOnIcon@2x.png in Resources */,
 				0014480F20C2A8BE00A87037 /* selectDeviceType_plugIcon@2x.png in Resources */,
+				004B85BD235D9B110095DA06 /* mokoLife_startIcon.png in Resources */,
 				001585722146118300C6D93C /* swich_state_off@2x.png in Resources */,
 				0051279B214BA8960071B827 /* connectAlertWifiSettingsIcon_switch@2x.png in Resources */,
 				002ABFDF214115290054F285 /* addDevice_centerSwichGif@2x.gif in Resources */,
@@ -1611,6 +1618,7 @@
 				0051279C214BA8960071B827 /* connectAlertWifiSettingsIcon_plug@3x.png in Resources */,
 				0055EB5420C51339003C4C70 /* notBlinkAmberStep1_rightIcon@3x.png in Resources */,
 				001585702146118300C6D93C /* swich_modifyDeviceNameIcon@2x.png in Resources */,
+				004B85BB235D9A330095DA06 /* Launch Screen.storyboard in Resources */,
 				003F6D8020C162AC0002C833 /* navigation_back_button@3x.png in Resources */,
 				0024A5C020D0CB6A003AD20E /* configPlugPage_scheduleOff@2x.png in Resources */,
 				0024A5BF20D0CB6A003AD20E /* configPlugPage_moreIcon@3x.png in Resources */,
@@ -1885,7 +1893,7 @@
 			baseConfigurationReference = 2BB0763E1F3538FB90377D4C /* Pods-MKSmartPlug.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_ENTITLEMENTS = MKSmartPlug/MKSmartPlug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1908,7 +1916,7 @@
 			baseConfigurationReference = 7A02BB2BC96529139122611F /* Pods-MKSmartPlug.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_ENTITLEMENTS = MKSmartPlug/MKSmartPlug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1982,7 +1990,7 @@
 			baseConfigurationReference = 08762769006BC3B202AFD33B /* Pods-MKSmartPlug.adhoc.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_ENTITLEMENTS = MKSmartPlug/MKSmartPlug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
