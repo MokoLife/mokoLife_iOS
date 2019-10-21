@@ -158,7 +158,7 @@
             EasyLodingConfig *config = [EasyLodingConfig shared];
             config.lodingType = LodingShowTypeIndicatorLeft;
             config.textFont = MKFont(18.f);
-            config.bgColor = NAVIGATION_BAR_COLOR;
+            config.bgColor = UIColorFromRGB(0x0188cc);
             config.tintColor = COLOR_WHITE_MACROS;
             config.superView = self.loadingView;
             return config;
@@ -346,22 +346,22 @@
     [self.view addSubview:self.addDeviceView];
     [self.view addSubview:self.tableView];
     [self.loadingView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self.customNaviView.mas_centerX);
-        make.width.mas_equalTo(140.f);
-        make.top.mas_equalTo(22.f);
-        make.bottom.mas_equalTo(-10.f);
+        make.left.mas_equalTo(5.f);
+        make.right.mas_equalTo(-5.f);
+        make.top.mas_equalTo(0);
+        make.bottom.mas_equalTo(-5.f);
     }];
     [self.addDeviceView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.top.mas_equalTo(self.customNaviView.mas_bottom).mas_offset(0);
-        make.bottom.mas_equalTo(0);
+        make.top.mas_equalTo(defaultTopInset);
+        make.bottom.mas_equalTo(-VirtualHomeHeight);
     }];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.top.mas_equalTo(self.customNaviView.mas_bottom).mas_offset(0);
-        make.bottom.mas_equalTo(0);
+        make.top.mas_equalTo(defaultTopInset);
+        make.bottom.mas_equalTo(-VirtualHomeHeight);
     }];
     [self.view sendSubviewToBack:self.addDeviceView];
 }

@@ -113,7 +113,10 @@
     [self.rightButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.top.mas_equalTo(defaultTopInset);
+        make.bottom.mas_equalTo(-VirtualHomeHeight);
     }];
 }
 

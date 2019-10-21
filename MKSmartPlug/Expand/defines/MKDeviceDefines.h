@@ -1,6 +1,3 @@
-
-
-
 /**
  头文件说明：
  1、与设备有关的宏定义
@@ -8,11 +5,6 @@
 #pragma mark - *************************  block弱引用强引用  *************************
 //弱引用对象
 #define WS(weakSelf)          __weak __typeof(&*self)weakSelf = self;
-#define StrongSelf(weakSelf)  __strong __typeof(self) = weakSelf
-
-
-
-
 
 #pragma mark - *************************  硬件相关  *************************
 /** 获取屏幕尺寸、宽度、高度 */
@@ -48,19 +40,27 @@
 
 #define iPhone6PlusZoom             (isRespondCurrModel ? isEqualToCurrModelSize(1125, 2001) : NO)
 
+//判断iPHoneXr
+#define iPhoneXR ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size) : NO)
+
+//判断iPHoneX、iPHoneXs
+#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+//判断iPhoneXs Max
+#define iPhoneMax ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
+
+//状态栏、导航栏、标签栏高度
+#define Height_StatusBar [[UIApplication sharedApplication] statusBarFrame].size.height
+
+//底部虚拟home键高度 一般用于最底部view到底部的距离
+#define VirtualHomeHeight ((iPhoneXR || iPhoneMax || iPhoneX) ? 34.f : 0.f)
+
+//默认顶部布局
+#define defaultTopInset (Height_StatusBar + 44.f)
+
 //自动调整x、y比例
 #define AutoSizeScaleForX (kScreenWidth > 480 ? kScreenWidth/320 : 1.0)
 #define AutoSizeScaleForY (kScreenHeight > 480 ? kScreenHeight/568 : 1.0)
-
-#pragma mark - **************************  常用单例宏  *********************************
-//iOS系统常用单例
-#define kApplicationSington         [UIApplication sharedApplication]               //UIApplication单例
-#define kUserDefaultsSington        [NSUserDefaults standardUserDefaults]           //NSUserDefaults单例
-#define kFileManagerSington         [NSFileManager defaultManager]                  //文件管理单例
-#define kNotificationCenterSington  [NSNotificationCenter defaultCenter]            //通知中心单例
-#define kBundleSington              [NSBundle mainBundle]                           //bundle单例
-#define kURLCacheSington            [NSURLCache sharedURLCache]                     //请求缓存单例
-#define kHTTPCookieStorageSington   [NSHTTPCookieStorage sharedHTTPCookieStorage]   //应用程序cookies池单例
 
 #pragma mark - *************************  系统相关  *************************
 //delegate对象//AppWindow
@@ -79,12 +79,12 @@
 #define kAppBuildVersion        ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"])
 
 /** 是否为iOS6、7、8、9、10、11系统 */
-#define iOS6                    ((kSystemVersion >= 6.0) ? YES : NO)
-#define iOS7                    ((kSystemVersion >= 7.0) ? YES : NO)
-#define iOS8                    ((kSystemVersion >= 8.0) ? YES : NO)
-#define iOS9                    ((kSystemVersion >= 9.0) ? YES : NO)
-#define iOS10                   ((kSystemVersion >= 10.0) ? YES : NO)
-#define iOS11                   ((kSystemVersion >= 11.0) ? YES : NO)
+#define iOS6                    ((kSystemVersion >= 6) ? YES : NO)
+#define iOS7                    ((kSystemVersion >= 7) ? YES : NO)
+#define iOS8                    ((kSystemVersion >= 8) ? YES : NO)
+#define iOS9                    ((kSystemVersion >= 9) ? YES : NO)
+#define iOS10                   ((kSystemVersion >= 10) ? YES : NO)
+#define iOS11                   ((kSystemVersion >= 11) ? YES : NO)
 
 
 
@@ -105,8 +105,6 @@
 /** 获取Tmp目录 */
 #define kTmpPath                 NSTemporaryDirectory()
 
-#pragma mark - **************************   数据库路径宏定义  *******************************
+#define kNotificationCenterSington  [NSNotificationCenter defaultCenter]
 
-/** 闹钟fmdb 路径*/
 #define deviceDBPath              kFilePath(@"deviceDB")
-

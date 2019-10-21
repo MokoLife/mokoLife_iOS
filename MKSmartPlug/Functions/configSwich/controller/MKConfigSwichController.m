@@ -41,7 +41,7 @@
     UIView *footView = [self footerView];
     [self.view addSubview:footView];
     [footView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(0);
+        make.bottom.mas_equalTo(-VirtualHomeHeight);
         make.height.mas_equalTo(90.f);
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
@@ -50,7 +50,7 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
-        make.top.mas_equalTo(0);
+        make.top.mas_equalTo(defaultTopInset);
         make.bottom.mas_equalTo(footView.mas_top);
     }];
     [self getTableDatas];

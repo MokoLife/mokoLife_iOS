@@ -23,7 +23,7 @@ PODS:
   - HJTabViewController (1.0.7)
   - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
-  - MJRefresh (3.1.15.7)
+  - MJRefresh (3.2.0)
   - MKMqttServerSDK (0.0.8):
     - MQTTClient (= 0.14.0)
   - MKSocketSDK (0.0.10):
@@ -58,7 +58,7 @@ DEPENDENCIES:
   - YYKit
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - AFNetworking
     - CircleProgressBar
     - CocoaAsyncSocket
@@ -80,7 +80,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   HJTabViewController:
-    :commit: 682a1d44b55913d6f9fc70b6da9295c791309a69
+    :commit: 2366906a39eaea8fc6da0198b3a339268156a9ea
     :git: https://github.com/panghaijiao/HJTabViewController.git
 
 SPEC CHECKSUMS:
@@ -92,7 +92,7 @@ SPEC CHECKSUMS:
   HJTabViewController: 85aaeb7aef5d96f617ff7500f5002d8e288bedf5
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
   MKMqttServerSDK: b8fd1f6f170d8a3c9bc5d10fe6d56cd9a1e97936
   MKSocketSDK: 4c272cfca8ca8f636c295d45209d506aa3132fcb
   MLInputDodger: 79a0e420a80d0d3bba122bf2639603cc76609ba8
@@ -102,4 +102,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 51e6e9ce51bd392e96635a6ac486e732ab38eff7
 
-COCOAPODS: 1.7.0.rc.1
+COCOAPODS: 1.8.3
