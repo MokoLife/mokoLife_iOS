@@ -24,13 +24,16 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKElectricityController销毁");
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedElectricityNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedElectricityNotification object:nil];
     //取消计电量主题
     [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"electricity_information"]]];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Electricity Management";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -39,18 +42,13 @@
         make.bottom.mas_equalTo(-VirtualHomeHeight);
     }];
     [self loadDatas];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(receiveElectricityData:)
                                        name:MKMQTTServerReceivedElectricityNotification
                                      object:nil];
     //订阅计电量主题
     [[MKMQTTServerManager sharedInstance] subscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"electricity_information"]]];
     // Do any additional setup after loading the view.
-}
-
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Electricity Management";
 }
 
 #pragma mark - UITableViewDelegate
@@ -117,6 +115,7 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         
         _tableView.delegate = self;
         _tableView.dataSource = self;

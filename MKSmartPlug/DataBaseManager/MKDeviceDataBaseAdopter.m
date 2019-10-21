@@ -15,7 +15,7 @@
         NSError *error = [[NSError alloc] initWithDomain:@"com.moko.databaseOperation"
                                                     code:-111111
                                                 userInfo:@{@"errorInfo":msg}];
-        dispatch_main_async_safe(^{
+        moko_dispatch_main_safe(^{
             block(error);
         });
     }

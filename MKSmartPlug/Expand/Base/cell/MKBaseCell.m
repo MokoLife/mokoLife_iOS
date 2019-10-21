@@ -35,7 +35,6 @@
         make.height.mas_equalTo(CUTTING_LINE_HEIGHT);
         make.bottom.mas_equalTo(0);
     }];
-    [super layoutSubviews];
 }
 
 #pragma mark - setter & getter

@@ -36,11 +36,6 @@
     // Do any additional setup after loading the view.
 }
 
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Operation Steps";
-}
-
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([MKAddDeviceCenter sharedInstance].deviceType == MKDevice_swich && indexPath.row == 0) {
@@ -98,6 +93,9 @@
 }
 
 - (void)loadSubViews{
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Operation Steps";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -111,6 +109,7 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         

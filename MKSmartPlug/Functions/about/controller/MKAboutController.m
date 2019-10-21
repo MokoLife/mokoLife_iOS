@@ -27,6 +27,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.defaultTitle = @"About";
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -36,11 +39,6 @@
     }];
     [self getDatas];
     // Do any additional setup after loading the view.
-}
-
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"About";
 }
 
 #pragma mark - UITableViewDelegate
@@ -73,6 +71,7 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         
         _tableView.delegate = self;
         _tableView.dataSource = self;

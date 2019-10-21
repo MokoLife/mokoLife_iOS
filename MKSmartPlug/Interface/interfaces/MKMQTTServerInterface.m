@@ -18,15 +18,7 @@
                  topic:(NSString *)topic
               sucBlock:(void (^)(void))sucBlock
            failedBlock:(void (^)(NSError *error))failedBlock{
-    if (hostType == MKFirmwareUpdateHostTypeIP && ![host isValidatIP]) {
-        [MKMQTTServerErrorBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    if (hostType == MKFirmwareUpdateHostTypeUrl && ![host checkIsUrl]) {
-        [MKMQTTServerErrorBlockAdopter operationParamsErrorBlock:failedBlock];
-        return;
-    }
-    if (port < 0 || port > 65535 || !catalogue) {
+    if (!host || port < 0 || port > 65535 || !catalogue) {
         [MKMQTTServerErrorBlockAdopter operationParamsErrorBlock:failedBlock];
         return;
     }

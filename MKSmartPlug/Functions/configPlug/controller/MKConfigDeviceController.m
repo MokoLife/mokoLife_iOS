@@ -46,8 +46,8 @@ static CGFloat const buttonViewHeight = 50.f;
 - (void)dealloc{
     NSLog(@"MKConfigDeviceController销毁");
     [self.deviceModel cancel];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedDelayTimeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedDelayTimeNotification object:nil];
     //取消订阅倒计时主题
     [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"delay_time"]]];
 }
@@ -64,12 +64,9 @@ static CGFloat const buttonViewHeight = 50.f;
 }
 
 #pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Moko Life";
-}
 
 - (void)rightButtonMethod{
-    MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] init];
     MKDeviceModel *model = [[MKDeviceModel alloc] init];
     [model updatePropertyWithModel:self.deviceModel];
     model.plugState = self.deviceModel.plugState;
@@ -110,7 +107,7 @@ static CGFloat const buttonViewHeight = 50.f;
     [self.delayTimeLabel setHidden:[timeMsg isEqualToString:@"0:0:0"]];
     NSString *stateMsg = [NSString stringWithFormat:@"%@ after %@", deviceDic[@"switch_state"], timeMsg];
     self.delayTimeLabel.text = stateMsg;
-    self.delayTimeLabel.textColor = (self.deviceModel.plugState == MKSmartPlugOn) ? NAVIGATION_BAR_COLOR : UIColorFromRGB(0x808080);
+    self.delayTimeLabel.textColor = (self.deviceModel.plugState == MKSmartPlugOn) ? UIColorFromRGB(0x0188cc) : UIColorFromRGB(0x808080);
 }
 
 #pragma mark - event method
@@ -162,7 +159,7 @@ static CGFloat const buttonViewHeight = 50.f;
     if (![self canClickEnable]) {
         return;
     }
-    MKElectricityController *vc = [[MKElectricityController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKElectricityController *vc = [[MKElectricityController alloc] init];
     MKDeviceModel *model = [[MKDeviceModel alloc] init];
     [model updatePropertyWithModel:self.deviceModel];
     vc.deviceModel = model;
@@ -196,11 +193,11 @@ static CGFloat const buttonViewHeight = 50.f;
 
 #pragma mark - private method
 - (void)addNotifications{
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(switchStateNotification:)
                                        name:MKMQTTServerReceivedSwitchStateNotification
                                      object:nil];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(delayTimeNotification:)
                                        name:MKMQTTServerReceivedDelayTimeNotification
                                      object:nil];
@@ -220,7 +217,9 @@ static CGFloat const buttonViewHeight = 50.f;
 
 #pragma mark - config view
 - (void)loadSubViews{
-    [self.customNaviView.rightButton setImage:LOADIMAGE(@"configPlugPage_moreIcon", @"png") forState:UIControlStateNormal];
+    [self.rightButton setImage:LOADIMAGE(@"configPlugPage_moreIcon", @"png") forState:UIControlStateNormal];
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Moko Life";
     [self.view addSubview:self.switchButton];
     [self.view addSubview:self.stateLabel];
     [self.view addSubview:self.delayTimeLabel];
@@ -269,11 +268,11 @@ static CGFloat const buttonViewHeight = 50.f;
 }
 
 - (void)configView{
-    [self.customNaviView setBackgroundColor:((self.deviceModel.plugState == MKSmartPlugOn) ? NAVIGATION_BAR_COLOR : UIColorFromRGB(0x303a4b))];
+    self.custom_naviBarColor =((self.deviceModel.plugState == MKSmartPlugOn) ? UIColorFromRGB(0x0188cc) : UIColorFromRGB(0x303a4b));
     [self.view setBackgroundColor:((self.deviceModel.plugState == MKSmartPlugOn) ? UIColorFromRGB(0xf2f2f2) : UIColorFromRGB(0x303a4b))];
     NSString *switchIcon = ((self.deviceModel.plugState == MKSmartPlugOn) ? @"configPlugPage_switchButtonOn" : @"configPlugPage_switchButtonOff");
     self.switchButton.image = LOADIMAGE(switchIcon, @"png");
-    self.stateLabel.textColor = ((self.deviceModel.plugState == MKSmartPlugOn) ? NAVIGATION_BAR_COLOR : UIColorFromRGB(0x808080));
+    self.stateLabel.textColor = ((self.deviceModel.plugState == MKSmartPlugOn) ? UIColorFromRGB(0x0188cc) : UIColorFromRGB(0x808080));
     NSString *textMsg = @"Socket is off";
     if (self.deviceModel.plugState == MKSmartPlugOffline) {
         textMsg = @"Socket is offline";
@@ -327,7 +326,7 @@ static CGFloat const buttonViewHeight = 50.f;
 - (UILabel *)stateLabel{
     if (!_stateLabel) {
         _stateLabel = [[UILabel alloc] init];
-        _stateLabel.textColor = NAVIGATION_BAR_COLOR;
+        _stateLabel.textColor = UIColorFromRGB(0x0188cc);
         _stateLabel.textAlignment = NSTextAlignmentCenter;
         _stateLabel.font = MKFont(15.f);
         _stateLabel.text = @"Socket is on";
@@ -338,7 +337,7 @@ static CGFloat const buttonViewHeight = 50.f;
 - (UILabel *)delayTimeLabel{
     if (!_delayTimeLabel) {
         _delayTimeLabel = [[UILabel alloc] init];
-        _delayTimeLabel.textColor = NAVIGATION_BAR_COLOR;
+        _delayTimeLabel.textColor = UIColorFromRGB(0x0188cc);
         _delayTimeLabel.textAlignment = NSTextAlignmentCenter;
         _delayTimeLabel.font = MKFont(15.f);
     }

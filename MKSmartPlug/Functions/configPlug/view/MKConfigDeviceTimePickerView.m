@@ -65,11 +65,15 @@ static CGFloat const kpickViewH = 300.f;
     return self.minList.count;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    if (component == 0) {
-        return self.hourList[row];
+- (nullable NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSString *titleString = @"";
+    if (component == 1) {
+        titleString = self.minList[row];
+    }else if (component == 0) {
+        titleString = self.hourList[row];
     }
-    return self.minList[row];
+    NSAttributedString *attributedString = [MKAttributedString getAttributedString:@[titleString] fonts:@[MKFont(15.f)] colors:@[DEFAULT_TEXT_COLOR]];
+    return attributedString;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
@@ -172,7 +176,7 @@ static CGFloat const kpickViewH = 300.f;
         cancelButton.frame = CGRectMake(10, 10, 60, 30);
         [cancelButton setBackgroundColor:COLOR_CLEAR_MACROS];
         [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-        [cancelButton setTitleColor:NAVIGATION_BAR_COLOR forState:UIControlStateNormal];
+        [cancelButton setTitleColor:UIColorFromRGB(0x0188cc) forState:UIControlStateNormal];
         [cancelButton.titleLabel setFont:MKFont(16)];
         [cancelButton addTarget:self action:@selector(cancelButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:cancelButton];
@@ -181,7 +185,7 @@ static CGFloat const kpickViewH = 300.f;
         confirmBtn.frame = CGRectMake(kScreenWidth - 10 - 60, 10, 60, 30);
         [confirmBtn setBackgroundColor:COLOR_CLEAR_MACROS];
         [confirmBtn setTitle:@"Confirm" forState:UIControlStateNormal];
-        [confirmBtn setTitleColor:NAVIGATION_BAR_COLOR forState:UIControlStateNormal];
+        [confirmBtn setTitleColor:UIColorFromRGB(0x0188cc) forState:UIControlStateNormal];
         [confirmBtn.titleLabel setFont:MKFont(16)];
         [confirmBtn addTarget:self action:@selector(confirmButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:confirmBtn];

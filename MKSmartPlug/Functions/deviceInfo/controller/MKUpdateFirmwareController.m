@@ -30,7 +30,7 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
     NSLog(@"MKUpdateFirmwareController销毁");
     //取消订阅
     [[MKMQTTServerManager sharedInstance] unsubscriptions:@[self.topicParam[updateResultTopic]]];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedUpdateResultNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedUpdateResultNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -48,6 +48,9 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Check Firmware Update";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -57,11 +60,6 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
     }];
     [self loadDatas];
     // Do any additional setup after loading the view.
-}
-
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Check Firmware Update";
 }
 
 #pragma mark - UITableViewDelegate
@@ -93,7 +91,7 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
     }
     MKUpdateFirmwareCell *hostCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     NSString *host = [hostCell currentValue];
-    if (![host checkIsUrl] && ![host isValidatIP]) {
+    if (!ValidStr(host)) {
         //host校验错误
         [self.view showCentralToast:@"Host error"];
         return;
@@ -122,7 +120,7 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
     [MKMQTTServerInterface updateFirmware:type host:host port:[port integerValue] catalogue:catalogue topic:self.topicParam[updateTopic] sucBlock:^{
         [[MKMQTTServerManager sharedInstance] subscriptions:@[weakSelf.topicParam[updateResultTopic]]];
         //监听升级结果
-        [kNotificationCenterSington addObserver:self
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                        selector:@selector(firmwareUpdateResult:)
                                            name:MKMQTTServerReceivedUpdateResultNotification
                                          object:nil];
@@ -141,7 +139,7 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
     //固件升级结果
     //取消订阅的固件升级主题,取消升级结果监听通知
     [[MKMQTTServerManager sharedInstance] unsubscriptions:@[self.topicParam[updateResultTopic]]];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedUpdateResultNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedUpdateResultNotification object:nil];
     [[MKHudManager share] hide];
     if ([deviceDic[@"ota_result"] isEqualToString:@"R1"]) {
         //升级成功
@@ -164,6 +162,7 @@ NSString *const deviceMacAddress = @"deviceMacAddress";
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [self tableFooter];

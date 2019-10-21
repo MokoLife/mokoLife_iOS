@@ -34,13 +34,16 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKDeviceInformationController销毁");
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedFirmwareInfoNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedFirmwareInfoNotification object:nil];
     //取消订阅固件主题
     [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"firmware_infor"]]];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Device Information";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -49,7 +52,7 @@
         make.bottom.mas_equalTo(-VirtualHomeHeight);
     }];
     [[MKHudManager share] showHUDWithTitle:@"Loading..." inView:self.view isPenetration:NO];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(receiveDeviceFirmware:)
                                        name:MKMQTTServerReceivedFirmwareInfoNotification
                                      object:nil];
@@ -60,9 +63,6 @@
 }
 
 #pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Device Information";
-}
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -92,7 +92,7 @@
     if (self.readTimer) {
         dispatch_cancel(self.readTimer);
     }
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedFirmwareInfoNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedFirmwareInfoNotification object:nil];
     [[MKHudManager share] hide];
     [self getDatasWithInfo:deviceDic];
 }
@@ -115,7 +115,7 @@
         dispatch_cancel(weakSelf.readTimer);
         dispatch_async(dispatch_get_main_queue(), ^{
             [[MKHudManager share] hide];
-            [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedFirmwareInfoNotification object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedFirmwareInfoNotification object:nil];
             [weakSelf.view showCentralToast:@"Get data failed!"];
             [weakSelf performSelector:@selector(leftButtonMethod) withObject:nil afterDelay:0.5f];
         });
@@ -156,6 +156,7 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         
         _tableView.delegate = self;
         _tableView.dataSource = self;

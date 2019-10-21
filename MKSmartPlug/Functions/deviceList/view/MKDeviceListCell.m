@@ -116,7 +116,7 @@ static CGFloat const switchHeight = 30.f;
         [self.stateButton setImage:LOADIMAGE(stateIconName, @"png") forState:UIControlStateNormal];
         self.stateButton.selected = (_dataModel.plugState == MKSmartPlugOn);
         if (_dataModel.plugState == MKSmartPlugOn) {
-            self.deviceStateLabel.textColor = NAVIGATION_BAR_COLOR;
+            self.deviceStateLabel.textColor = UIColorFromRGB(0x0188cc);
             self.deviceStateLabel.text = @"On";
         }else if (_dataModel.plugState == MKSmartPlugOffline){
             self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
@@ -135,7 +135,7 @@ static CGFloat const switchHeight = 30.f;
         self.deviceStateLabel.textColor = UIColorFromRGB(0xcccccc);
         self.deviceStateLabel.text = @"Offline";
     }else{
-        self.deviceStateLabel.textColor = NAVIGATION_BAR_COLOR;
+        self.deviceStateLabel.textColor = UIColorFromRGB(0x0188cc);
         self.deviceStateLabel.text = @"Online";
     }
     [self setNeedsLayout];
@@ -153,7 +153,7 @@ static CGFloat const switchHeight = 30.f;
 - (UILabel *)deviceNameLabel{
     if (!_deviceNameLabel) {
         _deviceNameLabel = [[UILabel alloc] init];
-        _deviceNameLabel.textColor = NAVIGATION_BAR_COLOR;
+        _deviceNameLabel.textColor = UIColorFromRGB(0x0188cc);
         _deviceNameLabel.textAlignment = NSTextAlignmentLeft;
         _deviceNameLabel.font = MKFont(15.f);
     }
@@ -163,7 +163,7 @@ static CGFloat const switchHeight = 30.f;
 - (UILabel *)deviceStateLabel{
     if (!_deviceStateLabel) {
         _deviceStateLabel = [[UILabel alloc] init];
-        _deviceStateLabel.textColor = NAVIGATION_BAR_COLOR;
+        _deviceStateLabel.textColor = UIColorFromRGB(0x0188cc);
         _deviceStateLabel.textAlignment = NSTextAlignmentLeft;
         _deviceStateLabel.font = MKFont(15.f);
     }

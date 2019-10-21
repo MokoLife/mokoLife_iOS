@@ -8,7 +8,6 @@
 
 #import "MKConfigServerPortCell.h"
 #import "MKConfigServerAdopter.h"
-#import "MKTextField.h"
 
 //static CGFloat const starIconWidth = 6.f;
 //static CGFloat const starIconHeight = 6.f;
@@ -23,7 +22,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
 
 @property (nonatomic, strong)UILabel *portLabel;
 
-@property (nonatomic, strong)MKTextField *textField;
+@property (nonatomic, strong)UITextField *textField;
 
 @property (nonatomic, strong)UILabel *cleanSessionLabel;
 
@@ -165,7 +164,7 @@ static NSString *const MKConfigServerPortCellIdenty = @"MKConfigServerPortCellId
     return _portLabel;
 }
 
-- (MKTextField *)textField{
+- (UITextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.keyboardType = UIKeyboardTypePhonePad;

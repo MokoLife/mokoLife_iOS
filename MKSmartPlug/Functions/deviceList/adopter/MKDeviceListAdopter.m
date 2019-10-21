@@ -16,23 +16,24 @@
 + (void)addDeviceButtonPressed:(UIViewController *)target{
     if (![[MKMQTTServerDataManager sharedInstance].configServerModel needParametersHasValue]) {
         //如果app的mqtt服务器信息没有，则去设置
-        MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKConfigServerController *vc = [[MKConfigServerController alloc] init];
         vc.controllerType = MKConfigServerForApp;
         [target.navigationController pushViewController:vc animated:YES];
         return;
     }
     if (![[MKSmartPlugConnectManager sharedInstance].configServerModel needParametersHasValue]) {
         //如果设置给plug的mqtt服务器信息没有，去设置
-        MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKConfigServerController *vc = [[MKConfigServerController alloc] init];
         vc.controllerType = MKConfigServerForSmartPlug;
         [target.navigationController pushViewController:vc animated:YES];
         return;
     }
     //如果都有了，则去添加设备
-    MKSelectDeviceTypeController *vc = [[MKSelectDeviceTypeController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKSelectDeviceTypeController *vc = [[MKSelectDeviceTypeController alloc] init];
     vc.isPrensent = YES;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [kAppRootController presentViewController:nav animated:YES completion:nil];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [target.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 @end

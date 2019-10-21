@@ -13,17 +13,11 @@ inhibit_all_warnings!
 
 target 'MKSmartPlug' do
 
-pod 'Masonry'
+pod 'mokoLibrary', :git => 'git@120.27.8.241:mokoBaseLibrary/mokoLibrary.git'
 pod 'FMDB'
-pod 'Toast'
-pod 'MBProgressHUD'
-pod 'MJRefresh'
-pod 'HJTabViewController',     :git => 'https://github.com/panghaijiao/HJTabViewController.git'
-pod 'YYKit'
 pod 'MLInputDodger'
 pod 'FLAnimatedImage'
 pod 'AFNetworking'
-pod 'CircleProgressBar'
 pod 'MKSocketSDK', '~> 0.0.2'
 pod 'MKMqttServerSDK'
 

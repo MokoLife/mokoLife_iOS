@@ -268,7 +268,7 @@
  @return YES:正确，NO:存在参数错误
  */
 + (BOOL)checkConfigServerParams:(MKConfigServerModel *)serverModel target:(MKConfigServerController *)target{
-    if (!ValidStr(serverModel.host) && ![serverModel.host isValidatIP]) {
+    if (!ValidStr(serverModel.host)) {
         //host校验错误
         [target.view showCentralToast:@"Host error"];
         return NO;
@@ -318,7 +318,7 @@
         [[MKMQTTServerDataManager sharedInstance] connectServer];
         if (![[MKSmartPlugConnectManager sharedInstance].configServerModel needParametersHasValue]) {
             //如果设置给plug的mqtt服务器信息没有，去设置
-            MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+            MKConfigServerController *vc = [[MKConfigServerController alloc] init];
             vc.controllerType = MKConfigServerForSmartPlug;
             [target.navigationController pushViewController:vc animated:YES];
             return;
@@ -329,7 +329,7 @@
     [[MKSmartPlugConnectManager sharedInstance] saveServerConfigDataToLocal:serverModel];
     if (![[MKMQTTServerDataManager sharedInstance].configServerModel needParametersHasValue]) {
         //如果app的mqtt服务器信息没有，则去设置
-        MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKConfigServerController *vc = [[MKConfigServerController alloc] init];
         vc.controllerType = MKConfigServerForApp;
         [target.navigationController pushViewController:vc animated:YES];
         return;

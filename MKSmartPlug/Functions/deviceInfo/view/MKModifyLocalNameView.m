@@ -8,7 +8,6 @@
 
 #import "MKModifyLocalNameView.h"
 #import "MKConnectAlertView.h"
-#import "MKTextField.h"
 
 static CGFloat const offset_X = 15.f;
 static CGFloat const alertViewHeight = 190.f;
@@ -17,7 +16,7 @@ static CGFloat const alertViewHeight = 190.f;
 
 @property (nonatomic, strong)MKConnectAlertView *alertView;
 
-@property (nonatomic, strong)MKTextField *textField;
+@property (nonatomic, strong)UITextField *textField;
 
 @property (nonatomic, copy)void (^confirmBlock)(BOOL empty, NSString *name);
 
@@ -118,7 +117,7 @@ static CGFloat const alertViewHeight = 190.f;
     return _alertView;
 }
 
-- (MKTextField *)textField{
+- (UITextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.maxLength = 20;

@@ -59,7 +59,7 @@
 
 #pragma mark -
 - (void)enterAddDevicePage{
-    MKDeviceListController *vc = [[MKDeviceListController alloc] initWithNavigationType:GYNaviTypeHide];
+    MKDeviceListController *vc = [[MKDeviceListController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     _window.rootViewController = nav;
     [_window makeKeyAndVisible];

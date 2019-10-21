@@ -8,7 +8,6 @@
 
 #import "MKConfigServerHostCell.h"
 #import "MKConfigServerAdopter.h"
-#import "MKTextField.h"
 
 //static CGFloat const starIconWidth = 6.f;
 //static CGFloat const starIconHeight = 6.f;
@@ -23,7 +22,7 @@ static NSString *const MKConfigServerHostCellIdenty = @"MKConfigServerHostCellId
 
 @property (nonatomic, strong)UILabel *msgLabel;
 
-@property (nonatomic, strong)MKTextField *textField;
+@property (nonatomic, strong)UITextField *textField;
 
 @end
 
@@ -135,7 +134,7 @@ static NSString *const MKConfigServerHostCellIdenty = @"MKConfigServerHostCellId
     return _msgLabel;
 }
 
-- (MKTextField *)textField{
+- (UITextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.delegate = self;

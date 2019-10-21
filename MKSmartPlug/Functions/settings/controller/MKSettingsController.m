@@ -28,6 +28,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Settings";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -38,11 +41,6 @@
     // Do any additional setup after loading the view.
 }
 
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Settings";
-}
-
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44.f;
@@ -51,13 +49,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         //device
-        MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKConfigServerController *vc = [[MKConfigServerController alloc] init];
         vc.controllerType = MKConfigServerForSmartPlug;
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
     //app
-    MKConfigServerController *vc = [[MKConfigServerController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKConfigServerController *vc = [[MKConfigServerController alloc] init];
     vc.controllerType = MKConfigServerForApp;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -78,6 +76,7 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

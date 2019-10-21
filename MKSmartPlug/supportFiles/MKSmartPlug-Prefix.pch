@@ -11,16 +11,17 @@
 #import "YYKit.h"
 
 /***************/
-#import "MKDefines.h"
 #import "AppDelegate.h"
-#import "MKCategories.h"
+#import "MKBaseModule.h"
+
+#import "MKSmartPlugDefines.h"
+#import "MKCommonlyUIHelper.h"
+
 
 /******自定义工具类********/
 #import "MKNetworkManager.h"
-#import "MKAttributedStringManager.h"
+#import "MKAttributedString.h"
 #import "MKDateFormatter.h"
-#import "MKCommonlyUIHelper.h"
-#import "MKAnimationAdopter.h"
 #import "MKDeviceModelHeader.h"
 #import "MKAddDeviceCenter.h"
 #import "MKAddDeviceKeys.h"

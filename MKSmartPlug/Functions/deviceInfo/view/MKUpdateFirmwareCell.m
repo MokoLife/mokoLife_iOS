@@ -7,7 +7,6 @@
 //
 
 #import "MKUpdateFirmwareCell.h"
-#import "MKTextField.h"
 #import "MKConfigServerAdopter.h"
 
 static CGFloat const msgLabelWidth = 100.f;
@@ -19,7 +18,7 @@ static NSString *const MKUpdateFirmwareCellIdenty = @"MKUpdateFirmwareCellIdenty
 
 @property (nonatomic, strong)UILabel *msgLabel;
 
-@property (nonatomic, strong)MKTextField *textField;
+@property (nonatomic, strong)UITextField *textField;
 
 @end
 
@@ -88,7 +87,7 @@ static NSString *const MKUpdateFirmwareCellIdenty = @"MKUpdateFirmwareCellIdenty
     return _msgLabel;
 }
 
-- (MKTextField *)textField{
+- (UITextField *)textField{
     if (!_textField) {
         _textField = [MKCommonlyUIHelper configServerTextField];
         _textField.delegate = self;

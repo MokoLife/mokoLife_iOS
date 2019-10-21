@@ -28,7 +28,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
         return;
     }
     if (deviceList.count == 0) {
-        dispatch_main_async_safe(^{
+        moko_dispatch_main_safe(^{
             sucBlock();
         });
         return;
@@ -95,7 +95,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             
         }
         if (sucBlock) {
-            dispatch_main_async_safe(^{
+            moko_dispatch_main_safe(^{
                 sucBlock();
             });
         }
@@ -138,7 +138,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
         }
         [db close];
         if (sucBlock) {
-            dispatch_main_async_safe(^{
+            moko_dispatch_main_safe(^{
                 sucBlock(dataList);
             });
         }
@@ -187,7 +187,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             return;
         }
         if (sucBlock) {
-            dispatch_main_async_safe(^{
+            moko_dispatch_main_safe(^{
                 sucBlock();
             });
         }
@@ -221,7 +221,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
             return;
         }
         if (sucBlock) {
-            dispatch_main_async_safe(^{
+            moko_dispatch_main_safe(^{
                 sucBlock();
             });
         }
@@ -256,7 +256,7 @@ static char *const MKDeviceDataBaseOperationQueue = "MKDeviceDataBaseOperationQu
         }
         [db close];
         if (sucBlock) {
-            dispatch_main_async_safe(^{
+            moko_dispatch_main_safe(^{
                 sucBlock(localName);
             });
         }

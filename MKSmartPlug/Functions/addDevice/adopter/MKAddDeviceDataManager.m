@@ -41,15 +41,15 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKAddDeviceDataManager销毁");
-    [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (instancetype)init{
     if (self = [super init]) {
         //当前网络状态发生改变的通知
-        [kNotificationCenterSington addObserver:self
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                        selector:@selector(networkStatusChanged)
                                            name:MKNetworkStatusChangedNotification
                                          object:nil];
@@ -120,7 +120,7 @@
         || ![deviceDic[@"mac"] isEqualToString:self.deviceDic[@"device_mac"]]) {
         return;
     }
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     //当前设备已经连上mqtt服务器了
     if (self.receiveTimer) {
         dispatch_cancel(self.receiveTimer);
@@ -162,8 +162,8 @@
 - (void)connectProgressWithCompleteBlock:(void (^)(NSError *error, BOOL success, MKDeviceModel *deviceModel))completeBlock{
     self.completeBlock = nil;
     self.completeBlock = completeBlock;
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(networkStatusChanged)
                                        name:UIApplicationDidBecomeActiveNotification
                                      object:nil];
@@ -212,11 +212,11 @@
     //开始连接mqtt服务器
     MKDeviceModel *model = [MKDeviceModel modelWithJSON:self.deviceDic];
     [[MKMQTTServerManager sharedInstance] subscriptions:@[[model subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"switch_state"]]];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(receiveDeviceTopicData:)
                                        name:MKMQTTServerReceivedSwitchStateNotification
                                      object:nil];
-    [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     [self startConnectTimer];
     [self showProcessView];
 }
@@ -251,7 +251,7 @@
         if (self.completeBlock) {
             self.completeBlock(error, NO, nil);
         }
-        [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
     });
 }
 

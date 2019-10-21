@@ -113,7 +113,7 @@ static NSString *const MKNotBlinkRedCellIdenty = @"MKNotBlinkRedCellIdenty";
 - (UILabel *)stepLabel{
     if (!_stepLabel) {
         _stepLabel = [[UILabel alloc] init];
-        _stepLabel.textColor = NAVIGATION_BAR_COLOR;
+        _stepLabel.textColor = UIColorFromRGB(0x0188cc);
         _stepLabel.textAlignment = NSTextAlignmentCenter;
         _stepLabel.font = MKFont(18.f);
         _stepLabel.numberOfLines = 0;

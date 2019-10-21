@@ -72,7 +72,7 @@
     [MKDeviceDataBaseManager deleteDeviceWithMacAddress:deviceModel.device_mac sucBlock:^{
         [[MKHudManager share] hide];
         [[MKMQTTServerManager sharedInstance] unsubscriptions:[deviceModel allTopicList]];
-        [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
         [weakTarget.navigationController popToRootViewControllerAnimated:YES];
     } failedBlock:^(NSError *error) {
         [[MKHudManager share] hide];

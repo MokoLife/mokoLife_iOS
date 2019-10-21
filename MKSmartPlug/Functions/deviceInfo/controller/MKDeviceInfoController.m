@@ -39,11 +39,6 @@
     // Do any additional setup after loading the view.
 }
 
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"More";
-}
-
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44.f;
@@ -65,7 +60,7 @@
     }
     if (indexPath.row == 3) {
         //关于
-        MKAboutController *vc = [[MKAboutController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKAboutController *vc = [[MKAboutController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
@@ -118,7 +113,7 @@
     WS(weakSelf);
     [MKMQTTServerInterface readDeviceFirmwareInformationWithTopic:topic sucBlock:^{
         [[MKHudManager share] hide];
-        MKDeviceInformationController *vc = [[MKDeviceInformationController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKDeviceInformationController *vc = [[MKDeviceInformationController alloc] init];
         MKDeviceModel *model = [[MKDeviceModel alloc] init];
         [model updatePropertyWithModel:weakSelf.deviceModel];
         vc.deviceModel = model;
@@ -163,7 +158,7 @@
 
 #pragma mark - interface
 - (void)updateFirmware{
-    MKUpdateFirmwareController *vc = [[MKUpdateFirmwareController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKUpdateFirmwareController *vc = [[MKUpdateFirmwareController alloc] init];
     NSString *topic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicAppType function:@"upgrade"];
     NSString *resultTopic = [self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"ota_upgrade_state"];
     vc.topicParam = @{
@@ -192,6 +187,9 @@
 
 #pragma mark - ui
 - (void)loadSubViews{
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"More";
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -209,7 +207,7 @@
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
                               withRowAnimation:UITableViewRowAnimationNone];
     }];
-    [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
 }
 
 - (void)loadDatas{
@@ -237,6 +235,7 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         
         _tableView.delegate = self;
         _tableView.dataSource = self;

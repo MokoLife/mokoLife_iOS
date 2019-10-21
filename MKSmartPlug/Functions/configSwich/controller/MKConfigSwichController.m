@@ -29,14 +29,17 @@
 - (void)dealloc{
     NSLog(@"MKConfigSwichController销毁");
     [self.deviceModel cancel];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedDelayTimeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedDelayTimeNotification object:nil];
     //取消订阅倒计时主题
     [[MKMQTTServerManager sharedInstance] unsubscriptions:@[[self.deviceModel subscribeTopicInfoWithType:deviceModelTopicDeviceType function:@"delay_time"]]];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.defaultTitle = @"Moko Life";
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
     [self.rightButton setImage:LOADIMAGE(@"configPlugPage_moreIcon", @"png") forState:UIControlStateNormal];
     UIView *footView = [self footerView];
     [self.view addSubview:footView];
@@ -63,12 +66,9 @@
 }
 
 #pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Moko Life";
-}
 
 - (void)rightButtonMethod{
-    MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKDeviceInfoController *vc = [[MKDeviceInfoController alloc] init];
     MKDeviceModel *model = [[MKDeviceModel alloc] init];
     [model updatePropertyWithModel:self.deviceModel];
     model.swich_way_nameDic = self.deviceModel.swich_way_nameDic;
@@ -187,7 +187,7 @@
     WS(weakSelf);
     [MKDeviceDataBaseManager updateDevice:self.deviceModel sucBlock:^{
         [weakSelf getTableDatas];
-        [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
     } failedBlock:^(NSError *error) {
         
     }];
@@ -246,11 +246,11 @@
 
 #pragma mark -
 - (void)addNotifications{
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(switchStateNotification:)
                                        name:MKMQTTServerReceivedSwitchStateNotification
                                      object:nil];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(delayTimeNotification:)
                                        name:MKMQTTServerReceivedDelayTimeNotification
                                      object:nil];

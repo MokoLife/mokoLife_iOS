@@ -36,11 +36,11 @@
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"MKDeviceListController销毁");
-    [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKNeedReadDataFromLocalNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKMQTTSessionManagerStateChangedNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:MKNeedUpdateSwichWayNameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTServerReceivedSwitchStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNeedReadDataFromLocalNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKMQTTSessionManagerStateChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNeedUpdateSwichWayNameNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -53,12 +53,9 @@
 }
 
 #pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Moko Life";
-}
 
 - (void)leftButtonMethod{
-    MKSettingsController *vc = [[MKSettingsController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKSettingsController *vc = [[MKSettingsController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -79,7 +76,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MKDeviceModel *dataModel = self.dataList[indexPath.row];
     if (dataModel.device_mode == MKDevice_plug) {
-        MKConfigDeviceController *vc = [[MKConfigDeviceController alloc] initWithNavigationType:GYNaviTypeHide];
+        MKConfigDeviceController *vc = [[MKConfigDeviceController alloc] init];
         MKDeviceModel *model = [[MKDeviceModel alloc] init];
         [model updatePropertyWithModel:dataModel];
         model.plugState = dataModel.plugState;
@@ -88,7 +85,7 @@
         return;
     }
     if (dataModel.device_mode == MKDevice_swich) {
-        MKConfigSwichController *vc = [[MKConfigSwichController alloc] initWithNavigationType:GYNaviTypeShow];
+        MKConfigSwichController *vc = [[MKConfigSwichController alloc] init];
         MKDeviceModel *model = [[MKDeviceModel alloc] init];
         [model updatePropertyWithModel:dataModel];
         model.swich_way_nameDic = [NSDictionary dictionaryWithDictionary:dataModel.swich_way_nameDic];
@@ -299,23 +296,23 @@
 }
 
 - (void)addNotification{
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(networkStatusChanged)
                                        name:MKNetworkStatusChangedNotification
                                      object:nil];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(receiveSwitchStateData:)
                                        name:MKMQTTServerReceivedSwitchStateNotification
                                      object:nil];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(getDeviceList)
                                        name:MKNeedReadDataFromLocalNotification
                                      object:nil];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(mqttServerManagerStateChanged)
                                        name:MKMQTTSessionManagerStateChangedNotification
                                      object:nil];
-    [kNotificationCenterSington addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                    selector:@selector(updateSwichWayNameNotification:)
                                        name:MKNeedUpdateSwichWayNameNotification
                                      object:nil];
@@ -339,10 +336,12 @@
 
 #pragma mark - loadSubViews
 - (void)loadSubViews{
-    [self.customNaviView.leftButton setImage:LOADIMAGE(@"mokoLife_menuIcon", @"png") forState:UIControlStateNormal];
-    [self.customNaviView.rightButton setImage:LOADIMAGE(@"mokoLife_addIcon", @"png") forState:UIControlStateNormal];
-    [self.customNaviView setBackgroundColor:NAVIGATION_BAR_COLOR];
-    [self.customNaviView addSubview:self.loadingView];
+    [self.leftButton setImage:LOADIMAGE(@"mokoLife_menuIcon", @"png") forState:UIControlStateNormal];
+    [self.rightButton setImage:LOADIMAGE(@"mokoLife_addIcon", @"png") forState:UIControlStateNormal];
+    self.titleLabel.text = @"Moko Life";
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    [self.titleLabel addSubview:self.loadingView];
     [self.view addSubview:self.addDeviceView];
     [self.view addSubview:self.tableView];
     [self.loadingView mas_remakeConstraints:^(MASConstraintMaker *make) {

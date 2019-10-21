@@ -8,7 +8,6 @@
 
 #import "MKConnectDeviceWifiView.h"
 #import "MKConnectAlertView.h"
-#import "MKTextField.h"
 
 static NSString *const titleMsg = @"Please enter Wi-Fi information";
 
@@ -22,11 +21,11 @@ static CGFloat const alertViewHeight = 230.f;
 
 @property (nonatomic, strong)UILabel *wifiNameLabel;
 
-@property (nonatomic, strong)MKTextField *wifiNameTextField;
+@property (nonatomic, strong)UITextField *wifiNameTextField;
 
 @property (nonatomic, strong)UILabel *wifiPasswordLabel;
 
-@property (nonatomic, strong)MKTextField *wifiPasswordTextField;
+@property (nonatomic, strong)UITextField *wifiPasswordTextField;
 
 @end
 
@@ -164,7 +163,7 @@ static CGFloat const alertViewHeight = 230.f;
     return _wifiNameLabel;
 }
 
-- (MKTextField *)wifiNameTextField{
+- (UITextField *)wifiNameTextField{
     if (!_wifiNameTextField) {
         _wifiNameTextField = [MKCommonlyUIHelper configServerTextField];
     }
@@ -178,7 +177,7 @@ static CGFloat const alertViewHeight = 230.f;
     return _wifiPasswordLabel;
 }
 
-- (MKTextField *)wifiPasswordTextField{
+- (UITextField *)wifiPasswordTextField{
     if (!_wifiPasswordTextField) {
         _wifiPasswordTextField = [MKCommonlyUIHelper configServerTextField];
     }

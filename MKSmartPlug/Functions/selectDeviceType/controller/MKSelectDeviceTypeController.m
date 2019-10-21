@@ -35,11 +35,6 @@
     // Do any additional setup after loading the view.
 }
 
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Select Device Type";
-}
-
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 60.f;
@@ -52,7 +47,7 @@
         deviceType = MKDevice_swich;
     }
     [MKAddDeviceCenter sharedInstance].deviceType = deviceType;
-    MKAddDeviceController *vc = [[MKAddDeviceController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKAddDeviceController *vc = [[MKAddDeviceController alloc] init];
     NSDictionary *params = [[MKAddDeviceCenter sharedInstance] fecthAddDeviceParams];
     [vc configAddDeviceController:params];
     [self.navigationController pushViewController:vc animated:YES];
@@ -84,6 +79,9 @@
 }
 
 - (void)loadSubViews{
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Select Device Type";
     [self.leftButton setImage:nil forState:UIControlStateNormal];
     [self.leftButton setTitle:@"Cancel" forState:UIControlStateNormal];
     [self.leftButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
@@ -100,6 +98,7 @@
 - (MKBaseTableView *)tableView{
     if (!_tableView) {
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.backgroundColor = COLOR_WHITE_MACROS;
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

@@ -60,7 +60,7 @@ static CGFloat const iconHeight = 28.f;
     if (ValidStr(_dataModel.msg)) {
         self.msgLabel.text = _dataModel.msg;
     }
-    self.msgLabel.textColor = (_dataModel.isOn ? NAVIGATION_BAR_COLOR : UIColorFromRGB(0x808080));
+    self.msgLabel.textColor = (_dataModel.isOn ? UIColorFromRGB(0x0188cc) : UIColorFromRGB(0x808080));
 }
 
 #pragma mark - setter & getter
@@ -74,7 +74,7 @@ static CGFloat const iconHeight = 28.f;
 - (UILabel *)msgLabel{
     if (!_msgLabel) {
         _msgLabel = [[UILabel alloc] init];
-        _msgLabel.textColor = NAVIGATION_BAR_COLOR;
+        _msgLabel.textColor = UIColorFromRGB(0x0188cc);
         _msgLabel.textAlignment = NSTextAlignmentCenter;
         _msgLabel.font = MKFont(10.f);
     }

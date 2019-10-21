@@ -48,11 +48,6 @@ static CGFloat const offset_X = 20.f;
     // Do any additional setup after loading the view.
 }
 
-#pragma mark - 父类方法
-- (NSString *)defaultTitle{
-    return @"Add Device";
-}
-
 #pragma mark - addDeviceControllerConfigProtocol
 - (void)configAddDeviceController:(NSDictionary *)params{
     if (!ValidDict(params)) {
@@ -79,7 +74,7 @@ static CGFloat const offset_X = 20.f;
 
 #pragma mark - event method
 - (void)linkLabelPressed{
-    MKNotBlinkAmberController *vc = [[MKNotBlinkAmberController alloc] initWithNavigationType:GYNaviTypeShow];
+    MKNotBlinkAmberController *vc = [[MKNotBlinkAmberController alloc] init];
     WS(weakSelf);
     vc.blinkButtonPressedBlock = ^{
         //点击了按钮之后需要等vc退出栈之后退出新的页面
@@ -95,8 +90,8 @@ static CGFloat const offset_X = 20.f;
             [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
             return ;
         }
-        [kNotificationCenterSington postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
-        MKSaveDeviceNameController *vc = [[MKSaveDeviceNameController alloc] initWithNavigationType:GYNaviTypeShow];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKNeedReadDataFromLocalNotification object:nil];
+        MKSaveDeviceNameController *vc = [[MKSaveDeviceNameController alloc] init];
         MKDeviceModel *tempModel = [[MKDeviceModel alloc] init];
         [tempModel updatePropertyWithModel:deviceModel];
         vc.deviceModel = tempModel;
@@ -106,6 +101,9 @@ static CGFloat const offset_X = 20.f;
 
 #pragma mark - loadSubViews
 - (void)loadSubViews{
+    self.custom_naviBarColor = UIColorFromRGB(0x0188cc);
+    self.titleLabel.textColor = COLOR_WHITE_MACROS;
+    self.defaultTitle = @"Add Device";
     [self.view addSubview:self.msgLabel];
     [self.view addSubview:self.gifIcon];
     [self.view addSubview:self.linkLabel];
@@ -173,7 +171,7 @@ static CGFloat const offset_X = 20.f;
 - (UILabel *)linkLabel{
     if (!_linkLabel) {
         _linkLabel = [MKCommonlyUIHelper clickEnableLabelWithText:@""
-                                                        textColor:NAVIGATION_BAR_COLOR
+                                                        textColor:UIColorFromRGB(0x0188cc)
                                                            target:self
                                                            action:@selector(linkLabelPressed)];
     }

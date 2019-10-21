@@ -34,8 +34,8 @@ NSString *const MKMQTTServerReceivedUpdateResultNotification = @"MKMQTTServerRec
 #pragma mark - life circle
 - (void)dealloc{
     NSLog(@"销毁");
-    [kNotificationCenterSington removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
-    [kNotificationCenterSington removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MKNetworkStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 - (instancetype)init{
     if (self = [super init]) {
@@ -46,11 +46,11 @@ NSString *const MKMQTTServerReceivedUpdateResultNotification = @"MKMQTTServerRec
             self.paramDic = [NSMutableDictionary dictionary];
         }
         [self.configServerModel updateServerModelWithDic:self.paramDic];
-        [kNotificationCenterSington addObserver:self
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                        selector:@selector(networkStateChanged)
                                            name:MKNetworkStatusChangedNotification
                                          object:nil];
-        [kNotificationCenterSington addObserver:self
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                        selector:@selector(networkStateChanged)
                                            name:UIApplicationDidBecomeActiveNotification
                                          object:nil];
