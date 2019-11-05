@@ -36,8 +36,6 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Mokolife need your location information for connecting device
 </string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>是否允许SmartPlug使用麦克风</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>SmartPlug need to add photos to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
