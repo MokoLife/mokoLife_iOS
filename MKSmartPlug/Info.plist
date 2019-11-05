@@ -25,19 +25,19 @@
 	<key>NSCameraUsageDescription</key>
 	<string>If not allowed ,you will be unable to take photos.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Mokolife need your location information for connecting device
+	<string>MokoLife need your location information for connecting device
 </string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Mokolife need your location information for connecting device
+	<string>MokoLife need your location information for connecting device
 </string>
 	<key>NSLocationUsageDescription</key>
-	<string>Mokolife need your location information for connecting device
+	<string>MokoLife need your location information for connecting device
 </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Mokolife need your location information for connecting device
+	<string>MokoLife need your location information for connecting device
 </string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>SmartPlug need to add photos to your photo library.</string>
+	<string>MokoLife need to add photos to your photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>If not allowed ,you will be unable to choose photos from Camera Roll.</string>
 	<key>UILaunchStoryboardName</key>
