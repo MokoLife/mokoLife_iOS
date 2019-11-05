@@ -1898,6 +1898,7 @@
 				CODE_SIGN_ENTITLEMENTS = MKSmartPlug/MKSmartPlug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2018110501;
 				DEVELOPMENT_TEAM = R558LEUW2T;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/MKSmartPlug/supportFiles/MKSmartPlug-Prefix.pch";
 				INFOPLIST_FILE = MKSmartPlug/Info.plist;
@@ -1921,6 +1922,7 @@
 				CODE_SIGN_ENTITLEMENTS = MKSmartPlug/MKSmartPlug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2018110501;
 				DEVELOPMENT_TEAM = R558LEUW2T;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/MKSmartPlug/supportFiles/MKSmartPlug-Prefix.pch";
 				INFOPLIST_FILE = MKSmartPlug/Info.plist;
@@ -1995,6 +1997,7 @@
 				CODE_SIGN_ENTITLEMENTS = MKSmartPlug/MKSmartPlug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2018110501;
 				DEVELOPMENT_TEAM = R558LEUW2T;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/MKSmartPlug/supportFiles/MKSmartPlug-Prefix.pch";
 				INFOPLIST_FILE = MKSmartPlug/Info.plist;

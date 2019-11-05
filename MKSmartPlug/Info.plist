@@ -19,19 +19,23 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>2018110201</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>If not allowed ,you will be unable to take photos.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>MokoLife需要使用您的位置来连接设备</string>
+	<string>Mokolife need your location information for connecting device
+</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>MokoLife需要使用您的位置来连接设备</string>
+	<string>Mokolife need your location information for connecting device
+</string>
 	<key>NSLocationUsageDescription</key>
-	<string>MokoLife需要使用您的位置来连接设备</string>
+	<string>Mokolife need your location information for connecting device
+</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>MokoLife需要使用您的位置来连接设备</string>
+	<string>Mokolife need your location information for connecting device
+</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>是否允许SmartPlug使用麦克风</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
